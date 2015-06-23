@@ -3,6 +3,10 @@ class Book < Neo
 		@id = id
 	end
 
+	def self.search_by_fb_id id
+		" MATCH (book:Book :FacebookBook) WHERE book.fb_id = " + id.to_s + " WITH book "
+	end
+
 	def self.init_match
 		" MATCH (book:Book) "
 	end
@@ -148,7 +152,7 @@ class Book < Neo
 	end
 
 	def get_news skip_count = 0
-		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book " + Book.skip(skip_count) + Book.limit(10) +  " WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Community.order_desc + Book.return_init + " news, " + Community.collect_map("communities" => Community.grouped_basic_info)
+		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book " + News.order_desc  + Book.skip(skip_count) + Book.limit(10) +  " WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Community.order_desc + Book.return_init + " news, " + Community.collect_map("communities" => Community.grouped_basic_info)
 	end
 
 	def self.match_lenders 
@@ -197,6 +201,14 @@ class Book < Neo
 		clause
 	end
 
+	def self.primary_info
+		" book.title AS title, book.author_name AS author_name, ID(book) AS id "
+	end
+
+	def get_primary_info
+		match + match_author + Book.return_group(Book.primary_info, "ID(author) as author_id")
+	end
+
 	def self.get_book_links
 		book_links_property={"Wrote"=> [], # These are the inlinks.	
 				"Published_in"	 => [],
@@ -227,5 +239,9 @@ class Book < Neo
 		else
 			" SET book.recommended_count = TOINT(COALESCE(book.recommended_count, " + value.to_s + ")) - " + value.to_s + " "
 		end
+	end
+
+	def self.set_facebook_book id
+		" SET book :FacebookBook, book.fb_id = " + id.to_s + " "
 	end
 end

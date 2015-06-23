@@ -74,7 +74,7 @@ ReadersDoor::Application.routes.draw do
   # root :to => "website#coming_soon"
   # get 'dev'                       => "recommendations#index",         :as => "dev"
   get 'home'                      => "website#home",                  :as => "home"
-  get 'infinity'                   => "website#infinity",             :as => "infinity"
+  get 'filters'                   => "website#filters",             :as => "filters"
   get 'search'                    => "website#search",                :as => "search"
   get 'profile'                    => "website#profile",              :as => "profile"
   get 'shelves'                     => "website#shelves",                  :as => "shelves"
@@ -127,7 +127,7 @@ ReadersDoor::Application.routes.draw do
   get 'personalised_suggestions'        => "website#personalised_suggestions",  :as => "personalised_suggestions"
 
   get 'signup'                          => "website#signup",                    :as => "signurep"
-  get 'news_group'                      => "website#news_group",                :as => "news_group"
+  get 'rooms'                      => "website#rooms",                :as => "rooms"
 
   get "trending_community_books"        => "books#trending_community_books",     :as => "trending_community_books"
   get "delete_book_relationship"        => "books#delete_book_relationship",       :as => "delete_book_relationship"

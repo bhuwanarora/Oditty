@@ -20,7 +20,7 @@ homeApp.controller('genresController', ["$scope", "$rootScope", "$timeout", 'use
         $scope.info.loading = true;
         if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
             $scope.info.genres = [];
-            genreService.get_genres().then(function(data){
+            genreService.get_categories().then(function(data){
                 angular.forEach(data, function(value){
                     var status = value.likes_weight != 0 && value.likes_weight !=  null;
                     var url = WebsiteUIConstants.GenreAWS + value.root_category_aws_key;

@@ -1,3 +1,9 @@
+<section layout="column" id="suggestions" class="md-whiteframe-z1" layout-align="center center">
+	<div class="big_title bold white_color">
+		SUGGESTIONS
+	</div>
+</section>
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="shift_above"></div> 
 <section layout="row" layout-wrap class="feed_margin">
     <div flex="10" hide-sm hide-md
         ng-include src="'/assets/angular/html/personalised_suggestions/left_panel.html'"></div>
@@ -7,3 +13,15 @@
     <div flex="10" hide-sm hide-md
     	ng-include src="'/assets/angular/html/personalised_suggestions/right_panel.html'"></div>
 </section>
+<style>
+	#suggestions{
+		background-image: url('/assets/personalised.svg');
+		height: 70vh;
+		background-size: cover;
+		margin-top: -55px;
+	}
+
+	.shift_above{
+		margin-top: -50px;
+	}
+</style>

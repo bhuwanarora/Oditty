@@ -1,11 +1,15 @@
 homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', '$mdDialog', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore, $mdDialog){
 
     $scope.get_popular_books = function(){
-        if(Object.keys($rootScope.filters).length > 0){
-            sharedService.filtered_books($scope);
-        }
-        else{
-            sharedService.get_popular_books($scope);
+        if(angular.isUndefined($scope.constant) || !$scope.constant.show_book){
+            if(Object.keys($rootScope.filters).length > 0){
+                if(!$scope.info.fetching_books){
+                    sharedService.filtered_books($scope);
+                }
+            }
+            else{
+                sharedService.get_popular_books($scope);
+            }
         }
     }
 

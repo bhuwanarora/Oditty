@@ -59,6 +59,10 @@ class News < Neo
 		" MATCH (news:News) WITH news "
 	end
 
+	def set_view_count
+		match + " SET news.view_count = COALESCE(news.view_count,0) + 1 "
+	end
+
 	def self.set_indexed_title title
 		" SET news.indexed_title = \"" + title.to_s.search_ready + "\" "
 	end

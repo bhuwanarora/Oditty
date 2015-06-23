@@ -7,7 +7,7 @@
 	<div layout="row" layout-align="center center" layout-margin 
 		 class="genre" 
 		 ng-repeat="genre in active_book.genres | limitTo:5">
-		<div hide-sm hide-md>{{genre}}&nbsp;&nbsp;</div>
+		<div hide-sm hide-md ng-show="(genre != null) && (genre.name != null)">{{genre.name || genre}}&nbsp;&nbsp;</div>
 		<!-- <div class="grey_circle" layout-align="center center" layout="center">
 			<div>{{genre | first_two | uppercase}}</div>
 		</div> -->

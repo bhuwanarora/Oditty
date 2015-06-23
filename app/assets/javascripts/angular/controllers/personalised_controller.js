@@ -1,4 +1,4 @@
-homeApp.controller('personalisedController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService){
+homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope', "websiteService", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', 'sharedService', 'Facebook', function($scope, $timeout, $rootScope, websiteService, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, sharedService, Facebook){
 	
 	var _set_data = function(data, array){
         angular.forEach(data, function(value){
@@ -33,7 +33,6 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
 
     $scope.show_books_on_friend_shelves = function(){
         if(angular.isUndefined($scope.friends) || $scope.friends.length == 0){
-            $scope.info.active_tab = "friend_shelves";
             $scope.info.loading = true;
             delete $scope.info.active_tag;
             infinityService.get_books_on_friends_shelves().then(function(data){
@@ -115,7 +114,6 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
         $scope.info.selectedIndex = 0;
         if(angular.isUndefined($scope.books_from_favourite_author)){
             $scope.books_from_favourite_author = [];
-            $scope.info.active_tab = "favourite_author";
             $scope.info.loading = true;
             delete $scope.info.active_tag;
             infinityService.get_books_from_favourite_author().then(function(data){
@@ -142,7 +140,6 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
     $scope.show_small_reads = function(){
         if(angular.isUndefined($scope.small_reads)){
             $scope.info.loading = true;
-            $scope.info.active_tab = "small_read";
             delete $scope.info.active_tag;
             infinityService.get_small_reads().then(function(data){
                 $scope.small_reads = [];
@@ -154,9 +151,21 @@ homeApp.controller('personalisedController', ["$scope", "userService", '$rootSco
 
 	var _init = (function(){
         $scope.info.books = [];
-        $scope.active_tab = {};
         $scope.friends = [];
-    	$scope.show_books_for_author();
+        var authors_timeout = $timeout(function(){
+    	   $scope.show_books_for_author();
+        }, 100);
+
+        $scope.$on('destroy', function(){
+            $timeout.cancel(authors_timeout);
+        });
+
+        // Facebook.api('108160689204689', function(response){
+        //     websiteService.handle_facebook_books(response);
+        // });
+        // Facebook.api('me/og.likes', function(response){
+        //     websiteService.handle_facebook_books(response);
+        // });
     }());
 
 }]);

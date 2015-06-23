@@ -1,0 +1,91 @@
+<md-list class="">
+    <section layout-padding>
+        <div layout="row" layout-align="space-between">
+            <img ng-src="{{author.id | author_thumb}}" 
+                 class="circular author_image"/>
+            <div layout="row">
+                <a title="facebook" ng-show="author.facebook_url"
+                    class="md-whiteframe-z1 facebook" layout-padding layout-align="center center" layout-margin
+                    layout="row"
+                    target="_blank" ng-href="{{::author.facebook_url}}">
+                    <div>
+                        <span class="icon-facebook"></span>
+                    </div>
+                </a>
+                <a title="twitter" ng-show="author.twitter_handle" 
+                    class="md-whiteframe-z1 twitter" layout-padding layout-align="center center" layout-margin
+                    layout="row"
+                    target="_blank" ng-href="http://twitter.com/{{::author.twitter_handle}}">
+                    <div>
+                        <span class="icon-twitter"></span>
+                    </div>
+                </a>
+                <a title="website" ng-show="author.website_url"
+                    class="md-whiteframe-z1 google-plus" layout-padding layout-align="center center" layout-margin
+                    layout="row"
+                    target="_blank" ng-href="http://{{::author.website_url}}">
+                    <div>
+                        <i class="material-icons">link</i>
+                    </div>
+                </a>
+             </div>
+        </div>
+        <md-list-item layout-padding class="md-3-line" layout="column">
+            <div layout="column" class="md-list-item-text" >
+                <div layout="row" layout-align="space-between">
+                    <div class="big_title" ng-bind-html="::author.name" layout-padding></div>
+                    <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
+                               ng-class="{'md-raised': !author.status}" 
+                               ng-click="toggle_follow()">
+                        <span ng-if="!author.status">Follow</span>
+                        <span ng-if="author.status">Following</span>
+                    </md-button>
+                </div>
+                <div layout-padding>
+                    <div class="small_font">Author</div>
+                    <div layout="row" layout-align="space-between center">
+                        <div>
+                            
+                        </div>
+                        <div layout="row" layout-align="center center" ng-show="::author.location">
+                            <i class="material-icons" class="small_font">location_on</i>
+                            <div ng-bind-html="::author.location" class="small_font bold"></div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-bind-html="::author.overview" layout-padding></div>
+            </div>
+        </md-list-item>
+    </section>
+    <div ng-click="toggle_wiki()" ng-if="author.wiki_url" class="">
+        <section layout="row" layout-align="space-between" flex>
+            <div></div>
+            <div layout="row" layout-padding>
+                <a>Info from Wikipedia</a>
+                <i class="material-icons" ng-show="show_author_wiki">expand_less</i>
+                <i class="material-icons" ng-show="!show_author_wiki">expand_more</i>
+            </div>
+        </section>
+    </div>
+    <md-list-item ng-show="show_author_wiki">
+        <iframe ng-src="{{::author.wiki_url}}" class="wiki" 
+                seamless="seamless"></iframe>
+    </md-list-item>
+
+</md-list>
+<div class="less_important" layout-padding>
+    Followers
+</div>
+<div layout="row" layout-wrap>
+    <div ng-include ng-init="active_tag = author" src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+</div>
+<div class="less_important" layout-padding>
+    Books Published
+</div>
+<div layout="row" layout-wrap>
+    <section ng-repeat="book in author.books" layout-margin>
+        <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover" >
+            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+        </md-button>
+    </section>
+</div>

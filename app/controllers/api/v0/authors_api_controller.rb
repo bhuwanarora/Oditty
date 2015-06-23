@@ -26,6 +26,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_basic_info
+				id = params[:id]
+				info = Api::V0::AuthorApi.get_basic_info id
+				render :json => info, :status => 200
+			end
+
 			def get_popular_authors
 				skip_count = params[:skip_count] || 0
 				authors =  Api::V0::AuthorApi.get_active_authors(skip_count).execute
@@ -46,6 +52,12 @@ module Api
 					Api::V0::AuthorApi.unfollow(id, user_id).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def get_interview_details
+				author_id = params[:id]
+				info = Api::V0::AuthorApi.get_interview_details(author_id)
+				render :json => info, :status => 200
 			end
 		end
 	end

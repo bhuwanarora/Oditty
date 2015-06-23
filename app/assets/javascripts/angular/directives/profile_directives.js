@@ -1,4 +1,24 @@
+homeApp.directive('authorInfo', ["$rootScope", "authorService", 'ColorConstants', '$mdDialog', function($rootScope, authorService, ColorConstants, $mdDialog){
+    return {
+        restrict: 'E',
+        scope : {author: '=', info: '='},
+        controller: ["$scope", function($scope){
+           
+            var _init = function(){
+                if(angular.isDefined($scope.author)){
+                    $scope.author_loading = true;
+                    authorService.get_basic_info($scope.author.id).then(function(data){
+                        $scope.author = angular.extend($scope.author, data);
+                        $scope.author_loading = false;
+                    });
+                }
+            }
 
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/author_info.html'
+    };
+}]);
 
 homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants', '$mdDialog', 'sharedService', function($rootScope, newsService, ColorConstants, $mdDialog, sharedService){
     return {
@@ -6,16 +26,6 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
         scope : {community: '=', info: '='},
         controller: ["$scope", function($scope){
             $scope.show_book_dialog = function(book, event){
-                // $rootScope.active_book = book;
-                // $rootScope.active_book.show_info_only = true;
-                // $mdDialog.show({
-                //     templateUrl: '/assets/angular/html/news/book.html',
-                //     scope: $scope,
-                //     preserveScope: true,
-                //     clickOutsideToClose: true,
-                //     targetEvent: event
-                // });
-                // event.stopPropagation();
                 sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
 
@@ -24,11 +34,6 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
                     $scope.community_loading = true;
                     newsService.get_feed_info($scope.community.id).then(function(data){
                         $scope.community = angular.extend($scope.community, data);
-                        angular.forEach($scope.community.books, function(book){
-                            var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                            var color = ColorConstants.value[random_int];
-                            book.color = color;
-                        });
                         $scope.community_loading = false;
                     });
                 }

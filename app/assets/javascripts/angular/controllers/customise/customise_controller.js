@@ -67,7 +67,7 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
 
         if(angular.isDefined($scope.data.selectedIndex)){
             if($scope.data.selectedIndex == 2){
-                window.location.href = "/infinity";
+                window.location.href = "/profile";
             }
             else{
                 if($scope.data.selectedIndex == 0){

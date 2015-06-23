@@ -1,0 +1,6 @@
+<div layout="column">
+	<a class="big_title bold" ng-href="/book?q={{::book.id}}" ng-bind-html="::book.title" ng-if="book.title"></a>
+	<div class="less_important" ng-show="book.author_name">
+		By <a ng-href="/author?q={{::book.author_id}}" ng-bind-html="::book.author_name"></a>
+	</div>
+</div>

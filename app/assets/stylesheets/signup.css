@@ -16,8 +16,14 @@
 .search input,
 .active_page_menu,
 .pointer,
-.hello_world .about_card{
+.hello_world .about_card,
+.hello_world a,
+.burger a{
     color: #444444 !important;
+}
+
+.hello_world a{
+    color: #444444;
 }
 
 .header .white_color{
@@ -91,13 +97,16 @@
 
 .tagline{
     /*text-transform: uppercase;*/
+    width: 100%;
+    z-index: 2;
+    top: 40%;
+}
+
+.tagline .main_heading{
     color: #BABABA;
     font-weight: 800;
     line-height: 1.4em;
     font-size: 60px;
-    width: 100%;
-    z-index: 2;
-    top: 40%;
 }
 
 .tagline img{
@@ -157,7 +166,7 @@
 }
 
 .hello_world{
-    height: 70vh;
+    height: 60vh;
 }
 
 .hello_world .about_card a{
@@ -299,23 +308,68 @@ and (max-width : 800px){
 }
 
 .profile__group .avatar-container .room_title{
-    background-color: white;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    right: 0px;
+    font-weight: bold;
+    margin-top: -10px;
+}
+
+.profile__group .avatar-container .room_title_wrapper{
+    background-color: rgba(0, 0, 0, 0.2);
     font-size: 15px;
     padding: 4px;
     position: absolute;
-    bottom: 0px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
+    border-radius: 50%;
+    text-align: center;
 }
 
 .profile__group .avatar-container .avatar,
 .profile__group .avatar-container .avatar--large{
     position: absolute;
-    width: 7rem;
-    height: 7rem;
+    width: 8rem;
+    height: 8rem;
     margin-left: -4.0625rem;
     margin-top: -4.0625rem;
-    border-radius: 3.5rem;
-    letter-spacing: 3.5px;
+    border-radius: 4rem;
+    letter-spacing: 4px;
     background-size: cover;
+}
+
+@media (min-width: 1000px) and (max-width: 2200px){    
+    .profile__group .avatar-container .avatar,
+    .profile__group .avatar-container .avatar--large{
+        width: 8rem;
+        height: 8rem;
+        border-radius: 4rem;
+        letter-spacing: 4px;
+    }
+}
+
+
+@media (min-width: 550px)and (max-width:1000px){
+    .profile__group .avatar-container .avatar,
+    .profile__group .avatar-container .avatar--large{
+        width: 6rem;
+        height: 6rem;
+        border-radius: 3rem;
+        letter-spacing: 2.5px;
+    }
+}
+
+@media (max-width: 540px)and (max-height:1199px){
+    .profile__group .avatar-container .avatar,
+    .profile__group .avatar-container .avatar--large{
+        width: 5rem;
+        height: 5rem;
+        border-radius: 2.5rem;
+        letter-spacing: 2px;
+    }
 }

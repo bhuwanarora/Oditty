@@ -1,14 +1,17 @@
-<div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book" class="primary"></div>
-<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+<div class="yellow" ng-class="{'md-whiteframe-z1': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}">
+    <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
+    <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
+</div>
+
 <section layout="row" layout-wrap class="feed_margin">
-    <div flex="20" hide-sm hide-md layout="row" layout-align="end start"  class="background" 
+    <div flex="20" hide-sm hide-md layout="row" layout-align="end start" 
          ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
     </div>
     <div flex="60" flex-sm="100" flex-md="100"
-         ng-include src="'/assets/angular/html/library/show.html'" class="background" 
+         ng-include src="'/assets/angular/html/library/show.html'" 
          layout-align="center center" layout-fill>
     </div>
-    <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" class="background" 
+    <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
          flex="20" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
     </div>
 </section>
@@ -34,8 +37,13 @@
     .filters_header{
         /*background-color: white !important;*/
         position: relative;
-        box-shadow: none;
+        /*box-shadow: none;*/
         padding: 7px;
+    }
+
+    .init_filters_header{
+        height: 50vh;
+        min-height: 400px;
     }
 
     .md-sticky-clone{

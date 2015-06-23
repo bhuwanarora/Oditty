@@ -59,7 +59,7 @@ angular.module('filtersApp', [])
                     output = "News";
                 }
                 else if(community_label){
-                    output = "Community";
+                    output = "Room";
                 }
             }
             return output;
@@ -69,7 +69,7 @@ angular.module('filtersApp', [])
         return function(input){
             var output = input;
             if(angular.isUndefined(input) || (input == "") || (input == null)){
-                output = "http://www.sessionlogs.com/media/icons/defaultIcon.png";
+                output = "/assets/user_profile.jpg";
             }
             return output;
         }

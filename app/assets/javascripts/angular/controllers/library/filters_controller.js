@@ -11,6 +11,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 	    		}, $scope.info.genres);
 	    	});
 		}
+        else{
+            $scope.info.loading = false;
+        }
     }
 
     $scope.close_filters = function(){
@@ -43,14 +46,23 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     var _set_books = function(){
         // $scope.info.books = [];
         $scope.info.infinity = true;
-        if(Object.keys($rootScope.filters).length == 0){
-            $scope.info.books = [];
+        $scope.info.books = [];
+        if(null_filters()){
             sharedService.get_popular_books($scope);
         }
         else{
-            $scope.info.books = [];
             sharedService.filtered_books($scope);
         }
+    }
+
+    var null_filters = function(){
+        var keys = Object.keys($rootScope.filters);
+        var has_other = keys.indexOf("other") >= 0;
+        var has_skip_count = keys.indexOf("skip_count") >= 0;
+        var status_on_length_one = (keys.length == 1) && (has_other || has_skip_count);
+        var status_on_length_two = (keys.length == 2) && (has_other && has_skip_count);
+        var has_null_filters = (keys.length == 0) || status_on_length_two || status_on_length_one;
+        return has_null_filters;
     }
 
     var _handle_filter_removal = function(){
@@ -58,37 +70,33 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         delete $rootScope.filters.skip_count;
         delete $scope.info.other_info;
         $scope.info.books = [];
-        if(Object.keys($rootScope.filters).length > 0){
-            _set_books();
+        if(null_filters()){
+            sharedService.get_popular_books($scope);
         }
         else{
-            sharedService.get_popular_books($scope);
+            _set_books();
         }
     }
 
     $scope.select_genre = function(genre){
         if(angular.isUndefined(genre)){
-            delete $rootScope.filters.category_id;
+            delete $rootScope.filters.genre_id;
             _handle_filter_removal();
         }
         else{
-            $rootScope.filters["category_id"] = (genre.id || genre.root_category_id);
+            $rootScope.filters["genre_id"] = genre.id;
            _set_books();
         }
     }
 
     $scope.select_author = function(author){
-        if(author){
-            if(angular.isUndefined(author)){
-                delete $rootScope.filters.author_id;
-                _handle_filter_removal();
-            }
-            else{
-                $rootScope.filters["author_id"] = author.id;
-                _set_books();
-            }
+        if(angular.isUndefined(author)){
+            delete $rootScope.filters.author_id;
+            _handle_filter_removal();
         }
         else{
+            $rootScope.filters["author_id"] = author.id;
+            _set_books();
         }
     }
 
@@ -116,23 +124,16 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 
     $scope.search_genres = function(input){
         // var params = "q="+input+"&count="+10;
-        if(input){
+        if(angular.isDefined(input) && (input.length > 2)){
             if(!$scope.info.loading){
                 $scope.info.loading = true;
-                genreService.search_genres(input).then(function(data){
+                genreService.search_star_genres(input).then(function(data){
                     $scope.info.loading = false;
-                    if(data.length > 0){
-                        $scope.info.genres = [];
-                        angular.forEach(data, function(value){
-                            var json = {"type": SearchUIConstants.Genre, "custom_option": true, "icon2": "icon-tag", 
-                                        "name": value.category_name, "id": value.category_id};
-                            this.push(json);
-                        }, $scope.info.genres);
-                    }
-                    else{
-                        // $scope.search_display = SearchUIConstants.NoResultsFound;
-                    }
+                    $scope.info.genres = data;
                 });
+            }
+            else{
+                $scope.info.genres = [];
             }
         }
         else{
@@ -152,7 +153,8 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 
     $scope.search_authors = function(input){
         // var params = "q="+input+"&count="+10;
-        if(!$scope.info.loading){
+
+        if(!$scope.info.loading && angular.isDefined(input) && input.length > 2){
             $scope.info.loading = true;
             authorService.search_authors(input).then(function(data){
                 $scope.info.loading = false;
@@ -215,6 +217,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             $scope._get_time_groups();
             $scope._get_reading_times();
             $scope._get_genres();
+            $scope._get_authors();
         }, 100);
         $scope.$on('destroy', function(){
             $timeout.cancel(fetch_data);
