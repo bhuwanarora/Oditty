@@ -32,17 +32,19 @@ class Status < Neo
 			reading_status_value = @reading_status_value ? (@status_type.create_for(@reading_status_value)  + " WITH status ") : ""
 			book_exchange_status = @book_exchange_status ? @status_book_exchange_type.create_for(@book_exchange_status) : ""
 			set_page_count_clause = @total_page_count ? set_book_page_count : ""
+			book_feed_addition = Book::BookFeed.new(@book_id).create "status_node"
 		else
 			match_clause = @user.match
 			reading_status_value = ""
 			book_exchange_status = ""
 			set_page_count_clause = ""
+			book_feed_addition = " WITH user, status_node "
 		end
 		mentioned_users_ids = @mentioned_users_ids ? Status::Mention::MentionsUser.create_group(@mentioned_users_ids, @user_id) : ""
 		mentioned_authors_ids = @mentioned_authors_ids ? Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id) : ""
 		hash_tags = @hash_tags ? Hashtag.create_group(@hash_tags, @user_id) : ""
 		feelings = @feelings ? Status::Feeling.create_group(@feelings, @user_id) : ""
-		match_clause + create_unique + " WITH status, status_node, user " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + set_page_count_clause + Status.return_init + Status.basic_info
+		match_clause + create_unique + " WITH status, book, status_node, user " + book_feed_addition + ", status " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + set_page_count_clause + Status.return_init + Status.basic_info
 	end
 
 	def create_unique 
