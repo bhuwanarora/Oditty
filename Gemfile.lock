@@ -554,7 +554,7 @@ DEPENDENCIES
   rails_admin
   rails_admin_nestable
   redis
-  resque (= 1.23.0)
+  resque
   rspec
   sass-rails (~> 4.0.0)
   sdoc
