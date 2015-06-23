@@ -46,7 +46,12 @@
         md-item-text="item.name"
         md-min-length="0"
         placeholder="Publishing Era">
-        <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
+        <div layout="column">
+            <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
+            <div class="less_important">
+                {{item.range}}
+            </div>
+        </div>
     </md-autocomplete>
     <!-- <div class="icon_angle">
         <span class="icon-angle-down"></span>
@@ -61,7 +66,13 @@
         md-item-text="item.name"
         md-min-length="0"
         placeholder="Duration">
-        <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
+        <div layout="column">
+            <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
+            <div class="less_important">
+                {{item.page_count_range}} Pages to read
+            </div>
+        </div>
+
     </md-autocomplete>
     <!-- <div class="icon_angle">
         <span class="icon-angle-down"></span>

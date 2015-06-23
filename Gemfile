@@ -38,7 +38,8 @@ gem 'rails_admin'
 gem 'rails_admin_nestable'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
-gem "resque", "1.23.0"
+gem 'sidekiq'
+gem "resque"
 # gem 'angularjs-rails'
 # gem 'angular-ui-router-rails'
 gem "jubatus", "~> 0.5.0"
@@ -124,6 +125,5 @@ gem 'open4'
 gem 'opengraph_parser'
 gem 'redis' # gem 'qless'
 # gem 'redis-namespace'
-gem 'sidekiq'
 gem 'geoip'
 gem 'elasticsearch'
