@@ -19,11 +19,7 @@ module Api
 			end
 
 			def self.get_relative_details(friend_id, user_id)
-				info = {}
-				if friend_id.present?
-					info = UsersUser.new(friend_id, user_id).get_basic_info.execute[0]
-				end
-				info
+				info = UsersUser.new(user_id, friend_id).get_basic_info.execute[0]
 			end
 
 			def self.news_visited(user_id, id)
