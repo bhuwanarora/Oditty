@@ -21,11 +21,15 @@
                 ng-repeat="news in active_community.news" 
                 ng-if="active_community.news"
                 layout-align="start start" layout="column" class="small-padding" flex-sm="100">
-                <a ng-href="/news?id={{::news.news_id}}">
-                    <div ng-bind-html="::news.title" class="big_title"></div>
-                </a>
+                <div>
+                    <a ng-href="/news?id={{::news.news_id}}">
+                        <div ng-bind-html="::news.title" class="big_title"></div>
+                    </a>
+                </div>
                 <div class="less_important">{{news.created_at | timestamp | date:'dd MMM'}}</div>
-                <a ng-href="{{::news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a>
+                <div>
+                    <a ng-href="{{::news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a>
+                </div>
                 <div ng-bind-html="::news.description"></div>
              </section>
         </div>

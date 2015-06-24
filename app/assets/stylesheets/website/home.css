@@ -43,7 +43,7 @@ a{
 	box-shadow: none;
 	min-height: 48px !important;
 	z-index: 3;
-	background-color: #2196F3;
+	background-color: #00BCD4;
 	color: white;
 	width: 100%;
 }
@@ -282,7 +282,7 @@ md-toolbar{
 }
 
 .primary{
-	background-color: #2196F3;
+	background-color: #00BCD4;
 }
 
 .share_container{
