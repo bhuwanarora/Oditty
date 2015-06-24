@@ -158,7 +158,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/community.html',
-    "<div layout=\"row\" layout-align=\"space-between center\" layout-padding><md-button class=\"clear big_circle\" aria-label=\"toggle_join\" ng-class=\"{'md-raised': !community.status}\" ng-click=\"toggle()\"><div layout=\"column\" layout-align=\"center center\"><img ng-src=\"{{::community.image_url}}\" class=\"big_circle\"><md-tooltip ng-bind-html=\"::community.name\"></md-tooltip></div></md-button></div>"
+    "<div layout=\"row\" layout-align=\"space-between center\" layout-padding><a class=\"md-whiteframe-z1 big_circle\" aria-label=\"toggle_join\" ng-class=\"{'md-raised': !community.status}\" ng-href=\"/room?q={{::community.id}}\"><div layout=\"column\" layout-align=\"center center\"><img ng-src=\"{{::community.image_url}}\" class=\"big_circle\"><md-tooltip ng-bind-html=\"::community.name\"></md-tooltip></div></a></div>"
   );
 
 
@@ -829,7 +829,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/share.html',
-    "<div ng-controller=\"shareController\" ng-show=\"info.mobile_search\" class=\"share_container\"><md-fab-speed-dial md-direction=\"left\" ng-class=\"md-scale\" class=\"fixed_share\" ng-hide=\"active_shelf || info.show_share\" aria-label=\"Share reading journey\" ng-style=\"type_icon_pressed\"><md-fab-trigger><md-button aria-label=\"menu\" class=\"md-fab md-warn\" ng-click=\"show_share_page($event)\"><i class=\"material-icons\">send</i></md-button></md-fab-trigger></md-fab-speed-dial></div>"
+    "<div ng-controller=\"shareController\" ng-show=\"info.mobile_search\" class=\"share_container\"><md-fab-speed-dial md-direction=\"left\" ng-class=\"'md-scale'\" class=\"fixed_share\" ng-hide=\"active_shelf || info.show_share\" aria-label=\"Share reading journey\" ng-style=\"type_icon_pressed\"><md-fab-trigger><md-button aria-label=\"menu\" class=\"md-fab md-warn\" ng-click=\"show_share_page($event)\"><i class=\"material-icons\">send</i></md-button></md-fab-trigger><md-fab-actions><section layout-margin><md-button aria-label=\"Currently Reading a Book\" class=\"md-raised\" ng-click=\"show_share_page($event, 1)\">Currently Reading a Book</md-button></section><section layout-margin><md-button aria-label=\"Planning To Read a Book\" class=\"md-raised\" ng-click=\"show_share_page($event, 0)\">Planning To Read a Book</md-button></section><section layout-margin><md-button aria-label=\"Recently Read a Book\" class=\"md-raised\" ng-click=\"show_share_page($event, 2)\">Recently Read a Book</md-button></section></md-fab-actions></md-fab-speed-dial></div>"
   );
 
 
