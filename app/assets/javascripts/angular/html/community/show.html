@@ -1,15 +1,19 @@
-<div hide-sm layout="row" flex hide-md>
-    <div layout="column"  flex="45" layout-padding>
-        <community-feed community-feed="::community_feed"
-            ng-repeat="community_feed in ::active_tag.news"></community-feed>
-    </div>
-    <div flex="5"></div>
-    <div layout="column" flex="50" layout-padding
-        ng-include src="'/assets/angular/html/room/info.html'"></div>
+<div class="less_important" ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
+        Readers in this room
 </div>
-<div show-sm show-md hide>
-    <div layout="column" layout-padding
-        ng-include src="'/assets/angular/html/room/info.html'"></div>
-    <community-feed community-feed="::community_feed" 
-            ng-repeat="community_feed in ::active_tag.news"></community-feed>
+<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+<div layout-padding></div>
+<div class="less_important" layout-padding>Books related to {{active_tag.name}}</div>
+    <div layout="row" layout-wrap layout-padding>
+        <section ng-repeat="book in active_tag.books" layout-margin>
+            <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover md-whiteframe-z3">
+                <div class="book_thumb" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
+                </div>
+            </md-button>
+        </section>    
+    </div>
+</div>
+<div layout="column"  flex="45" layout-padding>
+    <community-feed community-feed="::community_feed"
+        ng-repeat="community_feed in ::active_tag.news"></community-feed>
 </div>

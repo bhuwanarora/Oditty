@@ -21,6 +21,9 @@
 
     <div class="less_important" layout="column" layout-padding layout-align="center center"
         ng-if="!constant.show_book">
+        <div class="big_title" 
+            ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
+            Popular Books</div>
         <div>{{info.books.length}} results</div>
         <div>Scroll to see more.</div>
     </div>

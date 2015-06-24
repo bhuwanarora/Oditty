@@ -1,0 +1,26 @@
+<md-list class="">
+    <section layout-padding>
+       
+        <md-list-item layout-padding class="md-3-line" layout="column">
+            <div layout="column" class="md-list-item-text" >
+                <div ng-bind-html="::author.overview" layout-padding></div>
+            </div>
+        </md-list-item>
+        <div ng-click="toggle_wiki()" ng-if="author.wiki_url" class="">
+            <section layout="row" layout-align="space-between" flex>
+                <div></div>
+                <div layout="row" layout-padding>
+                    <a>Info from Wikipedia</a>
+                    <i class="material-icons" ng-show="show_author_wiki">expand_less</i>
+                    <i class="material-icons" ng-show="!show_author_wiki">expand_more</i>
+                </div>
+            </section>
+        </div>
+        <md-list-item ng-show="show_author_wiki">
+            <iframe ng-src="{{::author.wiki_url}}" class="wiki" 
+                    seamless="seamless"></iframe>
+        </md-list-item>
+    </section>
+    
+
+</md-list>

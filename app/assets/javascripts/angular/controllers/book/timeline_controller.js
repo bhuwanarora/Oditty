@@ -17,8 +17,6 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
     }
 
     $scope.get_feed = function(){
-        $scope.book_loading = true;
-        $scope.info.loading = true;
         if(angular.isUndefined($scope.book_feed)){
             $scope.book_feed = [];
         }
@@ -71,8 +69,6 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
                     value = angular.extend(value, {"message": message});
                 }
             });
-            $scope.book_loading = false;
-            $scope.info.loading = false;
         });
     }
     

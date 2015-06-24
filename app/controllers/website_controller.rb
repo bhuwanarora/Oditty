@@ -56,7 +56,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :home, :layout => "material_home"
+		render :filters, :layout => "material"
 	end
 
 	def jobs
@@ -114,7 +114,7 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
-	def shelves
+	def history
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")

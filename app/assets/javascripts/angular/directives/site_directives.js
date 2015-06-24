@@ -4,9 +4,9 @@ homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($roo
         scope: {book: '=', info: '='},
         link: function($scope, $element, google_public_key){
 
-            var alert_not_found = function(){
+            $scope.alert_not_found = function(){
                 $scope.info.loading = false;
-                $element.prepend("<div>Preview not found</div>");
+                $scope.info.book_not_found = true;
             }
 
             var load_book = function(){
@@ -16,8 +16,9 @@ homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($roo
                 else{
                     var isbn = $scope.book.isbn.split(',');
                     var isbn_string = "ISBN:"
+                    $scope.info.book_not_found = false;
                     var viewer = new google.books.DefaultViewer($element.find('div')[0]);
-                    viewer.load(isbn_string.concat(isbn[1]), alert_not_found);
+                    viewer.load(isbn_string.concat(isbn[1]), $scope.alert_not_found);
                     $scope.info.loading = false;
                 }
             }

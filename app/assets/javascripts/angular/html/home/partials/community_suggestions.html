@@ -1,38 +1,10 @@
 <div layout-padding layout="row">
 	<div flex="10" flex-md="5" hide-sm></div>
-	<div layout="column" layout-align="center center" flex="80" flex-md="90" flex-sm="100">
-		<div layout="row" class="white_color">
-			<div>
-				<i class="material-icons">whatshot</i>
-			</div>
-			<div class="big_title bold">
-				&nbsp;POPULAR ROOMS
-			</div>
-		</div>
-		<div ng-show="show_suggestions" layout="row" layout-wrap layout-sm="column">
-			<div flex layout-margin>
-				<join-community community="community" 
-					layout-margin
-					ng-if="$index < 4"
-					ng-repeat="community in suggest_communities" >
-				</join-community>
-			</div>
-			<div flex layout-margin>
-				<join-community community="community" 
-					layout-margin ng-if="$index >= 4 && $index < 8"
-					ng-repeat="community in suggest_communities" >
-				</join-community>
-			</div>
-		</div>
-		<div class="white_color" layout-padding>
-			<span> · </span>
-			<span>Scroll through News</span>
-			<span> · </span>
-			<span>Discover associated Rooms you like</span>
-			<span> · </span>
-			<span>Explore relevant Books</span>
-			<span> · </span>
-		</div>
+	<div layout="row" layout-align="center center" flex="80" flex-md="90" flex-sm="100" layout-wrap>
+		<join-community community="community" 
+			layout-margin
+			ng-repeat="community in suggest_communities" >
+		</join-community>
 	</div>
 	<div flex="10" flex-md="5" hide-sm></div>
 </div>

@@ -27,14 +27,6 @@
                 </a>
             </div>
             <div layout="row" layout-column layout-align="center center" ng-hide="hide_follow_links">
-                <a href="/shelves" ng-hide="hide_follow_links">
-                    <md-button class="nav_links">
-                        <div layout="column" layout-align="center center">
-                            <div><b>BOOKMARKS</b></div>
-                            <h2>{{profile_user.bookmark_count || 0}}</h2>
-                        </div>
-                    </md-button>
-                </a>
                 <a href="/network?q=0" ng-hide="hide_follow_links">
                      <md-button class="nav_links" ng-class="{'red_color': follow_state == 0}">
                         <div layout="column" layout-align="center center">
@@ -52,14 +44,16 @@
                         </div>
                     </md-button>
                 </a>
+                <a href="/history" ng-hide="hide_follow_links">
+                    <md-button class="nav_links">
+                        <div layout="column" layout-align="center center">
+                            <div><b>HISTORY</b></div>
+                            <h2>{{profile_user.bookmark_count || 0}}</h2>
+                        </div>
+                    </md-button>
+                </a>
             </div>
             <div layout="row" layout-column layout-align="center center" ng-show="hide_follow_links">
-                <div class="nav_links">
-                    <div layout="column" layout-align="center center">
-                        <div><b>BOOKMARKS</b></div>
-                        <h2>{{profile_user.bookmark_count || 0}}</h2>
-                    </div>
-                </div>
                 <div class="nav_links">
                     <div layout="column" layout-align="center center">
                         <div><b>FOLLOWERS</b></div>
@@ -70,6 +64,12 @@
                     <div layout="column" layout-align="center center">
                         <div><b>FOLLOWING</b></div>
                         <h2>{{profile_user.follows_count || 0}}</h2>
+                    </div>
+                </div>
+                <div class="nav_links">
+                    <div layout="column" layout-align="center center">
+                        <div><b>HISTORY</b></div>
+                        <h2>{{profile_user.bookmark_count || 0}}</h2>
                     </div>
                 </div>
             </div>

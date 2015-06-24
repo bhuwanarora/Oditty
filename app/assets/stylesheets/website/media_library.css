@@ -2,7 +2,7 @@
     
     .fixed_left_panel{
         position: fixed;
-        top: 218px;
+        top: 300px;
         left: -4px;
         width: 20vw;
     }
@@ -33,7 +33,7 @@
 
     .fixed_right_panel{
         position: fixed;
-        top: 218px;
+        top: 300px;
         width: 20vw;
         right:-4px;
     }
@@ -90,7 +90,7 @@
 
     .fixed_left_panel{
         position: fixed;
-        top: 218px;
+        top: 300px;
         left: -4px;
         width: 8vw;
     }
@@ -121,7 +121,7 @@
 
     .fixed_right_panel{
         position: fixed;
-        top: 218px;
+        top: 300px;
         width: 8vw;
         right: -4px; 
     }

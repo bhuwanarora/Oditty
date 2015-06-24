@@ -2,41 +2,42 @@
     <div class="filters_header animate-fast" 
          ng-class="{'init_filters_header': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}"
          layout="column" layout-align="center center">
-         <div layout-padding layout="column" layout-align="center center" 
-            ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
-             <div class="big_title bold white_color" layout-padding>
-                 FILTERS
+         <div layout="column" layout-align="center center" class="full_width" 
+            ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
+             <div layout-padding layout="column" layout-align="center center">
+                 <div class="big_title bold white_color" layout-padding>
+                     We help you choose the book with which you can relate to.
+                 </div>
+                 <div class="white_color">
+                    Select a Genre and the time you have to read
+                 </div>
              </div>
-             <div class="white_color">
-                 Choose a Genre, Author, Era, Duration
-             </div>
+            <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width">
+                <div flex="10" flex-md="5"></div>
+                <div layout="row" layout-align="center center"  layout-sm="column"
+                     ng-include src="'/assets/angular/html/library/main_options.html'"
+                     class="z-index-1" flex="80" flex-md="90"></div>  
+                <div flex="10" flex-md="5"></div>
+            </section>
          </div>
-        <section layout="row" show-sm hide layout-align="space-between center" layout-fill>
-            <md-button ng-click="show_left_nav($event)" class="clear_button" ng-show="info.infinity">
-                Sort by
-            </md-button>
-            <div layout="row" layout-align="end center" layout-wrap>
-                <md-button class="md-raised clear_button" ng-click="show_bottom_filters($event)">
-                    Add Filters
-                </md-button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <md-button class="clear_button" ng-click="show_right_nav($event)" ng-show="info.infinity">
-                    <div layout="column">
-                        <div>A</div>
-                        <div>Z</div>
-                    </div>
-                </md-button>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-        </section>
-        <section layout="row" hide-sm layout-align="center center" layout-wrap class="full_width">
-            <div flex="10" flex-md="5"></div>
-            <div layout="row" layout-align="center center" 
-                 ng-include src="'/assets/angular/html/library/shared/_filters.html'"
-                 class="z-index-1" 
-                 flex="80" flex-md="90"></div>  
-            <div flex="10" flex-md="5"></div>
-        </section>
+         <div layout="column" class="full_width" 
+            ng-if="info.selected_genre || info.selected_author || info.selected_year || info.selected_duration">
+            <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width" >
+                <div flex="10" flex-md="5"></div>
+                <div layout="row" layout-align="center center"  layout-sm="column"
+                     ng-include src="'/assets/angular/html/library/main_options.html'"
+                     class="z-index-1" flex="80" flex-md="90"></div>  
+                <div flex="10" flex-md="5"></div>
+            </section>
+            <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width" >
+                <div flex="10" flex-md="5"></div>
+                <div layout="row" layout-align="center center"  layout-sm="column"
+                     ng-include src="'/assets/angular/html/library/shared/_filters.html'"
+                     class="z-index-1" flex="80" flex-md="90"></div>  
+                <div flex="10" flex-md="5"></div>
+            </section>
+         </div>
+
     </div>
     <md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
         <br/>

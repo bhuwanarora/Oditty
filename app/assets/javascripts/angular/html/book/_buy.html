@@ -1,12 +1,9 @@
-<div ng-controller="buyController" layout="column">
+<div ng-controller="buyController" layout="column" class="book_page">
     
     <div layout="row" layout-sm="column" class="full_height">
         <div flex layout="column" layout-padding
             ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
         <div flex layout="column" layout-padding
             ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
-        <md-progress-linear class="md-primary loader"
-                            ng-show="book_loading"
-                            md-mode="indeterminate"></md-progress-linear>
     </div>
 </div>

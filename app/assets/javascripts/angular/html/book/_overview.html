@@ -4,8 +4,10 @@
             flex-sm="100"
             flex-md="100">
         <md-content class="overview_container">
-            <h3>{{::book.title}}</h3>
-            <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
+            <div layout="column">
+                <a ng-href="/book?q={{book.id || book.book_id}}" class="big_title">{{::book.title}}</a>
+                <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
+            </div>
             <div class="summary">
                 {{::book.description}}
             </div>

@@ -130,6 +130,22 @@
                         <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                     </div>
                     <div ng-hide="info.show_share || info.show_book_share">
+                        <div>
+                            <div class="cover_wrapper" layout="column" layout-align="space-between" >
+                                <div></div>
+
+                                <div class="tagline" layout="row" layout-align="center center">
+                                    <!-- <img src="assets/rd_icon.png" /> -->
+                                    <div layout-padding>
+                                        <div ng-include src="'assets/angular/html/shared/home/tagline.html'"></div>
+                                    </div>
+                                </div>
+                                <div></div>
+                            </div>
+                        </div>
+                        <div layout="column" layout-align="center center" 
+                            ng-include src="'assets/angular/html/shared/home/options.html'">
+                        </div>
                          <div class="hello_world">
                             <form accept-charset='UTF-8' class='form' id='form' role='form'></form>
                             <div class='main' role='main'>
@@ -442,22 +458,7 @@
                             </div>
 
                         </div>
-                        <div>
-                            <div class="cover_wrapper" layout="column" layout-align="space-between" >
-                                <div></div>
-
-                                <div class="tagline" layout="row" layout-align="center center">
-                                    <!-- <img src="assets/rd_icon.png" /> -->
-                                    <div layout-padding>
-                                        <div ng-include src="'assets/angular/html/shared/home/tagline.html'"></div>
-                                    </div>
-                                </div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div layout="column" layout-align="center center" 
-                            ng-include src="'assets/angular/html/shared/home/options.html'">
-                        </div>
+                        
 
 
                         <div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>

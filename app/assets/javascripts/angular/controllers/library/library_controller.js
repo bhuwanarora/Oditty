@@ -102,9 +102,10 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.show_book = function(event, book){
-        $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
-        $scope.constant = {"show_book": true};
-        $rootScope.active_book = book;
+        // $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
+        // $scope.constant = {"show_book": true};
+        // $rootScope.active_book = book;
+        sharedService.show_book_dialog($rootScope, $scope, book, event);
         event.stopPropagation();
     }
 

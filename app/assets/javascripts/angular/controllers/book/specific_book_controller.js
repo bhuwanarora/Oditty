@@ -1,4 +1,4 @@
-homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdSidenav', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdSidenav, ColorConstants){
+homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdSidenav', 'ColorConstants', 'scroller', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdSidenav, ColorConstants, scroller){
 
     $scope.toggle_endorse = function(){
         if(_unauthenticated_user()){
@@ -19,6 +19,17 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                 position: $scope.getToastPosition()
             });
         }
+    }
+
+    $scope.scroll_to = function(id){
+        var offset = 0;
+        var duration = 2000;
+        id = id+"-content";
+        var someElement = angular.element(document.getElementById(id));
+        var easeInQuad = function(t){ 
+            return t*t; 
+        };
+        scroller.scrollToElement(someElement, offset, duration);
     }
 
     var _unauthenticated_user = function(){

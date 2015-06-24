@@ -1,88 +1,35 @@
-<div flex="20" flex-sm="100" class="relative" layout-fill>
-    <!-- <md-input-container flex>
-        <label>Subject</label>
-        <input type="text"/>
-    </md-input-container> -->
-    <md-autocomplete  class="filters_autocomplete"
-        md-selected-item="info.selected_genre"
-        md-search-text="search_tag.genre"
-        md-items="item in info.genres"
-        md-search-text-change="search_genres(search_tag.genre)"
-        md-selected-item-change="select_genre(info.selected_genre)"
-        md-item-text="item.name || item.root_category_name"
-        md-min-length="0"
-        placeholder="Genre">
-        <div>
-            <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
-            <div class="less_important">{{item.books_count}} books</div>
+<md-autocomplete  class="filters_autocomplete"
+    md-selected-item="info.selected_author"
+    md-search-text="search_tag.author"
+    md-items="item in info.authors"
+    md-search-text-change="search_authors(search_tag.author)"
+    md-selected-item-change="select_author(info.selected_author)"
+    md-item-text="item.name"
+    md-min-length="0" layout-margin
+    placeholder="Author">
+    <span md-highlight-text="search_tag.author">{{item.name}}</span>
+</md-autocomplete>
+<md-autocomplete  class="filters_autocomplete"
+    md-selected-item="info.selected_year"
+    md-search-text="search_tag.time_group"
+    md-items="item in info.time_groups"
+    md-selected-item-change="select_publishing_year(info.selected_year)"
+    md-item-text="item.name"
+    md-min-length="0" layout-margin
+    placeholder="Publishing Era">
+    <div layout="column">
+        <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
+        <div class="less_important">
+            {{item.range}}
         </div>
-    </md-autocomplete>
-    <!-- <div class="icon_angle">
-        <span class="icon-angle-down"></span>
-    </div> -->
-</div>
-<div flex="20" flex-sm="100" class="relative" layout-fill>
-    <md-autocomplete  class="filters_autocomplete"
-        md-selected-item="info.selected_author"
-        md-search-text="search_tag.author"
-        md-items="item in info.authors"
-        md-search-text-change="search_authors(search_tag.author)"
-        md-selected-item-change="select_author(info.selected_author)"
-        md-item-text="item.name"
-        md-min-length="0"
-        placeholder="Author">
-        <span md-highlight-text="search_tag.author">{{item.name}}</span>
-    </md-autocomplete>
-    <!-- <div class="icon_angle">
-        <span class="icon-angle-down"></span>
-    </div> -->
-</div>
-<div flex="20" flex-sm="100" class="relative" layout-fill>
-    <md-autocomplete  class="filters_autocomplete"
-        md-selected-item="info.selected_year"
-        md-search-text="search_tag.time_group"
-        md-items="item in info.time_groups"
-        md-selected-item-change="select_publishing_year(info.selected_year)"
-        md-item-text="item.name"
-        md-min-length="0"
-        placeholder="Publishing Era">
-        <div layout="column">
-            <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
-            <div class="less_important">
-                {{item.range}}
-            </div>
-        </div>
-    </md-autocomplete>
-    <!-- <div class="icon_angle">
-        <span class="icon-angle-down"></span>
-    </div> -->
-</div>
-<div flex="20" flex-sm="100" class="relative" layout-fill>
-    <md-autocomplete class="filters_autocomplete"
-        md-selected-item="info.selected_duration"
-        md-search-text="search_tag.read_time"
-        md-items="item in info.read_times"
-        md-selected-item-change="select_reading_time(info.selected_duration)"
-        md-item-text="item.name"
-        md-min-length="0"
-        placeholder="Duration">
-        <div layout="column">
-            <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
-            <div class="less_important">
-                {{item.page_count_range}} Pages to read
-            </div>
-        </div>
-
-    </md-autocomplete>
-    <!-- <div class="icon_angle">
-        <span class="icon-angle-down"></span>
-    </div> -->
-</div>
-<div layout="row" layout-align-sm="space-around center" flex="10" flex-sm="100" layout-fill>
-    <md-button class="white clear_button md-raised" flex="100" flex-sm="40" ng-click="reset_filter()" ng-disabled="info.loading">
+    </div>
+</md-autocomplete>
+<div layout="row" layout-align-sm="space-around center" flex="10" flex-sm="100" class="full_width_sm">
+    <md-button class="white clear_button md-raised" flex="100" 
+        flex-sm="100" ng-click="reset_filter()" ng-disabled="info.loading">
         Reset
     </md-button>
-    <md-button class="white clear_button" flex-sm="40" hide show-sm ng-click="close_filters()" ng-disabled="info.loading">
+    <!-- <md-button class="white clear_button" flex-sm="40" hide show-sm ng-click="close_filters()" ng-disabled="info.loading">
         GO
-    </md-button>
+    </md-button> -->
 </div>
