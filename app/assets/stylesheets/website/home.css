@@ -694,12 +694,16 @@ md-tooltip .md-content{
 	width: 320px !important;
 }
 
-
 .rd_book_backup_cover,
 .rd_book_image_cover,
 .rd_slider_wrapper,
 .rd_book_shadow{
-	 width: 160px;
+	width: 160px;
+}
+
+.rd_book_backup_cover,
+.rd_slider_wrapper,
+.rd_book_shadow{
   	height: 220px;
 }
 
