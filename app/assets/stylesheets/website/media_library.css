@@ -4,7 +4,7 @@
         position: fixed;
         top: 300px;
         left: -4px;
-        width: 20vw;
+        width: 15vw;
     }
     .right_anchored{
         border-right: 5px solid;
@@ -34,7 +34,7 @@
     .fixed_right_panel{
         position: fixed;
         top: 300px;
-        width: 20vw;
+        width: 15vw;
         right:-4px;
     }
 

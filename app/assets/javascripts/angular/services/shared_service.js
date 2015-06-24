@@ -11,16 +11,18 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.show_book_dialog = function($rootScope, $scope, book, event){
-        $rootScope.active_book = book;
-        $rootScope.active_book.show_info_only = true;
-        $mdDialog.show({
-            templateUrl: '/assets/angular/html/news/book.html',
-            scope: $scope,
-            preserveScope: true,
-            clickOutsideToClose: true,
-            targetEvent: event
-        });
-        event.stopPropagation();
+        var id = book.book_id || book.id;
+        window.location.href = "/book?id="+id;
+        // $rootScope.active_book = book;
+        // $rootScope.active_book.show_info_only = true;
+        // $mdDialog.show({
+        //     templateUrl: '/assets/angular/html/news/book.html',
+        //     scope: $scope,
+        //     preserveScope: true,
+        //     clickOutsideToClose: true,
+        //     targetEvent: event
+        // });
+        // event.stopPropagation();
     }
 
     this.filtered_books = function($scope){

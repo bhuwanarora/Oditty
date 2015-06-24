@@ -1,4 +1,4 @@
-<div flex="20" flex-md="15" flex-sm="100" layout-margin>
+<div flex="15" flex-md="15" flex-sm="100" layout-margin hide-sm hide-md>
     <md-select ng-model="active_page" class="active_page_menu full_width_sm"
         layout="row" ng-show="info.mobile_search">
         <md-option ng-value="-1" ng-disabled>Browse</md-option>
@@ -14,8 +14,8 @@
         </a>
     </md-select>
 </div>
-<div class="relative">
-    <md-autocomplete  class="filters_autocomplete"
+<div class="relative" flex-md="100">
+    <md-autocomplete  class="filters_autocomplete genres_autocomplete"
         md-selected-item="info.selected_genre"
         md-search-text="search_tag.genre"
         md-items="item in info.genres"
@@ -31,8 +31,8 @@
     </md-autocomplete>
 </div>
 <br/>
-<div class="relative">
-    <md-autocomplete class="filters_autocomplete"
+<div class="relative" hide-sm hide-md>
+    <md-autocomplete class="filters_autocomplete time_autocomplete"
         md-selected-item="info.selected_duration"
         md-search-text="search_tag.read_time"
         md-items="item in info.read_times"
