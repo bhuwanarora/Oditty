@@ -1,7 +1,13 @@
+<div class="primary md-whiteframe-z1">
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div ng-include src="'/assets/angular/html/book/header.html'"></div>
+	<div ng-include src="'/assets/angular/html/shared/share.html'"></div>
+</div>
 <section layout="row" layout-wrap class="feed_margin">
 	<div flex="10" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
 		ng-if="!book.show_info_only"></div>
-    <div flex="80" flex-sm="100" flex-md="90" layout="column" class="md-whiteframe-z1" 
+    <div flex="80" flex-sm="100" flex-md="90" layout="column"
          ng-include src="'/assets/angular/html/book/show.html'">
     </div>
     <div flex="10" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
@@ -13,6 +19,13 @@
 	}
 
 	.book_page{
-		min-height: 400px;
+		min-height: 200px;
 	}
+
+	md-tabs .md-tab,
+	md-tabs .md-tab.md-active, 
+	md-tabs .md-tab.md-focused{
+		color: white;
+	}
+
 </style>

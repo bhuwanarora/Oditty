@@ -2,16 +2,20 @@
     <div ng-include src="'/assets/angular/html/author/header.html'"></div>
     <div ng-include src="'/assets/angular/html/shared/share.html'" ></div>
 </div>
-<div layout="row">
+<div layout="row" class="feed_margin">
     <div flex="10" flex-md="5" hide-sm></div>
-    <div flex="80" flex-md="90" flex-sm="100">
-        <div class="less_important" layout-padding>
+    <div flex="80" flex-md="90" flex-sm="100"> 
+        <div layout-padding
+            ng-include src="'/assets/angular/html/author/more_info.html'">
+        </div>
+        <div class="less_important bold" layout-padding>
             Followers
         </div>
         <div layout="row" layout-wrap>
-            <div ng-include ng-init="active_tag = author" src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+            <div ng-include ng-init="active_tag = author" 
+                src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
         </div>
-        <div class="less_important" layout-padding>
+        <div class="less_important bold" layout-padding>
             Books Published
         </div>
         <div layout="row" layout-wrap>

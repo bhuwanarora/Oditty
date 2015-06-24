@@ -1,11 +1,9 @@
 <md-content ng-controller="realVirtualityController" class="white book_page" check-scroll-bottom="load_news()">
-    <div class="less_important" layout-align="center center" layout="row" layout-padding>
-        <div>
-            Real Virtuality is seeing the world through the eyes of a book.
-        </div>
+    <div class="less_important bold" layout-padding>
+        Real Virtuality is seeing the world through the eyes of a book.
     </div>
     
-    <section layout="row">
+    <section layout="row" layout-sm="column">
         <div flex="30" flex-sm="100" layout="column" layout-align="start start">
             <md-radio-group layout="row" layout-align="start center"
                 layout-padding ng-change="load_news()"
@@ -18,7 +16,7 @@
                 </md-radio-button>
             </md-radio-group>        
         </div>
-        <div flex="70" layout="column" flex-sm="100">
+        <div flex="60" layout="column" flex-sm="100">
              <section layout="row" layout-sm="column" layout-wrap
                 ng-repeat="news in active_community.news" 
                 ng-if="active_community.news"
@@ -31,6 +29,7 @@
                 <div ng-bind-html="::news.description"></div>
              </section>
         </div>
+        <div flex="10" hide-sm></div>
     </section>
      <section ng-if="!active_community.news && !info.loading" layout-padding>
          <div class="big_title">We're searching for news from the real world for this book. Please come back later.</div>

@@ -24,10 +24,10 @@
         </md-card-content>
         <md-divider></md-divider>
      </md-card>
-     <md-card ng-if="book_feed && book_feed.length == 0" class="no_shadow" layout-padding>
+     <md-card ng-if="book_feed && book_feed.length == 0" class="no_shadow less_important bold" layout-padding>
         Be the first to share reading moments for this Book...
      </md-card>
-     <div layout="row" layout-align="center center" layout-padding>
+     <div layout="row" layout-align="start center" layout-padding>
         <md-button aria-label="share moments from reading journey" class="clear share_moments" 
                     ng-click="write_reading_journey_for($event)"
                     layout-align="start end">

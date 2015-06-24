@@ -1,3 +1,6 @@
+md-autocomplete md-autocomplete-wrap{
+	box-shadow: none !important;
+}
 
 md-content.md-default-theme,
 .background{
@@ -40,7 +43,7 @@ a{
 	box-shadow: none;
 	min-height: 48px !important;
 	z-index: 3;
-	background-color: #00BCD4;
+	background-color: #2196F3;
 	color: white;
 	width: 100%;
 }
@@ -267,9 +270,10 @@ md-toolbar{
 
 .loader{
 	position: fixed;
-	top: 50%;
-	left: 50%;
 	z-index: 99999;
+	bottom: 5px;
+	left: 0px;
+	right: 0px;
 }
 
 .md-fab-custom-right{
@@ -278,7 +282,7 @@ md-toolbar{
 }
 
 .primary{
-	background-color: #00BCD4;
+	background-color: #2196F3;
 }
 
 .share_container{

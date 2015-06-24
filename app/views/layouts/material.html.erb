@@ -296,26 +296,26 @@
                 <md-content ng-controller="roomController">
             <% elsif @author %>
                 <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
-                    check-scroll-bottom="load_books()" ng-keydown="keypress_scroll($event)">
+                    ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController">
+                <div ng-controller="specificBookController" class="background">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController">
             <% end %>
                     <div ng-show="info.mobile_search" flex>
-                        <div class="header <% if @profile || @shelves || @network || @filters || @signup %>yellow<% end %>">
+                        <div class="header <% if @profile || @shelves || @network || @signup %>yellow<% end %>">
                             <% if @home %>
                                 <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                             <% else %>
                                 <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                             <% end %>
-                            <% if @news || @blog || @shelves || @search || @book || @customise || @publishers %>
+                            <% if @news || @blog || @shelves || @search || @customise || @publishers %>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
                         </div>
@@ -329,10 +329,10 @@
                 </md-content>
             <% end %>
             
-            <md-progress-circular class="md-primary loader"
+            <md-progress-linear class="md-primary loader"
                                 ng-show="info.loading && !info.show_share"
                                 md-mode="indeterminate">
-            </md-progress-circular>
+            </md-progress-linear>
 
             <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
                     ng-if="info.cirular_loading">
