@@ -89,11 +89,11 @@ class UsersUser < Neo
 	end
 
 	def get_basic_info
-		@user.match + UsersUser.optional_match_invert + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
+		@user.match + optional_match_invert + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
 	end
 
-	def self.optional_match_invert
-		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend, follows_node "
+	def optional_match_invert
+		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WHERE ID(friend) = " + @friend_id.to_s + " AND ID(user) = "+ @user_id.to_s + " WITH user, friend, follows_node "
 	end
 
 end
