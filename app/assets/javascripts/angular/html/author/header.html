@@ -2,8 +2,9 @@
     <section layout="column" layout-wrap>
         <div layout="row" layout-align="end start" layout-padding class="top_section">
             <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
-                       ng-class="{'md-raised': !author.status}" 
-                       ng-click="toggle_follow()">
+                ng-hide="!info.hide_signin"
+                ng-class="{'md-raised': !author.status}" 
+                ng-click="toggle_follow()">
                 <span ng-if="!author.status">Follow</span>
                 <span ng-if="author.status">Following</span>
             </md-button>

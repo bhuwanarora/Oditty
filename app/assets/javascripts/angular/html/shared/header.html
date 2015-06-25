@@ -25,3 +25,7 @@
         ng-if="!info.hide_signin" ng-include src="'/assets/angular/html/shared/sign_in.html'">
     </div>
 </section>
+
+<md-sidenav class="md-sidenav-right md-whiteframe-z2 side_panel" md-component-id="signup">
+    <div ng-include="'assets/angular/html/home/partials/login_options.html'" ng-if="!hide_signin"></div>
+</md-sidenav>
