@@ -289,6 +289,7 @@ md-toolbar{
 	position: relative;
   	width: 100%;
   	height: 56px;
+  	z-index: 0;
 }
 
 .fixed_share{

@@ -426,6 +426,10 @@ md-toast.md-default-theme{
     z-index: 1;
 }
 
+.z_index_0{
+    z-index: 0;
+}
+
 .pointer{
     cursor: pointer;
 }
