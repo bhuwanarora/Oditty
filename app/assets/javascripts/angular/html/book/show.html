@@ -3,69 +3,74 @@
                         ng-show="book_loading"
                         md-mode="indeterminate">
     </md-progress-linear>
-    <div layout-padding class="md-whiteframe-z1 white">
-        <div layout="row" layout-align="space-between" layout-margin>
-            <div class="bold less_important pointer" ng-click="hide_rating = !hide_rating;">
-                Rate this book {{::book.user_rating}}/10
-            </div>
-            <div>
-                <i class="material-icons pointer" ng-show="hide_rating" ng-click="hide_rating = true;">add</i>
-                <i class="material-icons pointer" ng-show="!hide_rating" ng-click="hide_rating = false;">close</i>
-            </div>
-        </div>
-         <md-slider flex="20" md-discrete 
-                class="rate_slider" ng-show="!hide_rating"
-                ng-model="::book.user_rating" ng-change="rate_book(book)"
-                step="1" min="1" max="10" aria-label="rating">
-        </md-slider>
-    </div>
+    
     <div role="tabpanel"
          id="tab1-content"
          aria-labelledby="tab1"
          layout-margin
-         class="white md-whiteframe-z1">
+         class="white ">
         <div ng-include src="'/assets/angular/html/book/_overview.html'"></div>
     </div>
-    
-    <div role="tabpanel"
-         id="tab4-content"
-         aria-labelledby="tab4" ng-if="active_book"
-         layout-margin
-         class="white md-whiteframe-z1">
-        <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
+    <div layout="row" layout-sm="column" layout-md="column">
+        <div flex="70" flex-sm="100" flex-md="100" layout="column">
+            <div ng-include src="'/assets/angular/html/book/header.html'"></div>
+            <div role="tabpanel"
+                 id="tab3-content" ng-if="active_book"
+                 aria-labelledby="tab3"
+                 layout-margin
+                 class="white ">
+                 <div ng-include src="'/assets/angular/html/book/_timeline.html'"></div>
+            </div>
+             <div role="tabpanel"
+                 id="tab2-content"
+                 aria-labelledby="tab2" ng-if="active_book"
+                 layout-margin
+                 class="white ">
+                <div ng-include src="'/assets/angular/html/book/_news.html'"></div>
+            </div>
+        </div>
+        <div flex="30" layout="column" flex-sm="100" flex-md="100">
+            <div layout-padding class=" white">
+                <div layout="row" layout-align="space-between" layout-margin layout-padding>
+                    <div class="bold less_important">
+                        Rate this book {{::book.user_rating}}/10
+                    </div>
+                </div>
+                 <md-slider flex="20" md-discrete 
+                        class="rate_slider"
+                        ng-model="::book.user_rating" ng-change="rate_book(book)"
+                        step="1" min="1" max="10" aria-label="rating">
+                </md-slider>
+            </div>
+            <md-divider></md-divider>
+            <div role="tabpanel"
+                 id="tab4-content"
+                 aria-labelledby="tab4" ng-if="active_book"
+                 layout-margin
+                 class="white ">
+                <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
+            </div>
+            <md-divider></md-divider>
+            <div role="tabpanel"
+                 id="tab5-content" ng-if="active_book"
+                 aria-labelledby="tab5"
+                 layout-margin layout-padding
+                 class="white ">
+                <div layout="column"  ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'"
+                    ng-controller="recommendController"></div>
+            </div>
+        </div>
+        
     </div>
-    
     <div role="tabpanel"
          id="tab6-content" ng-if="active_book"
          aria-labelledby="tab6"
          layout-margin
-         class="white md-whiteframe-z1">
+         class="white ">
         <div ng-include src="'/assets/angular/html/book/_book_embed.html'"></div>
     </div>
     
-    <div role="tabpanel"
-         id="tab5-content" ng-if="active_book"
-         aria-labelledby="tab5"
-         layout-margin
-         class="white md-whiteframe-z1">
-        <div layout="column"  ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'"
-            ng-controller="recommendController"></div>
-    </div>
     
-    <div role="tabpanel"
-         id="tab3-content" ng-if="active_book"
-         aria-labelledby="tab3"
-         layout-margin
-         class="white md-whiteframe-z1">
-         <div ng-include src="'/assets/angular/html/book/_timeline.html'"></div>
-    </div>
-    
-    <div role="tabpanel"
-         id="tab2-content"
-         aria-labelledby="tab2" ng-if="active_book"
-         layout-margin
-         class="white md-whiteframe-z1">
-        <div ng-include src="'/assets/angular/html/book/_news.html'"></div>
-    </div>
+   
     
 </div>

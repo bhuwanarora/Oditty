@@ -302,7 +302,7 @@
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController" class="background">
+                <div ng-controller="specificBookController">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>
@@ -315,7 +315,7 @@
                             <% else %>
                                 <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                             <% end %>
-                            <% if @news || @blog || @shelves || @search || @customise || @publishers %>
+                            <% if @news || @blog || @shelves || @search || @customise || @publishers || @book %>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
                         </div>

@@ -333,7 +333,6 @@ input:focus{
     text-transform: none !important;
     font-weight: inherit !important;
     text-align: inherit !important;
-    border-radius: 0px !important;
     padding: 9px 18px !important;
 }
 
@@ -342,7 +341,6 @@ input:focus{
     font-weight: inherit !important;
     text-align: inherit !important;
     padding: 0px !important;
-    border-radius: 0px !important;
     margin: 0px !important;
 }
 
@@ -481,4 +479,9 @@ md-sidenav{
 
 .google-plus{
     color: #DD4C39;
+}
+
+md-select,
+md-select-label{
+    border-radius: 2px;
 }

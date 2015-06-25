@@ -1,19 +1,10 @@
-<div class="less_important bold">Buy this book from</div>
 <md-list>
     <md-item>
         <div layout="row" layout-align="space-between">
-            <div layout="row">
-                <img class="circular" src="https://pbs.twimg.com/profile_images/528320705125838848/q7o83VPn_400x400.jpeg">
-                <div layout-padding>Amazon</div>
-            </div>
-            <div layout="row">
-                <div ng-if="book.isbn">
-                    <md-button class="md-primary md-raised md-button-clear" 
-                        ng-href="http://www.amazon.in/dp/{{book.isbn | first_isbn}}/?tag=reade0c-21" target="_blank ">Buy</md-button>
-                </div>
-                <div ng-if="!book.isbn">
-                    Can't find this book on amazon.
-                </div>
+            <md-button class="md-primary md-raised md-button-clear" 
+                ng-href="http://www.amazon.in/dp/{{book.isbn | first_isbn}}/?tag=reade0c-21" target="_blank ">Buy from Amazon</md-button>
+            <div ng-if="!book.isbn">
+                Can't find this book on amazon.
             </div>
         </div>
     </md-item>
