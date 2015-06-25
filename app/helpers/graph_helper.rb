@@ -498,4 +498,51 @@ module GraphHelper
 			"CREATE UNIQUE (user)-[:NextNotification]->(user)"
 		clause.execute
 	end
+
+	def match_global_visited
+		visited_string = Bookmark::Type::Visited.get_key
+		" MATCH (global_visited:Label) WHERE HAS(global_visited.bookmark_count) AND global_visited.name = '" + visited_string + "' AND global_visited.basic = true AND global_visited.key = '" + visited_string + "' AND global_visited.public = false "\
+		"WITH global_visited AS label "
+	end
+
+	def match_user_labelled
+		" MATCH (user)-[labelled:Labelled]->(label:Label{key: \'" + Bookmark::Type::Visited.get_key + "\'}) " + " WHERE ID(label) <> ID(global_visited) "
+	end
+
+	def create_user_labelled
+		visited_string = Bookmark::Type::Visited.get_key
+		" MATCH (user)-[labelled:Labelled]->(label:Label{key: \'" + visited_string + "\'}) " + " WITH user, COUNT(label) as labelcount, COLLECT(label) AS labels, global_visited "\
+		" WHERE labelcount = 1 "\
+		" WITH user, global_visited, EXTRACT( label IN labels | label) AS label "\
+		" WHERE ID(label) = ID(global_visited) "\
+		" CREATE (user)-[labelled:Labelled]->(label:Label{key: \""+visited_string+"\"})"\
+	end
+
+	def merge_label_bookmark_node_media
+		" MERGE (label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\'" +Bookmark::Type::Visited.get_key + "\', book_id:ID(media), user_id: ID(user)})-[bookmark_action:BookmarkAction]->(media) "\
+		" ON CREATE SET bookmark_node.count = 0 "
+	end
+
+	def remove_global_visited
+		visited_string = Bookmark::Type::Visited.get_key	
+		clause = match_global_visited + Bookmark.match_path("media") + " "\
+		" WITH user, label AS global_visited, media " + match_user_labelled + " "\
+		" WITH user, label, global_visited, media "\
+		"" + merge_label_bookmark_node_media
+		clause.print
+		debugger
+
+		clause = match_global_visited + Bookmark.match_path("media") + " "\
+		" WITH user, label AS global_visited, media " + create_user_labelled + " "\
+		" WITH user, label, global_visited, media "\
+		"" + merge_label_bookmark_node_media
+		clause.print
+		debugger
+
+		clause = match_global_visited + " MATCH (global_visited)-[r]-() "\
+		" DELETE global_visited, r"
+		clause.print
+
+		debugger
+	end
 end
