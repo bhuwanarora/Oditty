@@ -17,6 +17,16 @@ md-toolbar{
 	/*border-bottom: 1px solid #ececec;*/
 }
 
+.share_wrapper{
+	position: fixed;
+  	top: 55px;
+  	left: 0px;
+  	right: 0px;
+  	bottom: 0px;
+  	background-color: rgba(255, 255, 255, 0.67);
+  	overflow-y: scroll;
+}
+
 a:hover,
 a:visited,
 a:active{
@@ -533,16 +543,21 @@ and (max-width : 800px){
 		padding: 11px;
 	}
 
-	/*.share:before{
-		content: "\e620";
-		font-family: icomoon;
-		speak: none;
-		font-style: normal;
-		font-weight: 400;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-	}*/
+
+	.rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_book_container,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
+		width: 120px;
+	}
+
+	.rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
+	  	height: 165px;
+	}
 
 }
 

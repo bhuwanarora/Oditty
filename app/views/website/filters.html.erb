@@ -1,7 +1,9 @@
 <div ng-class="{'md-whiteframe-z3': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}">
     <div class="video_wrapper" 
         ng-class="{'compressed_video_wrapper': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}">
-      <video poster="/assets/home.png" autoplay="" loop="" src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4">
+        <img src="/assets/home.png" hide show-sm show-md>
+        <video poster="/assets/home.png" autoplay="" 
+            hide-sm hide-md loop="" src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4">
                 <source type="video/mp4" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
                 <source type="video/webm" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.webm">
                 <object width="596" height="336" type="application/x-shockwave-flash" data="/video/assets/static/flashmediaelement.swf">
@@ -125,13 +127,8 @@
         overflow: hidden;
     }
 
-    .compressed_video_wrapper{
-        height: 240px;
-    }
 
-    .video_wrapper video{
-        width: 100%;
-    }
+   
 
     @media (min-width:1000px)and (max-width:2200px){
         md-autocomplete{
@@ -145,6 +142,16 @@
         .time_autocomplete{
             min-width: 200px;
         }
+
+        .video_wrapper video,
+        .video_wrapper img{
+            width: 100%;
+        }
+
+        .compressed_video_wrapper{
+            height: 240px;
+        }
+
     }
 
     @media (min-width:600px)and (max-width:1000px){
@@ -157,6 +164,15 @@
             min-width: 80%;
         }
 
+        .video_wrapper video,
+        .video_wrapper img{
+            width: 100%;
+            min-height: 73vh;
+        }
+
+        .compressed_video_wrapper{
+            height: 230px;
+        }
     }
 
     @media (max-width: 590px)and (max-height:1199px){
@@ -168,6 +184,16 @@
 
         .full_width_sm{
             min-width: 300px;
+        }
+
+        .video_wrapper video,
+        .video_wrapper img{
+            height: 100%;
+            min-height: 73vh;
+        }
+
+        .compressed_video_wrapper{
+            height: 340px;
         }
     }
 </style>
