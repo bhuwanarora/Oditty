@@ -371,7 +371,7 @@ md-toolbar{
 }
 
 .wiki{
-	width: 100vw;
+	width: 100%;
   	border: none;
   	height: 80vh;
   	overflow: hidden;
