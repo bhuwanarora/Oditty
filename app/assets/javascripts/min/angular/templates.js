@@ -448,6 +448,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/profile/communities.html',
+    "<div layout-padding class=\"less_important bold\">{{communities.length}} Rooms Joined</div><div layout=\"row\" layout-wrap><div ng-repeat=\"community in communities\" layout-margin class=\"community_group\"><img ng-src=\"{{community.image_url}}\" class=\"big_square\"><div layout-padding><a ng-href=\"/room?q={{::community.id}}\" ng-bind-html=\"::community.name\" class=\"capitalize\"></a></div></div></div>"
+  );
+
+
   $templateCache.put('/assets/angular/html/profile/feed.html',
     "<div ng-include src=\"'/assets/angular/html/share/status_options.html'\" ng-if=\"!hide_follow_links\" ng-controller=\"shareController\" class=\"dark_grey extensive_padding\" layout-margin></div><md-list layout=\"column\"><div ng-repeat=\"feed in personal_feed\"><div ng-include src=\"'/assets/angular/html/profile/partials/feed_type.html'\"></div><md-divider></md-divider></div><div ng-if=\"reading_journeys\" class=\"white\"><b class=\"small-padding\">{{user.first_name}}'s Reading Journey</b><md-divider></md-divider><md-card ng-repeat=\"reading_journey in reading_journeys\"><section layout=\"column\" layout-fill><img ng-src=\"{{reading_journey.image}}\" class=\"full_width\"> <a ng-href=\"/journey/{{reading_jounrey.id}}\" layout=\"column\"><md-button class=\"clear full_width\"><div class=\"small-padding\"><b>{{reading_journey.title}}</b><div>by {{reading_journey.author_name}}</div>RATING</div><md-divider></md-divider><div class=\"small-padding\"><b>STARTED ON</b><div>{{reading_journey.started_on}}</div></div></md-button></a></section></md-card><md-list ng-if=\"!personal_feed || (personal_feed == 0)\"><md-card><md-card-content>No recent activity.</md-card-content></md-card></md-list></div></md-list><style>.book_image_cover,.book_backup_cover,.slider_wrapper{width:80px;height:110px;color:transparent}.share_text{position:absolute;z-index:1;color:#fff;left:50%;top:50%;margin-left:-150px;margin-top:-20px;font-size:1.2em;font-family:sans-serif;text-transform:uppercase}.share_image{max-width:500px}.share_button{width:500px;height:100px}</style>"
   );
@@ -459,7 +464,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/left_panel.html',
-    ""
+    "<div class=\"genres light_grey\" ng-if=\"!hide_follow_links\" layout-margin><div layout=\"row\" layout-align=\"space-between\" layout-padding layout-sm=\"column\"><div layout=\"column\"><div class=\"big_title\">Select Subjects that you like.</div><div class=\"less_important\">This will help us to know more about your taste.</div></div><div layout=\"row\" layout-align=\"center center\"><a href=\"/customise\">Tell us more about you</a></div></div><div ng-controller=\"genresController\" layout=\"row\" layout-wrap layout-padding layout-align=\"center\"><div layout=\"column\" layout-padding class=\"center_text\" style=\"width:120px\" ng-repeat=\"genre in info.genres  | orderBy:genre.name\"><div ng-include src=\"'/assets/angular/html/shared/partials/genre.html'\"></div></div></div></div><div layout-padding><user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\"></user-communities></div><style>#genres .genre_cover,#genres .genre_cover_gradient{width:80px;height:80px;border-radius:50%}#genres .genre_cover_gradient{position:absolute;z-index:1;margin-left:10px;background-color:rgba(0,0,0,.5)}#genres .info_button{padding:0;border-radius:50%!important;width:80px;height:80px;position:absolute;box-shadow:inset 0 3px 8px rgba(0,0,0,.4);z-index:1}#genres .info_button:hover{border-radius:50%}#genres .info_button:active{border-radius:50%}#genres .circular_icon .icon-checkmark{font-size:1.5em}#genres .circular_icon{border-radius:50%;width:30px;height:30px}</style>"
   );
 
 

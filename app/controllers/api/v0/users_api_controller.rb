@@ -413,6 +413,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_communities
+				user_id = params[:id] || session[:user_id]
+				info = Api::V0::UserApi.get_communities user_id
+				render :json => info, :status => 200
+			end
+
 			def search_friends
 				user_id = session[:user_id]
 				search_text = params[:q]

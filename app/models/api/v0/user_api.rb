@@ -1,6 +1,10 @@
 module Api
 	module V0
 		class UserApi
+
+			def self.get_communities user_id
+				User::CommunityJoined.new(user_id).get_all.execute
+			end
 			
 			def self.get_facebook_books user_id
 				User.new(user_id).get_facebook_books.execute[0]

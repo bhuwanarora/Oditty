@@ -411,9 +411,20 @@ md-toast.md-default-theme{
     word-wrap: break-word;
 }
 
+.community_group,
+.big_square{
+    width: 120px;
+}
+
 .square{
     width: 60px;
+    border-radius: 2px;
     height: 60px;
+}
+
+.big_square{
+    height: 120px;
+    border-radius: 2px;
 }
 
 .feed_margin{

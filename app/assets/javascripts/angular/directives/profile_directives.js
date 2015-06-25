@@ -44,3 +44,21 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
         templateUrl: '/assets/angular/html/shared/partials/community_info.html'
     };
 }]);
+
+
+homeApp.directive('userCommunities', ["$rootScope", "userService", function($rootScope, userService){
+    return {
+        restrict: 'E',
+        scope : {userId: '='},
+        controller: ["$scope", function($scope){
+            var _init = function(){
+                userService.get_communities($scope.userId).then(function(data){
+                    $scope.communities = data;
+                });
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/profile/communities.html'
+    };
+}]);
