@@ -1,4 +1,4 @@
-<div ng-controller="timelineController" class="white">
+<div ng-controller="timelineController" class="white book_page">
      <md-card ng-repeat="feed in book_feed" ng-if="book_feed && book_feed.length > 0" class="no_shadow">
         <md-card-content ng-if="feed.user.first_name" layout="row">
             <img ng-src="{{feed.user.image_url | default_profile}}" class="circular">
@@ -24,19 +24,19 @@
         </md-card-content>
         <md-divider></md-divider>
      </md-card>
-     <div layout="row" layout-align="center center" layout-padding>
-        <md-button aria-label="share moments from reading journey" class="md-button-clear primary" 
-                    ng-click="write_reading_journey_for($event)">
-            <div><span>Share moments from Reading Journey.</span>
-            <span class="icon-pencil"></span></div>
+     <md-card ng-if="book_feed && book_feed.length == 0" class="no_shadow less_important bold" layout-padding>
+        Be the first to share reading moments for this Book...
+     </md-card>
+     <div layout="row" layout-align="start center" layout-padding>
+        <md-button aria-label="share moments from reading journey" class="clear share_moments" 
+                    ng-click="write_reading_journey_for($event)"
+                    layout-align="start end">
+            <div layout="row" layout-align="start end">
+                <span>Share moments from Reading Journey.</span>
+                <span class="icon-pencil"></span>
+            </div>
         </md-button>
      </div>
-     <!-- <md-card ng-if="!book_feed || (book_feed.length == 0)"> -->
-     <!-- </md-card> -->
-    <md-progress-linear class="md-primary loader"
-                        ng-show="book_loading"
-                        md-mode="indeterminate">
-    </md-progress-linear>
 </div>
 <style>
     .user_title{
@@ -48,4 +48,12 @@
         margin-top: 10px;
         font-size: 0.9em;
     }
+
+    .share_moments{
+        max-width: 500px;
+        width: 80vw;
+        border-bottom: 1px solid #ececec;
+    }
+
+    
 </style>

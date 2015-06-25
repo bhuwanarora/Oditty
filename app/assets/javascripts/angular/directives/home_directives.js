@@ -40,6 +40,7 @@ homeApp.directive('joinCommunity', ["$rootScope", "newsService", "$mdSidenav", f
                     var id = $scope.community.id;
                     $scope.community.status = !$scope.community.status;
                     newsService.follow(id, $scope.community.status);
+                    // delete $scope.community;
                 }
             }
 

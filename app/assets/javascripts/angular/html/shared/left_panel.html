@@ -58,11 +58,11 @@
                 </div>
             </div>
         </a>
-        <a href="/shelves" layout-padding class="pointer" ng-hide="!info.hide_signin">
+        <a href="/history" layout-padding class="pointer" ng-hide="!info.hide_signin">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
-                <i class="material-icons light_grey_color">library_books</i>
+                <i class="material-icons light_grey_color">turned_in_not</i>
                 <div layout-padding>
-                    Shelves
+                    History
                 </div>
             </div>
         </a>
@@ -76,9 +76,9 @@
         </md-button>
         <md-button layout-padding class="pointer" ng-disabled="!info.hide_signin" ng-hide="info.hide_signin">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
-                <i class="material-icons light_grey_color">library_books</i>
+                <i class="material-icons light_grey_color">turned_in_not</i>
                 <div layout-padding>
-                    Shelves
+                    History
                 </div>
             </div>
         </md-button>
@@ -92,7 +92,7 @@
             </div>
         </a>
     </section>
-    <section layout-padding layout="row" layout-align="space-between">
+    <section layout-padding layout="row" layout-align="space-between" ng-hide="!info.hide_signin">
         <a href="/customise" class="less_important">Customise</a>
         <a href="/signup" class="less_important">Logout</a>
     </section>

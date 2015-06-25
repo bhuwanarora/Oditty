@@ -1,29 +1,30 @@
-<div class="yellow" ng-class="{'md-whiteframe-z1': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}">
+<div ng-class="{'md-whiteframe-z3': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}">
+    <div class="video_wrapper" 
+        ng-class="{'compressed_video_wrapper': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}">
+      <video poster="/assets/home.png" autoplay="" loop="" src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4">
+                <source type="video/mp4" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
+                <source type="video/webm" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.webm">
+                <object width="596" height="336" type="application/x-shockwave-flash" data="/video/assets/static/flashmediaelement.swf">
+                    <param name="movie" value="/video/assets/static/flashmediaelement.swf">
+                    <param name="flashvars" value="controls=true&amp;file=http%3A%2F%2Fak6.picdn.net%2Fshutterstock%2Fvideos%2F1876138%2Fpreview%2Fstock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
+                </object>
+            </video>
+    </div>
     <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
     <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
 </div>
 
 <section layout="row" layout-wrap class="feed_margin">
-    <div flex="20" hide-sm hide-md layout="row" layout-align="end start" 
+    <div flex="15" hide-sm hide-md layout="row" layout-align="end start" 
          ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
     </div>
-    <div flex="60" flex-sm="100" flex-md="100"
+    <div flex="70" flex-sm="100" flex-md="100"
          ng-include src="'/assets/angular/html/library/show.html'" 
          layout-align="center center" layout-fill>
     </div>
     <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
-         flex="20" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
+         flex="15" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
     </div>
-</section>
-<section layout="row" layout-wrap ng-if="constant.show_book"
-    ng-controller="specificBookController">
-    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
-        ng-if="!book.show_info_only"></div>
-    <div flex="60" flex-sm="100" flex-md="80" layout="column" layout-padding class="dark_grey">
-        <div ng-include src="'/assets/angular/html/book/show.html'" class="md-whiteframe-z4"></div>
-    </div>
-    <div flex="20" hide-sm flex-md="10" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
-        ng-if="!book.show_info_only"></div>
 </section>
 
 <style>
@@ -114,5 +115,59 @@
     .infinity_page .custom_title{
         font-size: 1.2em;
         font-family: sans-serif;
+    }
+
+    .video_wrapper{
+        position: absolute;
+        margin-top: -55px;
+        width: 100vw;
+        height: 73vh;
+        overflow: hidden;
+    }
+
+    .compressed_video_wrapper{
+        height: 240px;
+    }
+
+    .video_wrapper video{
+        width: 100%;
+    }
+
+    @media (min-width:1000px)and (max-width:2200px){
+        md-autocomplete{
+            min-width: 300px;
+        }
+
+        .genres_autocomplete{
+            min-width: 400px;
+        }
+
+        .time_autocomplete{
+            min-width: 200px;
+        }
+    }
+
+    @media (min-width:600px)and (max-width:1000px){
+        md-autocomplete
+        {
+            min-width: 200px;
+        }
+
+        .genres_autocomplete{
+            min-width: 80%;
+        }
+
+    }
+
+    @media (max-width: 590px)and (max-height:1199px){
+        md-autocomplete,
+        .genres_autocomplete,
+        .time_autocomplete{
+            min-width: 300px;
+        }
+
+        .full_width_sm{
+            min-width: 300px;
+        }
     }
 </style>

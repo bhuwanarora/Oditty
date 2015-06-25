@@ -1,47 +1,61 @@
-<md-subheader class="room_header clear">
-   <div flex  layout="row" layout-align="space-between">
-        <div flex layout-align="start center" layout="row" layout-padding>
-            <span class="icon-remove"></span>
+<div class="profile_header ">
+    <section layout="column" layout-wrap>
+        <div layout="row" layout-align="end start" layout-padding class="top_section">
+             <md-button aria-label="toggle_follow" ng-class="{'md-raised': !active_tag.status}" 
+                class="md-warn md-button-clear" ng-click="toggle_follow()">
+                <span ng-if="!active_tag.status">Join Room&nbsp;</span>
+                <span ng-if="active_tag.status">Joined</span>
+                <span ng-if="!active_tag.status" class="icon-user-add"></span>
+            </md-button>
         </div>
-       <div flex layout-align="end center" layout="row" layout-padding>
-            <md-switch ng-model="data.cb1" aria-label="Switch 1">
-                {{ data.cb1 }}
-            </md-switch>
-       </div>
-   </div>
-</md-subheader>
+        <div layout="column" layout-align="center center" layout-padding>
+            <img ng-src="{{active_tag.image_url}}" class=" profile_pic" />
+            <div class="big_title bold capitalize" ng-bind-html="active_tag.name" layout-padding></div>
+            <div layout="row" layout-column layout-align="center center" ng-hide="hide_follow_links">
+                <div class="white_color" ng-show="active_tag.view_count && active_tag.view_count != 0">
+                    <span>{{active_tag.view_count}} </span>
+                    <span ng-show="active_tag.view_count == 1">View</span>
+                    <span ng-show="active_tag.view_count != 1">Views</span>
+                </div>
+            </div>
+            
+        </div>
+        <!-- <div ng-include src="'/assets/angular/html/shared/share.html'" class="yellow" flex="20"></div> -->
+    </section>
+</div>
 
 <style>
-    md-autocomplete ul{
+    .profile_header{
+        color: white !important;
+        box-shadow: none;
+    }
+
+    .profile_header h2{
+        padding: 0px;
+        margin: 0px 0px !important;
+    }
+
+    .profile_header h5{
+        margin: 5px 0px;
+    }
+
+    .profile_pic{
+        width: 200px;
+        border: 5px solid #E5E5E5;
         z-index: 1;
     }
 
-    md-autocomplete ul li{
-        line-height: 16px;
-        padding: 10px 15px;
-        height: inherit;
+    .profile_header .nav_links{
+        padding: 4px 8px !important;
+        font-size: 0.8em;
     }
 
-    .icon_angle{
-        position: absolute;
-        right: 15px;
-        top: 15px;
+    .profile_header .top_section{
+        min-height: 50px;
     }
 
-    .relative{
-        position: relative;
-    }
 
-    .reset_button{
-        z-index: 1;
-        height: 38px;
-        border-radius: 0px !important;
-        color: #8B8B8B !important;
+    .profile_header a{
+        color: white;
     }
-
-    .room_header{
-        /*margin: 0px;*/
-        background-color: #f5f5f5 !important;
-    }
-
 </style>

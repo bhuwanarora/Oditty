@@ -248,7 +248,7 @@ module Api
 			end
 
 			def follow
-				follow_action = params[:status]
+				follow_action = params[:status].to_s
 				friend_id = params[:id] 
 				user_id = session[:user_id]
 				if follow_action.present? && follow_action == "true"

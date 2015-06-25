@@ -89,7 +89,7 @@ class UsersUser < Neo
 	end
 
 	def get_basic_info
-		@user.match + optional_match + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
+		@user.match + UsersUser.optional_match_invert + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
 	end
 
 	def self.optional_match_invert

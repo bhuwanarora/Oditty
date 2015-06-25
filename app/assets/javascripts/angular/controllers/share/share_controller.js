@@ -211,7 +211,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
     }
 
-    $scope.show_share_page = function(event){
+    $scope.show_share_page = function(event, state){
         var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
         if(unauthenticated_user){
             $mdSidenav('signup').toggle();
@@ -219,6 +219,9 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         else{
             if(!$scope.info.show_share){
                 $scope.info.show_share = true;
+                if(angular.isDefined(status)){
+                    $scope.info.reading_status_value = state;
+                }
             }
             else{
                 $scope.post_status();
@@ -598,5 +601,8 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $scope.selected_book = $rootScope.active_book;
         }
         $scope.emotions = Emotions;
+        if(angular.isDefined($scope.info.reading_status_value)){
+            $scope.make_active($scope.info.reading_status_value);
+        }
     }());
 }]);

@@ -1,7 +1,23 @@
-<md-list layout-wrap layout="row">
-    <div layout="column" flex>
-        <div ng-repeat="news_feed in feed track by $index" class="feed">
-            <div ng-include src="'/assets/angular/html/home/partials/feed_type.html'" ></div>
+<div flex-sm="100" flex-md="100" flex="55">
+	<div layout-padding layout-align="start start">
+        <div layout="row"  layout-align="center center">
+            <div>
+                <i class="material-icons">whatshot</i>
+            </div>
+            <div class="big_title bold">
+                &nbsp;POPULAR ROOMS
+            </div>
         </div>
     </div>
-</md-list>
+    <suggest-communities></suggest-communities>
+    
+</div>
+<div flex-sm="100" flex-md="100" flex="45">
+	<md-list layout-wrap layout="row">
+	    <div layout="column" flex>
+	        <div ng-repeat="news_feed in feed track by $index" class="feed">
+	            <div ng-include src="'/assets/angular/html/home/partials/feed_type.html'" ></div>
+	        </div>
+	    </div>
+	</md-list>
+</div>

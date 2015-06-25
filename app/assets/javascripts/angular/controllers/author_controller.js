@@ -132,7 +132,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
                         $scope.author.books[index] = angular.extend($scope.author.books[index], json);
                     });
                 }
-                $scope.info.loading = false;
+                // $scope.info.loading = false;
             });
         }
     }

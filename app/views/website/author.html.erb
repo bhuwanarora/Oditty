@@ -1,3 +1,38 @@
+<div class="primary md-whiteframe-z1">
+    <div ng-include src="'/assets/angular/html/author/header.html'"></div>
+    <div ng-include src="'/assets/angular/html/shared/share.html'" ></div>
+</div>
+<div layout="row" class="feed_margin">
+    <div flex="5" flex-md="5" hide-sm></div>
+    <div flex="90" flex-md="90" flex-sm="100" layout="row" layout-sm="column" layout-md="column"> 
+        <div flex="65">
+            <div class="less_important bold" layout-padding>
+                Books Published
+            </div>
+            <div layout="row" layout-wrap>
+                <section ng-repeat="book in author.books" layout-margin>
+                    <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
+                        class="md-whiteframe-z3 clear rd_book_container" >
+                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+                    </md-button>
+                </section>
+            </div>
+        </div>
+        <div flex="35">
+            <div layout-padding
+                ng-include src="'/assets/angular/html/author/more_info.html'">
+            </div>
+            <div class="less_important bold" layout-padding>
+                Followers
+            </div>
+            <div layout="row" layout-wrap>
+                <div ng-include ng-init="active_tag = author" 
+                    src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+            </div>
+        </div>
+    </div>
+    <div flex="5" flex-md="5" hide-sm></div>
+</div>
 <div layout="row" class="feed_margin">
     <div ng-include src="'/assets/angular/html/author/tabs.html'" class="full_width"></div>
 </div>

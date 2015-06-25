@@ -1,9 +1,13 @@
-<md-content class="menu_details" >
-	<div layout="row" ng-if="users_list" class="md-whiteframe-z1 white">
+<div class="less_important bold" layout-padding>
+	Recommend this Book to your friends
+</div>
+<div class="menu_details book_page" layout-padding>
+	<div layout="row" ng-if="users_list" class=" white">
 	    <md-autocomplete flex
-	    	md-search-text-change=""
-	        md-items="item in search_friends(searchFriend)"
+	    	md-hide-dropdown="true"
+	        md-items="item in users_list"
 	        md-search-text="searchFriend"
+	        md-search-text-change="search_friends(searchFriend)"
 	        class="menu_search no_shadow"
 	        placeholder="Search Friends...">
 	    </md-autocomplete>
@@ -14,4 +18,4 @@
 	<div flex layout="column"
 	    ng-include src="'/assets/angular/html/share/partials/_recommend_options.html'">
 	</div>
-</md-content>
+</div>

@@ -111,7 +111,7 @@
                 <script src="assets/angular/controllers/signup_controller.js"></script>
             </div>
 
-            <% if @home || @signup %>
+            <% if @home %>
                 <script src="assets/angular/controllers/home_controller.js"></script>
 
             <% end %>
@@ -153,7 +153,7 @@
                 
             <% end %>
 
-            <% if @filters %>
+            <% if @filters || @signup %>
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 
@@ -196,7 +196,7 @@
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
             
-            <% if @home || @signup %>
+            <% if @home %>
                 <script src="assets/min/angular/controllers/home_group.min.js"></script>
             <% end %>
 
@@ -232,7 +232,7 @@
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
             <% end %>
 
-            <% if @filters %>
+            <% if @filters || @signup%>
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
 
@@ -287,37 +287,35 @@
             <% elsif @blogs && @news_group %>
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
                     check-scroll-bottom="get_blog_feed()" id="home">
-            <% elsif @signup %>
-                <md-content class="white" flex ng-controller="homeController">
             <% elsif @room %>
                 <md-content ng-controller="communityController" id="community" class="white">
-            <% elsif @filters %>
+            <% elsif @filters || @signup%>
                 <md-content ng-controller="libraryController" 
                     check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page" class="white">
             <% elsif @shelves %>
                 <md-content ng-controller="roomController">
             <% elsif @author %>
                 <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
-                    check-scroll-bottom="load_books()" ng-keydown="keypress_scroll($event)">
+                    ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <md-content class="white" ng-controller="specificBookController" class="white">
+                <div ng-controller="specificBookController">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController">
             <% end %>
                     <div ng-show="info.mobile_search" flex>
-                        <div class="header <% if @profile || @shelves || @network || @filters %>yellow<% end %>">
-                            <% if @home || @signup %>
+                        <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
+                            <% if @home %>
                                 <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                             <% else %>
                                 <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                             <% end %>
-                            <% unless @home || @profile || @network || @filters || @signup || @publishers || @news_group || @personalised_suggestions%>
+                            <% if @news || @blog || @shelves || @search || @customise || @publishers || @book %>
                                 <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
                             <% end %>
                         </div>
@@ -325,7 +323,11 @@
                             <%= yield %>
                         </div>
                     </div>
+            <% if @book %>
+                </div>
+            <% else %>
                 </md-content>
+            <% end %>
             
             <md-progress-linear class="md-primary loader"
                                 ng-show="info.loading && !info.show_share"
