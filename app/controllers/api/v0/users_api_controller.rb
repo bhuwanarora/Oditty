@@ -248,12 +248,12 @@ module Api
 			end
 
 			def follow
-				follow_action = params[:q] 
+				follow_action = params[:status]
 				friend_id = params[:id] 
 				user_id = session[:user_id]
-				if follow_action
+				if follow_action.present? && follow_action == "true"
 					Api::V0::UserApi.follow_user(user_id, friend_id).execute
-				else
+				elsif follow_action.present? && follow_action == "false"
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
