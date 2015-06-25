@@ -80,7 +80,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_genre = function(genre){
-        if(angular.isUndefined(genre)){
+        if(angular.isUndefined(genre) || (genre == null)){
             delete $rootScope.filters.genre_id;
             _handle_filter_removal();
         }
@@ -91,7 +91,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_author = function(author){
-        if(angular.isUndefined(author)){
+        if(angular.isUndefined(author) || (author == null)){
             delete $rootScope.filters.author_id;
             _handle_filter_removal();
         }
@@ -102,7 +102,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_reading_time = function(read_time){
-        if(angular.isUndefined(read_time)){
+        if(angular.isUndefined(read_time) || (read_time == null)){
             delete $rootScope.filters.reading_time_id;
             _handle_filter_removal();
         }
@@ -113,7 +113,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_publishing_year = function(time_group){
-        if(angular.isUndefined(time_group)){
+        if(angular.isUndefined(time_group) || (time_group == null)){
             delete $rootScope.filters.era_id;
             _handle_filter_removal();
         }
