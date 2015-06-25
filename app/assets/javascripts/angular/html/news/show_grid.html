@@ -57,7 +57,7 @@
 		<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
 		<div layout="row" layout-padding layout-wrap>
 			<div layout-margin ng-repeat="book in active_tag.books">
-				<md-button aria-label="show_book_dialog" class="clear rd_book_image_cover md-whiteframe-z3" ng-click="show_book_dialog(book, $event)" >
+				<md-button aria-label="show_book_dialog" class="clear rd_book_container md-whiteframe-z3" ng-click="show_book_dialog(book, $event)" >
 					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" >
 					</div>
 				</md-button>

@@ -7,7 +7,7 @@
     <div class="less_important" layout-padding>Books related to {{active_tag.name}}</div>
         <div layout="row" layout-wrap layout-padding>
             <section ng-repeat="book in active_tag.books" layout-margin>
-                <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_image_cover md-whiteframe-z3">
+                <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_container md-whiteframe-z3">
                     <div class="book_thumb" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
                     </div>
                 </md-button>
