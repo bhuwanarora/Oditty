@@ -50,6 +50,7 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
                 $scope.recommending = true;
                 userService.recommend(friends_id, book_id).then(function(){
                     $scope.recommending = false;
+                    $scope.recommended = true;
                 });
             }
 

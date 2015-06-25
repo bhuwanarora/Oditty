@@ -1,6 +1,7 @@
 <div ng-click="recommend_friend()"
+	ng-class="{'pointer md-whiteframe-z1': !recommended}"
 	layout="column" layout-align="space-between"
-	class="capitalize white custom_title pointer margin_top md-whiteframe-z1">
+	class="capitalize white custom_title margin_top">
 	<img ng-src="{{user.image_url | default_profile}}" class="square">
 	<div>
 		<a layout-padding ng-href="/profile?q={{user.id}}">{{user.first_name}}</a>

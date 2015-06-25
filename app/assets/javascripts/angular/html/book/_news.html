@@ -5,12 +5,14 @@
     
     <section layout="row" layout-sm="column">
         <div flex="40" flex-sm="100" layout="column" layout-align="start start">
-            <md-radio-group layout="row" layout-align="start center"
+            <md-radio-group layout="column" layout-align="start center"
+                layout-sm="row" layout-md="row"
                 layout-padding ng-change="load_news()"
                 layout-wrap ng-model="active_community">
                 <md-radio-button ng-repeat="community in communities" 
-                                class="md-warn" layout="row" layout-margin
-                                ng-value="community">
+                    layout-padding
+                    class="md-whiteframe-z1 full_width pointer capitalize" layout="row" layout-margin
+                    ng-value="community">
                     <img ng-src="{{::community.image_url}}" class="circular">
                     <div ng-bind-html="::community.name" layout-padding></div>
                 </md-radio-button>
@@ -47,8 +49,8 @@
         display: none;
     }
 
-    .md-checked img{
-        border: 6px solid #219653;
+    .md-checked{
+        font-weight: bold;
     }
 
     .md-switch-thumb .md-label, 
