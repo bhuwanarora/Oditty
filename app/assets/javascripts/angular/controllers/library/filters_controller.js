@@ -27,6 +27,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             angular.forEach(data, function(value){
                 this.push(value);
             },  $scope.info.authors);
+            $scope.top_authors = $scope.info.authors;
         });
     }
 
@@ -170,6 +171,14 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                     // $scope.search_display = SearchUIConstants.NoResultsFound;
                 }
             });
+        }
+        else if(!$scope.info.loading && angular.isDefined(input) && input.length < 3){
+            if($scope.top_authors){
+                $scope.info.authors = $scope.top_authors;
+            }
+            else{
+                $scope._get_authors();
+            }
         }
     }
 

@@ -4,9 +4,10 @@
 <div class="menu_details book_page" layout-padding>
 	<div layout="row" ng-if="users_list" class=" white">
 	    <md-autocomplete flex
-	    	md-search-text-change=""
-	        md-items="item in search_friends(searchFriend)"
+	    	md-hide-dropdown="true"
+	        md-items="item in users_list"
 	        md-search-text="searchFriend"
+	        md-search-text-change="search_friends(searchFriend)"
 	        class="menu_search no_shadow"
 	        placeholder="Search Friends...">
 	    </md-autocomplete>
