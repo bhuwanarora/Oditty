@@ -128,4 +128,5 @@ class Community < Neo
 	def get_news skip_count = 0
 		match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
 	end
+
 end
