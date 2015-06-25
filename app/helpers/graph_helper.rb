@@ -454,11 +454,6 @@ module GraphHelper
 		clause.execute
 	end
 
-	def relink_books_and_communities
-		# Before 20 May
-
-	end
-
 	def self.set_author_feed
 		clause = "MATCH (author:Author) MERGE (author)-[r4:AuthorFeedNext]->(author) "
 		clause.execute
