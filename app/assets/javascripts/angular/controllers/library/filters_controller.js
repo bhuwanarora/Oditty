@@ -221,7 +221,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         $scope.info.authors = [];
         $scope.info.time_groups = [];
         $scope.info.read_times = [];
-        console.debug("initialised filters controller");
         var fetch_data = $timeout(function(){
             $scope._get_time_groups();
             $scope._get_reading_times();
