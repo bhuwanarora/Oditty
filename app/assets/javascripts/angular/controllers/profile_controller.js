@@ -172,7 +172,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         else{
         	userService.get_user_details($scope.active_user_id).then(function(data){
     			$scope.profile_user = data;
-        		debugger
     		});
         }
     }
