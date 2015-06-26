@@ -2,10 +2,10 @@ module Api
 	module V0
 		class UsersApiController < ApplicationController
 
-			def facebook_books
+			def social_books
 				user_id = session[:user_id]
 				if user_id
-					info = UserApi.get_facebook_books user_id
+					info = UserApi.get_social_books user_id
 				else
 					info = []
 				end

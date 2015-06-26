@@ -4,8 +4,8 @@ class User < Neo
 		@id = user_id
 	end
 
-	def get_facebook_books
-		match + ReadingJourney.match_facebook_book + " WHERE NOT book :Book " + User.return_group(FacebookBook.basic_info)
+	def get_social_books
+		match + SocialBook.match + " WHERE NOT book :Book " + User.return_group(SocialBook.basic_info)
 	end
 
 	def search_friends q

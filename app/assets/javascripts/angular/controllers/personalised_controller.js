@@ -160,6 +160,10 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
             $timeout.cancel(authors_timeout);
         });
 
+        bookService.get_social_books().then(function(data){
+            
+        });
+
         // Facebook.api('108160689204689', function(response){
         //     websiteService.handle_facebook_books(response);
         // });

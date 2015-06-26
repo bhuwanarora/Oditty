@@ -6,8 +6,8 @@ module Api
 				User::CommunityJoined.new(user_id).get_all.execute
 			end
 			
-			def self.get_facebook_books user_id
-				User.new(user_id).get_facebook_books.execute[0]
+			def self.get_social_books user_id
+				User.new(user_id).get_social_books.execute
 			end
 
 			def self.set_intro_seen_status user_id, status
