@@ -1,18 +1,15 @@
 <div ng-controller="filtersController">
     <div class="filters_header animate-fast" 
-         ng-class="{'init_filters_header': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}"
-         layout="column" layout-align="center center">
+         ng-class="{'init_filters_header': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration), 'compressed_filters_header': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}"
+         layout="column" layout-align="end center">
          <div layout="column" layout-align="center center" class="full_width" 
             ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
              <div layout-padding layout="column" layout-align="center center">
                  <div class="rd_title bold white_color" layout-padding>
                      READ LIFE
                  </div>
-                 <div class="white_color big_title" hide-sm hide-md>
-                    Select a Genre and the Time to read
-                 </div>
-                 <div class="white_color big_title" show-sm show-md hide>
-                    Select a Genre
+                 <div class="white_color big_title center_text">
+                    Discover yourself through books, friends, and the world.
                  </div>
              </div>
             <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">

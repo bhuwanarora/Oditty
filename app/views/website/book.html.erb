@@ -1,3 +1,4 @@
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="md-whiteframe-z1"></div>
 <section layout="row" layout-wrap class="feed_margin">
 	<div flex="10" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
 		ng-if="!book.show_info_only"></div>
@@ -14,6 +15,10 @@
 
 	.book_page{
 		min-height: 200px;
+	}
+
+	.book #tab1-content{
+		height: 90vh;
 	}
 
 

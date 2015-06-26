@@ -8,6 +8,8 @@
         Notifications
     </md-tooltip>
 </div> -->
+<div hide-sm hide-md ng-show="info.mobile_search" 
+    ng-include src="'/assets/angular/html/shared/partials/discovery_options.html'"></div>
 <a href="/profile" ng-show="info.mobile_search" hide-sm>
     <div class="profile_link pointer">
         <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">

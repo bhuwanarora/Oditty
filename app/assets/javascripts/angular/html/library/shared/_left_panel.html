@@ -15,6 +15,12 @@
     <div class="thin_margin" ng-click="group_by_reading_time()" ng-disabled="info.reading_time_filter">
         <a ng-class="{'inactive_link': info.reading_time_filter}" class="right_anchored">Duration</a>
     </div>
+    <div class="thin_margin" ng-click="group_by_alphabet(A)">
+        <a class="right_anchored">A-Z</a>
+        <md-tooltip>
+            Group by alphabet
+        </md-tooltip>
+    </div>
     <div class="thin_margin" ng-click="ungroup()" 
         ng-if="info.reading_time_filter || info.author_filter || info.published_era_filter || info.subject_filter">
         <a class="right_anchored">Ungroup</a>

@@ -1,39 +1,10 @@
-<div class="primary md-whiteframe-z1">
-    <div layout-padding></div>
-    <div layout-padding></div>
-    <div layout="row" layout-align="center center">
-        <md-select ng-model="active_page" class="active_page_menu" hide-sm 
-            layout="row" flex="10" flex-md="15" flex-sm="30"  layout-margin layout-padding
-                 ng-if="info.hide_signin" ng-show="info.mobile_search">
-            <a href="/rooms" layout="row" layout-align="start center"  class="pointer">
-                <span>&nbsp;&nbsp;</span>
-                <i class="material-icons light_grey_color">whatshot</i>
-                <md-option ng-value="1">Rooms</md-option>
-            </a>
-            <a href="/filters" layout="row" layout-align="start center"  class="pointer">
-                <span>&nbsp;&nbsp;</span>
-                <i class="material-icons light_grey_color">filter_list</i>
-                <md-option ng-value="2">Filters</md-option>
-            </a>
-        </md-select>
-        
-    </div>
-    <div class="white_color" layout-padding layout="row" layout-align="center center">
-        <span> · </span>
-        <span>Scroll through News</span>
-        <span> · </span>
-        <span>Discover associated Rooms you like</span>
-        <span> · </span>
-        <span>Explore relevant Books</span>
-        <span> · </span>
-    </div>    
-    <div ng-include src="'/assets/angular/html/shared/share.html'" flex="20"
-        ng-class="{'md-whiteframe-z1': show_suggestions}"></div> 
+<div class="md-whiteframe-z1 light_grey">
+    <div ng-include src="'/assets/angular/html/shared/share.html'" flex="20"></div>
 </div>
 <div layout="row" layout-wrap class="feed_margin">
     <div flex="5" hide-sm flex-md="10"></div>
-    <div flex="90" flex-sm="100" flex-md="80" layout="row" layout-sm="column" layout-md="column"
-         ng-include src="'/assets/angular/html/home/main.html'">
+    <div flex="90" flex-sm="100" flex-md="80" layout="column" layout-align="center center"
+        layout-wrap ng-include src="'/assets/angular/html/home/main.html'">
     </div>
     <div flex="5" hide-sm flex-md="10"></div>
 </div>

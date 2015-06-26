@@ -1,18 +1,3 @@
-<div flex="15" flex-md="15" flex-sm="100" layout-margin hide-sm hide-md>
-    <md-select ng-model="active_page" class="active_page_menu full_width_sm"
-        layout="row" ng-show="info.mobile_search">
-        <a href="/rooms" layout="row" layout-align="start center"  class="pointer">
-            <span>&nbsp;&nbsp;</span>
-            <i class="material-icons light_grey_color">whatshot</i>
-            <md-option ng-value="1">Rooms</md-option>
-        </a>
-        <a href="/filters" layout="row" layout-align="start center"  class="pointer">
-            <span>&nbsp;&nbsp;</span>
-            <i class="material-icons light_grey_color">filter_list</i>
-            <md-option ng-value="2">Filters</md-option>
-        </a>
-    </md-select>
-</div>
 <div class="relative" flex-md="100">
     <md-autocomplete  class="filters_autocomplete genres_autocomplete"
         md-selected-item="info.selected_genre"
@@ -22,7 +7,7 @@
         md-selected-item-change="select_genre(info.selected_genre)"
         md-item-text="item.name || item.root_category_name"
         md-min-length="0"
-        placeholder="Genre">
+        placeholder="Select a Genre">
         <div>
             <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
             <div class="less_important">{{item.books_count}} books</div>
@@ -38,7 +23,7 @@
         md-selected-item-change="select_reading_time(info.selected_duration)"
         md-item-text="item.name"
         md-min-length="0"
-        placeholder="Duration">
+        placeholder="Time to Read">
         <div layout="column">
             <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
             <div class="less_important">

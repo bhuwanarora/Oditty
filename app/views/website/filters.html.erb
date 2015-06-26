@@ -38,15 +38,9 @@
     }
 
     .filters_header{
-        /*background-color: white !important;*/
         position: relative;
-        /*box-shadow: none;*/
+        margin-top: -56px;
         padding: 7px;
-    }
-
-    .init_filters_header{
-        height: 50vh;
-        min-height: 400px;
     }
 
     .md-sticky-clone{
@@ -109,6 +103,7 @@
         overflow: initial;
     }
 
+
     .md-button{
         text-transform: none !important;
         color: inherit;
@@ -121,11 +116,15 @@
 
     .video_wrapper{
         position: absolute;
-        margin-top: -55px;
         width: 100vw;
-        height: 73vh;
         overflow: hidden;
+        top: 50px;
     }
+
+    .init_filters_header,
+    .video_wrapper{
+        height: 73vh;
+    }    
 
 
    
@@ -148,7 +147,8 @@
             width: 100%;
         }
 
-        .compressed_video_wrapper{
+        .compressed_video_wrapper,
+        .compressed_filters_header{
             height: 240px;
         }
 
@@ -170,7 +170,8 @@
             min-height: 73vh;
         }
 
-        .compressed_video_wrapper{
+        .compressed_video_wrapper,
+        .compressed_filters_header{
             height: 230px;
         }
     }
@@ -192,7 +193,8 @@
             min-height: 73vh;
         }
 
-        .compressed_video_wrapper{
+        .compressed_video_wrapper,
+        .compressed_filters_header{
             height: 340px;
         }
     }
