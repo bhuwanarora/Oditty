@@ -27,8 +27,12 @@ module FacebookBooksHelper
 
 	def self.handle_gr_book data, user_id
 		book = data["data"]["book"] 
+		goodreads_id = book["id"]
+		goodreads_title = book["title"]
+		goodreads_url = book["url"]
+
 		progress = data["data"]["progress"]
-		reading_journey_info = (FacebookBook.merge_by_gr_url(book["url"]) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group("COALESCE(recent_status.timestamp,0) AS timestamp, ID(reading_journey) AS id , ID(book) AS book_id")).execute[0]
+		reading_journey_info = (GoodreadsBook.merge_by_id(id) + GoodreadsBook.set_url(url) + GoodreadsBook.set_title(title) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group("COALESCE(recent_status.timestamp,0) AS timestamp, ID(reading_journey) AS id , ID(book) AS book_id")).execute[0]
 		book_id = reading_journey_info['book_id']
 		progress_link = ReadingJourney.create_progress(reading_journey_info, progress)
 		if progress_link.present?

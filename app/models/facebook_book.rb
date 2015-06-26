@@ -19,10 +19,6 @@ class FacebookBook < Neo
 		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + book["type"].to_s.gsub("book.","") + "\" WITH book "
 	end
 
-	def self.merge_by_gr_url url
-		" MERGE (book:Book {gr_url: \"" + url.to_s + "\"}) WITH book "
-	end
-
 	def handle_relations original_book_id, relations
 		clause = Book.new(original_book_id).match + " WITH book "
 		if relations.present? && relations["outgoing"].present?
