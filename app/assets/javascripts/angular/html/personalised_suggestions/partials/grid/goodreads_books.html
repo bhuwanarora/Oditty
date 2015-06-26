@@ -1,0 +1,5 @@
+<div ng-if="book.label[0]=='GoodreadsBook'" ng-repeat="book in social_books">
+	<div>
+		<a ng-href="{{book.goodreads_url}}" target="_blank" ng-bind-html="book.title || book.goodreads_url"></a>
+	</div>
+</div>

@@ -7,6 +7,10 @@
         md-on-select="show_books_on_friend_shelves()">
         <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/friends_books.html'" ></div>
     </md-tab>
+    <md-tab aria-controls="tab3-content" ng-disabled="info.loading" label="Goodreads Shelves"
+        md-on-select="show_goodreads_books()">
+        <div ng-include src="'/assets/angular/html/personalised_suggestions/partials/grid/goodreads_books.html'" ></div>
+    </md-tab>
 </md-tabs>
 <!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/header.html'"></div> -->
 <!-- <div ng-include src="'/assets/angular/html/personalised_suggestions/left_panel.html'"></div> -->

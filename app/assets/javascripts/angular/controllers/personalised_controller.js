@@ -161,7 +161,7 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
         });
 
         bookService.get_social_books().then(function(data){
-            
+            $scope.social_books = data;
         });
 
         // Facebook.api('108160689204689', function(response){
