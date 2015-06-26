@@ -44,13 +44,6 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def notify_borrow
-				user_id = session[:user_id]
-				book_id = params[:id]
-				clause = Api::V0::FeedsApi.notify_borrow user_id,book_id
-				clause.execute
-				render :json => "success", :status => 200
-			end
 		end
 	end
 end
