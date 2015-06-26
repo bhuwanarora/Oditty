@@ -2,7 +2,7 @@ class VersionerWorker
 	include Sidekiq::Worker
 	sidekiq_options :queue => :versioner
 	def perform(id, url, type)
-		if id.present? && url.present? && tpye.present?
+		if id.present? && url.present? && type.present?
 			type.downcase!
 			case type
 			when "user"
