@@ -423,7 +423,11 @@ module Api
 
 			def get_communities
 				user_id = params[:id] || session[:user_id]
-				info = Api::V0::UserApi.get_communities user_id
+				if user_id
+					info = Api::V0::UserApi.get_communities user_id
+				else
+					info = []
+				end
 				render :json => info, :status => 200
 			end
 
