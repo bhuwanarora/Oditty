@@ -11,10 +11,13 @@ module FacebookBooksHelper
 					if data["application"]["id"] == facebook_app_id
 						book_id = FacebookBooksHelper.handle_facebook_book(data, user_id) 
 						FacebookBooksHelper.set_bookmark("book.from_facebok", user_id, book_id, data["publish_time"])
+						FacebookBooksHelper.set_bookmark(data["type"], user_id, book_id, data["publish_time"])
 					elsif data["application"]["id"] == goodreads_app_id
-						book_id = FacebookBooksHelper.handle_gr_book(data, user_id) 
+						book_id = FacebookBooksHelper.handle_gr_book(data, user_id)
+						FacebookBooksHelper.set_bookmark(data["type"], user_id, book_id, data["publish_time"])
+					else 
+						
 					end
-					FacebookBooksHelper.set_bookmark(data["type"], user_id, book_id, data["publish_time"])
 				rescue Exception => e
 					puts "ERROR   #{e}    FOR     #{book.to_s}".red
 				end
