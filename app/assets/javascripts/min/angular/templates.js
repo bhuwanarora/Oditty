@@ -819,7 +819,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/recommend.html',
-    "<div ng-click=\"recommend_friend()\" ng-class=\"{'pointer md-whiteframe-z1': !recommended}\" layout=\"column\" layout-align=\"space-between\" class=\"capitalize white custom_title margin_top\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"square\"><div><a layout-padding ng-href=\"/profile?q={{user.id}}\">{{user.first_name}}</a></div><div layout=\"row\" layout-align=\"center center\"><div layout-padding ng-hide=\"recommending\"><i class=\"material-icons md-dark\">check</i></div><div layout-padding ng-show=\"recommending\"><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\"></md-progress-circular></div></div></div>"
+    "<div ng-click=\"recommend_friend()\" ng-class=\"{'pointer md-whiteframe-z1': !recommended}\" layout=\"column\" layout-align=\"space-between\" class=\"recommend_block\"><img ng-src=\"{{user.image_url | default_profile}}\" class=\"square\"><div><a layout-padding ng-href=\"/profile?q={{user.id}}\">{{user.first_name}}</a></div><div layout=\"row\" layout-align=\"center center\"><div layout-padding ng-hide=\"recommending\"><i class=\"material-icons md-dark\">check</i></div><div layout-padding ng-show=\"recommending\"><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\"></md-progress-circular></div></div></div>"
   );
 
 
