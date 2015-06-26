@@ -11,8 +11,7 @@ module BookHelper
 
 	def self.get_by_one_author book_name, author_name_list
 		replace_dictionary = {"@" => "", "."  => ""}
-		#clause = " MATCH (books:Book) WHERE books.indexed_title = \'" + book_name.search_ready + "\' "
-		clause = " START books = node:indexed_title(indexed_title: '" + book_name.search_ready + "')"
+		clause = " START books = node:node_auto_index('indexed_title: " + book_name.search_ready + "') WITH books "
 		or_clause = " "
 		author_name_list.each_with_index do |author_name,index|
 			if index == 0
