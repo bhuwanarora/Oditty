@@ -14,7 +14,7 @@
 	</div>
 </div>
 <div layout="row" layout-sm="column" class="margin_top white md-whiteframe-z1">
-	<div flex="30" layout="column" flex-sm="100" layout-sm="column" layout-padding>
+	<div flex="25" layout="column" flex-sm="100" layout-sm="column" layout-padding>
 		<div class="less_important" layout-padding>
 			Related Rooms
 		</div>
@@ -36,7 +36,7 @@
 			</div>
 		</md-button>
 	</div>
-	<div flex="70" layout="column" flex-sm="100" layout-padding>
+	<div flex="75" layout="column" flex-sm="100" layout-padding>
 		<div layout="row" layout-align="space-between" layout-padding>
 			<a ng-href="/room?id={{active_tag.id}}">
 				<div class="big_title bold capitalize">{{active_tag.name}}</div>
@@ -57,7 +57,7 @@
 		<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
 		<div layout="row" layout-padding layout-wrap>
 			<div layout-margin ng-repeat="book in active_tag.books">
-				<md-button aria-label="show_book_dialog" class="clear rd_book_image_cover md-whiteframe-z3" ng-click="show_book_dialog(book, $event)" >
+				<md-button aria-label="show_book_dialog" class="clear rd_book_container md-whiteframe-z3" ng-click="show_book_dialog(book, $event)" >
 					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" >
 					</div>
 				</md-button>

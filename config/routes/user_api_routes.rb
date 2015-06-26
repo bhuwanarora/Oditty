@@ -60,6 +60,8 @@ ReadersDoor::Application.routes.draw do
       match "get_bookmarks"                           => 'users_api#get_bookmarks',                     :via => [:put, :get, :post]
       match "search_friends"                          => 'users_api#search_friends',                    :via => [:put, :get, :post]
       match "facebook_books"                          => 'users_api#facebook_books',                    :via => [:put, :get, :post]
+      match "get_communities"                         => 'users_api#get_communities',                   :via => [:put, :get, :post]
+      
     end
   end
 end

@@ -1,19 +1,5 @@
-<md-tabs md-selected="data.selectedIndex" md-dynamic-height md-center-tabs class="full_width">
-	<md-tab id="tab2" aria-controls="tab2-content" class="padding" ng-disabled="info.loading" label="Profile">
-		<section layout="row">
-			<div flex="10" hide-sm flex-md="10"></div>
-			<div ng-include src="'/assets/angular/html/author/profile.html'" flex="80" flex-sm="100" flex-md="80"></div>
-			<div flex="10" hide-sm flex-md="10"></div>
-		</section>
-	</md-tab>
-	<md-tab id="tab1" aria-controls="tab1-content" class="padding" 
-		ng-disabled="!author.is_interviewed || info.loading" label="Interview">
-		<div layout-padding></div>
-		<section layout="row">
-			<div flex="20" hide-sm flex-md="10"></div>
-			<guest-interview info="info" author="author" ng-if="author.id" flex="60" flex-sm="100" flex-md="80">
-			</guest-interview>
-			<div flex="20" hide-sm flex-md="10"></div>
-		</section>
-	</md-tab>
-</md-tabs>
+<section layout="row">
+	<div flex="10" hide-sm flex-md="10"></div>
+	<div ng-include src="'/assets/angular/html/author/profile.html'" flex="80" flex-sm="100" flex-md="80"></div>
+	<div flex="10" hide-sm flex-md="10"></div>
+</section>

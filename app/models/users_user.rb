@@ -81,7 +81,7 @@ class UsersUser < Neo
 
 	def unfollow
 		operation = "-"
-		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + remove  + User::Info.set_followed_by_count(operation) + UsersUser.return_group(User.basic_info) 
+		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + remove  + User::Info.set_followed_by_count(operation) + " WITH user AS ignore_it " + " OPTIONAL " + match + " DELETE follows_node, followed_by, follows_user WITH friend AS user " + UsersUser.return_group(User.basic_info)
 	end
 
 	def self.add_notification node_variable
@@ -89,11 +89,11 @@ class UsersUser < Neo
 	end
 
 	def get_basic_info
-		@user.match + optional_match + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
+		@user.match + optional_match_invert + UsersUser.return_group(User.basic_info, "ID(follows_node) as status")
 	end
 
-	def self.optional_match_invert
-		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend, follows_node "
+	def optional_match_invert
+		" OPTIONAL MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WHERE ID(friend) = " + @friend_id.to_s + " AND ID(user) = "+ @user_id.to_s + " WITH user, friend, follows_node "
 	end
 
 end

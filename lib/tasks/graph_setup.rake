@@ -341,6 +341,12 @@ namespace :graph do
     GraphHelper.update_follow_counts_for_user
   end
 
+  desc "update_followed_by_counts_for_user"
+  task :update_followed_by_counts_for_user => :environment do
+    include GraphHelper
+    GraphHelper.update_followed_by_counts_for_user
+  end
+
   desc "reset links to books for communities before a timestamp"
   task :reset_community_to_book_links => :environment do
     include CommunitiesHelper

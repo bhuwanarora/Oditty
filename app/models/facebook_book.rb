@@ -42,11 +42,11 @@ class FacebookBook < Neo
 	def self.link_relations relation, original_book_id, outgoing=false
 		clause = " MATCH (node) WHERE ID(node) = " + relation['node_id'].to_s 
 		if outgoing
-			clause += " MERGE (node)<-[:" + relation["type"] + "]-(book) "
+			clause += " MERGE (node)<-[:" + relation["type"] + "]-(book)  "
 		else
 			clause += " MERGE (node)-[:" + relation["type"] + "]->(book) "
 		end
-		clause + " WITH book "
+		clause + " SET node.book_id = CASE WHEN node.book_id IS NOT NULL THEN ID(book) ELSE node.book_id END WITH book "
 	end
 
 	def self.get_relations id

@@ -1,7 +1,13 @@
+<div class="primary md-whiteframe-z1">
+	<div ng-include src="'/assets/angular/html/room/_header.html'"></div>
+    <div ng-include src="'/assets/angular/html/shared/share.html'" ></div>
+</div>
+
 <section layout="row">
 	<div flex="10" hide-md hide-sm></div>
 	<div ng-include src="'/assets/angular/html/community/show.html'" 
 	         class="right_panel_container feed_margin"
+	         layout="row" layout-sm="column" layout-md="column"
 	         flex="80" flex-md="100" flex-sm="100"></div>
 	<div flex="10" hide-md hide-sm></div>
 </section>

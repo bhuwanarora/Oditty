@@ -450,13 +450,15 @@ module GraphHelper
 	end
 
 	def update_follow_counts_for_user
-		clause = User.match + UsersUser.match + " WITH user, COUNT(DISTINCT(friend)) as follows_count RETURN ID(user), follows_count "
+		clause = UsersUser.match + " WITH user, COUNT(DISTINCT(friend)) as follows_count "\
+		" SET user.follows_count = follows_count "
 		clause.execute
 	end
 
-	def relink_books_and_communities
-		# Before 20 May
-
+	def update_followed_by_counts_for_user
+		clause = UsersUser.match + " WITH friend, COUNT(DISTINCT(user)) as followed_by_count "\
+		" SET friend.followed_by_count = followed_by_count "
+		clause.execute
 	end
 
 	def self.set_author_feed

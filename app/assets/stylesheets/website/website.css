@@ -333,7 +333,6 @@ input:focus{
     text-transform: none !important;
     font-weight: inherit !important;
     text-align: inherit !important;
-    border-radius: 0px !important;
     padding: 9px 18px !important;
 }
 
@@ -342,7 +341,6 @@ input:focus{
     font-weight: inherit !important;
     text-align: inherit !important;
     padding: 0px !important;
-    border-radius: 0px !important;
     margin: 0px !important;
 }
 
@@ -413,9 +411,20 @@ md-toast.md-default-theme{
     word-wrap: break-word;
 }
 
+.community_group,
+.big_square{
+    width: 120px;
+}
+
 .square{
     width: 60px;
+    border-radius: 2px;
     height: 60px;
+}
+
+.big_square{
+    height: 120px;
+    border-radius: 2px;
 }
 
 .feed_margin{
@@ -424,6 +433,10 @@ md-toast.md-default-theme{
 
 .z_index_1{
     z-index: 1;
+}
+
+.z_index_0{
+    z-index: 0;
 }
 
 .pointer{
@@ -477,4 +490,9 @@ md-sidenav{
 
 .google-plus{
     color: #DD4C39;
+}
+
+md-select,
+md-select-label{
+    border-radius: 2px;
 }

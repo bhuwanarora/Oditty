@@ -128,7 +128,7 @@ var _deferred_request = function(url, $q, $http, search_service_url){
     }
     var error_callback = function(reason){
         if(reason.status == 500){
-            alert("Something went wrong. Our developers are working on this error.");
+            alert("Something went wrong. If you're already Logged in. Try Logging out and Log in again.");
         }
     }
     if(angular.isDefined(search_service_url)){

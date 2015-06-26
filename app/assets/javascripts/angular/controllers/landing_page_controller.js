@@ -20,6 +20,7 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 	$scope._scroll_page_to_id = function(id){
 		var offset = 0;
 		var duration = 2000;
+		id = id + "-content";
 		var someElement = angular.element(document.getElementById(id));
 		var easeInQuad = function(t){ 
 			return t*t; 

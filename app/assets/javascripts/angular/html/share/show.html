@@ -2,7 +2,7 @@
 <audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
 <audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio>
 
-<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share">
+<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share" class="share_wrapper">
 	<div class="share animate-fast" 
 		 layout="row" 
 		 layout-sm="column"
@@ -18,8 +18,7 @@
 		</div>
 		<div flex="80" layout="column" flex-sm="100" class="full_width">
 			<div ng-include src="'/assets/angular/html/share/searched_books.html'" ng-if="info.show_book_share"></div>
-			<div ng-include src="'/assets/angular/html/share/status_options.html'" class="extensive_padding"
-				ng-class="{'dark_grey': reading_status_selected}"
+			<div ng-include src="'/assets/angular/html/share/status_options.html'" class="status_options"
 				ng-if="info.show_share"></div>
 		</div>
 	    <div flex="10" hide-sm></div>
@@ -97,12 +96,6 @@
 	  	background-color: transparent;
 	}
 
-	.menu_details,
-	.menu_search{
-		/*width: 400px;*/
-		max-height: 300px !important;
-	}
-
 	.overlap{
 		margin-top: -2px !important;
 	}
@@ -139,6 +132,10 @@
 	.active_extended{
 		width: 103%;
   		margin-left: -10px;
+	}
+
+	.status_options{
+		max-width: 500px;
 	}
 
 	

@@ -102,10 +102,12 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.show_book = function(event, book){
-        $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
-        $scope.constant = {"show_book": true};
-        $rootScope.active_book = book;
-        event.stopPropagation();
+        // $scope.grid_style = {"height": "35px", "overflow-y": "hidden", "padding-bottom": "0px"};
+        // $scope.constant = {"show_book": true};
+        // $rootScope.active_book = book;
+        // sharedService.show_book_dialog($rootScope, $scope, book, event);
+        var id = book.book_id || book.id;
+        window.location.href = "/book?id="+id;
     }
 
     var _set_data = function(data, array){

@@ -1,3 +1,6 @@
+md-autocomplete md-autocomplete-wrap{
+	box-shadow: none !important;
+}
 
 md-content.md-default-theme,
 .background{
@@ -12,6 +15,16 @@ md-content.md-default-theme,
 md-toolbar{
 	box-shadow: none;
 	/*border-bottom: 1px solid #ececec;*/
+}
+
+.share_wrapper{
+	position: fixed;
+  	top: 55px;
+  	left: 0px;
+  	right: 0px;
+  	bottom: 0px;
+  	background-color: rgba(255, 255, 255, 0.67);
+  	overflow-y: scroll;
 }
 
 a:hover,
@@ -267,11 +280,10 @@ md-toolbar{
 
 .loader{
 	position: fixed;
-	bottom: 0px;
+	z-index: 99999;
+	bottom: 5px;
 	left: 0px;
 	right: 0px;
-	height: 10px;
-	z-index: 99999;
 }
 
 .md-fab-custom-right{
@@ -287,6 +299,7 @@ md-toolbar{
 	position: relative;
   	width: 100%;
   	height: 56px;
+  	z-index: 0;
 }
 
 .fixed_share{
@@ -358,7 +371,7 @@ md-toolbar{
 }
 
 .wiki{
-	width: 100vw;
+	width: 100%;
   	border: none;
   	height: 80vh;
   	overflow: hidden;
@@ -530,16 +543,21 @@ and (max-width : 800px){
 		padding: 11px;
 	}
 
-	/*.share:before{
-		content: "\e620";
-		font-family: icomoon;
-		speak: none;
-		font-style: normal;
-		font-weight: 400;
-		font-variant: normal;
-		text-transform: none;
-		line-height: 1;
-	}*/
+
+	.rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_book_container,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
+		width: 120px;
+	}
+
+	.rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
+	  	height: 165px;
+	}
 
 }
 
@@ -620,12 +638,14 @@ md-tooltip .md-content{
 
 .active_page_menu{
 	padding: 0px;
-	margin: 0px;
-	margin-top: 10px;
+  	background-color: rgb(250, 250, 250);
+  	height: 40px;
 }
 
 .active_page_menu .md-select-label{
 	border-color: white !important;
+	width: 100%;
+  	padding: 0px 10px;
 }
 
 .active_page_menu, 
@@ -644,7 +664,6 @@ md-tooltip .md-content{
 }
 
 .navigator{
-  	border-radius: 0px;
   	width: 400px;
   	/*height: 300px;*/
   	margin-left: -185px;
@@ -690,13 +709,19 @@ md-tooltip .md-content{
 	width: 320px !important;
 }
 
+.rd_book_backup_cover,
+.rd_book_image_cover,
+.rd_book_container,
+.rd_slider_wrapper,
+.rd_book_shadow{
+	width: 160px;
+}
 
 .rd_book_backup_cover,
 .rd_book_image_cover,
 .rd_slider_wrapper,
 .rd_book_shadow{
-	width: 130px;
-	height: 180px;
+  	height: 220px;
 }
 
 .rd_book_backup_cover{

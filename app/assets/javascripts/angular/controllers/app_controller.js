@@ -84,7 +84,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         var url = $location.absUrl();
         var communities = (url.indexOf("rooms") > 0);
         var personalised_suggestions = (url.indexOf("personalised_suggestions") > 0);
-        var infinity = (url.indexOf("filters") > 0);
+        var infinity = (url.indexOf("filters") > 0) || ((url.indexOf("signup") > 0));
 
         if(communities){
             $scope.active_page = 1;

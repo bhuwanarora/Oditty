@@ -27,6 +27,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             angular.forEach(data, function(value){
                 this.push(value);
             },  $scope.info.authors);
+            $scope.top_authors = $scope.info.authors;
         });
     }
 
@@ -79,7 +80,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_genre = function(genre){
-        if(angular.isUndefined(genre)){
+        if(angular.isUndefined(genre) || (genre == null)){
             delete $rootScope.filters.genre_id;
             _handle_filter_removal();
         }
@@ -90,7 +91,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_author = function(author){
-        if(angular.isUndefined(author)){
+        if(angular.isUndefined(author) || (author == null)){
             delete $rootScope.filters.author_id;
             _handle_filter_removal();
         }
@@ -101,7 +102,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_reading_time = function(read_time){
-        if(angular.isUndefined(read_time)){
+        if(angular.isUndefined(read_time) || (read_time == null)){
             delete $rootScope.filters.reading_time_id;
             _handle_filter_removal();
         }
@@ -112,7 +113,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     $scope.select_publishing_year = function(time_group){
-        if(angular.isUndefined(time_group)){
+        if(angular.isUndefined(time_group) || (time_group == null)){
             delete $rootScope.filters.era_id;
             _handle_filter_removal();
         }
@@ -171,6 +172,14 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 }
             });
         }
+        else if(!$scope.info.loading && angular.isDefined(input) && input.length < 3){
+            if($scope.top_authors){
+                $scope.info.authors = $scope.top_authors;
+            }
+            else{
+                $scope._get_authors();
+            }
+        }
     }
 
     $scope._get_time_groups = function(){
@@ -212,7 +221,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         $scope.info.authors = [];
         $scope.info.time_groups = [];
         $scope.info.read_times = [];
-        console.debug("initialised filters controller");
         var fetch_data = $timeout(function(){
             $scope._get_time_groups();
             $scope._get_reading_times();

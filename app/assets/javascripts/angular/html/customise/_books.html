@@ -24,8 +24,7 @@
 				<div ng-repeat="book in popular_books"
 					 layout-margin
 					 layout="column"
-					 style="width: 140px;"
-					 class="relative">
+					 class="relative book_container">
 					 <div ng-include src="'/assets/angular/html/shared/partials/book.html'"></div>
 				</div>
 			</div>
@@ -45,9 +44,15 @@
 	}
 
 	#books .cover,
-	#books .cover_gradient{
-		width: 130px;
-		height: 180px;
+	#books .cover_gradient,	
+	#books .book_container{
+		width: 160px;
+	}
+
+	#books .cover,
+	#books .cover_gradient,
+	{
+		height: 220px;
 		z-index: 1;
 	}
 
@@ -61,8 +66,8 @@
 
 	#books .info_button{
 		padding: 0px;
-		width: 130px;
-		height: 180px;
+		width: 160px;
+		height: 220px;
 		position: absolute;
 		/*box-shadow: inset 0 3px 8px #000000;*/
 		z-index: 2;

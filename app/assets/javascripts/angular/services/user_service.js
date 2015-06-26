@@ -144,4 +144,14 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/recommend?friends_id='+friends_id+'&book_id='+book_id, $q, $http);
     }
 
+    this.get_communities = function(id){
+        if(angular.isDefined(id)){
+            return _deferred_request('/api/v0/get_communities?id='+id, $q, $http);
+        }
+        else{
+            return _deferred_request('/api/v0/get_communities', $q, $http);
+            
+        }
+    }
+
 }]);

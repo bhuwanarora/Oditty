@@ -1,6 +1,10 @@
 module Api
 	module V0
 		class UserApi
+
+			def self.get_communities user_id
+				User::CommunityJoined.new(user_id).get_all.execute
+			end
 			
 			def self.get_facebook_books user_id
 				User.new(user_id).get_facebook_books.execute[0]
@@ -23,11 +27,7 @@ module Api
 			end
 
 			def self.get_relative_details(friend_id, user_id)
-				info = {}
-				if friend_id.present?
-					info = UsersUser.new(friend_id, user_id).get_basic_info.execute[0]
-				end
-				info
+				info = UsersUser.new(friend_id, user_id).get_basic_info.execute[0]
 			end
 
 			def self.news_visited(user_id, id)
@@ -349,7 +349,7 @@ module Api
 
 			def self.add_books_from_fb(params, user_id)
 				if params[:data].present?
-					FacebookBookWorker.perform_async(params, user_id)
+					FacebookBooksWorker.perform_async(params, user_id)
 				end
 			end
 

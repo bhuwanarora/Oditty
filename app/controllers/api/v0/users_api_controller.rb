@@ -248,12 +248,12 @@ module Api
 			end
 
 			def follow
-				follow_action = params[:q] 
+				follow_action = params[:status].to_s
 				friend_id = params[:id] 
 				user_id = session[:user_id]
-				if follow_action
+				if follow_action.present? && follow_action == "true"
 					Api::V0::UserApi.follow_user(user_id, friend_id).execute
-				else
+				elsif follow_action.present? && follow_action == "false"
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
 				render :json => {:message => "Success"}, :status => 200
@@ -387,14 +387,22 @@ module Api
 			def get_followers
 				user_id = session[:user_id]
 				skip_count = params[:skip] || 0
-				info = Api::V0::UserApi.get_followers(user_id, skip_count).execute
+				if user_id
+					info = Api::V0::UserApi.get_followers(user_id, skip_count).execute
+				else
+					info = []
+				end
 				render :json => info, :status => 200
 			end
 
 			def get_users_followed
 				user_id = session[:user_id]
 				skip_count = params[:skip] || 0
-				info = Api::V0::UserApi.get_users_followed(user_id, skip_count).execute
+				if user_id
+					info = Api::V0::UserApi.get_users_followed(user_id, skip_count).execute
+				else
+					info = []
+				end
 				render :json => info, :status => 200
 			end
 
@@ -410,6 +418,12 @@ module Api
 				user_id = session[:user_id]
 				remote_ip = request.remote_ip
 				info = Api::V0::UserApi.set_region(user_id, region, remote_ip).execute
+				render :json => info, :status => 200
+			end
+
+			def get_communities
+				user_id = params[:id] || session[:user_id]
+				info = Api::V0::UserApi.get_communities user_id
 				render :json => info, :status => 200
 			end
 

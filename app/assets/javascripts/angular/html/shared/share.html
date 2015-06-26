@@ -12,7 +12,7 @@
         </md-tooltip>
     </md-button> -->
     <md-fab-speed-dial md-direction="left"
-        ng-class="md-scale"
+        ng-class="'md-scale'"
         class="fixed_share "
         ng-hide="active_shelf || info.show_share"
         aria-label="Share reading journey"
@@ -22,23 +22,25 @@
                 <i class="material-icons">send</i>
             </md-button>
         </md-fab-trigger>
-        <!-- <md-fab-actions>
+        <md-fab-actions>
             <section layout-margin>
-                <md-button aria-label="twitter" class="md-fab md-raised md-mini"
-                    ng-click="show_share_page($event)">
-                    <i class="material-icons">share</i>
+                <md-button aria-label="Currently Reading a Book" class=" md-raised md-button-clear "
+                    ng-click="show_share_page($event, 1)">
+                    Currently Reading a Book
                 </md-button>
             </section>
             <section layout-margin>
-                <md-button aria-label="facebook" class="md-fab md-raised md-mini">
-                    <span class="icon-book-alt2"></span>
+                <md-button aria-label="Planning To Read a Book" class="md-raised md-button-clear"
+                    ng-click="show_share_page($event, 0)">
+                    Planning To Read a Book
                 </md-button>
             </section>
             <section layout-margin>
-                <md-button aria-label="Google hangout" class="md-fab md-raised md-mini">
-                    <span class="icon-book-alt2"></span>
+                <md-button aria-label="Recently Read a Book" class="md-raised md-button-clear"
+                    ng-click="show_share_page($event, 2)">
+                    Recently Read a Book
                 </md-button>
             </section>
-        </md-fab-actions> -->
+        </md-fab-actions>
     </md-fab-speed-dial>
 </div>

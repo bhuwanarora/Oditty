@@ -4,28 +4,20 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 	}
 
 	var _init = (function(){
-		$scope.info.loading = true;
 		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
 		if(angular.isUndefined($scope.book)){
 			$scope.book = $rootScope.active_book;
 		}
-		$scope.book_loading = true;
 		
 		if(!_unauthenticated_user()){
 			var borrow_users_timeout = $timeout(function(){
 				bookService.get_borrow_users(id).then(function(data){
 					$scope.borrow_users = data;
-					$scope.book_loading = false;
-					$scope.info.loading = false;
 				});
 			}, 100);
 			$scope.$on('destroy', function(){
 				$timeout.cancel(borrow_users_timeout);
 			});
-		}
-		else{
-			$scope.book_loading = false;
-			$scope.info.loading = false;
 		}
 	}());
 

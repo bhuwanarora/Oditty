@@ -1,11 +1,12 @@
 <div ng-click="recommend_friend()"
-	layout-padding layout="row" layout-align="space-between"
-	class="capitalize white custom_title pointer margin_top md-whiteframe-z1">
-	<div layout="row" layout-align="start center">
-		<img ng-src="{{user.image_url | default_profile}}" class="square">
+	ng-class="{'pointer md-whiteframe-z1': !recommended}"
+	layout="column" layout-align="space-between"
+	class="capitalize white custom_title margin_top">
+	<img ng-src="{{user.image_url | default_profile}}" class="square">
+	<div>
 		<a layout-padding ng-href="/profile?q={{user.id}}">{{user.first_name}}</a>
 	</div>
-	<div layout="row" layout-align="space-between center" layout-padding>
+	<div layout="row" layout-align="center center">
 		<div layout-padding ng-hide="recommending">
         	<i class="material-icons md-dark">check</i>
         </div>
