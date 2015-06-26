@@ -26,7 +26,7 @@ class ReadingJourney < Neo
 			progress.each_with_index do |step, index|
 				if (step["timestamp"].to_i > reading_journey_info['timestamp'].to_i)
 					nodes << "node#{index}"
-					clause += " CREATE (node#{index}: Progress {percentage: " + step['percent_complete'].to_s + ", created_at: " + step['timestamp'].to_s + " timestamp: " + Time.now.to_i.to_s + "}) "
+					clause += " CREATE (node#{index}: Progress {percentage: " + step['percent_complete'].to_s + ", created_at: " + step['timestamp'].to_s + ", timestamp: " + Time.now.to_i.to_s + "}) "
 					if index > 0
 						clause += " MERGE (node#{index})-[:NextStatus]->(#{nodes[-2]}) "
 					end
