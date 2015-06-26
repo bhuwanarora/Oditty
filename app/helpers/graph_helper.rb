@@ -511,15 +511,16 @@ module GraphHelper
 
 	def create_user_labelled
 		visited_string = Bookmark::Type::Visited.get_key
-		" MATCH (user)-[labelled:Labelled]->(label:Label{key: \'" + visited_string + "\'}) " + " WITH user, COUNT(label) as labelcount, COLLECT(label) AS labels, global_visited "\
+		" MATCH (user)-[labelled:Labelled]->(label:Label{key: '" + visited_string + "'}) " + " WITH user, COUNT(label) as labelcount, COLLECT(label) AS labels, global_visited, media "\
 		" WHERE labelcount = 1 "\
-		" WITH user, global_visited, EXTRACT( label IN labels | label) AS label "\
+		" UNWIND labels AS label "\
+		" WITH user, global_visited, label, media "\
 		" WHERE ID(label) = ID(global_visited) "\
-		" CREATE (user)-[labelled:Labelled]->(label:Label{key: \""+visited_string+"\"})"\
+		" MERGE(user)-[labelled:Labelled]->(label_unique:Label{key: '" + visited_string + "', bookmark_count: 0}) "
 	end
 
 	def merge_label_bookmark_node_media
-		" MERGE (label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\'" +Bookmark::Type::Visited.get_key + "\', book_id:ID(media), user_id: ID(user)})-[bookmark_action:BookmarkAction]->(media) "\
+		" MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node: BookmarkNode{label:\'" +Bookmark::Type::Visited.get_key + "\', book_id:ID(media), user_id: ID(user)})-[bookmark_action:BookmarkAction]->(media) "\
 		" ON CREATE SET bookmark_node.count = 0 "
 	end
 
@@ -534,7 +535,7 @@ module GraphHelper
 
 		clause = match_global_visited + Bookmark.match_path("media") + " "\
 		" WITH user, label AS global_visited, media " + create_user_labelled + " "\
-		" WITH user, label, global_visited, media "\
+		" WITH user, label_unique AS label, global_visited, media "\
 		"" + merge_label_bookmark_node_media
 		clause.print
 		debugger
