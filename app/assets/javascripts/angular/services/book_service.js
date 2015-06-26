@@ -86,4 +86,8 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/book_primary_info?id='+id, $q, $http);
     }
 
+    this.send_borrow_notification = function(id){
+        return _deferred_request('/api/v0/notify_borrow?id='+id, $q, $http);
+    }
+
 }]);

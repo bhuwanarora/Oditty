@@ -27,7 +27,8 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 			$mdSidenav('signup').toggle();
 		}
 		else{
-
+			var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+			bookService.send_borrow_notification(id);
 		}
 	}
 

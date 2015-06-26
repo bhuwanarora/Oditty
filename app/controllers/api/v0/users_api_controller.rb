@@ -413,6 +413,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def notify_borrow
+				user_id = session[:user_id]
+				book_id = params[:id]
+				info = Api::V0::UserApi.notify_borrow(book_id, user_id).execute
+				render :json => info, :status => 200
+			end
+
 			def set_region
 				region = params[:id]
 				user_id = session[:user_id]

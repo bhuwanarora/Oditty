@@ -506,7 +506,11 @@ module Api
 
 
 			def self.get_lenders book_id, user_id
-				UsersBook.new(book_id, user_id).notify_borrow + Book.new(book_id).get_lenders(user_id)
+				Book.new(book_id).get_lenders(user_id)
+			end
+
+			def self.notify_borrow book_id, user_id
+				UsersBook.new(book_id, user_id).notify_borrow
 			end
 
 			def self.get_profile_info_of_another id, user_id
