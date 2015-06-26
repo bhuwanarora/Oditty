@@ -11,7 +11,7 @@ ReadersDoor::Application.routes.draw do
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
   # devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   Sidekiq::Web.use Rack::Auth::Basic do |username, password|
-    username == "readersdoor" && password == "admin@readersdoor"
+    username == "readersdoor" && password == "rdadminontheroll"
   end 
   mount Sidekiq::Web => '/sidekiq'  
 
