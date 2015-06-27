@@ -366,4 +366,9 @@ namespace :graph do
     GraphHelper.set_user_notification
   end
 
+  desc "remove global Visited node"
+  task :remove_global_visited => :environment do
+    include GraphHelper
+    GraphHelper.remove_global_visited
+  end
 end

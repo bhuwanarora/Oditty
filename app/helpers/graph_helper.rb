@@ -500,4 +500,96 @@ module GraphHelper
 			"CREATE UNIQUE (user)-[:NextNotification]->(user)"
 		clause.execute
 	end
+
+	def match_global_visited
+		visited_string = Bookmark::Type::Visited.get_key
+		" MATCH (global_visited:Label) WHERE HAS(global_visited.bookmark_count) AND global_visited.name = '" + visited_string + "' AND global_visited.basic = true AND global_visited.key = '" + visited_string + "' AND global_visited.public = false "\
+		"WITH global_visited AS label "
+	end
+
+	def match_user_labelled
+		" MATCH (user)-[labelled:Labelled]->(label:Label{key: \'" + Bookmark::Type::Visited.get_key + "\'}) " + " WHERE ID(label) <> ID(global_visited) "
+	end
+
+	def create_user_labelled
+		visited_string = Bookmark::Type::Visited.get_key
+		" MATCH (user)-[labelled:Labelled]->(label:Label{key: '" + visited_string + "'}) " + " WITH user, COUNT(label) as labelcount, COLLECT(label) AS labels, global_visited "\
+		" WHERE labelcount = 1 "\
+		" UNWIND labels AS label "\
+		" WITH user, label, global_visited "\
+		" WHERE ID(label) = ID(global_visited) "\
+		" WITH user, global_visited "\
+		" MERGE(user)-[labelled:Labelled]->(label_unique:Label{"\
+			"key: '" + visited_string + "', "\
+			"name: '" + visited_string + "', "\
+			"public: false, "\
+			"bookmark_count: 0}) "
+	end
+
+	def merge_label_bookmark_node_media
+		" MERGE (bookmark_node: BookmarkNode{"\
+			"label:\'" +Bookmark::Type::Visited.get_key + "\', "\
+			"book_id:ID(media), "\
+			"user_id: ID(user), "\
+			"created_at: global_bookmark_node.created_at, "\
+			"updated_at: global_bookmark_node.updated_at, "\
+			"key: global_bookmark_node.key})-[bookmark_action:BookmarkAction]->(media) "\
+			"ON CREATE SET bookmark_node.count = 0 "\
+			"ON MATCH SET bookmark_node.count = global_bookmark_node.count "\
+		" WITH user, label, global_visited, media, bookmark_node "\
+		" MERGE (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node) "
+	end
+
+	def merge_global_visited prev_clause
+		visited_string = Bookmark::Type::Visited.get_key
+		clause = prev_clause + match_global_visited + ", user " + Bookmark.match_path("media") + " "\
+		" WITH user, label AS global_visited, media, bookmark_node AS global_bookmark_node " + match_user_labelled + " "\
+		" WITH user, label, global_visited, global_bookmark_node, media "\
+		"" + merge_label_bookmark_node_media + " RETURN DISTINCT ID(user) AS id "
+		output = clause.execute
+		if(output.length == 0)
+			clause = prev_clause + match_global_visited + ", user " + Bookmark.match_path("media") + " "\
+			" WITH DISTINCT user, label AS global_visited " + create_user_labelled + " "\
+			" WITH user, label_unique, global_visited AS label "\
+			"" + Bookmark.match_path("media") + ""\
+			" WITH user, label AS global_visited, media, bookmark_node AS global_bookmark_node, label_unique AS label "\
+			"" + merge_label_bookmark_node_media + " RETURN DISTINCT ID(user) AS id"
+			output = clause.execute
+		end
+		if (output.length > 0)
+			output = output[0]["id"]
+		else
+			output = nil
+		end
+		output
+	end
+
+	def remove_global_visited
+		global_visited_key = "global_visited_key_jun26"
+		output = User.get_max_min_id.execute
+		min_id = output[0]["min_id"].to_i
+		max_id = output[0]["max_id"].to_i
+		if($redis[global_visited_key])
+			cur_id = $redis[global_visited_key].to_i
+		else
+			cur_id = min_id
+			$redis[global_visited_key] = cur_id - 1
+		end
+		while cur_id <= max_id
+			clause = " MATCH (user:User) WHERE ID(user) >=" + cur_id.to_s + " "\
+			"WITH user ORDER BY ID(user) LIMIT 1 "
+			actual_id = merge_global_visited clause
+			if(actual_id.present?)
+				$redis[global_visited_key] = actual_id
+				cur_id = actual_id + 1
+			else
+				output = (clause + " RETURN ID(user) AS id ").execute
+				if(output.length > 0)
+					cur_id = output[0]["id"] + 1
+				else
+					cur_id = max_id + 1
+				end
+			end
+		end
+	end
 end
