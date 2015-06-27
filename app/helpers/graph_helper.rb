@@ -601,8 +601,10 @@ module GraphHelper
 			user_id = user_id["id"]
 			puts " SEARCHING FOR USER WITH ID #{user_id} ".green
 			clause = " MATCH (node1)-[feednext:FeedNext{user_id:" + user_id.to_s + "}]->() "\
+					 " WITH node1, feednext "\
+					 " ORDER BY toInt(node1.created_at) DESC "\
 					 " DELETE feednext "\
-					 " ORDER BY node1.created_at DESC WITH collect(node1) as p "\
+					 " WITH collect(node1) as p "\
 					 " FOREACH(i in RANGE(0, length(p)-2) |  "\
 					 	"FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  "\
 					 		"CREATE UNIQUE (p1)-[:FeedNext{user_id:" + user_id.to_s + "}]->(p2)))) "\
