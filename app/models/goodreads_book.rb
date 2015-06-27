@@ -29,5 +29,4 @@ class GoodreadsBook < Neo
 		" MERGE (book :Book{gr_url:"+goodreads_url.to_s+"}) WITH book "
 	end
 
-
 end

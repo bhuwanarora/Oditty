@@ -371,4 +371,10 @@ namespace :graph do
     include GraphHelper
     GraphHelper.remove_global_visited
   end
+
+  desc "fix_user_linked_feed"
+  task :fix_user_linked_feed => :environment do
+    include GraphHelper
+    GraphHelper.fix_user_linked_feed
+  end
 end

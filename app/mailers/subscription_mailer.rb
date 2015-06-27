@@ -13,8 +13,9 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
   end
 
   def webhooks params
+    subject = params[:params][:commits][0][:message] + ' : ' + params[:params][:pusher][:name] rescue ""
     mandrill_mail template: params[:template] ,
-                  subject: ('Github ' + params[:params][:commits][0][:message] + ' : ' + params[:params][:pusher][:name]),
+                  subject: ('Github ' + subject),
                   to: {email: params[:email]},
                   vars: {
                     'USERNAME' => params[:params][:pusher][:name],
