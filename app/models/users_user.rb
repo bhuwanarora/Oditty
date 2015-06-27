@@ -14,7 +14,7 @@ class UsersUser < Neo
 	end
 
 	def self.follow_match
-		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) "
+		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) WITH user, friend, follows_user, follows_node, followed_by  "
 	end
 
 	def match 
@@ -23,6 +23,10 @@ class UsersUser < Neo
 
 	def self.reverse_match 
 		" MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend "
+	end
+
+	def self.optional_follow_match
+		" OPTIONAL " + UsersUser.follow_match
 	end
 
 	def optional_match

@@ -377,4 +377,10 @@ namespace :graph do
     include GraphHelper
     GraphHelper.fix_user_linked_feed
   end
+
+  desc "fix_user_notification_feed"
+  task :fix_user_notification_feed => :environment do
+    include GraphHelper
+    GraphHelper.fix_user_notification_feed
+  end
 end

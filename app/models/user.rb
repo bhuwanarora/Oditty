@@ -308,7 +308,7 @@ class User < Neo
 	end
 
 	def match_users_followed skip
-		match + UsersUser.match + " WITH user, friend " +  UsersUser.optional_reverse_match + " , ID(follows_node) AS status " + User.skip(skip) + User.limit(10) + " WITH friend AS user , status "
+		match + UsersUser.match + " WITH user, friend " +  UsersUser.optional_follow_match + " , ID(follows_node) AS status " + User.skip(skip) + User.limit(10) + " WITH friend AS user , status "
 	end
 
 	def get_users_followed skip

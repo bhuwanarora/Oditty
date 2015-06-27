@@ -1,12 +1,5 @@
 <!-- <div ng-include src="'/assets/angular/html/profile/invite.html'"></div> -->
 <md-item ng-repeat="user in users_list" class="white user_card md-whiteframe-z1" layout-margin>
-    <md-item-content layout="row" flex class="clear">
-        <div ng-repeat="book in user.books" class="network_book" ng-if="book.id">
-            <a ng-href="/book?q={{::book.id}}">
-            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-            </a>
-        </div>
-    </md-item-content>
     <md-item-content layout="row" layout-align="center center" flex class="user_cover_image clear">
         <img ng-src="{{user.image_url | default_profile}}" class="square user_photo" flex="60">
     </md-item-content>
@@ -16,10 +9,21 @@
         </a>
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
-        <md-button aria-label="toggle_follow" class="md-primary md-button-clear">
+        <md-button aria-label="toggle_follow" class="md-primary md-button-clear" 
+            ng-click="toggle_follow(user);">
             <span ng-if="!user.status" >Follow</span>
             <span ng-if="user.status">Following</span>
         </md-button>
+    </md-item-content>
+    <md-item-content layout="column" flex class="clear">
+        <div class="less_important" layout="row" layout-align="center center">Recent Books</div>
+        <div ng-repeat="book in user.books" class="network_book" ng-if="book.id" layout-padding>
+            <a ng-href="/book?q={{::book.id}}" class="less_important bold">
+                <span ng-bind-html="book.title"></span>
+                <span> by </span>
+                <span ng-bind-html="book.author_name"></span>
+            </a>
+        </div>
     </md-item-content>
 </md-item>
 
@@ -54,7 +58,7 @@
     .user_card{
         width: 240px;
         padding: 0px;
-        max-height: 310px;
+        max-height: 400px;
     }
 
     .user_cover_image{

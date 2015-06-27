@@ -4,6 +4,17 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 		$scope.load_followers();
 	}
 
+	$scope.toggle_follow = function(user){
+		if(angular.isDefined(user.status) && status != null){
+			user.status = null;
+			userService.follow(user.id, false);
+		}
+		else{
+			user.status = true;
+			userService.follow(user.id, true);	
+		}
+	}
+
 	$scope.load_followers = function(){
 		if(!$scope.info.loading){
 			$scope.info.loading = true;

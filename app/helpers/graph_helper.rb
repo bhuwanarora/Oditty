@@ -597,22 +597,61 @@ module GraphHelper
 	def fix_user_linked_feed
 		clause = User.match + User.return_group("ID(user) AS id")
 		user_ids = clause.execute
+		count = 0
 		for user_id in user_ids
 			user_id = user_id["id"]
-			puts " SEARCHING FOR USER WITH ID #{user_id} ".green
-			clause = " MATCH (node1)-[feednext:FeedNext{user_id:" + user_id.to_s + "}]->() "\
-					 " WITH node1, feednext "\
-					 " ORDER BY toInt(node1.created_at) DESC "\
-					 " DELETE feednext "\
-					 " WITH collect(node1) as p "\
-					 " FOREACH(i in RANGE(0, length(p)-2) |  "\
-					 	"FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  "\
-					 		"CREATE UNIQUE (p1)-[:FeedNext{user_id:" + user_id.to_s + "}]->(p2)))) "\
-					 " WITH LAST(p) AS last, HEAD(p) AS head "\
-					 " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " "\
-					 " MERGE (last)-[:FeedNext{user_id:" + user_id.to_s + "}]->(user) "\
-					 " MERGE (user)-[:FeedNext{user_id:" + user_id.to_s + "}]->(head) "
-			clause.execute
+			puts " SEARCHING FOR USER WITH ID #{user_id} #{count}".green
+			begin
+				clause = " MATCH (node1)-[feednext:FeedNext{user_id:" + user_id.to_s + "}]->() "\
+						 " WITH node1, feednext "\
+						 " ORDER BY toInt(node1.created_at) DESC "\
+						 " DELETE feednext "\
+						 " WITH collect(node1) as p "\
+						 " FOREACH(i in RANGE(0, length(p)-2) |  "\
+						 	"FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  "\
+						 		"CREATE UNIQUE (p1)-[:FeedNext{user_id:" + user_id.to_s + "}]->(p2)))) "\
+						 " WITH LAST(p) AS last, HEAD(p) AS head "\
+						 " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " "\
+						 " MERGE (last)-[:FeedNext{user_id:" + user_id.to_s + "}]->(user) "\
+						 " MERGE (user)-[:FeedNext{user_id:" + user_id.to_s + "}]->(head) "
+				
+				count = count + 1
+				clause.execute
+			rescue Exception => e
+				clause = " MATCH (user:User) WHERE ID(user)=#{user_id} CREATE UNIQUE (user)-[:FeedNext{user_id:#{user_id}}]->(user) "
+				count = count + 1
+				clause.execute
+			end
+		end
+	end
+
+	def fix_user_notification_feed
+		clause = User.match + User.return_group("ID(user) AS id")
+		user_ids = clause.execute
+		count = 0
+		for user_id in user_ids
+			user_id = user_id["id"]
+			begin
+				puts " SEARCHING FOR USER WITH ID #{user_id} #{count}".green
+				clause = " MATCH (node1)-[next_notification:NextNotification{user_id:" + user_id.to_s + "}]->() "\
+						 " WITH node1, next_notification "\
+						 " ORDER BY toInt(node1.created_at) DESC "\
+						 " DELETE next_notification "\
+						 " WITH collect(node1) as p "\
+						 " FOREACH(i in RANGE(0, length(p)-2) |  "\
+						 	"FOREACH(p1 in [p[i]] |  FOREACH(p2 in [p[i+1]] |  "\
+						 		"CREATE UNIQUE (p1)-[:NextNotification{user_id:" + user_id.to_s + "}]->(p2)))) "\
+						 " WITH LAST(p) AS last, HEAD(p) AS head "\
+						 " MATCH (user:User) WHERE ID(user) = " + user_id.to_s + " "\
+						 " MERGE (last)-[:NextNotification{user_id:" + user_id.to_s + "}]->(user) "\
+						 " MERGE (user)-[:NextNotification{user_id:" + user_id.to_s + "}]->(head) "
+				count = count + 1
+				clause.execute
+			rescue Exception => e
+				clause = " MATCH (user:User) WHERE ID(user)=#{user_id} CREATE UNIQUE (user)-[:NextNotification{user_id:#{user_id}}]->(user) "
+				count = count + 1
+				clause.execute
+			end
 		end
 	end
 
