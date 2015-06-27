@@ -45,13 +45,18 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
 
     $scope.refresh_data = function(){
         newsService.get_community_details($scope.active_tag.id).then(function(data){
-            $scope.active_tag = angular.extend($scope.active_tag, data[0].most_important_tag[0]);
-            angular.forEach($scope.active_tag.books, function(value){
-                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                var color = ColorConstants.value[random_int];
-                value.color = color;
+            if(angular.isDefined(data[0])){
+                $scope.active_tag = angular.extend($scope.active_tag, data[0].most_important_tag[0]);
+                angular.forEach($scope.active_tag.books, function(value){
+                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    var color = ColorConstants.value[random_int];
+                    value.color = color;
+                    $scope.info.loading = false;
+                });
+            }
+            else{
                 $scope.info.loading = false;
-            });
+            }
         });
     }
 

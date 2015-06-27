@@ -339,7 +339,7 @@ class User < Neo
 	end
 
 	def self.get_max_min_id
-		output = "MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id"
+		" MATCH (a:User) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id "
 	end
 
 	def self.set_facebook_books_retrieval_time
@@ -351,7 +351,7 @@ class User < Neo
 	end
 
 	def create_like timestamp
-		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s +" "
+		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s + User.with_group("user", "likes", "facebook_like")
 	end
 
 	def match_facebook_likes
