@@ -11,13 +11,13 @@ module Api
 				end
 			end
 
-			def self.set_info
+			def set_info
 				like_app_id = params[:id]
 				Api::V0::LikeApi.map_books_for_likes(like_app_id)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
-			def self.get_likes
+			def get_likes
 				user_id = session[:user_id]
 				info = Api::V0::LikeApi.get_likes user_id
 				render :json => info, :status => 200

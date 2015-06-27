@@ -1,7 +1,4 @@
 ReadersDoor::Application.routes.draw do
-    #############################################
-    #API ROUTES
-    #############################################
     namespace :api do
         namespace :v0 do
             match 'fb_likes'                               => 'likes_api#fb_likes',                         :via => [:put, :get, :post]
