@@ -349,7 +349,12 @@ module Api
 
 			def self.add_books_from_fb(params, user_id)
 				if params[:data].present?
-					FacebookBooksWorker.perform_async(params, user_id)
+					clause = User.new(user_id).match + User.return_group("user.facebook_books_retrieval_time AS time")
+					facebook_books_retrieval_time = clause.execute[0]['time'] rescue ""
+					time_to_add_books = !facebook_books_retrieval_time.present? || facebook_books_retrieval_time.to_i < (Time.now.to_i - 3600*24*30)
+					if time_to_add_books
+						FacebookBooksWorker.perform_async(params, user_id)
+					end
 				end
 			end
 

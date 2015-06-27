@@ -264,7 +264,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/shared/_grid.html',
-    "<div class=\"big_title\" layout-padding layout=\"column\" layout-align=\"center\"><div>{{ key }}</div></div><div layout=\"row\" layout-wrap layout-align=\"start\"><div ng-repeat=\"book in value\" layout-align=\"start start\" layout=\"row\" layout-margin class=\"rd_book_container\" ng-class=\"{'book': book.isBook}\"><md-button class=\"book_grid_link clear md-whiteframe-z3\" aria-label=\"book\" ng-click=\"show_book($event, book)\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></div></div>"
+    "<div class=\"big_title\" layout-padding layout=\"column\" layout-align=\"center\"><div>{{ key }}</div></div><div layout=\"row\" layout-wrap layout-align=\"start\"><div ng-repeat=\"book in value\" layout-align=\"start start\" layout=\"row\" layout-margin class=\"rd_book_container\" ng-class=\"{'book': book.isBook}\"><md-button class=\"white clear md-whiteframe-z3\" aria-label=\"book\" ng-click=\"show_book($event, book)\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></div></div>"
   );
 
 
@@ -489,7 +489,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/publisher/show.html',
-    "<div layout=\"column\" layout-wrap class=\"relative md-whiteframe-z1 white\"><img ng-src=\"{{::publisher.image_url}}\" class=\"max_full_width\" layout-padding><div layout-padding ng-bind-html=\"::publisher.description\"></div></div>"
+    "<div layout=\"column\" layout-wrap class=\"relative md-whiteframe-z1 white\" flex=\"40\" flex-sm=\"100\" flex-md=\"100\"><img ng-src=\"{{::publisher.image_url}}\" class=\"max_full_width\" layout-padding><div layout-padding ng-bind-html=\"::publisher.description\"></div></div><div flex=\"5\" hide-sm hide-md></div><div flex=\"60\" flex-sm=\"100\" flex-md=\"100\"><div class=\"less_important bold\">Books Published</div><div ng-include src=\"'/assets/angular/html/library/shared/_grid.html'\" ng-init=\"value = publisher_books\"></div></div>"
   );
 
 

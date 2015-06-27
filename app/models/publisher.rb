@@ -12,7 +12,15 @@ class Publisher < Neo
 	end
 
 	def match
-		" MATCH (publisher:Publisher) WHERE ID(publisher)="+@id+" "
+		" MATCH (publisher:Publisher) WHERE ID(publisher)="+@id+" WITH publisher "
+	end
+
+	def match_books
+		" MATCH (publisher)-[:Published]->(:PublishingNode)-[:PublishedBook]->(book:Book) WITH book "
+	end
+
+	def get_books
+		match + match_books + Publisher.return_group(Book.basic_info)
 	end
 
 end

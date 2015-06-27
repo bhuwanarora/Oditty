@@ -164,6 +164,10 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
             $scope.social_books = data;
         });
 
+        bookService.get_facebook_likes().then(function(data){
+            $scope.facebook_likes = data;
+        });
+
         // Facebook.api('108160689204689', function(response){
         //     websiteService.handle_facebook_books(response);
         // });

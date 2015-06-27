@@ -343,6 +343,23 @@ class User < Neo
 	end
 
 	def self.set_facebook_books_retrieval_time
-		" SET user.facebook_books_retrieval_time = " + Time.now.to_i.to_s
+		" SET user.facebook_books_retrieval_time = " + Time.now.to_i.to_s + " "
 	end
+
+	def self.set_facebook_likes_retrieval_time
+		" SET user.facebook_likes_retrieval_time = " + Time.now.to_i.to_s + " "
+	end
+
+	def create_like timestamp
+		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s +" "
+	end
+
+	def match_facebook_likes
+		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
+	end
+
+	def get_facebook_likes
+		match + match_facebook_likes + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
+	end
+
 end

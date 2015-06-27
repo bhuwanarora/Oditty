@@ -38,6 +38,10 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return _deferred_post_request('/api/v0/fb', params, $q, $http);
     }
 
+    this.handle_facebook_likes = function(params){
+        return _deferred_post_request('/api/v0/fb_likes', params, $q, $http);
+    }
+
     this.handle_google_user = function(params){
         return _deferred_post_request('/api/v0/google', params, $q, $http);
     }   

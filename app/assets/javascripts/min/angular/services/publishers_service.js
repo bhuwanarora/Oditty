@@ -1,1 +1,1 @@
-homeApp.service("publishersService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.get_info=function(c){return _deferred_request("/api/v0/publishers_info?id="+c,b,a)}}]);
+homeApp.service("publishersService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.get_info=function(c){return _deferred_request("/api/v0/publishers_info?id="+c,b,a)},this.get_books=function(c){return _deferred_request("/api/v0/publishers_books?id="+c,b,a)}}]);

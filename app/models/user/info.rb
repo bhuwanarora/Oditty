@@ -96,4 +96,5 @@ class User::Info < User
 	def self.set_followed_by_count operation
 		" SET user.followed_by_count = COALESCE(user.followed_by_count,0)" + operation + "1 "
 	end
+
 end

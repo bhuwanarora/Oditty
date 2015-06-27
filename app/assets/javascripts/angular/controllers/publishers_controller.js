@@ -1,4 +1,10 @@
 homeApp.controller('publishersController', ["$scope", '$rootScope', "publishersService", "$location", function($scope, $rootScope, publishersService, $location){
+
+	var _get_books = function(id){
+		publishersService.get_books(id).then(function(data){
+			$scope.publisher_books = data;
+		});
+	}
 	
 	var _init = (function(){
 		var regex = /[?&]([^=#]+)=([^&#]*)/g;
@@ -11,7 +17,7 @@ homeApp.controller('publishersController', ["$scope", '$rootScope', "publishersS
 				$scope.publisher = data;
 				$scope.info.loading = false;
 			});
+			_get_books(id);
 		}
-
 	}());
 }]);
