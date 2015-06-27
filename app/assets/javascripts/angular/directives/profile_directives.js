@@ -1,3 +1,23 @@
+homeApp.directive('friendInfo', ["$rootScope", "userService", function($rootScope, userService){
+    return {
+        restrict: 'E',
+        scope : {friend: '=', info: '='},
+        controller: ["$scope", function($scope){
+           
+            var _init = function(){
+                if(angular.isDefined($scope.friend)){
+                    userService.get_user_details($scope.friend.id).then(function(data){
+                        $scope.friend = angular.extend($scope.friend, data);
+                    });
+                }
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/friend_info.html'
+    };
+}]);
+
 homeApp.directive('authorInfo', ["$rootScope", "authorService", 'ColorConstants', '$mdDialog', function($rootScope, authorService, ColorConstants, $mdDialog){
     return {
         restrict: 'E',
@@ -6,10 +26,8 @@ homeApp.directive('authorInfo', ["$rootScope", "authorService", 'ColorConstants'
            
             var _init = function(){
                 if(angular.isDefined($scope.author)){
-                    $scope.author_loading = true;
                     authorService.get_basic_info($scope.author.id).then(function(data){
                         $scope.author = angular.extend($scope.author, data);
-                        $scope.author_loading = false;
                     });
                 }
             }
@@ -31,10 +49,8 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
 
             var _init = function(){
                 if(angular.isDefined($scope.community)){
-                    $scope.community_loading = true;
                     newsService.get_feed_info($scope.community.id).then(function(data){
                         $scope.community = angular.extend($scope.community, data);
-                        $scope.community_loading = false;
                     });
                 }
             }

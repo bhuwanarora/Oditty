@@ -42,11 +42,14 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 							message = "Joined a room.";
 						}
 						else if(angular.isDefined(value.author)){
-							message = "Followed an author.";
+							message = "Started following an Author.";
+						}
+						else if(angular.isDefined(value.friend)){
+							message = "Started following."
 						}
 						break;
 					case "RecommendNode":
-						message = "Recommended this book.";
+						message = "Recommended this book to a friend.";
 				}
 				return message;
 			}

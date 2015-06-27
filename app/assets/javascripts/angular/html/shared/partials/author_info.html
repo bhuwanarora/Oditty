@@ -1,4 +1,4 @@
-<div class="follow_content" layout="row" ng-show="!author_loading" ng-if="author">
+<div class="follow_content" layout="row" ng-if="author">
     <img ng-src="{{author.id | author_thumb}}" class="circular">
     <div layout-padding>
         <a ng-href="/author?id={{::author.id}}">

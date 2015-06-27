@@ -1,0 +1,11 @@
+<div class="follow_content" layout="row" ng-if="friend">
+    <img ng-src="{{friend.image_url | default_profile}}" class="circular">
+    <div layout-padding>
+        <a ng-href="/friend?id={{::friend.id}}">
+            <div class="big_title bold capitalize">{{::friend.first_name}} {{::friend.last_name}}</div>
+        </a>
+        <div class="less_important" ng-show="friend.bookmark_count">
+            <span>{{::friend.bookmark_count}} Bookmarks</span>
+        </div>
+    </div>
+</div>
