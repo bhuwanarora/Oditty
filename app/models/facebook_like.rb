@@ -16,7 +16,7 @@ class FacebookLike < Neo
 	end
 
 	def self.set_category category
-		" SET facebook_like :Fb" + category.to_s.search_ready + " SET facebook_like.category = \"" + category.to_s +"\" "
+		" SET facebook_like :Fb" + category.to_s.search_ready + " SET facebook_like.category = \"" + category.to_s + "\" "
 	end
 
 	def self.set_name name
