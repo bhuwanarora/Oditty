@@ -33,8 +33,8 @@ class User::UserNotification < User
 		" MATCH path = (user)-[:NextNotification*{user_id:ID(user)}]->(notification) WITH path "
 	end
 
-	def self.match_last_visited_notification(user_id)
-		User.new(user_id).match + " MATCH (user)-[visited_notification:VisitedNotification]->(notification) WITH notification, user, visited_notification "
+	def match_last_visited_notification
+		User.new(@user_id).match + " MATCH (user)-[visited_notification:VisitedNotification]->(notification) WITH notification, user, visited_notification "
 	end
 
 	def self.create_for_new_user
