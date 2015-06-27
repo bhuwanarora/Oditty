@@ -10,6 +10,7 @@
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
         <md-button aria-label="toggle_follow" class="md-primary md-button-clear" 
+            ng-class="{'md-raised': !user.status}"
             ng-click="toggle_follow(user);">
             <span ng-if="!user.status" >Follow</span>
             <span ng-if="user.status">Following</span>

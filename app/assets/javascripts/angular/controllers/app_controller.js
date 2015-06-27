@@ -35,8 +35,14 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
                 $scope.info.loading = false;
                 $scope.notifications = data;
                 angular.forEach($scope.notifications, function(value){
-                    if(value.label == "RecommendNode"){
-                        value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.";
+                    switch(value.label){
+                        case "FollowsNode":
+                            if(angular.isDefined(value.friend)){
+                                value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> started following you."
+                            }
+                            break;
+                        case "RecommendNode":
+                            value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.";
                     }
                 });
             });
@@ -77,6 +83,20 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         event.stopPropagation();
     }
 
+    var _get_user_details = function(){
+        var user_timeout = $timeout(function(){
+            if(angular.isUndefined($rootScope.user)){
+                userService.get_user_details().then(function(data){
+                    $rootScope.user = data;
+                });
+            }
+        }, 100);
+
+        $scope.$on('destroy', function(){
+            $timeout.cancel(user_timeout);
+        });
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
@@ -102,12 +122,18 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         $scope.random_set = -1;
 
         $scope.data = {"selectedIndex" : 0};
+        _get_user_details();
 
         var _handle_labels = function(){
             if(angular.isUndefined($cookieStore.get('labels')) || $cookieStore.get('labels') == null || $cookieStore.get('labels').length == 0){
-                shelfService.get_all_shelves().then(function(data){
-                    $rootScope.labels = data;
-                    $cookieStore.put('labels', data);
+                var data_timeout = $timeout(function(){
+                    shelfService.get_all_shelves().then(function(data){
+                        $rootScope.labels = data;
+                        $cookieStore.put('labels', data);
+                    });
+                }, 100);
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(data_timeout);
                 });
             }
             else{
