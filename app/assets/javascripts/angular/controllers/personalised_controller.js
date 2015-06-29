@@ -166,6 +166,21 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
 
         bookService.get_facebook_likes().then(function(data){
             $scope.facebook_likes = data;
+            data = [1];
+            if(data != null && data.length >0){
+                angular.forEach(data, function(value){
+                    var app_id = value.app_id;
+                    FB.api(
+                        "/"+206270296204652,
+                        function (response) {
+                            if (response && !response.error){
+                                debugger
+                                // websiteService.set_like_info(response);
+                            }
+                        }
+                    );
+                });
+            }
         });
 
         // Facebook.api('108160689204689', function(response){
