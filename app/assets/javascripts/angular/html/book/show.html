@@ -30,6 +30,14 @@
             </div>
         </div>
         <div flex="30" layout="column" flex-sm="100" flex-md="100">
+            <div role="tabpanel"
+                 id="tab4-content"
+                 aria-labelledby="tab4" ng-if="active_book"
+                 layout-margin
+                 class="white ">
+                <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
+            </div>
+            <md-divider></md-divider>
             <div layout-padding class=" white">
                 <div layout="row" layout-align="space-between" layout-margin layout-padding>
                     <div class="bold less_important">
@@ -41,14 +49,6 @@
                         ng-model="::book.user_rating" ng-change="rate_book(book)"
                         step="1" min="1" max="10" aria-label="rating">
                 </md-slider>
-            </div>
-            <md-divider></md-divider>
-            <div role="tabpanel"
-                 id="tab4-content"
-                 aria-labelledby="tab4" ng-if="active_book"
-                 layout-margin
-                 class="white ">
-                <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
             </div>
             <md-divider></md-divider>
             <div role="tabpanel"

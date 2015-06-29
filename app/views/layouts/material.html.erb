@@ -21,13 +21,110 @@
         <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
 
         <% if Rails.env.development? %>
-            <!-- <link rel="stylesheet" href="assets/material_icons.css" /> -->
             <link rel="stylesheet" href="assets/angular_material.css" />
             <link rel="stylesheet" href="assets/website/website.css" />
             <link rel="stylesheet" href="assets/website/icomoon.css" />
             <link rel="stylesheet" href="assets/website/home.css" />
             <link rel="stylesheet" href="assets/website/media_library.css" />
-            <link rel="stylesheet" type="text/css" href="assets/website/animation.css" >
+            <link rel="stylesheet" type="text/css" href="assets/website/animation.css" />
+        <% else %>
+            <link rel="stylesheet" href="assets/min/site.min.css" />
+        <% end %>
+    </head>
+
+    <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
+         ng-click="close_popups()" 
+        msd-wheel="close_popups()">
+        <script>
+          // (function() {
+          //   var cx = '010250045073231072543:z7pnnxbf5s8';
+          //   var gcse = document.createElement('script');
+          //   gcse.type = 'text/javascript';
+          //   gcse.async = true;
+          //   gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+          //       '//cse.google.com/cse.js?cx=' + cx;
+          //   var s = document.getElementsByTagName('script')[0];
+          //   s.parentNode.insertBefore(gcse, s);
+          // })();
+        </script>
+        <!-- <gcse:search></gcse:search> -->
+        <div layout="column" layout-fill>
+            <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
+
+
+            <% if @home %>
+                <md-content class="white" flex ng-controller="homeController">
+            <% elsif @personalised_suggestions %>
+                <md-content ng-controller="personalisedController">
+            <% elsif @network %>
+                <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
+            <% elsif @news %>
+                <md-content layout="column" ng-controller="newsController" id="news">
+            <% elsif @news_group && !@blogs %>
+                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
+            <% elsif @blogs && @news_group %>
+                <md-content layout="row" layout-wrap ng-controller="feedController" 
+                    check-scroll-bottom="get_blog_feed()" id="home">
+            <% elsif @room %>
+                <md-content ng-controller="communityController" id="community" class="white">
+            <% elsif @filters || @signup%>
+                <md-content ng-controller="libraryController" 
+                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page" class="white">
+            <% elsif @shelves %>
+                <md-content ng-controller="roomController">
+            <% elsif @author %>
+                <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
+                    ng-keydown="keypress_scroll($event)">
+            <% elsif @profile %>
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
+            <% elsif @search %>
+                <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
+            <% elsif @book %>
+                <div ng-controller="specificBookController">
+            <% elsif @customise %>
+                <md-content ng-controller="customiseController" class="white" flex="100">
+            <% elsif @publishers %>
+                <md-content ng-controller="publishersController">
+            <% end %>
+            <div ng-show="info.mobile_search" flex>
+                <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
+                    <% if @home %>
+                        <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                    <% else %>
+                        <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
+                    <% end %>
+                    <% if @news || @blog || @shelves || @search || @customise || @publishers || @book %>
+                        
+                    <% end %>
+                </div>
+                <div id="yield" class="yield">
+                    <%= yield %>
+                </div>
+            </div>
+            <% if @book %>
+                </div>
+            <% else %>
+                </md-content>
+            <% end %>
+            
+            <md-progress-linear class="md-primary loader"
+                                ng-show="info.loading && !info.show_share"
+                                md-mode="indeterminate">
+            </md-progress-linear>
+
+            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+                    ng-if="info.cirular_loading">
+            </md-progress-circular>
+
+            <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
+            <div ng-include src="'/assets/angular/html/shared/notifications.html'" class="right_panel_container"></div>
+            <% unless @profile %>
+                <div ng-include src="'/assets/angular/html/share/show.html'"></div>
+            <% end %>
+            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
+        </div>
+         <% if Rails.env.development? %>
+            <!-- <link rel="stylesheet" href="assets/material_icons.css" /> -->
             <script src='assets/min/angular/vendors/angular.min.js'></script>
             <script src='assets/min/angular/vendors/angular_messages.min.js'></script>
             <script src="assets/angular/vendors/hammer.js"></script>
@@ -252,99 +349,6 @@
                 <script src="assets/min/angular/controllers/search_group.min.js"></script>
             <% end %>
         <% end %>
-    </head>
-
-    <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
-         ng-click="close_popups()" 
-        msd-wheel="close_popups()">
-        <script>
-          // (function() {
-          //   var cx = '010250045073231072543:z7pnnxbf5s8';
-          //   var gcse = document.createElement('script');
-          //   gcse.type = 'text/javascript';
-          //   gcse.async = true;
-          //   gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-          //       '//cse.google.com/cse.js?cx=' + cx;
-          //   var s = document.getElementsByTagName('script')[0];
-          //   s.parentNode.insertBefore(gcse, s);
-          // })();
-        </script>
-        <!-- <gcse:search></gcse:search> -->
-        <div layout="column" layout-fill>
-            <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
-
-
-            <% if @home %>
-                <md-content class="white" flex ng-controller="homeController">
-            <% elsif @personalised_suggestions %>
-                <md-content ng-controller="personalisedController">
-            <% elsif @network %>
-                <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
-            <% elsif @news %>
-                <md-content layout="column" ng-controller="newsController" id="news">
-            <% elsif @news_group && !@blogs %>
-                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
-            <% elsif @blogs && @news_group %>
-                <md-content layout="row" layout-wrap ng-controller="feedController" 
-                    check-scroll-bottom="get_blog_feed()" id="home">
-            <% elsif @room %>
-                <md-content ng-controller="communityController" id="community" class="white">
-            <% elsif @filters || @signup%>
-                <md-content ng-controller="libraryController" 
-                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page" class="white">
-            <% elsif @shelves %>
-                <md-content ng-controller="roomController">
-            <% elsif @author %>
-                <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
-                    ng-keydown="keypress_scroll($event)">
-            <% elsif @profile %>
-                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
-            <% elsif @search %>
-                <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
-            <% elsif @book %>
-                <div ng-controller="specificBookController">
-            <% elsif @customise %>
-                <md-content ng-controller="customiseController" class="white" flex="100">
-            <% elsif @publishers %>
-                <md-content ng-controller="publishersController">
-            <% end %>
-            <div ng-show="info.mobile_search" flex>
-                <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
-                    <% if @home %>
-                        <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
-                    <% else %>
-                        <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
-                    <% end %>
-                    <% if @news || @blog || @shelves || @search || @customise || @publishers || @book %>
-                        
-                    <% end %>
-                </div>
-                <div id="yield" class="yield">
-                    <%= yield %>
-                </div>
-            </div>
-            <% if @book %>
-                </div>
-            <% else %>
-                </md-content>
-            <% end %>
-            
-            <md-progress-linear class="md-primary loader"
-                                ng-show="info.loading && !info.show_share"
-                                md-mode="indeterminate">
-            </md-progress-linear>
-
-            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
-                    ng-if="info.cirular_loading">
-            </md-progress-circular>
-
-            <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
-            <div ng-include src="'/assets/angular/html/shared/notifications.html'" class="right_panel_container"></div>
-            <% unless @profile %>
-                <div ng-include src="'/assets/angular/html/share/show.html'"></div>
-            <% end %>
-            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
-        </div>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
