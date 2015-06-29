@@ -154,7 +154,7 @@ class User < Neo
 	end
 
 	def get_notifications
-		User::UserNotification.new(@id,nil).match_last_visited_notification + User::UserNotification.delete_visited_notification  + " WITH user, notification " + User::UserNotification.create_visited_notification + ", notification SET user.notification_count = 0 WITH user, notification " + User::UserNotification.match_path  + "," + User::UserNotification.extract_unwind("notification") + " WITH " + User.tail("notification") + User.return_group(User::UserNotification.basic_info) + User.order_init + " notification.created_at DESC "
+		User::UserNotification.new(@id,nil).match_last_visited_notification + User::UserNotification.delete_visited_notification  + " WITH user, notification " + User::UserNotification.create_visited_notification + ", notification SET user.notification_count = 0 WITH user, notification " + User::UserNotification.match_path  + ", notification, " + User::UserNotification.extract_unwind("notifications") + ",  notification WHERE ID(notifications) <> ID(notification) WITH notifications AS notification WITH" + User.tail("notification") + User.return_group(User::UserNotification.basic_info) + User.order_init + " notification.created_at DESC "
 	end
 
 	def get_books_bookmarked(skip_count=0)
