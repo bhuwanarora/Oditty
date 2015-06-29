@@ -79,7 +79,8 @@ homeApp.config(["$mdThemingProvider", function($mdThemingProvider){
                       .warnPalette('googleRed')
 }]);
 
-homeApp.constant('facebookAppId', "667868653261167");
+homeApp.constant('facebookAppId', "742659549115410");
+// 667868653261167
 
 homeApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, facebookAppId){
     var myAppId = facebookAppId;
