@@ -30,6 +30,20 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   inline_css: true
   end
 
+  def follow params
+    mandrill_mail template: params[:follow_template],
+                  subject: params[:friend][:name] + " started following you at ReadersDoor.",
+                  to: { email: params[:user][:email]},
+                  vars: {
+                    'USERNAME' => params[:user][:name],
+                    'FRIENDNAME' => params[:friend][:name]
+                    'FRIENDID'  => params[:friend][:id]
+                  },
+                  important: true,
+                  inline_css: true
+  end
+  end
+
   def news_subscription params
     mandrill_mail template: params[:template],
                   subject: params[:news1][:title],
