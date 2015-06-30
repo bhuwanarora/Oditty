@@ -30,10 +30,10 @@ class User::Feed < User
 	end
 
 	def create object
-		" MATCH (user)-[old:FeedNext]->(old_feed) "\
+		" MATCH (user)-[old:FeedNext{user_id:ID(user)}]->(old_feed) "\
 		" CREATE UNIQUE (user)-[:FeedNext{user_id:" + @user_id.to_s + "}]->(" + object + ")-[:FeedNext{user_id:" + @user_id.to_s + "}]->(old_feed) "\
 		" DELETE old "\
-		" SET user.latest_feed_id = ID(" + object + ")"
+		" SET user.latest_feed_id = ID(" + object + ")"\
 		" WITH user, " + object + " "
 	end
 end
