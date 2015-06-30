@@ -87,6 +87,7 @@ md-card{
 
 md-content{
 	max-height: 98vh !important;
+	outline: none !important;
 }
 
 .burger{
