@@ -191,7 +191,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         Facebook.api('/me', function(response){
             websiteService.handle_facebook_user(response).then(function(){
                 $scope._init_user();
-                _redirect_user();
+                // _redirect_user();
             });
             $rootScope.user = response;
             Facebook.api('me/picture?redirect=false&type=large', function(response){
