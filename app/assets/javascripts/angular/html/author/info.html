@@ -2,7 +2,7 @@
     <section layout-padding>
         <div layout="column" layout-align="center center">
             <img ng-src="{{author.id | author_thumb}}" 
-                 class="author_image"/>
+                 class="author_image" onerror="this.src='/assets/author_profile.jpg'"/>
             <div layout="column"  layout-align="center center"  layout-padding>
                 <div class="big_title bold" layout-padding ng-bind-html="::author.name"></div>
                 <div class="small_font">Author</div>
