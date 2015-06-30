@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -33,18 +33,18 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         var notifications_timeout = $timeout(function(){
             feedService.get_notifications().then(function(data){
                 $scope.info.loading = false;
-                $scope.notifications = data;
-                angular.forEach($scope.notifications, function(value){
-                    switch(value.label){
+                $scope.notifications = [];
+                angular.forEach(data, function(value){
+                    var timestamp = $filter('timestamp')(value.created_at, "date:'h:mm a, dd MMM'");
+                    switch(value.label[0]){
                         case "FollowsNode":
-                            if(angular.isDefined(value.friend)){
-                                value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> started following you."
-                            }
+                            value.message = "<div layout-padding><div><span>Your </span><a href='/profile?id="+value.notification.friend_id+"'>friend</a><span> started following you.</span></div><div class='less_important'>"+timestamp+"</div></div>";
                             break;
                         case "RecommendNode":
-                            value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.";
+                            value.message = "<div layout-padding><div><span>Your <a href='/profile?id="+value.notification.friend_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.</div><div class='less_important'>"+timestamp+"</div></div>";
                     }
-                });
+                    this.push(value);
+                }, $scope.notifications);
             });
         }, 100);
         $scope.$on('destroy', function(){

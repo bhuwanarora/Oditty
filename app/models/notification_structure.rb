@@ -15,28 +15,29 @@ class NotificationStructure < Neo
 		@notifications.each do |notification|
 			type = notification[:label][0]
 			if type == Constant::NodeLabel::FollowsNode
-				notifications_formatted << get_notification_FollowsNode(notification)
+				notifications_formatted << get_notification_follows_node(notification)
 			elsif type == Constant::NodeLabel::RecommendNode
-				notifications_formatted << get_notification_RecommendNode(notification)
+				notifications_formatted << get_notification_recommend_node(notification)
 			elsif type == Constant::NodeLabel::EndorseNode
-				notifications_formatted << get_notification_EndorseNode(notification)
+				notifications_formatted << get_notification_endorse_node(notification)
 			elsif type == Constant::NodeLabel::BorrowNode
-				notifications_formatted << get_notification_BorrowNode(notification)
+				notifications_formatted << get_notification_borrow_node(notification)
 			end
 		end
 		notifications_formatted
 	end
 
-	def get_notification_FollowsNode notification
-		temp = {:friend_id => notification[:notification]["friend_id"],
-				:user_id => notification[:notification]["user_id"],
+	def get_notification_follows_node notification
+		temp = {
+				:friend_id => notification[:notification]["user_id"],
+				:user_id => notification[:notification]["friend_id"],
 				:created_at => notification[:created_at],
 			}
 		notification[:notification] = temp
 		notification
 	end
 
-	def get_notification_EndorseNode notification
+	def get_notification_endorse_node notification
 		temp = {
 			:book_id => notification[:notification]["book_id"],
 			:user_id => notification[:notification]["user_id"],
@@ -46,18 +47,18 @@ class NotificationStructure < Neo
 		notification
 	end
 
-	def get_notification_RecommendNode notification
+	def get_notification_recommend_node notification
 		temp = {
-			:friend_id => notification[:notification]["friend_id"],
+			:friend_id => notification[:notification]["user_id"],
 			:book_id => notification[:notification]["book_id"],
-			:user_id => notification[:notification]["user_id"],
+			:user_id => notification[:notification]["friend_id"],
 			:timestamp => notification[:notification]["timestamp"]
 		}
 		notification[:notification] = temp
 		notification
 	end
 
-	def get_notification_BorrowNode notification
+	def get_notification_borrow_node notification
 		temp = {
 			:book_id => notification[:notification]["book_id"],
 			:user_id => notification[:notification]["user_id"],
