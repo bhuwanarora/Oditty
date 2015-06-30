@@ -123,7 +123,7 @@
             <% end %>
             <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
         </div>
-         <% if Rails.env.development? %>
+         <% if Rails.env.development? || Rails.env.staging? %>
             <!-- <link rel="stylesheet" href="assets/material_icons.css" /> -->
             <script src='assets/min/angular/vendors/angular.min.js'></script>
             <script src='assets/min/angular/vendors/angular_messages.min.js'></script>
