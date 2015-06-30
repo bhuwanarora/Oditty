@@ -36,7 +36,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   to: { email: params[:user][:email]},
                   vars: {
                     'USERNAME' => params[:user][:name],
-                    'FRIENDNAME' => params[:friend][:name]
+                    'FRIENDNAME' => params[:friend][:name],
                     'FRIENDID'  => params[:friend][:id]
                   },
                   important: true,
