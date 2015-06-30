@@ -42,6 +42,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
                             break;
                         case "RecommendNode":
                             value.message = "<div layout-padding><div><span>Your <a href='/profile?id="+value.notification.friend_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.</div><div class='less_important'>"+timestamp+"</div></div>";
+                            break;
+                        case "BorrowNode":
+                            value.message = "<div layout-padding><div><span>Your </span><a href='/profile?id="+value.notification.friend_id+"'>friend</a><span> is looking to borrow </span><span><a href='/book?id="+value.notification.book_id+"'>book</a></span></div><div class='less_important'>"+timestamp+"</div></div>";
                     }
                     this.push(value);
                 }, $scope.notifications);
