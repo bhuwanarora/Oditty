@@ -42,7 +42,6 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   important: true,
                   inline_css: true
   end
-  end
 
   def news_subscription params
     mandrill_mail template: params[:template],
