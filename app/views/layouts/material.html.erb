@@ -149,7 +149,11 @@
             <script src="assets/angular/apps/filters_app.js"></script>
             <script src="assets/angular/apps/home_app.js"></script>
             <script src="assets/angular/apps/app_constants.js"></script>
-            <script src="assets/angular/constants/development.js"></script>
+            <% if Rails.env.staging? %>
+                <script src="assets/angular/constants/staging.js"></script>
+            <% else %>
+                <script src="assets/angular/constants/development.js"></script>
+            <% end %>
             <script src="assets/angular/services/user_service.js"></script>
             <script src="assets/angular/services/genre_service.js"></script>
             <script src="assets/angular/services/book_service.js"></script>
@@ -348,9 +352,7 @@
                 <script src="assets/min/angular/controllers/search_group.min.js"></script>
             <% end %>
         <% end %>
-        <% if Rails.env.staging? %>
-            <script src="assets/angular/constants/staging.js"></script>
-        <% end %>
+       
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
