@@ -26,10 +26,14 @@ class User::Feed < User
 	end
 
 	def delete_feed(object)
-		" MATCH (s)-[f1:FeedNext{user_id:"+@user_id.to_s+"}]->("+object+")-[f2:FeedNext{user_id:"+@user_id.to_s+"}]->(e) CREATE (s)-[:FeedNext{user_id:"+@user_id.to_s+"}]->(e) DELETE f1, f2  WITH user, "+object
+		" MATCH (s)-[f1:FeedNext{user_id:"+@user_id.to_s+"}]->("+object+")-[f2:FeedNext{user_id:"+@user_id.to_s+"}]->(e) CREATE (s)-[:FeedNext{user_id:"+@user_id.to_s+"}]->(e) DELETE f1, f2  WITH user, " + object + " "
 	end
 
 	def create object
-		" MATCH (user)-[old:FeedNext]->(old_feed) OPTIONAL MATCH (" + object + ")-[existing_relation:FeedNext{user_id:" + @user_id.to_s + "}]->() FOREACH(ignore IN CASE WHEN existing_relation IS NULL THEN [1] ELSE [] END | CREATE UNIQUE (user)-[:FeedNext{user_id:" + @user_id.to_s + "}]->(" + object + ")-[:FeedNext{user_id:" + @user_id.to_s + "}]->(old_feed) DELETE old SET user.latest_feed_id = ID(" + object + ")) WITH user, " + object + " "
+		" MATCH (user)-[old:FeedNext]->(old_feed) "\
+		" CREATE UNIQUE (user)-[:FeedNext{user_id:" + @user_id.to_s + "}]->(" + object + ")-[:FeedNext{user_id:" + @user_id.to_s + "}]->(old_feed) "\
+		" DELETE old "\
+		" SET user.latest_feed_id = ID(" + object + ")"
+		" WITH user, " + object + " "
 	end
 end

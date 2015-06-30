@@ -14,7 +14,7 @@ class User::UserNotification < User
 	end
 
 	def self.remove node_variable
-		" MATCH (s)-[f1:NextNotification]->("+node_variable+")-[f2:NextNotification]->(e) CREATE (s)-[:NextNotification]->(e) DELETE f1, f2  WITH "+node_variable
+		" MATCH (s)-[f1:NextNotification]->("+node_variable+")-[f2:NextNotification]->(e) CREATE (s)-[:NextNotification{user_id:f1.user_id}]->(e) DELETE f1, f2  WITH "+node_variable
 	end
 
 	def self.match
