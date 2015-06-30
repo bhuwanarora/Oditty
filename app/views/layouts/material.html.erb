@@ -280,7 +280,6 @@
             <% if @search %>
                 <script src="assets/angular/controllers/search_page_controller.js"></script>
             <% end %>
-
         <% else %>
             <link rel="stylesheet" href="assets/min/site.min.css" />
             <script src="assets/min/angular/site.min.js"></script>
@@ -348,6 +347,9 @@
             <% if @search %>
                 <script src="assets/min/angular/controllers/search_group.min.js"></script>
             <% end %>
+        <% end %>
+        <% if Rails.env.staging? %>
+            <script src="assets/angular/constants/staging.js"></script>
         <% end %>
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
