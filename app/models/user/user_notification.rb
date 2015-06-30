@@ -46,7 +46,7 @@ class User::UserNotification < User
 	end
 
 	def self.create_visited_notification
-		User::UserNotification.match("new_visited_notification") + ", notification CREATE UNIQUE (user)-[:VisitedNotification]->(new_visited_notification) WITH user "
+		User::UserNotification.match("new_visited_notification") + ", notification CREATE UNIQUE (user)-[:VisitedNotification{user_id:ID(user)}]->(new_visited_notification) WITH user "
 	end
 
 	def self.basic_info
