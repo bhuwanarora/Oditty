@@ -149,8 +149,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         if(getCookie("logged") != ""){
             $scope.info.hide_signin = true;
         }
+        console.log("appController Facebook me response");
         Facebook.api('/me', function(response){
-            console.debug("appController Facebook me response", response);
+            console.log("appController Facebook me response", response);
             Facebook.api('me/books', function(response){
                 websiteService.handle_facebook_books(response);
             });
@@ -163,6 +164,12 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
             Facebook.api('me/likes', function(response){
                 websiteService.handle_facebook_likes(response);
             });
+        });
+
+        $scope.$on('Facebook:statusChange', function(ev, data){
+            console.log('appController facebookStatus: ', data);
+            // var access_token = data.accessToken;
+            // setCookie("accessToken", access_token, 1);
         });
 
     }());
