@@ -7,6 +7,7 @@ class String
     def search_ready
     	self.downcase
             .gsub(" ", "")
+            .gsub("-", "")
             .gsub(":", "")
             .gsub("'", "")
             .gsub("!", "")
