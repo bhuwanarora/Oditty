@@ -140,15 +140,17 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         });
 
 
-        $scope.$on('Facebook:statusChange', function(ev, data){
-            console.log('facebookStatus: ', data);
-            if(data.status == LoginConstants.FacebookLoginStatusCheck) {
-                $scope.$apply(function() {
-                });
-            } 
-            else {
-            }
-        });
+        // $scope.$on('Facebook:statusChange', function(ev, data){
+        //     console.log('facebookStatus: ', data);
+        //     var access_token = data.accessToken;
+        //     setCookie("accessToken", access_token, 1);
+        //     // if(data.status == LoginConstants.FacebookLoginStatusCheck) {
+        //     //     $scope.$apply(function() {
+        //     //     });
+        //     // } 
+        //     // else {
+        //     // }
+        // });
 
         /**
          * Watch for Facebook to be ready.
@@ -195,19 +197,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
-
-            Facebook.api('me/books', function(response){
-                websiteService.handle_facebook_books(response);
-            });
-            Facebook.api('me/books.reads', function(response){
-                websiteService.handle_facebook_books(response);
-            });
-            Facebook.api('me/books.wants_to_read', function(response){
-                websiteService.handle_facebook_books(response);
-            });
-            Facebook.api('me/likes', function(response){
-                websiteService.handle_facebook_likes(response);
-            });      
         });
     };
 

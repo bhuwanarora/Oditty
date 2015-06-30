@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -149,6 +149,21 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         if(getCookie("logged") != ""){
             $scope.info.hide_signin = true;
         }
+        Facebook.api('/me', function(response){
+            console.debug("appController Facebook me response", response);
+            Facebook.api('me/books', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/books.reads', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/books.wants_to_read', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/likes', function(response){
+                websiteService.handle_facebook_likes(response);
+            });
+        });
 
     }());
 
