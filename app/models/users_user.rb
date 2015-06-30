@@ -70,7 +70,7 @@ class UsersUser < Neo
 	end
 
 	def self.match_followers
-		" MATCH (friend)-[followed_by:FollowedBy]->(follows_node:FollowsNode)-[follows_user:FollowsUser]->(user) WITH user, friend "
+		" MATCH (friend)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(user) WITH user, friend "
 	end
 
 	def follow

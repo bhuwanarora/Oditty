@@ -280,7 +280,7 @@ class User < Neo
 	end
 
 	def match_followers skip
-		match  + UsersUser.match_followers + "WITH user, friend " + UsersUser.optional_follow_match + ", ID(follows_node) AS status " + User.skip(skip) + User.limit(10)
+		match  + UsersUser.match_followers + UsersUser.optional_follow_match + ", ID(follows_node) AS status " + User.skip(skip) + User.limit(10)
 	end
 
 	def self.get_visited_books

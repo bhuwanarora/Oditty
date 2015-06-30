@@ -93,6 +93,6 @@ class UsersBook < Neo
 	end
 
 	def notify_borrow
-		User.new(@user_id).match + UsersUser.match_followers + create_borrow_node + ", friend " + "WITH friend as user, borrow_node " + User::UserNotification.add("borrow_node")
+		User.new(@user_id).match + UsersUser.match_followers + create_borrow_node + ", friend " + "WITH friend as user, borrow_node " + User::UserNotification.add("borrow_node") + User.return_group(User.basic_info)
 	end
 end
