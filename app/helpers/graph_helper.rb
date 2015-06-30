@@ -655,4 +655,14 @@ module GraphHelper
 		end
 	end
 
+	def self.reset_user_notification
+		clause = " MATCH ()-[r:NextNotification]->() DELETE r "\
+				" MATCH ()-[r:VisitedNotification]->() DELETE r "\
+				" MATCH (user:User) "\
+				" CREATE UNIQUE (user)-[:NextNotification{user_id:ID(user)}]->(user) "\
+				" CREATE UNIQUE (user)-[:VisitedNotification{user_id:ID(user)}]->(user) "
+
+		clause.execute
+	end
+
 end
