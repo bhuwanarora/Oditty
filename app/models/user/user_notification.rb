@@ -17,8 +17,8 @@ class User::UserNotification < User
 		" MATCH (s)-[f1:NextNotification]->("+node_variable+")-[f2:NextNotification]->(e) CREATE (s)-[:NextNotification{user_id:f1.user_id}]->(e) DELETE f1, f2  WITH "+node_variable
 	end
 
-	def self.match
-		" MATCH (user)-[next_notification:NextNotification{user_id:ID(user)}]->(notification) WITH user, notification, next_notification "
+	def self.match label="notification"
+		" MATCH (user)-[next_notification:NextNotification{user_id:ID(user)}]->(" + label + ") WITH user, " + label + ", next_notification "
 	end
 
 	def self.delete_visited_notification
@@ -38,7 +38,7 @@ class User::UserNotification < User
 	end
 
 	def match_last_visited_notification
-		User.new(@user_id).match + " MATCH (user)-[visited_notification:VisitedNotification]->(notification) WITH notification, user, visited_notification "
+		@user.match + " MATCH (user)-[visited_notification:VisitedNotification]->(notification) WITH notification, user, visited_notification "
 	end
 
 	def self.create_for_new_user
@@ -46,7 +46,7 @@ class User::UserNotification < User
 	end
 
 	def self.create_visited_notification
-		User::UserNotification.match + " CREATE UNIQUE (user)-[:VisitedNotification]->(new_visited_notification) WITH user "
+		User::UserNotification.match("new_visited_notification") + ", notification CREATE UNIQUE (user)-[:VisitedNotification]->(new_visited_notification) WITH user "
 	end
 
 	def self.basic_info
