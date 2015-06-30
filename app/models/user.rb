@@ -304,7 +304,7 @@ class User < Neo
 	end
 
 	def get_followers skip
-		match_followers(skip) + User.optional_get_visited_books + User.return_group(User.basic_info,"books", "status")
+		match_followers(skip) + " WITH friend AS user, status " + User.optional_get_visited_books + User.return_group(User.basic_info,"books", "status")
 	end
 
 	def match_users_followed skip
