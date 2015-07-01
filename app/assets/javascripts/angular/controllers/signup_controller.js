@@ -1,6 +1,4 @@
 homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService){
-    // Here we do the authentication processing and error handling.
-    // Note that authResult is a JSON object.
     $scope.processAuth = function(authResult){
         // Do a check if authentication has been successful.
         if(authResult['access_token']){
@@ -16,10 +14,10 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                 immediate: true
             }, function (authRes) {
                 if (authRes['status']['signed_in']) {
-                    console.log("signedIn",authResult['error']);
+                    console.log("signedIn", authResult['error']);
                 }
             });
-            console.log(" not signedIn",authResult['error']);
+            console.log(" not signedIn", authResult['error']);
             $scope.signedIn = false;
         }
     };
@@ -86,17 +84,13 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         var not_repeat_pattern = new RegExp("^(.)\\1{7,16}$");
         var max_length_pattern = new RegExp("^.{100,}$");
 
-        // var email = "bhuwanarora67@gmail.com";
-        // var password = "test";
         var data_json = {"email": email, "password": password, "old_user": old_user};
         
         var success_callback = function(data){
             $rootScope.user = data.user;
             $cookieStore.put('user', data.user);
             $scope._init_user();
-            // window.location.gr
             $scope.info.hide_signin = true;
-            // _redirect_user();
         }
 
         var error_callback = function(reason){
@@ -138,33 +132,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         $scope.$on('event:google-plus-signin-failure', function (event, authResult){
             console.log("google login", authResult);
         });
-
-
-        // $scope.$on('Facebook:statusChange', function(ev, data){
-        //     console.log('facebookStatus: ', data);
-        //     var access_token = data.accessToken;
-        //     setCookie("accessToken", access_token, 1);
-        //     // if(data.status == LoginConstants.FacebookLoginStatusCheck) {
-        //     //     $scope.$apply(function() {
-        //     //     });
-        //     // } 
-        //     // else {
-        //     // }
-        // });
-
-        /**
-         * Watch for Facebook to be ready.
-         * There's also the event that could be used
-        */
-        // var callback1 = function(){
-     //         return Facebook.isReady();
-     //    }
-     //    var callback2 = function(newVal){
-     //         if(newVal){
-     //         $scope.facebookReady = true;
-     //         }
-     //    }
-        // $scope.$watch(callback1, callback2);
     }
    
     $scope.intent_login = function(){
@@ -181,7 +148,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
     $scope.login = function() {
         Facebook.login(function(response){
             if (response.status == LoginConstants.FacebookLoginStatusCheck) {
-                // $rootScope.logged = true;
                 $scope.me();
             }
         }, {scope: 'email'});
@@ -191,36 +157,18 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         Facebook.api('/me', function(response){
             websiteService.handle_facebook_user(response).then(function(){
                 $scope._init_user();
-                // _redirect_user();
+                _redirect_user();
             });
             $rootScope.user = response;
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
-
-             Facebook.api('me/books', function(response){
-                websiteService.handle_facebook_books(response);
-            });
-            Facebook.api('me/books.reads', function(response){
-                websiteService.handle_facebook_books(response);
-            });
-            Facebook.api('me/books.wants_to_read', function(response){
-                websiteService.handle_facebook_books(response);
-            });
-            Facebook.api('me/likes', function(response){
-                websiteService.handle_facebook_likes(response);
-            });   
         });
     };
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
         window.location.href = "/filters";
-        // if(redirect_url && (redirect_url != null)){
-        //     window.location.href = redirect_url;
-        // }
-        // else{
-        // }
     }
 
     
@@ -231,15 +179,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         setCookie("logged", $rootScope.user.id, 31);
     }
       
-    // $scope.logout = function(){
-   //   Facebook.logout(function() {
-   //           $scope.$apply(function() {
-   //           $rootScope.user   = {};
-   //           // $rootScope.logged = false;
-   //           });
-   //   });
-    // }
-
     $scope._is_logged_in = function(){
         var _handle_push_notifications = function(){
             websiteService.get_personal_notifications().then(function(data){
@@ -258,19 +197,13 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                 websiteService.get_user_details().then(function(data){
                     angular.extend($rootScope.user, data);
                 });
-                // $cookieStore.put('logged', true);
                 $scope._init_user();
-                // $scope._on_authenticate();
                 _handle_push_notifications();     
-                // stropheService.start_connection();
             }
         });
     }
 
     var _init = (function(){
-        // $cookieStore.remove('tab');
-        // $scope.login_active = true;
-        // $scope._is_logged_in();
         _bind_auth_listeners();
         $rootScope.user = {'books': {'bookmarked':[], 'read': []},
                 'authors': {'bookmarked': [], 'follow': []},
@@ -282,7 +215,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                $rootScope.user.fb_connect = true;
             }
         });
-
 
         var index = 0;
         var timer = 500;
@@ -304,7 +236,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             }
             timer = timer + 1500;
         });
-        // $scope.renderSignInButton();
     }());
 
 }]);

@@ -159,37 +159,6 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
         $scope.$on('destroy', function(){
             $timeout.cancel(authors_timeout);
         });
-
-        bookService.get_social_books().then(function(data){
-            $scope.social_books = data;
-        });
-
-        bookService.get_facebook_likes().then(function(data){
-            $scope.facebook_likes = data;
-            data = [1];
-            if(data != null && data.length >0){
-                angular.forEach(data, function(value){
-                    var app_id = value.app_id;
-                    FB.api(
-                        "/"+206270296204652,
-                        function (response) {
-                            if (response && !response.error){
-                                debugger
-                                // websiteService.set_like_info(response);
-                            }
-                        }
-                    );
-                });
-            }
-        });
-
-        // Facebook.api('108160689204689', function(response){
-        //     websiteService.handle_facebook_books(response);
-        // });
-    
-        // Facebook.api('me/og.likes', function(response){
-        //     websiteService.handle_facebook_books(response);
-        // });
     }());
 
 }]);

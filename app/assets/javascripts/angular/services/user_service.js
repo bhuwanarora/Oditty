@@ -154,4 +154,13 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         }
     }
 
+    
+    this.get_social_books = function(){
+        return _deferred_request('/api/v0/social_books', $q, $http);
+    }
+
+    this.get_facebook_likes = function(){
+        return _deferred_request('/api/v0/get_likes', $q, $http);   
+    }
+
 }]);
