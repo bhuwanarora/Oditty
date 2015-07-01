@@ -3,7 +3,16 @@ ReadersDoor::Application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
-
+  config.nlp_service = "http://52.27.104.2/"
+  config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
+  config.blog_url = " https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after="
+  config.neo4j_url = "http://localhost:7474"
+  config.community_bucket = "rd-images"
+  config.user_bucket = "rd-images"
+  config.news_bucket = "rd-images"
+  config.google_public_key = 'AIzaSyAV495wghmWMcTENY9CsrUpvVPzJpNOaxo'
+  config.image_service = "http://52.10.230.9"
+  config.neo4j_server_port = 7474
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
   # and those relying on copy on write to perform better.
@@ -78,13 +87,12 @@ ReadersDoor::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-  config.nlp_service = "http://54.68.193.213/"
-  config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
-  config.blog_url = " https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after="
-  config.home = "http://www.production.readersdoor.com/"
+  config.home = "http://www.staging.readersdoor.com/"
   config.assets.precompile += [
     'basic.css', 
     'basic_less.css',
     'full_control.css'
   ]
+
+  config.search_service_url = "http://109.237.26.43"
 end

@@ -87,12 +87,12 @@ class UsersBook < Neo
 	end
 
 	def create_borrow_node
-		" MERGE (user) -[:BorrowItem]->(borrow_node:BorrowNode{book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s +  "})"\
-		"SET borrow_node.timestamp =\'" + Time.now.to_i.to_s + "\' "\
+		" MERGE (borrow_node:BorrowNode{book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + ", timestamp: " + Time.now.to_i.to_s + "}) "\
+		" CREATE UNIQUE (user) -[:BorrowItem]->(borrow_node) "\
 		" WITH user, borrow_node "
 	end
 
 	def notify_borrow
-		User.new(@user_id).match + UsersUser.match_followers + create_borrow_node + ", friend " + "WITH friend as user, borrow_node " + 	User::UserNotification.add("borrow_node")
+		User.new(@user_id).match + UsersUser.match_followers + create_borrow_node + ", friend " + "WITH friend as user, borrow_node " + User::UserNotification.add("borrow_node") + User.return_group(User.basic_info)
 	end
 end

@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdBottomSheet', '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', function($scope, $rootScope, $mdSidenav, $mdBottomSheet, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -33,18 +33,21 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
         var notifications_timeout = $timeout(function(){
             feedService.get_notifications().then(function(data){
                 $scope.info.loading = false;
-                $scope.notifications = data;
-                angular.forEach($scope.notifications, function(value){
-                    switch(value.label){
+                $scope.notifications = [];
+                angular.forEach(data, function(value){
+                    var timestamp = $filter('timestamp')(value.created_at, "date:'h:mm a, dd MMM'");
+                    switch(value.label[0]){
                         case "FollowsNode":
-                            if(angular.isDefined(value.friend)){
-                                value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> started following you."
-                            }
+                            value.message = "<div layout-padding><div><span>Your </span><a href='/profile?id="+value.notification.friend_id+"'>friend</a><span> started following you.</span></div><div class='less_important'>"+timestamp+"</div></div>";
                             break;
                         case "RecommendNode":
-                            value.message = "<span>Your <a href='/profile?id="+value.notification.user_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.";
+                            value.message = "<div layout-padding><div><span>Your <a href='/profile?id="+value.notification.friend_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.</div><div class='less_important'>"+timestamp+"</div></div>";
+                            break;
+                        case "BorrowNode":
+                            value.message = "<div layout-padding><div><span>Your </span><a href='/profile?id="+value.notification.friend_id+"'>friend</a><span> is looking to borrow </span><span><a href='/book?id="+value.notification.book_id+"'>book</a></span></div><div class='less_important'>"+timestamp+"</div></div>";
                     }
-                });
+                    this.push(value);
+                }, $scope.notifications);
             });
         }, 100);
         $scope.$on('destroy', function(){
@@ -88,12 +91,113 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdB
             if(angular.isUndefined($rootScope.user)){
                 userService.get_user_details().then(function(data){
                     $rootScope.user = data;
+                    _handle_facebook_data();
                 });
+            }
+            else{
+                _handle_facebook_data();
             }
         }, 100);
 
         $scope.$on('destroy', function(){
             $timeout.cancel(user_timeout);
+        });
+    }
+
+    var _handle_facebook_data = function(){
+        var _fetch_books = function(){
+            Facebook.api('me/books', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/books.reads', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+            Facebook.api('me/books.wants_to_read', function(response){
+                websiteService.handle_facebook_books(response);
+            });
+        }
+
+        var _fetch_likes = function(){
+            Facebook.api('me/likes', function(response){
+                websiteService.handle_facebook_likes(response);
+            });
+        }
+
+        var _fetch_likes_from_database = function(){
+            userService.get_facebook_likes().then(function(data){
+                $scope.facebook_likes = data;
+                data = [1];
+                if(data != null && data.length >0){
+                    angular.forEach(data, function(value){
+                        var app_id = value.app_id || 206270296204652;
+                        _fetch_like_info(app_id);
+                    });
+                }
+            });
+        }
+
+        var _fetch_book_info = function(app_id){
+            Facebook.api(
+                "/"+app_id,
+                function (response) {
+                    if(response && !response.error){
+                        websiteService.handle_facebook_books(response);
+                    }
+                }
+            );
+        }
+
+        var _fetch_books_from_database = function(){
+            userService.get_social_books().then(function(data){
+                $scope.social_books = data;
+                if(data != null && data.length >0){
+                    angular.forEach(data, function(value){
+                        var app_id = value.app_id || 206270296204652;
+                        _fetch_book_info(app_id);
+                    });
+                }
+            });
+        }
+
+        var _fetch_like_info = function(app_id){
+            Facebook.api(
+                "/"+app_id,
+                function (response) {
+                    if (response && !response.error){
+                        websiteService.set_like_info(response);
+                    }
+                }
+            );
+        }
+        
+        $scope.$on('Facebook:statusChange', function(ev, data){
+            var time = (new Date().getTime())/1000;
+            if(angular.isDefined($rootScope.user.facebook_books_retrieval_time)){
+                var likes_retrieval_time_difference = (time-$rootScope.user.facebook_books_retrieval_time)/(3600*24);
+                if(likes_retrieval_time_difference > 1){
+                    _fetch_books();
+                }
+                else{
+                    _fetch_books_from_database();
+                }
+            }
+            else{
+                _fetch_books();
+            }
+
+            if(angular.isDefined($rootScope.user.facebook_likes_retrieval_time)){
+                var likes_retrieval_time_difference = (time-$rootScope.user.facebook_likes_retrieval_time)/(3600*24);
+                if(likes_retrieval_time_difference > 1){
+                    _fetch_likes();
+                }
+                else{
+                    _fetch_likes_from_database();
+                }
+            }
+            else{
+                _fetch_likes();
+            }
+
         });
     }
 

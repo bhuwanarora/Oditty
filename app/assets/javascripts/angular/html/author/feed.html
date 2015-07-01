@@ -6,7 +6,7 @@
         <div layout-padding>
             <md-list-item  class="md-3-line">
                 <img ng-src="{{author.id | author_thumb}}"
-                    class="circular"/>
+                    class="circular" onerror="this.src='/assets/author_profile.jpg'"/>
                 <div>&nbsp;&nbsp;</div>
                 <div layout="column" layout-padding class="md-list-item-text side_padding">
                     <div class="less_important">

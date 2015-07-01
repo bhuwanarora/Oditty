@@ -1,8 +1,8 @@
 class SubscriptionMailer < MandrillMailer::TemplateMailer
-  default from: 'developers@readersdoor.com'
+    default from: 'developers@readersdoor.com'
 
-  def invite(invitation='Coming Soon')
-    mandrill_mail template: invitation[:template],
+    def invite(invitation='Coming Soon')
+        mandrill_mail template: invitation[:template],
                   subject: 'Welcome To Reader\'s Door',
                   to: { email: invitation[:email], name: invitation[:name] },
                   vars: {
@@ -10,11 +10,11 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   },
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def webhooks params
-    subject = params[:params][:commits][0][:message] + ' : ' + params[:params][:pusher][:name] rescue ""
-    mandrill_mail template: params[:template] ,
+    def webhooks params
+        subject = params[:params][:commits][0][:message] + ' : ' + params[:params][:pusher][:name] rescue ""
+        mandrill_mail template: params[:template] ,
                   subject: ('Github ' + subject),
                   to: {email: params[:email]},
                   vars: {
@@ -28,10 +28,23 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   },
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def news_subscription params
-    mandrill_mail template: params[:template],
+    def follow params
+        mandrill_mail template: params[:follow_template],
+                  subject: params[:friend][:name] + " started following you at ReadersDoor.",
+                  to: { email: params[:user][:email]},
+                  vars: {
+                    'USERNAME' => params[:user][:name],
+                    'FRIENDNAME' => params[:friend][:name],
+                    'FRIENDID'  => params[:friend][:id]
+                  },
+                  important: true,
+                  inline_css: true
+    end
+
+    def news_subscription params
+        mandrill_mail template: params[:template],
                   subject: params[:news1][:title],
                   to: { email: "prachi@readersdoor.com"},
                   vars: {
@@ -83,10 +96,10 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   # from: "recommendbooks@readersdoor.com",
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def subscribe(invitation)
-    mandrill_mail template: invitation[:template],
+    def subscribe(invitation)
+        mandrill_mail template: invitation[:template],
                   subject: 'Welcome To Reader\'s Door',
                   to: { email: invitation[:email], name: invitation[:name] },
                   vars: {
@@ -94,10 +107,10 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   },
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def verify_email(invitation)
-    mandrill_mail template: invitation[:template],
+    def verify_email(invitation)
+        mandrill_mail template: invitation[:template],
                   subject: 'Verify Email: Reader\'s Door',
                   to: { email: invitation[:email] },
                   vars: {
@@ -105,10 +118,10 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   },
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def recommend_book params
-    mandrill_mail template: params[:template],
+    def recommend_book params
+        mandrill_mail template: params[:template],
                   subject: params[:user][:name]+" recommends you to read " + params[:book][:title],
                   to: { email: params[:friend][:email]},
                   vars: {
@@ -124,10 +137,10 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   # from: "recommendbooks@readersdoor.com",
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def recover_password invitation
-    mandrill_mail template: invitation[:template],
+    def recover_password invitation
+        mandrill_mail template: invitation[:template],
                   subject: 'Recover Password: Reader\'s Door',
                   to: { email: invitation[:email] },
                   vars: {
@@ -135,13 +148,13 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
                   },
                   important: true,
                   inline_css: true
-  end
+    end
 
-  def test_email
-    mandrill_mail template: "TestEmail",
+    def test_email
+        mandrill_mail template: "TestEmail",
                   subject: 'TEST EMAIL',
                   to: { email: "bhuwanarora67@gmail.com" },
                   important: true,
                   inline_css: true 
-  end
+    end
 end

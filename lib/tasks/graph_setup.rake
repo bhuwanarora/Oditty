@@ -383,4 +383,11 @@ namespace :graph do
     include GraphHelper
     GraphHelper.fix_user_notification_feed
   end
+
+
+  desc "reset_user_notification"
+  task :reset_user_notification => :environment do
+    include GraphHelper
+    GraphHelper.reset_user_notification
+  end
 end

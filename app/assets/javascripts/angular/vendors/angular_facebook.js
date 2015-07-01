@@ -206,7 +206,7 @@
         /**
          * SDK version
          */
-        settings.version = 'v1.0';
+        settings.version = 'v2.3';
 
         this.setSdkVersion = function(version) {
           settings.version = version;

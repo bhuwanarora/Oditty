@@ -98,7 +98,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
 	end
 
 	def self.grouped_basic_info
@@ -154,7 +154,7 @@ class User < Neo
 	end
 
 	def get_notifications
-		User::UserNotification.match_last_visited_notification(@id) + User::UserNotification.delete_visited_notification  + " WITH user " + User::UserNotification.create_visited_notification + User::UserNotification.match_path  + "," + User::UserNotification.extract_unwind("notification") + " WITH " + User.tail("notification") + User.return_group(User::UserNotification.basic_info) + User.order_init + " notification.created_at DESC "
+		User::UserNotification.new(@id, nil).match_last_visited_notification + User::UserNotification.delete_visited_notification  + " WITH user, notification " + User::UserNotification.create_visited_notification + ", notification SET user.notification_count = 0 WITH user, notification " + User::UserNotification.match_path  + ", notification, " + User::UserNotification.extract_unwind("notifications") + ",  notification WHERE ID(notifications) <> ID(notification) AND labels(notification) <> 'User' WITH notifications AS notification "  + User.return_group(User::UserNotification.basic_info) + User.order_init + " notification.created_at DESC "
 	end
 
 	def get_books_bookmarked(skip_count=0)
@@ -280,7 +280,7 @@ class User < Neo
 	end
 
 	def match_followers skip
-		match + " WITH user AS friend " + UsersUser.match_followers + "WITH user, friend " + UsersUser.optional_reverse_match + ", ID(follows_node) AS status " + User.skip(skip) + User.limit(10)
+		match  + UsersUser.match_followers + UsersUser.optional_follow_match + ", ID(follows_node) AS status " + User.skip(skip) + User.limit(10)
 	end
 
 	def self.get_visited_books
@@ -304,7 +304,7 @@ class User < Neo
 	end
 
 	def get_followers skip
-		match_followers(skip) + User.optional_get_visited_books + User.return_group(User.basic_info,"books", "status")
+		match_followers(skip) + " WITH friend AS user, status " + User.optional_get_visited_books + User.return_group(User.basic_info,"books", "status")
 	end
 
 	def match_users_followed skip
