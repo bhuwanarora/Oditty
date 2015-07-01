@@ -15,8 +15,16 @@ class FacebookLike < Neo
 		merge + FacebookLike.set_category + FacebookLike.set_facebook_created_time + FacebookLike.set_name + FacebookLike.set_created_time
 	end
 
+	def self.get_relationship_type field_name
+		"FbRel" + field_name.search_ready.camelize + ""
+	end
+
+	def self.get_node_label field_name
+		"Fb" + field_name.search_ready.camelize + ""
+	end
+
 	def self.set_category category
-		" SET facebook_like :Fb" + category.to_s.search_ready + " SET facebook_like.category = \"" + category.to_s + "\" "
+		" SET facebook_like :" + FacebookLike.get_node_label(category) + " SET facebook_like.category = \"" + category.to_s + "\" "
 	end
 
 	def self.set_name name
