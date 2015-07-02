@@ -1,7 +1,14 @@
 <div ng-if="borrow_users && borrow_users.length > 0" class="less_important">
     Borrow this book from a friend</div>
 <div ng-if="!borrow_users || borrow_users.length == 0" class="less_important">
-    <a ng-click="notify_friends()">Notify</a> your friends that you want to borrow this book.</div>
+    <div ng-hide="hide_link">
+        <a ng-click="notify_friends()">Notify</a> your friends that you want to borrow this book.
+    </div>
+    <div ng-show="hide_link">
+        Notification Sent.
+    </div>
+</div>
+
 <md-list layout-padding ng-if="borrow_users">
     <md-item>
         <md-item-content layout="row" ng-repeat="user in borrow_users">

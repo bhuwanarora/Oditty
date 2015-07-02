@@ -28,7 +28,13 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		}
 		else{
 			var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
-			bookService.send_borrow_notification(id);
+			if(!$scope.info.loading){
+				$scope.info.loading = true;
+				bookService.send_borrow_notification(id).then(function(){
+					$scope.info.loading = false;
+					$scope.hide_link = true;
+				});
+			}
 		}
 	}
 
