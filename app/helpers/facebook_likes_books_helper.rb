@@ -2,8 +2,35 @@ module FacebookLikesBooksHelper
 	
 	def self.set_community_books node_id
 		text_array = FacebookLikesBooksHelper.get_data_for_NLP node_id
-		communitynames = FacebookLikesBooksHelper.get_communities_from_text text_array
-		BookCommunityHelper.merge_community communitynames
+		text = text_array.join(" ")
+		community_books_relevance = FacebookLikesBooksHelper.get_communities_from_text [text]
+		default_community_books_relevance = FacebookLikesBooksHelper.get_communities_from_default node_id
+		all_community_books_relevance = community_books_relevance[0] + default_community_books_relevance
+		FacebookLikesBooksHelper.merge_community_to_books all_community_books_relevance
+		FacebookLikesBooksHelper.merge_node_to_community all_community_books_relevance, node_id
+	end
+
+	def self.merge_community_to_books all_community_books_relevance
+		all_community_books_relevance.each do |element|
+			books_id = element['books_id']
+			name 	= element['name']
+			clause = Community.merge(name)
+			books_id.each do |book_id|
+				clause +=  FacebookLikesBooksHelper.match_node(books_id,"book") + ", community " + Community.merge_book + " WITH community "
+			end
+			(clause + " RETURN ID(community)").execute
+	end
+
+	def self.merge_node_to_community all_community_books_relevance, node_id
+		clause = FacebookLikesBooksHelper.match_node(node_id)
+		all_community_books_relevance.each do |element|
+			clause += Community.merge(element['name']) + ", node " + News.merge_community({
+										'relevance' =>element['relevance'],
+										'relevanceOriginal' => element['relevanceOriginal']
+										},'node')
+			clause += " WITH node "
+		end
+		clause.execute
 	end
 
 	def self.match_node id, nodename = "node"
@@ -158,10 +185,34 @@ module FacebookLikesBooksHelper
 		text_array.map{|text| FacebookLikesBooksHelper.get_communities_from_NLP(text)} # Arjun's filter to apply there
 	end
 
+	def self.get_communities_from_default node_id
+		clause = FacebookLikesBooksHelper.match_node(node_id) + "RETURN "
+		link_types = []
+		Constant::FbDataNode::FbDefaultCommunities.each do |property|
+			unless property[property.length -1] == '/'
+				clause += " node." + property + ","
+			else
+				link_types << FacebookLike.get_relationship_type property
+			end
+		end
+		clause[clause.length -1] = ''
+		output = clause.execute
+		communitynames = []
+		if(output.length > 0)
+			community_info = output[0]
+			community_info.each do |key,community|
+				communitynames += community.split("/")
+			end
+		end
+		communitynames.map{|communityname| {'name'		=> communityname
+									'relevance' => Constant::FbDataNode::FbDefaultCommunityRelevance,
+									'relevanceOriginal' => Constant::FbDataNode::FbDefaultCommunityRelevance,
+									'books_id' => CommunitiesHelper.fetch_book_ids(communityname)[communityname]}}
+	end
+
 	def self.get_communities_from_NLP text
-		query = Rails.application.config.nlp_service + "api/v0/get_community" 
-		uri = URI(query)
-		response = Net::HTTP.post(uri,'q=' + text )
-		output = response.is_json ? JSON.parse(response) : {}
+		uri= URI.parse(Rails.application.config.nlp_service + "api/v0/get_community")
+		response = Net::HTTP.post_form(uri, {"q" => text})
+		community_books_relevance = CommunitiesHelper.handle_nlp_response response
 	end
 end

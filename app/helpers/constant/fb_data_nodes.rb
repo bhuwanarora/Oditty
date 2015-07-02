@@ -12,9 +12,10 @@ module Constant::FbDataNode
 	}
 
 	FbNlpDescriptionPropertiesPrimary = [ "description", "about", "mission","bio", "company_overview", "general_info"]
-	FbNlpDescriptionPropertiesSecondary = ["name", "location/city", "location/country"]
+	FbNlpDescriptionPropertiesSecondary = ["name"]
 	FbDirectCommunitySearchProperties = ["written_by","starring","directed_by"] # comma separated
 	FbDefaultCommunities = ["category", "category_list/","genre"] #slash in genre handled.
+	FbDefaultCommunityRelevance = 0.987654321
 	FbDataTimeHandleSpecially = ["birthday","founded","release_date"]
 
 	FbAbstractCategory = ["Local Business or Place", "Company, Organization or Institution","Artist, Band or Public Figure", "Entertainment"]

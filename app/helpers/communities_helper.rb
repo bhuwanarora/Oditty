@@ -45,6 +45,25 @@ module CommunitiesHelper
 		end
 	end
 
+	def self.handle_nlp_response response
+		communities_books = []
+		community_data = JSON.parse(response.body)
+		community_data = CommunitiesHelper.handle_communities response
+		community_data.each_with_index do |community, index|
+			community_books = CommunitiesHelper.fetch_books_id_database_net community['value']
+			books = community_books[community['value']]
+			if CommunitiesHelper.has_required_book_count(books)
+				communities_books << {
+									'name'		=> community['value']
+									'relevance' => community['relevance'],
+									'relevanceOriginal' => community['relevanceOriginal'],
+									'books_id' => community_books[community['value']]
+									}
+			end
+		end
+		communities_books
+	end
+
 	def self.handle_communities response
 		communities = []		
 		response["Tags"].each do |social_tag|
@@ -56,6 +75,25 @@ module CommunitiesHelper
 		communities
 	end
 
+	def self.fetch_books_id_database_net community
+		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name, ID(book)"
+		books_list = clause.execute
+		if(books_list.empty?)
+			books = CommunitiesHelper.fetch_books community
+		else
+			books = {community => []}
+			books_list.each do |book|
+				if(book.has_key?("book.author_name"))
+					author = book["book.author_name"] # it will be array, now it is not
+					if(author.nil?)
+						next
+					end
+					books[community] << book["ID(book)"]
+				end
+			end
+		end
+		books
+	end
 	# This funnction first checks the database for books, if no books are present,
 	# it calls google api to fetch books	
 	def self.fetch_books_database_net community

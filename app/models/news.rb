@@ -110,11 +110,11 @@ class News < Neo
 	end
 
 #{relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}
-	def self.merge_community relevance
-		clause = " MERGE (news)-[h:HasCommunity]->(community)"\
+	def self.merge_community relevance, news = 'news'
+		clause = " MERGE (" + news + ")-[h:HasCommunity]->(community)"\
 		" ON CREATE SET h +={relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}"\
 		" ON MATCH  SET h +={relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}"\
-		" WITH news,community"
+		" WITH "+ news + ",community"
 		clause
 	end
 
