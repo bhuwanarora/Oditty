@@ -14,7 +14,7 @@
             </md-button>
         </div>
         <div layout="column" layout-align="center center" layout-padding>
-            <img ng-src="{{profile_user.image_url | default_profile}}" class="profile_pic">
+            <img ng-src="{{profile_user.image_url}}" class="profile_pic" onerror="this.src='/assets/user_profile.jpg'">
             <div>
                 <a ng-href="/profile?id={{::profile_user.id}}">
                     <div layout="column" layout-wrap layout-align="start start">

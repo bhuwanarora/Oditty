@@ -2,7 +2,7 @@
     <md-card-content layout="column">
         <section layout="column" layout-align="start" flex="50">
             <div layout="row">
-                <img ng-src="{{profile_user.image_url | default_profile}}" class="circular">
+                <img ng-src="{{profile_user.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
                 <div layout="column" layout-align="start start" class="side_padding">
                     <div layout-padding class="bold" ng-show="profile_user.first_name">{{::profile_user.first_name}}</div>
                     <div layout-padding>

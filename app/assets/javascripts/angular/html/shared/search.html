@@ -21,9 +21,11 @@
     <md-item-template>
         <div layout="row" layout-align="space-between">
             <div layout="row" flex="90">
-                <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb" />
-                <img ng-src="{{item.image_url}}" ng-show="item.image_url" class="search_thumb" />
-                <img ng-src="{{item.id | author_small_thumb}}" ng-show="item.labels == 'Author'" 
+                <img ng-src="{{item.isbn | small_thumb}}" ng-show="item.isbn" class="search_thumb"  
+                    onerror="this.src='/assets/defpicbook.png'"/>
+                <img ng-src="{{item.image_url}}" ng-show="item.image_url" class="search_thumb"  
+                     onerror="this.src='/assets/user_profile.jpg'"/>
+                <img ng-src="{{item.id | author_small_thumb}}" ng-show="item.labels == 'Author'" onerror="this.src='/assets/author_profile.jpg'" 
                     class=" circular" />
                 <div>&nbsp;</div>
                 <div layout-align="center start" layout="column">

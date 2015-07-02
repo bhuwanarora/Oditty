@@ -1,7 +1,7 @@
 <!-- <div ng-include src="'/assets/angular/html/profile/invite.html'"></div> -->
 <md-item ng-repeat="user in users_list" class="white user_card md-whiteframe-z1" layout-margin>
     <md-item-content layout="row" layout-align="center center" flex class="user_cover_image clear">
-        <img ng-src="{{user.image_url | default_profile}}" class="square user_photo" flex="60">
+        <img ng-src="{{user.image_url}}" class="square user_photo" flex="60" onerror="this.src='/assets/user_profile.jpg'">
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
         <a ng-href="/profile?p={{::user.id}}">
