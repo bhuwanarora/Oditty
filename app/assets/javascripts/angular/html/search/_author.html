@@ -4,7 +4,7 @@
         </section><br/>
         <section layout="row">
             <div flex="20" flex-md="30" flex-sm="35" layout="row" layout-align="start start">
-                <img ng-src="{{result.id | author_thumb}}" class="large_circular">
+                <img ng-src="{{result.id | author_thumb}}" class="large_circular" onerror="this.src='/assets/author_profile.jpg'"/>
             </div>
             <div flex="80" flex-md="70" flex-sm="65" layout="column" layout-wrap class="side_padding">
                 <div class="author_title"><a ng-href="/author?id={{::result.id}}">{{::result.name}}</a></div>
