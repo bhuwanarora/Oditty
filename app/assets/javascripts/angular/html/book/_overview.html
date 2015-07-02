@@ -23,7 +23,7 @@
         </div>
     </div>
     <div flex="50" hide-sm class="relative" hide-md>
-        <img ng-src="{{book | large_thumb}}" class="cover"/>
+        <img ng-src="{{book | large_thumb}}" class="cover" onerror="this.src='/assets/defpicbook.png'"/>
         <div class="absolute" ng-style="{background: '{{::book.color}}'}"></div>
     </div>
 </section>
