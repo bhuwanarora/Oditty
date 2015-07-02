@@ -1,5 +1,5 @@
-<div ng-controller="timelineController" class="white book_page">
-     <md-card ng-repeat="feed in book_feed" ng-if="book_feed && book_feed.length > 0" class="no_shadow">
+<div ng-controller="timelineController" class="book_page">
+     <md-card ng-repeat="feed in book_feed" ng-if="book_feed && book_feed.length > 0">
         <md-card-content ng-if="feed.user.first_name" layout="row">
             <img ng-src="{{feed.user.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
             <div layout="column" layout-padding>
@@ -24,7 +24,7 @@
         </md-card-content>
         <md-divider></md-divider>
      </md-card>
-     <md-card ng-if="book_feed && book_feed.length == 0" class="no_shadow less_important bold" layout-padding>
+     <!-- <md-card ng-if="book_feed && book_feed.length == 0" class="less_important bold" layout-padding>
         Be the first to share reading moments for this Book...
      </md-card>
      <div layout="row" layout-align="start center" layout-padding>
@@ -36,7 +36,7 @@
                 <span class="icon-pencil"></span>
             </div>
         </md-button>
-     </div>
+     </div> -->
 </div>
 <style>
     .user_title{

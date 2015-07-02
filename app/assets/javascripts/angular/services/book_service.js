@@ -1,4 +1,4 @@
-homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "search_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, search_service_url){
+homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "search_service_url", "price_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, search_service_url, price_service_url){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -88,6 +88,14 @@ homeApp.service('bookService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
 
     this.send_borrow_notification = function(id){
         return _deferred_request('/api/v0/notify_borrow?id='+id, $q, $http);
+    }
+
+    this.all_prices = function(isbn){
+        return _deferred_request('/api/v0/all_prices?isbn='+isbn, $q, $http, price_service_url);
+    }
+
+    this.more_prices = function(isbn){
+        return _deferred_request('/api/v0/more_prices?isbn='+isbn, $q, $http, price_service_url);
     }
 
 }]);

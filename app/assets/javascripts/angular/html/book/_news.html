@@ -1,4 +1,4 @@
-<md-content ng-controller="realVirtualityController" class="white book_page" check-scroll-bottom="load_news()">
+<div ng-controller="realVirtualityController" class="white book_page">
     <div class="less_important bold" layout-padding>
         Real Virtuality is seeing the world through the eyes of a book.
     </div>
@@ -25,14 +25,14 @@
                 layout-align="start start" layout="column" class="small-padding" flex-sm="100">
                 <div>
                     <a ng-href="/news?id={{::news.news_id}}">
-                        <div ng-bind-html="::news.title" class="big_title"></div>
+                        <div ng-bind-html="::news.title"></div>
                     </a>
                 </div>
                 <div class="less_important">{{news.created_at | timestamp | date:'dd MMM'}}</div>
-                <div>
-                    <a ng-href="{{::news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a>
-                </div>
-                <div ng-bind-html="::news.description"></div>
+                <!-- <div> -->
+                    <!-- <a ng-href="{{::news.news_url}}" class="less_important" target="_blank">{{news.news_url}}</a> -->
+                <!-- </div> -->
+                <div ng-bind-html="::news.description" class="summary"></div>
              </section>
         </div>
     </section>
@@ -42,7 +42,7 @@
      <section ng-if="!active_community.news && info.loading" layout-padding class="less_important">
          Searching...
      </section>
-</md-content>
+</div>
 <style>
     .md-switch-thumb .md-container, 
     md-radio-button .md-container{

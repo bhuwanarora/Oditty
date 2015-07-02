@@ -126,7 +126,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                 $scope.info.loading = false;
             });
             bookService.update_visited(book_id);
-        }, 1000);
+        }, 100);
         
         $scope.$on('destroy', function(){
             $timeout.cancel(book_data_timeout);

@@ -1,7 +1,25 @@
 <div layout="column" layout-align="space-between">
-    <md-button class="md-primary md-raised md-button-clear" ng-if="book.isbn"
-        ng-href="http://www.amazon.in/dp/{{book.isbn | first_isbn}}/?tag=reade0c-21" target="_blank ">Buy from Amazon</md-button>
-    <div ng-if="!book.isbn" class="less_important">
-        Can't find this book on amazon.
-    </div>
+	<div layout-padding layout="row" layout-align="space-between">
+		<div class="less_important bold">Store</div>
+		<div class="less_important bold">Delivery Time</div>
+		<div class="less_important bold">Price</div>
+		<div class="less_important bold">Goto Store</div>
+	</div>
+	<md-divider></md-divider>
+	<div ng-repeat="price in prices">
+		<div layout-padding layout="row" layout-align="space-between">
+			<div layout-padding>
+				<div >{{price.store}}&nbsp;</div>
+				<div class="less_important" ng-if="price.in_stock">(Available)</div>
+				<div class="less_important" ng-if="!price.in_stock">(No in Stock)</div>
+			</div>
+			<div layout-padding>
+				{{price.min_days}}-{{price.max_days}} Days
+			</div>
+			<div class=" bold" layout-padding>
+				{{price.currency_code}} {{price.price}} 
+			</div>
+		    <md-button ng-href="{{price.url}}" target="_blank" class="md-button-clear md-warn md-raised">Buy</md-button>
+		</div>
+	</div>
 </div>
