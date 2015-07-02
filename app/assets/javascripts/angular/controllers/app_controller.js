@@ -126,10 +126,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         var _fetch_likes_from_database = function(){
             userService.get_facebook_likes().then(function(data){
                 $scope.facebook_likes = data;
-                data = [1];
                 if(data != null && data.length >0){
                     angular.forEach(data, function(value){
-                        var app_id = value.app_id || 206270296204652;
+                        var app_id = value.app_id;
                         _fetch_like_info(app_id);
                     });
                 }
@@ -152,7 +151,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
                 $scope.social_books = data;
                 if(data != null && data.length >0){
                     angular.forEach(data, function(value){
-                        var app_id = value.app_id || 206270296204652;
+                        var app_id = value.app_id;
                         _fetch_book_info(app_id);
                     });
                 }
