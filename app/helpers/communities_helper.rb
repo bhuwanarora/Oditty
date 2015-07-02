@@ -54,7 +54,7 @@ module CommunitiesHelper
 			books = community_books[community['value']]
 			if CommunitiesHelper.has_required_book_count(books)
 				communities_books << {
-									'name'		=> community['value']
+									'name'		=> community['value'],
 									'relevance' => community['relevance'],
 									'relevanceOriginal' => community['relevanceOriginal'],
 									'books_id' => community_books[community['value']]

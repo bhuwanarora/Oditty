@@ -19,6 +19,7 @@ module FacebookLikesBooksHelper
 				clause +=  FacebookLikesBooksHelper.match_node(books_id,"book") + ", community " + Community.merge_book + " WITH community "
 			end
 			(clause + " RETURN ID(community)").execute
+		end
 	end
 
 	def self.merge_node_to_community all_community_books_relevance, node_id
@@ -40,7 +41,7 @@ module FacebookLikesBooksHelper
 	def self.merge_node label, properties
 		clause = "MERGE (node:" + label + "{"
 		properties.each do |key,value|
-			clause += " " + key + ": " + value.to_s +","
+			clause += " " + key + ": " + value.to_s + ","
 		end
 		clause[clause.length -1] = '}'
 	end
@@ -182,7 +183,7 @@ module FacebookLikesBooksHelper
 	end
 
 	def self.get_communities_from_text text_array
-		text_array.map{|text| FacebookLikesBooksHelper.get_communities_from_NLP(text)} # Arjun's filter to apply there
+		text_array.map{|text| FacebookLikesBooksHelper.get_communities_from_NLP(text)}
 	end
 
 	def self.get_communities_from_default node_id
@@ -192,7 +193,7 @@ module FacebookLikesBooksHelper
 			unless property[property.length -1] == '/'
 				clause += " node." + property + ","
 			else
-				link_types << FacebookLike.get_relationship_type property
+				link_types << FacebookLike.get_relationship_type(property)
 			end
 		end
 		clause[clause.length -1] = ''
@@ -204,7 +205,7 @@ module FacebookLikesBooksHelper
 				communitynames += community.split("/")
 			end
 		end
-		communitynames.map{|communityname| {'name'		=> communityname
+		communitynames.map{|communityname| {'name'		=> communityname,
 									'relevance' => Constant::FbDataNode::FbDefaultCommunityRelevance,
 									'relevanceOriginal' => Constant::FbDataNode::FbDefaultCommunityRelevance,
 									'books_id' => CommunitiesHelper.fetch_book_ids(communityname)[communityname]}}
