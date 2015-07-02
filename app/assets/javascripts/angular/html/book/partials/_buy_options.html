@@ -1,11 +1,7 @@
-<md-list>
-    <md-item>
-        <div layout="row" layout-align="space-between">
-            <md-button class="md-primary md-raised md-button-clear" 
-                ng-href="http://www.amazon.in/dp/{{book.isbn | first_isbn}}/?tag=reade0c-21" target="_blank ">Buy from Amazon</md-button>
-            <div ng-if="!book.isbn">
-                Can't find this book on amazon.
-            </div>
-        </div>
-    </md-item>
-</md-list>
+<div layout="column" layout-align="space-between">
+    <md-button class="md-primary md-raised md-button-clear" ng-if="book.isbn"
+        ng-href="http://www.amazon.in/dp/{{book.isbn | first_isbn}}/?tag=reade0c-21" target="_blank ">Buy from Amazon</md-button>
+    <div ng-if="!book.isbn" class="less_important">
+        Can't find this book on amazon.
+    </div>
+</div>

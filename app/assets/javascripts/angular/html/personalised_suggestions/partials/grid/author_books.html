@@ -5,13 +5,17 @@
 </div>
 <div ng-if="books_from_favourite_author" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
-		<md-button aria-label="refresh_author" class="margin_top clear md-whiteframe-z1"
+		<md-button aria-label="refresh_author" class="margin_top clear" 
+			ng-class="{'md-whiteframe-z1': info.active_tag.name != author.name}"
 			 ng-repeat="author in books_from_favourite_author" 
 			 ng-click="refresh_data(author)">
 			 <div layout="row">
 				<img ng-src="{{::author.image_url}}" layout="row" class="square" onerror="this.src='/assets/author_profile.jpg'"/>
-				<div layout-padding ng-bind-html="::author.name"
-					ng-class="{'bold': info.active_tag.name == author.name}"></div>
+				<div layout="column" layout-padding >
+					<div ng-bind-html="::author.name"
+						ng-class="{'bold': info.active_tag.name == author.name}"></div>
+					<!-- <div class="less_important">{{author.view_count}} Views</div> -->
+				</div>
 			 </div>
 		</md-button>
 	</div>
@@ -19,12 +23,14 @@
 		<div layout-padding>
 			<a class="big_title" ng-href="/author?q={{info.active_tag.id}}" 
 				ng-bind-html="info.active_tag.name"></a>
+			<div class="less_important" ng-bind-html="info.active_tag.overview"
+				layout-padding></div>
 		</div>
 		<div layout="row" layout-wrap>
 			<section layout-margin ng-repeat="book in info.active_tag.books" class="rd_book_container">
 				<md-button aria-label="show_book_dialog" class="md-whiteframe-z3 clear"
 					ng-click="show_book_dialog(book, $event)">
-					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></md-button>
+					<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
 				</md-button>
 			</section>
 		</div>

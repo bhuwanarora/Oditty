@@ -7,9 +7,8 @@
     <div role="tabpanel"
          id="tab1-content"
          aria-labelledby="tab1"
-         layout-margin
-         class="white">
-        <div ng-include src="'/assets/angular/html/book/_overview.html'"></div>
+         layout-margin>
+        <div ng-include src="'/assets/angular/html/book/_overview.html'" class="white md-whiteframe-z4 round_corners"></div>
     </div>
     <div layout="row" layout-sm="column" layout-md="column">
         <div flex="70" flex-sm="100" flex-md="100" layout="column">
@@ -29,7 +28,7 @@
                 <div ng-include src="'/assets/angular/html/book/_news.html'"></div>
             </div>
         </div>
-        <div flex="30" layout="column" flex-sm="100" flex-md="100">
+        <div flex="30" layout="column" flex-sm="100" flex-md="100" class="md-whiteframe-z2">
             <div role="tabpanel"
                  id="tab4-content"
                  aria-labelledby="tab4" ng-if="active_book"

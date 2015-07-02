@@ -43,7 +43,7 @@ homeApp.controller('personalisedController', ["$scope", "$timeout", '$rootScope'
                     else{
                         var image_url = value.info[0].image_url;
                     }
-                    var json = {"image_url": image_url, "view_count": 100, "name": value.info[0].first_name, "id": value.info[0].id};
+                    var json = {"image_url": image_url, "name": value.info[0].first_name, "id": value.info[0].id};
                     value = angular.extend(value, json);
                     value.books = _set_data(value.books, []);
                     if(value.name != null){

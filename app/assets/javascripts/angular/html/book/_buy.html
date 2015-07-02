@@ -5,7 +5,15 @@
     <div layout="column" layout-sm="column" class="full_height">
         <div flex layout="column" layout-padding
             ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
+          <md-divider></md-divider>
         <div flex layout="column" layout-padding
             ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
     </div>
+    <div layout="row" layout-align="space-between">
+	    <div layout="column">
+	        <md-button ng-class="{'md-raised': !book.i_own_this}" ng-click="toggle_bookmark(book.i_own_this)" class="md-button-clear">
+	            I own this book
+	        </md-button>
+	    </div>
+	</div>
 </div>

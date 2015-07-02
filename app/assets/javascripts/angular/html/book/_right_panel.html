@@ -10,7 +10,7 @@
                <div>{{::book.endorse_count}}</div>
           </div>
           <div ng-class="{'inactive_blue_circle': !book.endorse_status, 
-               'md-raised blue_circle': book.endorse_status}"   layout="row" layout-align="center center"
+                    'md- md-whiteframe-z1 blue_circle': book.endorse_status}"   layout="row" layout-align="center center"
                class="pointer" layout-padding ng-click="toggle_endorse()">
                <!-- <span class="icon-feed"></span> -->
                <i class="material-icons">plus_one</i>
@@ -23,7 +23,7 @@
           <div class="counter" layout="row" layout-align="center center" ng-if="book.share_count">
                <div>{{::book.share_count}}</div>
           </div>
-          <div class="md-raised blue_circle pointer"  layout="row" layout-align="center center"
+          <div class="blue_circle pointer md-whiteframe-z1"  layout="row" layout-align="center center"
                layout-padding ng-click="show_share_bottom_sheet()">
                <!-- <span class="icon-share"></span> -->
                <i class="material-icons">share</i>
@@ -54,7 +54,7 @@
           background-color: #4986c5 !important;
           width: 40px;
           height: 40px;
-          border-radius: 50% !important;
+          border-radius: 2px;
           color: white !important;
           padding: 0px !important;
      }

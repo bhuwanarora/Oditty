@@ -1,7 +1,7 @@
-<div ng-if="borrow_users && borrow_users.length > 0" >
+<div ng-if="borrow_users && borrow_users.length > 0" class="less_important">
     Borrow this book from a friend</div>
-<div ng-if="!borrow_users || borrow_users.length == 0">
-    Notify your friends that you want to borrow this book.</div>
+<div ng-if="!borrow_users || borrow_users.length == 0" class="less_important">
+    <a ng-click="notify_friends()">Notify</a> your friends that you want to borrow this book.</div>
 <md-list layout-padding ng-if="borrow_users">
     <md-item>
         <md-item-content layout="row" ng-repeat="user in borrow_users">
@@ -16,18 +16,3 @@
         </md-item-content>
     </md-item>
 </md-list>
-<div layout="row" layout-align="space-between">
-    <div layout="column">
-        <a ng-show="!book.i_own_this" ng-click="toggle_bookmark(false)">
-            Add to "I own this"
-        </a>
-        <a ng-show="book.i_own_this" ng-click="toggle_bookmark(true)">
-            I own this
-        </a>
-    </div>
-    <div layout="column">
-        <a ng-click="notify_friends()">
-            Notify
-        </a>
-    </div>
-</div>

@@ -492,6 +492,7 @@ md-sidenav{
     color: #DD4C39;
 }
 
+.round_corners,
 md-select,
 md-select-label{
     border-radius: 2px;

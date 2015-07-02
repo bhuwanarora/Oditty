@@ -64,6 +64,10 @@ a{
   	top: 0px;
 }
 
+.border_bottom{
+  	border-bottom: 1px solid #E2E2E2;
+}
+
 md-card{
 	/*box-shadow: none !important;*/
 }
