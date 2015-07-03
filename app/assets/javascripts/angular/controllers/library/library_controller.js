@@ -68,29 +68,8 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.info.subject_filter = true;
     }
 
-    $scope.select_read_time = function(event){
-        delete $scope.info.books;
-        $scope.info.custom_loading = true;   
-    }
-
-    $scope.select_genre = function(selected_genre, event){
-        delete $scope.info.books;
-        $scope.info.custom_loading = true;
-        $scope.filters.other  = angular.extend($scope.filters.other, {"genre" : selected_genre.id});
-        $scope._get_popular_books();
-    }
-
-    $scope.select_author = function(event){
-        delete $scope.info.books;
-        $scope.info.custom_loading = true;
-    }
-
-    $scope.select_time_group = function(event){
-        delete $scope.info.books;
-        $scope.info.custom_loading = true;
-    }
-
     $scope._get_popular_books = function(){
+        console.log("_get_popular_books");
         sharedService.load_popular_books($scope);
     }
 
@@ -158,6 +137,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_bookmark = true;
         $scope.active_share = true;
         var popular_books_timeout = $timeout(function(){
+            console.log("libraryController");
             $scope._get_popular_books();
         }, 100);
 

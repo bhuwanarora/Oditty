@@ -216,6 +216,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     }
 
     var _init = (function(){
+        console.log("filtersController");
         $scope.search_tag = {};
         $scope.info.genres = [];
         $scope.info.authors = [];

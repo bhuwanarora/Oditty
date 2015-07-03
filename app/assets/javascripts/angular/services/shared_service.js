@@ -82,7 +82,6 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.load_popular_books = function($scope, books){
-        console.log("load_popular_books");
         $scope.info.loading = true;
         if(angular.isUndefined(books)){
             if(angular.isUndefined($scope.info.books)){
