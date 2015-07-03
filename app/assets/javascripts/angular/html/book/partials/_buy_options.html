@@ -6,7 +6,7 @@
 		<div class="less_important bold">Goto Store</div>
 	</div>
 	<md-divider></md-divider>
-	<div ng-repeat="price in prices">
+	<div ng-repeat="price in prices" ng-class="{'light_grey_color': !price.in_stock}">
 		<div layout-padding layout="row" layout-align="space-between">
 			<div layout-padding>
 				<div >{{price.store}}&nbsp;</div>
@@ -14,7 +14,14 @@
 				<div class="less_important" ng-if="!price.in_stock">(No in Stock)</div>
 			</div>
 			<div layout-padding>
-				{{price.min_days}}-{{price.max_days}} Days
+				<div ng-if="price.min_days">
+					<div ng-if="price.min_days == price.min_days">
+						Upto {{price.min_days}} Days
+					</div>
+					<div ng-if="price.min_days != price.min_days">
+						{{price.min_days}}-{{price.ng-if="price.min_days"}} Days
+					</div>
+				</div>
 			</div>
 			<div class=" bold" layout-padding>
 				{{price.currency_code}} {{price.price}} 
