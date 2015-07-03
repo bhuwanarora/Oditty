@@ -15,11 +15,11 @@
 			</div>
 			<div layout-padding>
 				<div ng-if="price.min_days">
-					<div ng-if="price.min_days == price.min_days">
+					<div ng-if="price.max_days == price.min_days">
 						Upto {{price.min_days}} Days
 					</div>
-					<div ng-if="price.min_days != price.min_days">
-						{{price.min_days}}-{{price.ng-if="price.min_days"}} Days
+					<div ng-if="price.max_days != price.min_days">
+						{{price.max_days}}-{{price.min_days}} Days
 					</div>
 				</div>
 			</div>
