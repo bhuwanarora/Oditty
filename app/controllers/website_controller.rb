@@ -246,6 +246,11 @@ class WebsiteController < ApplicationController
 		render :layout => "material_home"
 	end
 
+	def new_home
+		@new_home = true
+		render :layout => "material"
+	end
+
 	def publishers
 		@publishers = true
 		render :layout => "material"

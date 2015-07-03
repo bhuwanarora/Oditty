@@ -12,23 +12,36 @@
                 </object>
             </video>
     </div>
-    <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
-    <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
+    <div class="filters_header animate-fast" 
+         layout="column" layout-align="center center">
+         <div layout="column" layout-align="center center" class="full_width" >
+             <div layout-padding layout="column" layout-align="center center">
+                 <div class="rd_title bold white_color" layout-padding>
+                     READ LIFE
+                 </div>
+                 <div class="white_color big_title center_text">
+                    Discover yourself through books, friends, and the world.
+                 </div>
+             </div>
+            <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">
+                <div flex="10" flex-md="5"></div>
+                <div layout="row" layout-align="center center"  layout-sm="column"
+                     ng-include src="'/assets/angular/html/library/main_options.html'"
+                     class="z-index-1" flex="80" flex-md="90"></div>  
+                <div flex="10" flex-md="5"></div>
+            </section>
+         </div>
+    </div>
 </div>
 
 <section layout="row" layout-wrap class="feed_margin">
-    <div flex="15" hide-sm hide-md layout="row" layout-align="end start" 
-         ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill>
-    </div>
-    <div flex="70" flex-sm="100" flex-md="100"
-         ng-include src="'/assets/angular/html/library/show.html'" 
-         layout-align="center center" layout-fill>
-    </div>
-    <div ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" 
-         flex="15" hide-md hide-sm layout="column" layout-align="start start" layout-fill>
-    </div>
+   
 </section>
-
+<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
+<div class="small_title" layout="column" layout-align="center center">
+    <div class="less_important" layout-padding>Discover yourself through books, friends and the world.</div>
+    <div class="less_important" layout-padding>© Singularity Technologies Pvt. Ltd.</div>
+</div>
 <style>
     .subheaderdemoBasicUsage .face{
         border-radius: 30px;
@@ -198,4 +211,42 @@
             height: 340px;
         }
     }
+
+    .filters_header md-autocomplete ul li{
+        line-height: 16px;
+        padding: 10px 15px;
+        height: inherit;
+    }
+
+    .icon_angle{
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+
+    .relative{
+        position: relative;
+    }
+
+    .clear_button{
+        z-index: 1;
+        height: 38px;
+        color: #8B8B8B !important;
+    }
+    
+    .left_nav{
+        min-width: 250px;
+        width: 250px;
+        margin-top: -10px !important;
+        position: fixed !important;
+    }
+
+    .right_nav{
+        min-width: 50px;
+        width: 50px;
+        margin-top: -10px !important;
+        position: fixed !important;
+        margin-right: 50px;
+    }
+
 </style>
