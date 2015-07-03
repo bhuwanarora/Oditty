@@ -3,7 +3,7 @@
     <span class="icon-search"></span>
 </md-button>
 
-<div hide-sm>
+<div hide-sm class="search_icon">
     <i class="material-icons">search</i>
 </div>
 <md-autocomplete md-selected-item="selected_item_search"
@@ -15,9 +15,9 @@
                 md-min-length="0"
                 class="search"
                 hide-sm
-                flex="85"
+                flex="100"
                 ng-click="get_default_results(search_text, $event)"
-                md-floating-label="Search books, topics and more...">
+                placeholder="Search books, topics and more...">
     <md-item-template>
         <div layout="row" layout-align="space-between">
             <div layout="row" flex="90">

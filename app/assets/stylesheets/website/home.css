@@ -129,8 +129,12 @@ md-content{
 	padding: 0px !important;
 	border: none;
 	box-shadow: none;
-	/*font-size: 18px;*/
+	border-bottom: 1px solid black;
 	color: white !important;
+}
+
+.search md-input-container .md-placeholder{
+	color: #333;
 }
 
 .search md-input-container label,
@@ -148,16 +152,15 @@ md-content{
 	outline: none;
 }
 
-.search_container{
+.search_icon{
 	position: absolute;
-    left: 25%;
-    height: 50px;
+  	right: 5px;
+  	margin-top: 15px;
 }
 
-.search_container label{
-	font-size: 15px;
-	color: white !important;
-  	padding-left: 40px;
+.search_container{
+	position: relative;
+	z-index: 1;
 }
 
 .library{
@@ -232,14 +235,6 @@ md-backdrop.md-opaque.md-default-theme{
 
 .md-button-left{
 	text-align: left;
-}
-
-.search_icon{
-	color: grey;
-	position: absolute;
-	z-index: 1;
-	top: 32px;
-  	margin-left: -25px;
 }
 
 md-toolbar{

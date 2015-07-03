@@ -43,7 +43,8 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		// 			min_days: 11,
 		// 			max_days: 15,
 		// 			url: "http://www.amazon.in/Tiger-Woods-How-Play-Golf/dp/0446529311%3FSubscriptionId%3DAKIAJUPAVELJRPUOFMLA%26tag%3Dreade03-21%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0446529311",
-		// 			in_stock: true
+		// 			in_stock: true,
+		// 			max_price: asas,
 		// 		},
 		// 		{
 		// 			store: "Amazon.in",

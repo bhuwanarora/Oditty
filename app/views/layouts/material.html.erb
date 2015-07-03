@@ -69,7 +69,7 @@
                 <md-content ng-controller="communityController" id="community" class="white">
             <% elsif @filters || @signup%>
                 <md-content ng-controller="libraryController" 
-                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page" class="white">
+                    ng-model="info" id="infinity_page" class="white">
             <% elsif @shelves %>
                 <md-content ng-controller="roomController">
             <% elsif @author %>
