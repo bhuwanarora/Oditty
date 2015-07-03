@@ -1,5 +1,9 @@
+<div layout-padding class="feed_margin">
+    <user-communities ng-if="profile_user" user-id="profile_user.id"></user-communities>
+</div>
+
 <div class="genres light_grey" ng-if="!hide_follow_links" layout-margin>
-    <div layout="row" layout-align="space-between" layout-padding layout-sm="column">
+    <div layout="column" layout-align="space-between" layout-padding layout-sm="column">
         <div layout="column">
             <div class="big_title">
                 Select Subjects that you like.
@@ -28,9 +32,7 @@
     </div>
 </div>
 
-<div layout-padding>
-    <user-communities ng-if="profile_user" user-id="profile_user.id"></user-communities>
-</div>
+
 <style>
     #genres .genre_cover,
     #genres .genre_cover_gradient{

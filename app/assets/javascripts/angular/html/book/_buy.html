@@ -9,7 +9,7 @@
             ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
     </div>
     <md-divider></md-divider>
-    <div layout-padding class="less_important bold">Editorial Review</div>
+    <div layout-padding class="less_important bold" ng-show="reviews.editorial_review">Editorial Review</div>
     <div ng-bind-html="reviews.editorial_review" class="summary" layout-padding></div>
     <div ng-bind-html="reviews.source" layout-padding class="less_important"></div>
     <iframe ng-src="{{reviews.user_review_iframe}}" ng-if="reviews.user_review_iframe"></iframe>

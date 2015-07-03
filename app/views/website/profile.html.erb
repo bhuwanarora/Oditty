@@ -1,12 +1,15 @@
 <div ng-include src="'/assets/angular/html/profile/_header.html'" class="md-whiteframe-z1"></div>
-<section layout="row" layout-wrap>
-    <div flex="50" hide-sm flex-md="100"
-    	ng-include src="'/assets/angular/html/profile/left_panel.html'">
-
+<section layout="row" layout-md="row" layout-sm="column">
+    <div flex="10" flex-md="5" hide-sm></div>
+    <div flex="80" flex-md="90" flex-sm="100" layout="row" layout-sm="column" layout-md="column">
+        <div flex="40" hide-sm flex-md="100"
+        	ng-include src="'/assets/angular/html/profile/left_panel.html'">
+        </div>
+        <div flex="60" flex-sm="100" flex-md="100" layout="column"
+             ng-include src="'/assets/angular/html/profile/show.html'">
+        </div>
     </div>
-    <div flex="50" flex-sm="100" flex-md="100" layout="column"
-         ng-include src="'/assets/angular/html/profile/show.html'">
-    </div>
+    <div flex="10" flex-md="5" hide-sm></div>
     <!-- <div flex="20" hide-sm flex-md="15"
     	ng-include src="'/assets/angular/html/profile/right_panel.html'"></div> -->
 </section>
