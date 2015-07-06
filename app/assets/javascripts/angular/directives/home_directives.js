@@ -1,27 +1,4 @@
-homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
-    return {
-        restrict: 'E',
-        controller: ["$scope", function($scope){
-            var _init = function(){
-                $scope.info.loading = true;
-                var room_timeout = $timeout(function(){
-                    userService.suggest_communities().then(function(data){
-                        $scope.info.loading = false;
-                        $scope.suggest_communities = data;
-                        $scope.show_suggestions = true;
-                    });
-                }, 100);
-            }
 
-            $scope.toggle_suggestions = function(){
-                $scope.show_suggestions = !$scope.show_suggestions;
-            }
-
-            _init();
-        }],
-        templateUrl: '/assets/angular/html/home/partials/community_suggestions.html'
-    };
-}]);
 
 homeApp.directive('joinCommunity', ["$rootScope", "newsService", "$mdSidenav", function($rootScope, newsService, $mdSidenav){
     return {

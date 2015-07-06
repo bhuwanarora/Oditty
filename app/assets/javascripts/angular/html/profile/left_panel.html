@@ -1,8 +1,13 @@
 <div layout-padding class="feed_margin">
     <user-communities ng-if="profile_user" user-id="profile_user.id"></user-communities>
 </div>
+<div layout="row">
+    <a href="/customise">
+        Tell us more about you
+    </a>
+</div>
 
-<div class="genres light_grey" ng-if="!hide_follow_links" layout-margin>
+<!-- <div class="genres light_grey" ng-if="!hide_follow_links" layout-margin>
     <div layout="column" layout-align="space-between" layout-padding layout-sm="column">
         <div layout="column">
             <div class="big_title">
@@ -13,13 +18,8 @@
             </div>
         </div>
        
-        <!-- <div ng-click="toggle_genres()">
+        <div ng-click="toggle_genres()">
             <i class="material-icons close_icon">close</i>
-        </div> -->
-        <div layout="row" layout-align="center center">
-            <a href="/customise">
-                Tell us more about you
-            </a>
         </div>
     </div>
     <div ng-controller="genresController" layout="row" layout-wrap 
@@ -30,7 +30,7 @@
             <div ng-include src="'/assets/angular/html/shared/partials/genre.html'"></div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <style>

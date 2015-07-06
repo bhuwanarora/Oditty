@@ -1,6 +1,5 @@
-<div ng-class="{'md-whiteframe-z3': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}">
-    <div class="video_wrapper" 
-        ng-class="{'compressed_video_wrapper': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}">
+<div class="md-whiteframe-z3">
+    <div class="video_wrapper">
         <img src="/assets/home.png" hide show-sm show-md>
         <video poster="/assets/home.png" autoplay="" 
             hide-sm hide-md loop="" src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4">
@@ -12,30 +11,77 @@
                 </object>
             </video>
     </div>
-    <div class="filters_header animate-fast" 
+    <div class="filters_header animate-fast init_filters_header" 
          layout="column" layout-align="center center">
          <div layout="column" layout-align="center center" class="full_width" >
              <div layout-padding layout="column" layout-align="center center">
                  <div class="rd_title bold white_color" layout-padding>
                      READ LIFE
                  </div>
-                 <div class="white_color big_title center_text">
+                 <div class="white_color big_title center_text bold">
                     Discover yourself through books, friends, and the world.
                  </div>
              </div>
             <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">
                 <div flex="10" flex-md="5"></div>
-                <div layout="row" layout-align="center center"  layout-sm="column"
-                     ng-include src="'/assets/angular/html/library/main_options.html'"
-                     class="z-index-1" flex="80" flex-md="90"></div>  
+                <div layout="row" layout-align="center center"
+                     class="z-index-1" flex="80" flex-md="90">
+                    <div class="relative" flex-md flex-sm>
+                        <md-autocomplete  class="filters_autocomplete genres_autocomplete"
+                            md-selected-item="info.selected_genre"
+                            md-search-text="search_tag.genre"
+                            md-items="item in info.genres"
+                            md-search-text-change="search_genres(search_tag.genre)"
+                            md-item-text="item.name || item.root_category_name"
+                            md-min-length="0"
+                            placeholder="Select a Genre">
+                            <div>
+                                <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
+                                <div class="less_important">{{item.books_count}} books</div>
+                            </div>
+                        </md-autocomplete>
+                    </div>
+                    <div class="relative" hide-sm hide-md>
+                        <md-autocomplete class="filters_autocomplete time_autocomplete"
+                            md-selected-item="info.selected_duration"
+                            md-search-text="search_tag.read_time"
+                            md-items="item in info.read_times"
+                            md-item-text="item.name"
+                            md-min-length="0"
+                            placeholder="Time to Read">
+                            <div layout="column">
+                                <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
+                                <div class="less_important">
+                                    {{item.page_count_range}} Pages to read
+                                </div>
+                            </div>
+
+                        </md-autocomplete>
+                    </div>
+                    <div>
+                        <md-button class="md-button-clear md-raised md-whiteframe-z2" style="height:42px;"
+                            ng-click="show_filter_results()">
+                            Go
+                        </md-button>
+                    </div>
+                </div>  
                 <div flex="10" flex-md="5"></div>
             </section>
          </div>
+         
+
     </div>
 </div>
-
 <section layout="row" layout-wrap class="feed_margin">
-   
+    <div flex="10" hide-md hide-sm></div>
+    <div flex="80" flex-md="100" flex-sm="100" layout="column">
+        <a layout-padding layout="row" layout-align="center center" class="bold grey_color" href="/rooms">
+            <div><i class="material-icons">trending_up</i></div>
+            <div layout-padding>Trending Rooms of Knowledge</div>
+        </a>
+        <suggest-communities></suggest-communities>
+    </div>
+    <div flex="10" hide-md hide-sm></div>
 </section>
 <div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
 <div class="small_title" layout="column" layout-align="center center">
@@ -56,10 +102,6 @@
         padding: 7px;
     }
 
-    .md-sticky-clone{
-        top: 0px !important;
-    }
-
     md-autocomplete{
         box-shadow: none;
         border: 1px solid #E8E8E8;
@@ -68,44 +110,6 @@
 
     .autocompletedemoBasicUsage md-content{
         min-height: 500px; 
-    }
-
-    .sticky_header{
-        background-color: transparent !important;
-        box-shadow: none;
-        -webkit-animation: none !important;
-        animation: none !important;
-    }
-
-    .book .subheader{
-        height: 50px;
-        margin: 0px;
-        padding: 0px;
-    }
-
-    .gradient{
-        height: 10vh;
-        background-color: rgba(0, 0, 0, 0.31);
-        position: absolute;
-        z-index: 1;
-        width: 60%;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-        background-color: rgba(0,0,0,0);
-        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0 0%, rgba(0,0,0,0)), color-stop(0 100% rgba(0,0,0,0.5)));
-        background-image: -webkit-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
-        background-image: -moz-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
-        background-image: -webkit-gradient(linear, 0 0%, 0 100%, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.5)));
-        background-image: -ms-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
-        background-image: -o-linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
-        background-image: linear-gradient(top, rgba(0,0,0,0) 0 0%, rgba(0,0,0,0.5) 0 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=0);
-        background-repeat: repeat-x;
-    }
-
-    .gradient:hover{
-        font-size: 1.2em;
     }
 
     .md-subheader:not(.md-sticky-no-effect).md-sticky-clone{
@@ -160,11 +164,6 @@
             width: 100%;
         }
 
-        .compressed_video_wrapper,
-        .compressed_filters_header{
-            height: 240px;
-        }
-
     }
 
     @media (min-width:600px)and (max-width:1000px){
@@ -183,10 +182,6 @@
             min-height: 73vh;
         }
 
-        .compressed_video_wrapper,
-        .compressed_filters_header{
-            height: 230px;
-        }
     }
 
     @media (max-width: 590px)and (max-height:1199px){
@@ -206,10 +201,6 @@
             min-height: 73vh;
         }
 
-        .compressed_video_wrapper,
-        .compressed_filters_header{
-            height: 340px;
-        }
     }
 
     .filters_header md-autocomplete ul li{
@@ -218,35 +209,6 @@
         height: inherit;
     }
 
-    .icon_angle{
-        position: absolute;
-        right: 15px;
-        top: 15px;
-    }
-
-    .relative{
-        position: relative;
-    }
-
-    .clear_button{
-        z-index: 1;
-        height: 38px;
-        color: #8B8B8B !important;
-    }
-    
-    .left_nav{
-        min-width: 250px;
-        width: 250px;
-        margin-top: -10px !important;
-        position: fixed !important;
-    }
-
-    .right_nav{
-        min-width: 50px;
-        width: 50px;
-        margin-top: -10px !important;
-        position: fixed !important;
-        margin-right: 50px;
-    }
+  
 
 </style>

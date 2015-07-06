@@ -1,27 +1,7 @@
 <div ng-controller="filtersController">
-    <div class="filters_header animate-fast" 
-         ng-class="{'init_filters_header': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration), 'compressed_filters_header': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}"
-         layout="column" layout-align="center center">
-         <div layout="column" layout-align="center center" class="full_width" 
-            ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
-             <div layout-padding layout="column" layout-align="center center">
-                 <div class="rd_title bold white_color" layout-padding>
-                     READ LIFE
-                 </div>
-                 <div class="white_color big_title center_text">
-                    Discover yourself through books, friends, and the world.
-                 </div>
-             </div>
-            <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">
-                <div flex="10" flex-md="5"></div>
-                <div layout="row" layout-align="center center"  layout-sm="column"
-                     ng-include src="'/assets/angular/html/library/main_options.html'"
-                     class="z-index-1" flex="80" flex-md="90"></div>  
-                <div flex="10" flex-md="5"></div>
-            </section>
-         </div>
-         <div layout="column" class="full_width" 
-            ng-if="info.selected_genre || info.selected_author || info.selected_year || info.selected_duration">
+    <div class="filters_header animate-fast compressed_filters_header" 
+         layout="column" layout-align="end center">
+         <div layout="column" class="full_width">
             <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">
                 <div flex="10" flex-md="5"></div>
                 <div layout="row" layout-align="center center"  layout-sm="column"

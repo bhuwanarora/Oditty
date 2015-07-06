@@ -1,4 +1,4 @@
-homeApp.controller('newHomeController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', '$mdDialog', 'readingTimeService', 'genreService', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore, $mdDialog, readingTimeService, genreService){
+homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstants', 'readingTimeService', 'genreService', function($scope, $timeout, SearchUIConstants, readingTimeService, genreService){
 
     $scope._get_genres = function(){
         if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -16,25 +16,27 @@ homeApp.controller('newHomeController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
-    $scope.select_genre = function(genre){
-        if(angular.isUndefined(genre) || (genre == null)){
-            delete $rootScope.filters.genre_id;
-            _handle_filter_removal();
+    $scope.show_filter_results = function(){
+        var filters = "";
+        if(angular.isDefined($scope.info.selected_duration) && $scope.info.selected_duration != null){
+            var duration_filter = "d="+$scope.info.selected_duration.id;
+            filters = duration_filter;
         }
-        else{
-            $rootScope.filters["genre_id"] = genre.id;
-           _set_books();
+        if(angular.isDefined($scope.info.selected_genre) && $scope.info.selected_genre != null){
+            var genre_filter = "g="+$scope.info.selected_genre.id;
+            if(filters != ""){
+                filters = filters + "&" + genre_filter;
+            }
+            else{
+                filters = genre_filter;
+            }
         }
-    }
 
-    $scope.select_reading_time = function(read_time){
-        if(angular.isUndefined(read_time) || (read_time == null)){
-            delete $rootScope.filters.reading_time_id;
-            _handle_filter_removal();
+        if(filters != ""){
+            window.location.href = "/filters?"+filters;
         }
         else{
-            $rootScope.filters["reading_time_id"] = read_time.id;
-            _set_books();
+            window.location.href = "/filters";
         }
     }
 
@@ -75,16 +77,6 @@ homeApp.controller('newHomeController', ["$scope", "$rootScope", "$timeout", 'We
         });
     }
 
-    $scope._detect_key = function(event){
-        var backspace_or_delete = (event.keyCode == WebsiteUIConstants.Backspace) || (event.keyCode == WebsiteUIConstants.Delete);
-        var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
-        var keyDown = event.keyCode == WebsiteUIConstants.KeyDown;
-        var keyLeft = event.keyCode == WebsiteUIConstants.KeyLeft;
-        var keyRight = event.keyCode == WebsiteUIConstants.KeyRight;
-        var enter = event.keyCode == WebsiteUIConstants.Enter;
-        return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
-    }
-
     var _init = (function(){
         $scope.info.read_times = [];
         $scope.info.genres = [];
@@ -95,14 +87,8 @@ homeApp.controller('newHomeController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.$on('destroy', function(){
             $timeout.cancel(fetch_data);
         });
-        if(angular.isUndefined($rootScope.filters)){
-            $rootScope.filters = {};
-        }
-        // $scope.info.author_filter = true;
-        $scope.$routeParams = $routeParams;
         $scope.filters = {"other": {}};
         $scope.search_tag = {};
-        $scope.active_tab = {};
 
     }());
 

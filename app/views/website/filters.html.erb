@@ -1,16 +1,6 @@
-<div ng-class="{'md-whiteframe-z3': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration)}">
-    <div class="video_wrapper" 
-        ng-class="{'compressed_video_wrapper': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}">
-        <img src="/assets/home.png" hide show-sm show-md>
-        <video poster="/assets/home.png" autoplay="" 
-            hide-sm hide-md loop="" src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4">
-                <source type="video/mp4" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
-                <source type="video/webm" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.webm">
-                <object width="596" height="336" type="application/x-shockwave-flash" data="/video/assets/static/flashmediaelement.swf">
-                    <param name="movie" value="/video/assets/static/flashmediaelement.swf">
-                    <param name="flashvars" value="controls=true&amp;file=http%3A%2F%2Fak6.picdn.net%2Fshutterstock%2Fvideos%2F1876138%2Fpreview%2Fstock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
-                </object>
-            </video>
+<div class="md-whiteframe-z1">
+    <div class="video_wrapper compressed_video_wrapper light_grey">
+        <!-- <img src="/assets/home.png"> -->
     </div>
     <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
     <div ng-include src="'/assets/angular/html/shared/share.html'"></div>

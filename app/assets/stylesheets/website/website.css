@@ -1,3 +1,7 @@
+body, html{
+    background-color: #ececec;
+}
+
 hr{
     opacity: 0.2;
 }

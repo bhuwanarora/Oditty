@@ -2,10 +2,14 @@
     {{communities.length}} Rooms Joined
 </div>
 <div layout="row" layout-wrap>
-	<div ng-repeat="community in communities" layout-margin class="community_group">
-		<img ng-src="{{community.image_url}}" class="big_square" />
+	<div ng-repeat="community in communities" layout-margin>
 		<div layout-padding>
-			<a ng-href="/room?q={{::community.id}}" ng-bind-html="::community.name" class="capitalize"></a>
+			<a ng-href="/room?q={{::community.id}}"  class="capitalize">
+				<img ng-src="{{community.image_url}}" class="square" />
+				<md-tooltip>
+					{{::community.name}}
+				</md-tooltip>
+			</a>
 		</div>
 	</div>
 </div>

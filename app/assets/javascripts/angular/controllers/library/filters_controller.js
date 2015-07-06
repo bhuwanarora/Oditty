@@ -1,4 +1,4 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', 'sharedService', '$mdBottomSheet', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants, sharedService, $mdBottomSheet){
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', '$location', 'sharedService', '$mdBottomSheet', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, $location, sharedService, $mdBottomSheet){
 
     $scope._get_genres = function(){
     	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -7,6 +7,11 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
 	    		angular.forEach(data, function(value){
 	    			var status = value.status != null;
 	    			var json = angular.extend(value, {"status": status});
+                    if(angular.isDefined($scope.selected_genre)){
+                        if(value.id == $scope.selected_genre){
+                            $scope.info.selected_genre = value;
+                        }
+                    }
 	    			this.push(json);
 	    		}, $scope.info.genres);
 	    	});
@@ -200,6 +205,11 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             angular.forEach(data, function(value){
                 var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
                 json = angular.extend(json, value);
+                if(angular.isDefined($scope.selected_duration)){
+                    if(value.id == $scope.selected_duration){
+                        $scope.info.selected_duration = value;
+                    }
+                }
                 this.push(json);
             }, $scope.info.read_times);
         });
@@ -233,6 +243,24 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         });
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {};
+        }
+
+        var regex = /[?&]([^=#]+)=([^&#]*)/g;
+        var url_parser = regex.exec($location.absUrl());
+        if(angular.isDefined(url_parser) && url_parser != null){
+            if(url_parser[1] == "g"){
+                $scope.selected_genre = url_parser[2];
+            }
+            else if(url_parser[1] == "d"){
+                $scope.selected_duration = url_parser[2];
+            }
+
+            if(url_parser[3] == "g"){
+                $scope.selected_genre = url_parser[4];
+            }
+            else if(url_parser[3] == "d"){
+                $scope.selected_duration = url_parser[4];
+            }
         }
     }());
     

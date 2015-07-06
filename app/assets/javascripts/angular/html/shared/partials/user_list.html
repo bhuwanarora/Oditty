@@ -1,10 +1,7 @@
-
 <md-list layout="row" layout-wrap>
-    <a ng-repeat="user in author.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" layout-margin
+    <a ng-repeat="user in active_tag.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" layout-margin
         layout="row" layout-align="center center">
         <img class="circular" ng-src="{{user.image_url}}"  alt="{{::user.first_name}} {{::user.last_name}}" onerror="this.src='/assets/user_profile.jpg'"/>
-        <div layout-padding>
-            <div>{{::user.first_name}} {{::user.last_name}}</div>
-        </div>
+    	<md-tooltip>{{::user.first_name}} {{::user.last_name}}</md-tooltip>
     </a>
 </md-list>

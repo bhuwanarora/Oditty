@@ -1,3 +1,41 @@
+homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+                $scope.info.loading = true;
+                var room_timeout = $timeout(function(){
+                    userService.suggest_communities().then(function(data){
+                        $scope.info.loading = false;
+                        $scope.suggest_communities = [];
+                        $scope.show_suggestions = true;
+                        angular.forEach(data, function(value, index){
+                            if(index == 0 || index == 6){
+                                value.span = {"col": 4, "row": 2};
+                            }
+                            else{
+                                value.span = {"col": 2, "row": 2};
+                            }
+                            this.push(value);
+                        }, $scope.suggest_communities);
+                    });
+                }, 100);
+            }
+
+            $scope.goto_room = function(id){
+                window.location.href = "/room?p="+id;
+            }
+
+            $scope.toggle_suggestions = function(){
+                $scope.show_suggestions = !$scope.show_suggestions;
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/partials/community_suggestions.html'
+    };
+}]);
+
 homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($rootScope, google_public_key){
     return{
         restrict: 'A',
