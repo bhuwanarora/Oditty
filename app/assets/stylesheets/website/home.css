@@ -144,7 +144,7 @@ md-content{
 }
 
 .search input{
-	padding-left: 0px;
+	padding-left: 40px !important;
 	color: #333 !important;
 }
 
@@ -154,7 +154,7 @@ md-content{
 
 .search_icon{
 	position: absolute;
-  	right: 5px;
+  	left: 5px;
   	margin-top: 15px;
 }
 
