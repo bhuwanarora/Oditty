@@ -4,15 +4,15 @@ class FacebookLike < Neo
 	end
 
 	def match
-		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + app_id + " WITH facebook_like "
+		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + @app_id + " WITH facebook_like "
 	end
 
 	def merge
-		" MERGE (facebook_like:FacebookLike{app_id: " + app_id + "}) WITH facebook_like "
+		" MERGE (facebook_like:FacebookLike{app_id: " + @app_id + "}) WITH facebook_like "
 	end
 
 	def merge_info(category, created_time, name)
-		merge + FacebookLike.set_category + FacebookLike.set_facebook_created_time + FacebookLike.set_name + FacebookLike.set_created_time
+		merge + FacebookLike.set_category(category) + FacebookLike.set_name(name) + FacebookLike.set_created_time(created_time)
 	end
 
 	def self.get_relationship_type field_name
@@ -24,7 +24,12 @@ class FacebookLike < Neo
 	end
 
 	def self.set_category category
-		" SET facebook_like :" + FacebookLike.get_node_label(category) + " SET facebook_like.category = \"" + category.to_s + "\" "
+		clause = " SET facebook_like "
+		categories = category.split("/")
+		categories.each do |category_single|
+			clause += ":"+FacebookLike.get_node_label(category_single)
+		end
+		clause += " SET facebook_like.category = \"" + category.to_s + "\" "
 	end
 
 	def self.set_name name
@@ -32,7 +37,7 @@ class FacebookLike < Neo
 	end
 
 	def self.set_created_time created_time
-		" SET facebook_like.created_time = " + Time.now.to_i.to_s + " "
+		" SET facebook_like.created_time = " + created_time.to_s + " "
 	end
 
 	def self.basic_info

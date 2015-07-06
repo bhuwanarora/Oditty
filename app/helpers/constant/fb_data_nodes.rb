@@ -1,5 +1,6 @@
 module Constant::FbDataNode
 	Location = "Location"
+	FbNullProperty = "<<not-applicable>>"
 	FbDataNodeToLabel = {
 		"city" => "City",
 		"country" => "Country",
@@ -7,6 +8,16 @@ module Constant::FbDataNode
 		"hometown" => "City",
 		"state"		=> "State",
 		"current_location" => Location,
+		"founded" => "Time",
+		"release_date" => "Time"
+	}
+	FbDataNodeToParentLabel = {
+		"city" => "Location",
+		"country" => "Location",
+		"street" => "Location",
+		"hometown" => "",
+		"state"		=> "",
+		"current_location" => "",
 		"founded" => "Time",
 		"release_date" => "Time"
 	}

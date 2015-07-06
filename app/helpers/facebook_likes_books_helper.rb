@@ -1,13 +1,13 @@
 module FacebookLikesBooksHelper
 	
 	def self.set_community_books node_id
-		text_array = FacebookLikesBooksHelper.get_data_for_NLP node_id
+		text_array = self.get_data_for_NLP node_id
 		text = text_array.join(" ")
-		community_books_relevance = FacebookLikesBooksHelper.get_communities_from_text [text]
-		default_community_books_relevance = FacebookLikesBooksHelper.get_communities_from_default node_id
+		community_books_relevance = self.get_communities_from_text [text]
+		default_community_books_relevance = self.get_communities_from_default node_id
 		all_community_books_relevance = community_books_relevance[0] + default_community_books_relevance
-		FacebookLikesBooksHelper.merge_community_to_books all_community_books_relevance
-		FacebookLikesBooksHelper.merge_node_to_community all_community_books_relevance, node_id
+		self.merge_community_to_books all_community_books_relevance
+		self.merge_node_to_community all_community_books_relevance, node_id
 	end
 
 	def self.merge_community_to_books all_community_books_relevance
@@ -16,14 +16,14 @@ module FacebookLikesBooksHelper
 			name 	= element['name']
 			clause = Community.merge(name)
 			books_id.each do |book_id|
-				clause +=  FacebookLikesBooksHelper.match_node(books_id,"book") + ", community " + Community.merge_book + " WITH community "
+				clause +=  self.match_node(books_id,"book") + ", community " + Community.merge_book + " WITH community "
 			end
 			(clause + " RETURN ID(community)").execute
 		end
 	end
 
 	def self.merge_node_to_community all_community_books_relevance, node_id
-		clause = FacebookLikesBooksHelper.match_node(node_id)
+		clause = self.match_node(node_id)
 		all_community_books_relevance.each do |element|
 			clause += Community.merge(element['name']) + ", node " + News.merge_community({
 										'relevance' =>element['relevance'],
@@ -41,51 +41,59 @@ module FacebookLikesBooksHelper
 	def self.merge_node label, properties
 		clause = "MERGE (node:" + label + "{"
 		properties.each do |key,value|
-			clause += " " + key + ": " + value.to_s + ","
+			clause += " " + key + ": \"" + value.to_s + "\","
 		end
-		clause[clause.length -1] = '}'
+		clause[clause.length - 1] = '}'
+		clause += ') '
+		clause
 	end
 
 	def self.merge_relationship source_id, dest_id, type, properties = nil
 		if(properties.nil?)
 			properties = []
 		end
-		clause = FacebookLikesBooksHelper.match_node(source_id) + "AS source " + FacebookLikesBooksHelper.match_node(dest_id) + "AS destination, source "\
-		" MERGE (source)-[:" + type + "{ "
-		properties.each do |key,value|
-			clause += " " + key + ": " + value.to_s + ","
+		clause = self.match_node(source_id) + "AS source " + self.match_node(dest_id) + "AS destination, source "\
+		" MERGE (source)-[:" + type
+		if(properties.length > 0 )
+			clause += "{ "
+			properties.each do |key,value|
+				clause += " " + key + ": " + value.to_s + ","
+			end
+			clause[length -1] = '}'
 		end
-		clause[length -1] = '}'
-		clause += "->(destination) "
+		clause += "]->(destination) "
 	end
 
 	def self.handle_hash properties, key, default_label
 		child_node_property = properties
 		child_node_relationship_label =FacebookLike.get_relationship_type key
-		child_node_label = node_label
+		child_node_label = default_label
 		{:label => child_node_label,
 		:relationship_label => child_node_relationship_label,
 		:property => child_node_property}
 	end
 
 	def self.handle_array properties, key, default_label
-		properties.map {|property| FacebookLikesBooksHelper.handle_hash(property,key,default_label)}
+		properties.map {|property| self.handle_hash(property,key,default_label)}
 	end
 
 	def self.handle_each_param param, key, node_label
 		children_node_set = []
 		node_property = nil
-
 		if param.is_a?(Hash)
-			children_node_set << FacebookLikesBooksHelper.handle_hash(params, key, node_label)
+			children_node_set << self.handle_hash(param, key, FacebookLike.get_node_label(key))
 		elsif param.is_a?(Array)
-			output = FacebookLikesBooksHelper.handle_array(param, key, node_label)
+			if(key == "category_list")
+				output = self.handle_array(param, key, node_label)
+			else
+				output = self.handle_array(param, key, FacebookLike.get_node_label(key))
+			end
 			output.each {|element| children_node_set << element}
-		else
-			node_property = param
-			if is_separate_node_needed? key
+		elsif param.to_s != Constant::FbDataNode::FbNullProperty
+			node_property = param.to_s
+			if is_separate_node_needed? key, node_label
 				children_node_set << {
-									:label => FacebookLikesBooksHelper.get_custom_label_fb_data_node(key),
+									:label => self.get_custom_label_fb_data_node(key),
 									:relationship_label => FacebookLike.get_relationship_type(key),
 									:property => {key => param}
 									}
@@ -94,37 +102,45 @@ module FacebookLikesBooksHelper
 		{:children_node_set => children_node_set, :node_property => node_property}
 	end
 
-	def self.handle_children children_node_set
-		clause = ""
+	def self.handle_children node_id, children_node_set
 		children_id_set = []
-		children_node_set.each do |child_node|
-			child_id = set_node_property_recursive(child_node[:property], child_node[:label])
-			clause += merge_relationship(node_id,child_id,child_node[:relationship_label])
-			children_id_set << child_id
+		if children_node_set.length > 0
+			clause = ""
+			children_node_set.each do |child_node|
+				child_id = set_node_property_recursive(child_node[:property], child_node[:label])
+				debugger
+				clause += merge_relationship(node_id,child_id,child_node[:relationship_label])
+				clause += " WITH ID(source) AS ignore "
+				children_id_set << child_id
+			end
+			clause += " RETURN ignore AS id "
+			clause.execute
 		end
-		clause.execute
 		children_id_set
 	end
 
 	def self.set_node_property_recursive params, parent_category
+		node_id = params["id"]
 		clause = match_node node_id
 		children_node_set = []
 		node_property = {}
-		node_label = FacebookLike.get_node_label params["category"]
-		if (node_label.nil?)
+		debugger
+		if(params["category"].present?)
+			node_label = FacebookLike.get_node_label params["category"]
+		else
 			node_label = parent_category
 		end
 		params.keys.each do |key|
 			output = handle_each_param params[key], key, node_label
 			children_node_set += output[:children_node_set]
-			if !output[:node_property].nil
+			if !output[:node_property].blank?
 				node_property[key] = output[:node_property]
 			end
 		end
-		clause = FacebookLikesBooksHelper.merge_node(node_label, node_property) + "RETURN ID(node) AS id"
+		clause = self.merge_node(node_label, node_property) + " RETURN ID(node) AS id"
 		node_id = clause.execute[0]["id"]
-		children_id_set = FacebookLikesBooksHelper.handle_children children_node_set
-		FacebookLikesBooksHelper.handle_location children_node_set, children_id_set
+		children_id_set = self.handle_children node_id, children_node_set
+		#self.handle_location children_node_set, children_id_set
 		node_id
 	end
 
@@ -162,11 +178,14 @@ module FacebookLikesBooksHelper
 				clause += LocationHierarchyHelper.merge_city_to_street_id(city_id, street_id)
 			end
 		end
-		clause.execute
+		debugger
+		if(clause.length > 0)
+			clause.execute
+		end
 	end
 
-	def self.is_separate_node_needed? key
-		Constant::FbDataNode::FbDataNodeToLabel.keys.include? key
+	def self.is_separate_node_needed? key, node_label
+		(Constant::FbDataNode::FbDataNodeToLabel.keys.include? key) && (self.get_custom_label_fb_data_node(key) != node_label)
 	end
 
 	def self.get_custom_label_fb_data_node key
@@ -174,7 +193,7 @@ module FacebookLikesBooksHelper
 	end
 
 	def self.get_data_for_NLP node_id
-		clause = FacebookLikesBooksHelper.match_node(node_id) + " RETURN "
+		clause = self.match_node(node_id) + " RETURN "
 		Constant::FbDataNode::FbNlpDescriptionPropertiesPrimary.each do |property|
 			clause += " node." + property + "AS " + property + ","
 		end
@@ -183,11 +202,11 @@ module FacebookLikesBooksHelper
 	end
 
 	def self.get_communities_from_text text_array
-		text_array.map{|text| FacebookLikesBooksHelper.get_communities_from_NLP(text)}
+		text_array.map{|text| self.get_communities_from_NLP(text)}
 	end
 
 	def self.get_communities_from_default node_id
-		clause = FacebookLikesBooksHelper.match_node(node_id) + "RETURN "
+		clause = self.match_node(node_id) + "RETURN "
 		link_types = []
 		Constant::FbDataNode::FbDefaultCommunities.each do |property|
 			unless property[property.length -1] == '/'

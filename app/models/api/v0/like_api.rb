@@ -1,9 +1,8 @@
 module Api
 	module V0
 		class LikeApi
-
 			def self.add_facebook_likes params, user_id
-				if params[:data].present?
+				if params["data"].present?
 					clause = User.new(user_id).match + User.return_group("user.facebook_likes_retrieval_time AS time")
 					facebook_books_retrieval_time = clause.execute[0]['time'] rescue ""
 					time_to_add_likes = !facebook_books_retrieval_time.present? || facebook_books_retrieval_time.to_i < (Time.now.to_i - 3600*24*30)
@@ -14,7 +13,7 @@ module Api
 			end
 
 			def self.set_info params
-				FacebookLikesBookWorker.perform_async(params)
+				FacebookLikesBooksWorker.perform_async(params)
 			end
 
 			def self.get_likes user_id
