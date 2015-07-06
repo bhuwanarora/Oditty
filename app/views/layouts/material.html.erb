@@ -67,7 +67,7 @@
                     check-scroll-bottom="get_blog_feed()" id="home">
             <% elsif @room %>
                 <md-content ng-controller="communityController" id="community" class="white">
-            <% elsif @new_home %>
+            <% elsif @home %>
                 <md-content ng-controller="newHomeController">
             <% elsif @filters || @signup%>
                 <md-content ng-controller="libraryController" 
@@ -252,7 +252,7 @@
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
             <% end %>
 
-            <% if @new_home %>
+            <% if @home %>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 <script src="assets/angular/controllers/new_home_controller.js"></script>
             <% end %>
@@ -335,7 +335,7 @@
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
             <% end %>
 
-            <% if @new_home %>
+            <% if @home %>
                 <script src="assets/min/angular/controllers/new_home_group.min.js"></script>
             <% end %>
 
