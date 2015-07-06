@@ -1,39 +1,7 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', '$location', 'sharedService', '$mdBottomSheet', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, $location, sharedService, $mdBottomSheet){
-
-    $scope._get_genres = function(){
-    	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
-			$scope.info.genres = [];
-	    	genreService.get_genres().then(function(data){
-	    		angular.forEach(data, function(value){
-	    			var status = value.status != null;
-	    			var json = angular.extend(value, {"status": status});
-                    if(angular.isDefined($scope.selected_genre)){
-                        if(value.id == $scope.selected_genre){
-                            $scope.info.selected_genre = value;
-                        }
-                    }
-	    			this.push(json);
-	    		}, $scope.info.genres);
-	    	});
-		}
-        else{
-            $scope.info.loading = false;
-        }
-    }
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', '$location', 'sharedService', '$mdBottomSheet', 'PopularAuthors', 'Times', 'PopularGenres', 'ReadTimes', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, $location, sharedService, $mdBottomSheet, PopularAuthors, Times, PopularGenres, ReadTimes){
 
     $scope.close_filters = function(){
         $mdBottomSheet.hide();
-    }
-
-    $scope._get_authors = function(){
-        $scope.info.authors = [];
-        var skip_count = 0;
-        authorService.get_popular_authors(skip_count).then(function(data){
-            angular.forEach(data, function(value){
-                this.push(value);
-            },  $scope.info.authors);
-            $scope.top_authors = $scope.info.authors;
-        });
     }
 
     $scope.reset_filter = function(){
@@ -187,34 +155,6 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         }
     }
 
-    $scope._get_time_groups = function(){
-        timeGroupService.get_time_groups().then(function(data){
-            $scope.info.time_groups = [];
-            angular.forEach(data, function(value){
-                var json = {"icon2": "icon-calendar", "type": SearchUIConstants.Year, "custom_option": true};
-                json = angular.extend(json, value);
-                this.push(json);
-            }, $scope.info.time_groups);
-        });
-    }
-
-    $scope._get_reading_times = function(){
-        readingTimeService.get_read_times().then(function(data){
-            $scope.info.read_times = [];
-
-            angular.forEach(data, function(value){
-                var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
-                json = angular.extend(json, value);
-                if(angular.isDefined($scope.selected_duration)){
-                    if(value.id == $scope.selected_duration){
-                        $scope.info.selected_duration = value;
-                    }
-                }
-                this.push(json);
-            }, $scope.info.read_times);
-        });
-    }
-
     $scope._detect_key = function(event){
         var backspace_or_delete = (event.keyCode == WebsiteUIConstants.Backspace) || (event.keyCode == WebsiteUIConstants.Delete);
         var keyUp = event.keyCode == WebsiteUIConstants.KeyUp;
@@ -240,19 +180,11 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
     var _init = (function(){
         console.log("filtersController");
         $scope.search_tag = {};
-        $scope.info.genres = [];
-        $scope.info.authors = [];
-        $scope.info.time_groups = [];
-        $scope.info.read_times = [];
-        var fetch_data = $timeout(function(){
-            $scope._get_time_groups();
-            $scope._get_reading_times();
-            $scope._get_genres();
-            $scope._get_authors();
-        }, 100);
-        $scope.$on('destroy', function(){
-            $timeout.cancel(fetch_data);
-        });
+        $scope.info.time_groups = Times;
+        $scope.info.read_times = ReadTimes;
+        $scope.info.genres = PopularGenres;
+        $scope.info.authors = PopularAuthors;
+        
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {};
         }

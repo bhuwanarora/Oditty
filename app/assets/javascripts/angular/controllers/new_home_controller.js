@@ -1,4 +1,4 @@
-homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstants', 'readingTimeService', 'genreService', function($scope, $timeout, SearchUIConstants, readingTimeService, genreService){
+homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstants', 'ReadTimes', 'genreService', 'PopularGenres', function($scope, $timeout, SearchUIConstants, ReadTimes, genreService, PopularGenres){
 
     $scope._get_genres = function(){
         if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
@@ -80,6 +80,8 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
     var _init = (function(){
         $scope.info.read_times = [];
         $scope.info.genres = [];
+        $scope.info.read_times = ReadTimes;
+        $scope.info.genres = PopularGenres;
         var fetch_data = $timeout(function(){
             $scope._get_reading_times();
             $scope._get_genres();

@@ -293,13 +293,10 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/new_home_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/reading_time_service.js",
                     "app/assets/javascripts/min/angular/controllers/new_home_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/infinity_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/time_group_service.js",
-                    "app/assets/javascripts/min/angular/services/reading_time_service.js",
                     "app/assets/javascripts/min/angular/controllers/library/library_controller.js",
                     "app/assets/javascripts/min/angular/controllers/library/filters_controller.js"
                     
