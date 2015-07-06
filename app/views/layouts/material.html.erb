@@ -54,7 +54,7 @@
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
 
 
-            <% if @home %>
+            <% if @home || @signup%>
                 <md-content class="white" flex ng-controller="newHomeController">
             <% elsif @personalised_suggestions %>
                 <md-content ng-controller="personalisedController">
@@ -69,7 +69,7 @@
                     check-scroll-bottom="get_blog_feed()" id="home">
             <% elsif @room %>
                 <md-content ng-controller="communityController" id="community" >
-            <% elsif @filters || @signup%>
+            <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
                     check-scroll-bottom="get_popular_books()"
                     id="infinity_page" class="white">
@@ -90,8 +90,8 @@
                 <md-content ng-controller="publishersController">
             <% end %>
             <div ng-show="info.mobile_search" flex>
-                <div class="<% unless @home %>header<% else %>home_header<% end %> <% if @profile || @shelves || @network %>yellow<% else %>border_bottom<% end %>">
-                    <% if @home %>
+                <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @profile || @shelves || @network %>yellow<% else %>border_bottom<% end %>">
+                    <% if @home || @signup%>
                         <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                     <% else %>
                         <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
@@ -250,12 +250,12 @@
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
             <% end %>
 
-            <% if @home %>
+            <% if @home || @signup%>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 <script src="assets/angular/controllers/new_home_controller.js"></script>
             <% end %>
 
-            <% if @filters || @signup %>
+            <% if @filters  %>
                 <script src="assets/angular/services/time_group_service.js"></script>
                 <script src="assets/angular/services/reading_time_service.js"></script>
                 
@@ -331,11 +331,11 @@
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
             <% end %>
 
-            <% if @home %>
+            <% if @home || @signup%>
                 <script src="assets/min/angular/controllers/new_home_group.min.js"></script>
             <% end %>
 
-            <% if @filters || @signup%>
+            <% if @filters %>
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
 

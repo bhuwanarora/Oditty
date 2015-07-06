@@ -56,7 +56,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :filters, :layout => "material"
+		render :home, :layout => "material"
 	end
 
 	def jobs
