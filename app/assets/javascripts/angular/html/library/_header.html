@@ -1,7 +1,7 @@
 <div ng-controller="filtersController">
     <div class="filters_header animate-fast" 
          ng-class="{'init_filters_header': (!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration), 'compressed_filters_header': (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)}"
-         layout="column" layout-align="end center">
+         layout="column" layout-align="center center">
          <div layout="column" layout-align="center center" class="full_width" 
             ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
              <div layout-padding layout="column" layout-align="center center">

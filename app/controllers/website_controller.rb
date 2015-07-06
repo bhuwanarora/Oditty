@@ -243,8 +243,13 @@ class WebsiteController < ApplicationController
 
 	def home
 		@home = true
-		render :layout => "material_home"
+		render :layout => "material"
 	end
+
+	# def home
+	# 	@home = true
+	# 	render :layout => "material_home"
+	# end
 
 	def publishers
 		@publishers = true
