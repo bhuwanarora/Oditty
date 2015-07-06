@@ -11,16 +11,6 @@ module Constant::FbDataNode
 		"founded" => "Time",
 		"release_date" => "Time"
 	}
-	FbDataNodeToParentLabel = {
-		"city" => "Location",
-		"country" => "Location",
-		"street" => "Location",
-		"hometown" => "",
-		"state"		=> "",
-		"current_location" => "",
-		"founded" => "Time",
-		"release_date" => "Time"
-	}
 
 	FbNlpDescriptionPropertiesPrimary = [ "description", "about", "mission","bio", "company_overview", "general_info"]
 	FbNlpDescriptionPropertiesSecondary = ["name"]

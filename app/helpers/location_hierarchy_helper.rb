@@ -5,7 +5,7 @@ module LocationHierarchyHelper
 	CityStreetName = {"1" => "city", "2" => "street"}
 
 	def self.merge_country_to_city(country_node,city_node)
-		merge_hierachy_links(country_node,city_node,Constant::FbDataNode("city"))
+		merge_hierachy_links(country_node,city_node,Constant::FbDataNode::FbDataNodeToLabel["city"])
 	end
 
 	def self.merge_country_to_city_id(country_id, city_id)
@@ -13,7 +13,7 @@ module LocationHierarchyHelper
 	end
 
 	def self.merge_city_to_street(city_node,street_node)
-		merge_hierachy_links(city_node,street_node,Constant::FbDataNode("street"))
+		merge_hierachy_links(city_node,street_node,Constant::FbDataNode::FbDataNodeToLabel["street"])
 	end
 
 	def self.merge_city_to_street_id(city_id, street_id)
@@ -21,7 +21,7 @@ module LocationHierarchyHelper
 	end
 
 	def self.merge_country_to_street(country_node,street_node)
-		merge_hierachy_links(country_node,street_node,Constant::FbDataNode("street"))
+		merge_hierachy_links(country_node,street_node,Constant::FbDataNode::FbDataNodeToLabel["street"])
 	end
 
 	def self.merge_country_to_street_id(country_id, street_id)
@@ -38,7 +38,7 @@ module LocationHierarchyHelper
 
 	def self.match_node_pair(id_hash,name_hash = {"1" => "node1", "2" => "node2"})
 		"MATCH (" + name_hash["1"] + "), (" + name_hash["2"] + ")"\
-		"WHERE ID("+ name_hash["1"] + ") ==" + id_hash["1"].to_s + " AND ID(" + name_hash["2"] + ") == " + id_hash["2"] + " "\
+		"WHERE ID("+ name_hash["1"] + ") =" + id_hash["1"].to_s + " AND ID(" + name_hash["2"] + ") = " + id_hash["2"].to_s + " "\
 		"WITH " + name_hash["1"] + ", " + name_hash["2"] + " "
 	end
 end
