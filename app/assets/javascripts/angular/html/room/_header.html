@@ -21,10 +21,17 @@
                 <span ng-if="!active_tag.status" class="icon-user-add"></span>
             </md-button>
         </div>
-         <div class="less_important" ng-show="active_tag.users && active_tag.users.length > 0" layout-padding>
+        <md-divider></md-divider>
+        <div class="less_important" ng-show="active_tag.users && active_tag.users.length > 0" layout-padding>
                 Readers in this room
         </div>
         <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+        <md-divider></md-divider>
+        <div class="pointer" layout-padding>
+            <a href="/rooms" class="grey_color">
+                More Rooms
+            </a>
+        </div>
     </section>
 </div>
 

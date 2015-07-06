@@ -1,4 +1,31 @@
-<md-whiteframe layout-fill ng-hide="constant.show_book" layout-align="start" 
+<div layout="row" layout-padding
+	ng-if="!constant.show_book && (info.selected_genre || info.selected_author || info.selected_year || info.selected_duration)"
+	flex>
+    <div layout-padding class="less_important">Group by</div>
+    <div ng-click="group_by_subject()" ng-disabled="info.subject_filter" layout-padding class="less_important">
+        <a ng-class="{'inactive_link': info.subject_filter}">Genre</a>
+    </div>
+    <div ng-click="group_by_published_era()" ng-disabled="info.published_era_filter" layout-padding class="less_important">
+        <a ng-class="{'inactive_link': info.published_era_filter}">Publishing Era</a>
+    </div>
+    <div ng-click="group_by_author()" ng-disabled="info.author_filter"  layout-padding class="less_important">
+        <a ng-class="{'inactive_link': info.author_filter}">Author</a>
+    </div>
+    <div ng-click="group_by_reading_time()" ng-disabled="info.reading_time_filter" layout-padding class="less_important">
+        <a ng-class="{'inactive_link': info.reading_time_filter}">Duration</a>
+    </div>
+    <div ng-click="group_by_alphabet(A)" layout-padding class="less_important">
+        <a>A-Z</a>
+        <md-tooltip>
+            Group by alphabet
+        </md-tooltip>
+    </div>
+    <div class="less_important" ng-click="ungroup()" layout-padding
+        ng-if="info.reading_time_filter || info.author_filter || info.published_era_filter || info.subject_filter">
+        <a>Ungroup</a>
+    </div>
+</div>
+<!-- <md-whiteframe layout-fill ng-hide="constant.show_book" layout-align="start" 
 	layout-padding layout="row">
-</md-whiteframe>
+</md-whiteframe> -->
 <div ng-include src="'/assets/angular/html/library/_books.html'"></div>

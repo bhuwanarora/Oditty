@@ -33,36 +33,6 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 	}
 
 	$scope.get_prices_and_reviews = function(data){
-		// var data = {
-		// 	"prices": [
-		// 		{
-		// 			store: "Amazon.in",
-		// 			price: 1058.40,
-		// 			currency_code: "INR",
-		// 			delivery_info: "Usually dispatched within 1-3 weeks",
-		// 			min_days: 11,
-		// 			max_days: 15,
-		// 			url: "http://www.amazon.in/Tiger-Woods-How-Play-Golf/dp/0446529311%3FSubscriptionId%3DAKIAJUPAVELJRPUOFMLA%26tag%3Dreade03-21%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0446529311",
-		// 			in_stock: true,
-		// 			max_price: asas,
-		// 		},
-		// 		{
-		// 			store: "Amazon.in",
-		// 			price: 1058.40,
-		// 			currency_code: "INR",
-		// 			delivery_info: "Usually dispatched within 1-3 weeks",
-		// 			min_days: 11,
-		// 			max_days: 15,
-		// 			url: "http://www.amazon.in/Tiger-Woods-How-Play-Golf/dp/0446529311%3FSubscriptionId%3DAKIAJUPAVELJRPUOFMLA%26tag%3Dreade03-21%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0446529311",
-		// 			in_stock: true
-		// 		}
-		// 	],
-		// 	"reviews":{
-		// 		user_review_iframe: "http://www.amazon.com/reviews/iframe?akid=AKIAJUPAVELJRPUOFMLA&alinkCode=xm2&asin=0446529311&atag=reade06c-20&exp=2015-07-03T12%3A44%3A03Z&v=2&sig=QenSpwxuPF8HuOYmZ%2Fa1QDERUcE45N9ZXY%2FgTf0U3S0%3D",
-		// 		editorial_review: "No athlete has changed his sport the way Tiger Woods has transformed the world of golf. The Tiger phenomenon has created a new legion of golfers, seduced by Woods's almost effortless mastery of this most difficult game. In <I>How I Play Golf</I> Woods reveals the many facets of his game and offers a plethora of tips and advice aimed at all levels of play. Unlike most golf guides, and perhaps somewhat surprising from a player best known for his long game, <I>How I Play Golf</I> begins with the short game--putting, chipping, and pitching--before moving onto swing mechanics and hitting off the tee. Produced in conjunction with the editors of <I>Golf Digest</I>, the book is lavishly photographed and illustrated and offers a gold mine of useful ideas and mental images Tiger has collected over the years. Throughout, Tiger recounts memorable shots from his relatively brief career; for example, his only perfect shot (a 3-wood on No. 14 at St. Andrews) and his first putt at the 1995 Masters (a 20-footer for birdie on No. 1 that missed and rolled off the green). <I>How I Play Golf</I> is not only a first-rate instructional guide, it also communicates a passion and respect for the game that beginners, hackers, and low handicappers should find inspiring. Highly recommended. <I>--Harry C. Edwards</I>",
-		// 		source: "Amazon.com"
-		// 	}
-		// }
 		if(angular.isDefined($scope.prices)){
 			$scope.prices = $scope.prices.concat(data.prices);
 		}
@@ -70,7 +40,7 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 			$scope.prices = data.prices;
 		}
 		if(angular.isDefined($scope.reviews)){
-			// $scope.reviews = $scope.reviews.concat(data.reviews);
+			$scope.reviews = $scope.reviews.concat(data.reviews);
 		}
 		else{
 			$scope.reviews = data.reviews;
@@ -102,8 +72,10 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 			});
 		}, 100);
 		var more_prices_timeout = $timeout(function(){
+			$scope.loading_buy_options = true;
 			bookService.more_prices(isbn).then(function(data){
-				$scope.get_prices_and_reviews(data)
+				$scope.get_prices_and_reviews(data);
+				$scope.loading_buy_options = false;
 			});
 		}, 100);
 		$scope.$on('destroy', function(){

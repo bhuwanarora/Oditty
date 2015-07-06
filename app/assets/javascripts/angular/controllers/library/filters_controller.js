@@ -225,6 +225,18 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
     }
 
+    function get_query_params(name){
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\?&]"+name+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec(window.location.href);
+        var output = "";
+        if(results != null){
+            output = results[1];
+        }
+        return output;
+    }
+
     var _init = (function(){
         console.log("filtersController");
         $scope.search_tag = {};
@@ -245,22 +257,13 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             $rootScope.filters = {};
         }
 
-        var regex = /[?&]([^=#]+)=([^&#]*)/g;
-        var url_parser = regex.exec($location.absUrl());
-        if(angular.isDefined(url_parser) && url_parser != null){
-            if(url_parser[1] == "g"){
-                $scope.selected_genre = url_parser[2];
-            }
-            else if(url_parser[1] == "d"){
-                $scope.selected_duration = url_parser[2];
-            }
-
-            if(url_parser[3] == "g"){
-                $scope.selected_genre = url_parser[4];
-            }
-            else if(url_parser[3] == "d"){
-                $scope.selected_duration = url_parser[4];
-            }
+        var genre = get_query_params("g");
+        var duration = get_query_params("d");
+        if(genre != null){
+            $scope.selected_genre = genre;
+        }
+        if(duration != null){
+            $scope.selected_duration = duration;
         }
     }());
     

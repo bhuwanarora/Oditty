@@ -1,0 +1,68 @@
+<div class="video_wrapper">
+    <img src="/assets/home.png" hide show-sm show-md>
+    <video poster="/assets/home.png" autoplay="" 
+        hide-sm hide-md loop="" src="https://a0.muscache.com/airbnb/static/London-P1-1.mp4">
+            <source type="video/mp4" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
+            <source type="video/webm" src="http://ak6.picdn.net/shutterstock/videos/1876138/preview/stock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.webm">
+            <object width="596" height="336" type="application/x-shockwave-flash" data="/video/assets/static/flashmediaelement.swf">
+                <param name="movie" value="/video/assets/static/flashmediaelement.swf">
+                <param name="flashvars" value="controls=true&amp;file=http%3A%2F%2Fak6.picdn.net%2Fshutterstock%2Fvideos%2F1876138%2Fpreview%2Fstock-footage-baby-girl-reading-a-book-while-lying-on-the-floor.mp4">
+            </object>
+        </video>
+</div>
+<div class="filters_header animate-fast init_filters_header" 
+     layout="column" layout-align="center center">
+     <div layout="column" layout-align="center center" class="full_width" >
+         <div layout-padding layout="column" layout-align="center center">
+             <div class="rd_title bold white_color" layout-padding>
+                 READ LIFE
+             </div>
+             <div class="white_color big_title center_text bold">
+                Discover yourself through books, friends, and the world.
+             </div>
+         </div>
+        <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">
+            <div flex="10" flex-md="5"></div>
+            <div layout="row" layout-align="center center"
+                 class="z-index-1" flex="80" flex-md="90">
+                <div class="relative" flex-md flex-sm>
+                    <md-autocomplete  class="filters_autocomplete genres_autocomplete"
+                        md-selected-item="info.selected_genre"
+                        md-search-text="search_tag.genre"
+                        md-items="item in info.genres"
+                        md-search-text-change="search_genres(search_tag.genre)"
+                        md-item-text="item.name || item.root_category_name"
+                        md-min-length="0"
+                        placeholder="Select a Genre">
+                        <div>
+                            <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
+                            <div class="less_important">{{item.books_count}} books</div>
+                        </div>
+                    </md-autocomplete>
+                </div>
+                <div class="relative" hide-sm hide-md>
+                    <md-autocomplete class="filters_autocomplete time_autocomplete"
+                        md-selected-item="info.selected_duration"
+                        md-search-text="search_tag.read_time"
+                        md-items="item in info.read_times"
+                        md-item-text="item.page_count_range"
+                        md-min-length="0"
+                        placeholder="No. of Pages">
+                        <div layout="column">
+                            {{item.page_count_range}}
+                        </div>
+                    </md-autocomplete>
+                </div>
+                <div>
+                    <md-button class="md-button-clear md-raised md-whiteframe-z2" style="height:42px;"
+                        ng-click="show_filter_results()">
+                        Go
+                    </md-button>
+                </div>
+            </div>  
+            <div flex="10" flex-md="5"></div>
+        </section>
+     </div>
+     
+
+</div>

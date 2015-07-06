@@ -21,14 +21,11 @@
         md-search-text="search_tag.read_time"
         md-items="item in info.read_times"
         md-selected-item-change="select_reading_time(info.selected_duration)"
-        md-item-text="item.name"
+        md-item-text="item.page_count_range"
         md-min-length="0"
-        placeholder="Time to Read">
+        placeholder="No. of Pages">
         <div layout="column">
-            <span md-highlight-text="search_tag.read_time" md-highlight-flags="^i">{{item.name}}</span>
-            <div class="less_important">
-                {{item.page_count_range}} Pages to read
-            </div>
+            {{item.page_count_range}}
         </div>
 
     </md-autocomplete>

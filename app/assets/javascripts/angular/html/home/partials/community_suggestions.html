@@ -1,13 +1,17 @@
+<a layout-padding layout="row" layout-align="center center" class="bold grey_color" href="/rooms">
+    <div><i class="material-icons">trending_up</i></div>
+    <div layout-padding>Trending Rooms of Knowledge</div>
+</a>
 <md-grid-list
     md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
     md-row-height-gt-md="1:1" md-row-height="4:3"
-    md-gutter="20px" md-gutter-gt-sm="10px">
+    md-gutter="50px" md-gutter-gt-sm="10px">
     <md-grid-tile ng-repeat="trend in suggest_communities"
-              md-rowspan="{{trend.span.row}}"
-              md-colspan="{{trend.span.col}}"
-              md-colspan-sm="1"
-              class="pointer"
-              ng-click="goto_room(trend.id)">
+            md-rowspan="{{trend.span.row}}"
+            md-colspan="{{trend.span.col}}"
+            md-colspan-sm="1"
+            class="pointer"
+            ng-click="goto_room(trend.id)">
         <img ng-src="{{trend.image_url}}" class="trends" />
         <md-grid-tile-footer layout="row" layout-padding>
         	<h3 class="capitalize bold">{{trend.name}}</h3>
