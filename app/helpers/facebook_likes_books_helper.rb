@@ -4,13 +4,24 @@ module FacebookLikesBooksHelper
 		text_array = self.get_data_for_NLP node_id
 		text = self.concatenate_hash text_array
 		community_books_relevance = self.get_communities_from_text [text]
-		debugger
 		default_community_books_relevance = self.get_communities_from_default node_id
 		debugger
 		all_community_books_relevance = community_books_relevance[0] + default_community_books_relevance
 		self.merge_community_to_books all_community_books_relevance
 		self.merge_node_to_community all_community_books_relevance, node_id
+		self.clean_up node_id
 		debugger
+	end
+
+	def self.clean_up node_id
+		clause = self.match_rel(node_id, FacebookLike.get_relationship_type("category_list")) + " RETURN ID(destination) AS id, destination.name AS name "
+		ids = clause.execute
+		ids.each do |category|
+			clause = Community.search_by_index(category["name"]) + self.match_node(node_id) + ", community "
+			clause += " MERGE(node)-[:" + FacebookLike.get_relationship_type("category_list") + "]->(community) WITH node "
+			clause += " MATCH (node)-[r:" + FacebookLike.get_relationship_type("category_list") + "]->(to_be_deleted) WHERE ID(to_be_deleted) = " + category["id"].to_s + " DELETE to_be_deleted, r"
+			clause.execute
+		end
 	end
 
 	def self.merge_community_to_books all_community_books_relevance
@@ -42,6 +53,10 @@ module FacebookLikesBooksHelper
 		" MATCH(" + nodename + ") WHERE ID(" + nodename + ") = " + id.to_s + " WITH " + nodename + " "
 	end
 
+	def self.match_rel id_src, rel_type, src_name = "node"
+		" MATCH(" + src_name + ")-[rel:" + rel_type + "]-(destination) WHERE ID(" + src_name + ") = " + id_src.to_s + " WITH rel, destination, " + src_name + " "
+	end
+
 	def self.match_fb_node app_id, nodename = "node"
 		" MATCH(" + nodename + ") WHERE " + nodename + ".app_id = " + "\"" + app_id.to_s + "\" WITH " + nodename + " "
 	end
@@ -50,7 +65,7 @@ module FacebookLikesBooksHelper
 		clause = " MERGE (node"
 		clause += (label.map{|label_single| (":" + label_single + " ")}).join
 		if(properties["id"].present?)
-			clause += "{ app_id: \"" + properties["id"] + "\"}) SET "
+			clause += "{ app_id: \"" + properties["id"] + "\"})  ON CREATE SET node.created_at = " + Time.now.to_i.to_s + ", node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET node.updated_at = " + Time.now.to_i.to_s + " WITH node SET "
 			properties.each do |key,value|
 				if key == 'id'
 					next
@@ -65,7 +80,7 @@ module FacebookLikesBooksHelper
 			end
 			clause[clause.length - 1] = '}'
 			clause += ') '
-			clause
+			clause += " ON CREATE SET node.created_at = " + Time.now.to_i.to_s + ", node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET node.updated_at = " + Time.now.to_i.to_s + " "
 		end
 		clause
 	end
@@ -106,7 +121,7 @@ module FacebookLikesBooksHelper
 			children_node_set << self.handle_hash(param, key, [FacebookLike.get_node_label(key)])
 		elsif param.is_a?(Array)
 			if(key == "category_list")
-				output = self.handle_array(param, key, node_label)
+				output = self.handle_array(param, key, ["Community"])
 			else
 				output = self.handle_array(param, key, [FacebookLike.get_node_label(key)])
 			end
@@ -157,7 +172,7 @@ module FacebookLikesBooksHelper
 				node_property[key] = output[:node_property]
 			end
 		end
-		clause = self.merge_node(node_label, node_property) + " RETURN ID(node) AS id"
+		clause = self.merge_node(node_label, node_property) + "RETURN ID(node) AS id"
 		node_id = clause.execute[0]["id"]
 		children_id_set = self.handle_children node_id, children_node_set
 		self.handle_location children_node_set, children_id_set
@@ -230,11 +245,10 @@ module FacebookLikesBooksHelper
 		text_array.map{|text| self.get_communities_from_NLP(text)}
 	end
 
-	def self.get_communities_from_default node_id
+	def self.get_default_communities_from_node node_id
 		clause = self.match_node(node_id) + "RETURN "
 		link_types = []
 		Constant::FbDataNode::FbDefaultCommunities.each do |property|
-			debugger
 			unless property[property.length - 1] == '/'
 				clause += " node." + property + " AS " + property + ","
 			else
@@ -252,10 +266,28 @@ module FacebookLikesBooksHelper
 				end
 			end
 		end
-		communitynames.map{|communityname| {'name'		=> communityname,
+		communitynames.map{|communityname| {
+									'name'		=> communityname,
 									'relevance' => Constant::FbDataNode::FbDefaultCommunityRelevance,
 									'relevanceOriginal' => Constant::FbDataNode::FbDefaultCommunityRelevance,
 									'books_id' => CommunitiesHelper.fetch_book_ids(communityname)[communityname]}}
+	end
+
+	def self.get_default_communities_from_rel node_id
+		clause = self.match_rel(node_id, FacebookLike.get_relationship_type("category_list")) + "RETURN destination.name AS name"
+		communitynames = clause.execute.map{|elem| elem["name"]}
+		communitynames.map{|communityname| {
+									'name'		=> communityname,
+									'relevance' => Constant::FbDataNode::FbDefaultCommunityRelevance,
+									'relevanceOriginal' => Constant::FbDataNode::FbDefaultCommunityRelevance,
+									'books_id' => CommunitiesHelper.fetch_book_ids(communityname)[communityname]}
+											}
+	end
+
+	def self.get_communities_from_default node_id
+		c1 = self.get_default_communities_from_node node_id
+		c2 = self.get_default_communities_from_rel node_id
+		c1 + c2
 	end
 
 	def self.get_communities_from_NLP text
