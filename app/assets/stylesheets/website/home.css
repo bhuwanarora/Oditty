@@ -77,10 +77,6 @@ a{
   	border-bottom: 1px solid #E2E2E2;
 }
 
-md-card{
-	/*box-shadow: none !important;*/
-}
-
 .no_shadow{
 	box-shadow: none !important;
 }
@@ -90,7 +86,7 @@ md-card{
 }
 
 md-card{
-	/*margin-top: 25px !important;*/
+	border-radius: 2px;
 	background-color: white;
 }
 

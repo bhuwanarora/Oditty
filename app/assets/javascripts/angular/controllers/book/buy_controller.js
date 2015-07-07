@@ -40,7 +40,7 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 			$scope.prices = data.prices;
 		}
 		if(angular.isDefined($scope.reviews)){
-			$scope.reviews = $scope.reviews.concat(data.reviews);
+			// $scope.reviews = $scope.reviews.concat(data.reviews);
 		}
 		else{
 			$scope.reviews = data.reviews;
