@@ -11,6 +11,65 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
     }
 
+    var _get_reading_time = function(book){
+        if(book.page_count == null){
+            var reading_time = "Dont Know";
+        }
+        else{
+            book.page_count = parseInt(book.page_count);
+            if(book.page_count < 50){
+                var reading_time = "For a flight journey";
+            }
+            else if(book.page_count < 100){
+                var reading_time = "For a weekend getaway";
+            }
+            else if(book.page_count <= 250){
+                var reading_time = "For a week holiday";
+            }
+            else if(book.page_count > 250){
+                var reading_time = "For a month vacation";
+            }
+            else{
+                var reading_time = "Dont Know";
+            }
+        }
+        return reading_time;
+    }
+
+    var _get_published_era = function(book){
+        if(book.published_year > 2000){
+            var published_era = "Contemporary";
+        }
+        else if(book.published_year >= 1939 && book.published_year < 2000){
+            var published_era = "Post Modern Literature";
+        }
+        else if(book.published_year >= 1900 && book.published_year < 1939){
+            var published_era = "Modernism";
+        }
+        else if(book.published_year >= 1837 && book.published_year < 1901){
+            var published_era = "Victorian Literature";
+        }
+        else if(book.published_year >= 1900 && book.published_year < 1939){
+            var published_era = "Romanticism";
+        }
+        else if(book.published_year >= 1798 && book.published_year < 1837){
+            var published_era = "Neo Classical Period";
+        }
+        else if(book.published_year >= 1900 && book.published_year < 1939){
+            var published_era = "English Renaissance";
+        }
+        else if(book.published_year >= 1660 && book.published_year < 1798){
+            var published_era = "Middle English Literature";
+        }
+        else if(book.published_year >= 1900 && book.published_year < 1939){
+            var published_era = "Old English Literature";
+        }
+        else{
+            var published_era = "Don't Know";
+        }
+        return published_era;
+    }
+
     this.show_book_dialog = function($rootScope, $scope, book, event){
         var id = book.book_id || book.id;
         window.location.href = "/book?id="+id;
@@ -32,9 +91,20 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         var skip_count = $scope.info.books.length;
         infinityService.get_books(skip_count).then(function(data){
             if(data != null){
-                angular.forEach(data.books, function(value){
-                    var random_int = Math.floor(Math.random() * ColorConstants.value.length);
-                    var json = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                angular.forEach(data.books, function(book){
+                    var status = book.status != null;
+                    var reading_time = _get_reading_time(book);
+                    var published_era = _get_published_era(book);
+
+                    var json = {
+                            "published_era": published_era,
+                            "reading_time": reading_time,
+                            "status": status,
+                            "isBook": true,
+                            "colspan": 1,
+                            "rowspan": 1,
+                            "alphabet": book.title[0]};
+                    json = angular.extend(book, json)
                     this.push(json);
                 }, $scope.info.books);
                 delete data.books;
@@ -108,58 +178,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
 
         bookService.get_popular_books(params).then(function(data){
-            var _get_reading_time = function(book){
-                if(book.pages_count < 50){
-                    var reading_time = "For a flight journey";
-                }
-                else if(book.pages_count < 100){
-                    var reading_time = "For a weekend getaway";
-                }
-                else if(book.pages_count <= 250){
-                    var reading_time = "For a week holiday";
-                }
-                else if(book.pages_count > 250){
-                    var reading_time = "For a month vacation";
-                }
-                else{
-                    var reading_time = "Dont Know";
-                }
-                return reading_time;
-            }
-
-            var _get_published_era = function(book){
-                if(book.published_year > 2000){
-                    var published_era = "Contemporary";
-                }
-                else if(book.published_year >= 1939 && book.published_year < 2000){
-                    var published_era = "Post Modern Literature";
-                }
-                else if(book.published_year >= 1900 && book.published_year < 1939){
-                    var published_era = "Modernism";
-                }
-                else if(book.published_year >= 1837 && book.published_year < 1901){
-                    var published_era = "Victorian Literature";
-                }
-                else if(book.published_year >= 1900 && book.published_year < 1939){
-                    var published_era = "Romanticism";
-                }
-                else if(book.published_year >= 1798 && book.published_year < 1837){
-                    var published_era = "Neo Classical Period";
-                }
-                else if(book.published_year >= 1900 && book.published_year < 1939){
-                    var published_era = "English Renaissance";
-                }
-                else if(book.published_year >= 1660 && book.published_year < 1798){
-                    var published_era = "Middle English Literature";
-                }
-                else if(book.published_year >= 1900 && book.published_year < 1939){
-                    var published_era = "Old English Literature";
-                }
-                else{
-                    var published_era = "Don't Know";
-                }
-                return published_era;
-            }
+           
 
             angular.forEach(data, function(book){
                 if(angular.isDefined($scope.info.categories)){
@@ -178,24 +197,22 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                         }
                     });
                 }
-                var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                 var status = book.status != null;
                 var reading_time = _get_reading_time(book);
                 var published_era = _get_published_era(book);
-
                 var json = {
                         "published_era": published_era,
                         "reading_time": reading_time,
                         "status": status,
                         "isBook": true,
                         "colspan": 1,
-                        "color": ColorConstants.value[random_int],
                         "rowspan": 1,
                         "alphabet": book.title[0]};
                 json = angular.extend(book, json)
                 this.push(json);
             },  books);
             console.log("load_popular_books", books.length, $scope.info.books.length);
+            // $scope.info.books = books;
             $scope.info.loading = false;
         });
     }

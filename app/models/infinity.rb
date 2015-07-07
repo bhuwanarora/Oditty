@@ -18,11 +18,11 @@ class Infinity < Neo
 		if only_read_time
 			puts "only_read_time".green
 			puts @skip_count
-			clause = ReadTime.new(@reading_time_id).match_books_after(@skip_count, Limit) + Infinity.match_genres + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info}, genres: genres"}))
+			clause = ReadTime.new(@reading_time_id).match_books_after(@skip_count, Limit) + Infinity.match_genres + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info}, genres: genres, description: book.description"}))
 		elsif only_genre
 			with_clause += " ,genre "
 			puts "only_genre".green
-			clause = Infinity::FilterGenre.new(@genre_id).get_books(@skip_count, Limit) + Infinity::FilterGenre.return_group(Infinity::FilterGenre.collect_map({"books" => "#{Book.grouped_basic_info}"}))
+			clause = Infinity::FilterGenre.new(@genre_id).get_books(@skip_count, Limit) + Infinity::FilterGenre.return_group(Infinity::FilterGenre.collect_map({"books" => "#{Book.grouped_basic_info}, description: book.description"}))
 		else
 			clause = ""
 			book_label_defined = false
@@ -52,9 +52,9 @@ class Infinity < Neo
 			clause += Infinity.match_genres(with_clause)
 
 			if return_group.present?
-				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info}, genres: genres"}), return_group) 
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info}, description: book.description, genres: genres"}), return_group) 
 			else
-				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info}, genres: genres"})) 
+				clause += Book.order_desc + Infinity.skip(@skip_count) + Infinity.limit(Limit) + Infinity.return_group(Infinity.collect_map({"books" => "#{Book.grouped_basic_info},  description: book.description, genres: genres"})) 
 			end
 		end
 		clause

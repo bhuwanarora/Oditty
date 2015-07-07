@@ -1,4 +1,4 @@
-<md-whiteframe layout-fill flex="80" flex-sm="100">
+<md-whiteframe layout-fill flex="80" flex-sm="100" layout-padding>
     <div class="books_cover animate-very-fast"
          flex="60"
          flex-md="80"
@@ -40,32 +40,23 @@
     <!-- {{info.books}} -->
     <div ng-style="grid_style" 
             ng-if="!info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
-                && !info.reading_time_filter && !info.subject_filter" layout-fill layout-padding>
+            && !info.reading_time_filter && !info.subject_filter" layout-fill layout-padding>
         <div layout="row" layout-wrap layout-align="start">
             <div ng-repeat="book in info.books track by $index"
                 layout-margin
                 layout-align="start start"
                 layout="row"
-                class="rd_book_container"
+                class="book_container full_width md-whiteframe-z1"
                 ng-class="{'book': book.isBook}" >
-                <md-button aria-label="show_book" class="md-whiteframe-z3 book_grid_link clear" aria-label="book"
-                        ng-click="show_book($event, book)">
-                    <!-- <img ng-src="{{book | choose_medium_thumb}}"/> -->
-                    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
-                    </div>
-                </md-button>
-                <!-- <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                        layout="column" layout-padding layout-align="space-between">
-                    <h3>{{book.title}}</h3>
-                    <h5>{{book.author_name}}</h5>
-                </div> -->
+                <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'">
+                </div>
             </div>
         </div>
     </div>
 
     <div ng-if="info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
-                && !info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" >
+            && !info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'author_name'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
@@ -73,23 +64,23 @@
    
     <div ng-if="info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
             && !info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" >
+            ng-style="grid_style" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'alphabet'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
 
     <div ng-if="!info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
-                && info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" >
+            && info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'reading_time'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
     </div>
 
     <div ng-if="!info.group_by_alphabet && !info.author_filter && info.published_era_filter 
-                && !info.reading_time_filter && !info.subject_filter"
-        ng-style="grid_style" >
+            && !info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
         <div ng-repeat="(key, value) in info.books | groupBy: 'published_era'" layout-padding>
             <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
         </div>
@@ -97,7 +88,7 @@
 
     <div ng-if="!info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
             && !info.reading_time_filter && info.subject_filter"
-        ng-style="grid_style" >
+            ng-style="grid_style" >
         <div ng-repeat="category in info.categories" layout-padding>
             <h3>{{category.name}}</h3>
             <div layout="row" layout-wrap layout-align="start">
@@ -105,18 +96,10 @@
                     layout-align="start start"
                     layout="row"
                     layout-margin
-                    class="rd_book_container"
+                    class="book_container full_width md-whiteframe-z1"
                     ng-class="{'book': book.isBook}" >
-                    <md-button aria-label="show_book" class="md-whiteframe-z3 book_grid_link clear"
-                            aria-label="book"
-                            ng-click="show_book($event, book)">
-                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-                    </md-button>
-                    <!-- <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                            layout="column" layout-padding layout-align="space-between">
-                        <h3>{{book.title}}</h3>
-                        <h5>{{book.author_name}}</h5>
-                    </div> -->
+                    <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'" 
+                        ></div>
                 </div>
             </div>
         </div>
