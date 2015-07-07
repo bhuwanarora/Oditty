@@ -63,8 +63,8 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return _deferred_request('/api/v0/personal_notifications', $q, $http);
     }
 
-    this.set_like_info = function(){
-        return _deferred_request('/api/v0/set_like_info', $q, $http);
+    this.set_like_info = function(params){
+        return _deferred_post_request('/api/v0/set_like_info', params, $q, $http);
     }
 
 

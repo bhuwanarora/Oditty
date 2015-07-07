@@ -20,6 +20,9 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
                         }, $scope.suggest_communities);
                     });
                 }, 100);
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(room_timeout);
+                });
             }
 
             $scope.goto_room = function(id){
@@ -36,6 +39,31 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
     };
 }]);
 
+
+homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+                var friend_timeout = $timeout(function(){
+                    userService.suggest_friends().then(function(data){
+                        $scope.suggest_friends = data;
+                        $scope.show_suggestions = true;
+                    });
+                }, 100);
+
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(friend_timeout);
+                });
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/partials/friend_suggestions.html'
+    };
+}]);
+
+
 homeApp.directive('trending', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
@@ -46,6 +74,10 @@ homeApp.directive('trending', ["$rootScope", "userService", "$timeout", function
                         $scope.suggest_communities = data;
                     });
                 }, 100);
+
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(room_timeout);
+                });
             }
 
             _init();

@@ -518,6 +518,11 @@ module Api
 				info = User.new(user_id).search_friends(search_text).execute
 				info
 			end
+
+			def self.get_friends_of_friend user_id
+				info = User::Suggest::FriendSuggestion.new(user_id).get_friends_of_friend.execute
+				info
+			end
 		end
 	end
 end

@@ -444,6 +444,16 @@ module Api
 				info = Api::V0::UserApi.search_friends(user_id, search_text)
 				render :json => info, :status => 200
 			end
+
+			def get_friends_of_friend
+				user_id = session[:user_id]
+				if user_id
+					info = Api::V0::UserApi.get_friends_of_friend(user_id)
+				else
+					info = []
+				end
+				render :json => info, :status => 200
+			end
 		end
 	end
 end
