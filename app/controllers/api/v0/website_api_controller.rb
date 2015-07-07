@@ -21,13 +21,25 @@ module Api
 
 			def basic_community_info
 				id = params[:id]
-				info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
+				info = $redis.get id
+				unless info
+					info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
+					$redis.set(id, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 
 			def feed_community_info
 				id = params[:id]
-				info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
+				info = $redis.get id
+				unless info
+					info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
+					$redis.set id, info.to_json
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 

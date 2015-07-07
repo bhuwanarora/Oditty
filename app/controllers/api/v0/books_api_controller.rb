@@ -63,8 +63,13 @@ module Api
 
 			def get_primary_info
 				id = params[:id]
-				user_id = session[:user_id]
-				info = BookApi.get_primary_info(id)
+				info = $redis.get id
+				unless info
+					info = BookApi.get_primary_info(id)
+					$redis.set id, info.to_json
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 

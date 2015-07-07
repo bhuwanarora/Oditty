@@ -28,7 +28,13 @@ module Api
 
 			def get_basic_info
 				id = params[:id]
-				info = Api::V0::AuthorApi.get_basic_info id
+				info = $redis.get id
+				unless info
+					info = Api::V0::AuthorApi.get_basic_info id
+					$redis.set id, info.to_json
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 

@@ -57,6 +57,15 @@ homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", fu
                 });
             }
 
+            $scope.follow_user = function(id){
+                userService.follow(id, true);
+                angular.forEach($scope.suggest_friends, function(value, index){
+                    if(value.id == id){
+                        $scope.suggest_friends.splice(index, 1);
+                    }
+                });
+            }
+
             _init();
         }],
         templateUrl: '/assets/angular/html/home/partials/friend_suggestions.html'

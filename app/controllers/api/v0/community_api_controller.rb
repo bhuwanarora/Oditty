@@ -14,7 +14,14 @@ module Api
 
 			def suggest_communities
 				user_id = session[:user_id]
-				info = Api::V0::CommunityApi.suggest_communities(user_id).execute
+				info = $redis.get 'trends'
+				unless info
+					info = Api::V0::CommunityApi.suggest_communities(user_id).execute
+					$redis.set('trends', info.to_json)
+				else
+					info = JSON.parse info
+				end
+
 				render :json => info, :status => 200
 			end
 

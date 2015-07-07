@@ -1,5 +1,19 @@
+<div layout-padding class="less_important" ng-show="suggest_friends && suggest_friends.length > 0">
+	Friend Suggestions
+</div>
 <div layout="row" layout-padding>
-	<div ng-repeat="friend in suggest_friends" layout-margin >
-		<img class="square" ng-src="{{friend.image_url}}">
+	<div ng-repeat="friend in suggest_friends" layout-margin layout="column">
+		<a ng-href="/profile?id={{friend.id}}"><img class="square" ng-src="{{friend.image_url}}"></a>
+		<div class="less_important">{{friend.first_name}} {{friend.last_name}}</div>
+		<div>
+			 <md-button aria-label="follow_user" class="md-warn md-button-clear md-raised" 
+	                    ng-click="follow_user(friend.id)"
+	                    ng-hide="hide_follow"
+	                    ng-if="!info.my_profile">
+	            <div ng-show="!profile_user.status" layout="row" layout-align="start center">
+	                <i class="material-icons">person_add</i>
+	            </div>
+	        </md-button>
+		</div>
 	</div>
 </div>
