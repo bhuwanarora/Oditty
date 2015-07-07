@@ -2,12 +2,15 @@ module FacebookLikesBooksHelper
 	
 	def self.set_community_books node_id
 		text_array = self.get_data_for_NLP node_id
-		text = text_array.join(" ")
+		text = self.concatenate_hash text_array
 		community_books_relevance = self.get_communities_from_text [text]
+		debugger
 		default_community_books_relevance = self.get_communities_from_default node_id
+		debugger
 		all_community_books_relevance = community_books_relevance[0] + default_community_books_relevance
 		self.merge_community_to_books all_community_books_relevance
 		self.merge_node_to_community all_community_books_relevance, node_id
+		debugger
 	end
 
 	def self.merge_community_to_books all_community_books_relevance
@@ -16,7 +19,7 @@ module FacebookLikesBooksHelper
 			name 	= element['name']
 			clause = Community.merge(name)
 			books_id.each do |book_id|
-				clause +=  self.match_node(books_id,"book") + ", community " + Community.merge_book + " WITH community "
+				clause +=  self.match_node(book_id,"book") + ", community " + Community.merge_book + " WITH community "
 			end
 			(clause + " RETURN ID(community)").execute
 		end
@@ -31,6 +34,7 @@ module FacebookLikesBooksHelper
 										},'node')
 			clause += " WITH node "
 		end
+		clause += " RETURN ID(node)"
 		clause.execute
 	end
 
@@ -216,9 +220,9 @@ module FacebookLikesBooksHelper
 	def self.get_data_for_NLP node_id
 		clause = self.match_node(node_id) + " RETURN "
 		Constant::FbDataNode::FbNlpDescriptionPropertiesPrimary.each do |property|
-			clause += " node." + property + "AS " + property + ","
+			clause += " node." + property + " AS " + property + ","
 		end
-		clause[clause.length -1] = ''
+		clause[clause.length - 1] = ''
 		clause.execute[0]
 	end
 
@@ -230,19 +234,22 @@ module FacebookLikesBooksHelper
 		clause = self.match_node(node_id) + "RETURN "
 		link_types = []
 		Constant::FbDataNode::FbDefaultCommunities.each do |property|
-			unless property[property.length -1] == '/'
-				clause += " node." + property + ","
+			debugger
+			unless property[property.length - 1] == '/'
+				clause += " node." + property + " AS " + property + ","
 			else
-				link_types << FacebookLike.get_relationship_type(property)
+				link_types << FacebookLike.get_relationship_type(property[0,property.length - 1])
 			end
 		end
-		clause[clause.length -1] = ''
+		clause[clause.length - 1] = ''
 		output = clause.execute
 		communitynames = []
 		if(output.length > 0)
 			community_info = output[0]
 			community_info.each do |key,community|
-				communitynames += community.split("/")
+				if(community.present?)
+					communitynames += community.split("/")
+				end
 			end
 		end
 		communitynames.map{|communityname| {'name'		=> communityname,
@@ -255,5 +262,15 @@ module FacebookLikesBooksHelper
 		uri= URI.parse(Rails.application.config.nlp_service + "api/v0/get_community")
 		response = Net::HTTP.post_form(uri, {"q" => text})
 		community_books_relevance = CommunitiesHelper.handle_nlp_response response
+	end
+
+	def self.concatenate_hash dict, joining_string = " "
+		output = ""
+		dict.each do |key,value|
+			if(value.present?)
+				output += dict[key].to_s + joining_string
+			end
+		end
+		output = output[0, output.length - joining_string.length]
 	end
 end

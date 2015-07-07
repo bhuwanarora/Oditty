@@ -20,14 +20,14 @@ class FacebookLike < Neo
 	end
 
 	def self.get_node_label field_name
-		"Fb" + field_name.search_ready.camelize + ""
+		field_name.search_ready.camelize + ""
 	end
 
 	def self.set_category category
 		clause = " SET facebook_like "
 		categories = category.split("/")
 		categories.each do |category_single|
-			clause += ":"+FacebookLike.get_node_label(category_single)
+			clause += ":Fb" + FacebookLike.get_node_label(category_single)
 		end
 		clause += " SET facebook_like.category = \"" + category.to_s + "\" "
 	end
