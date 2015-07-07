@@ -61,14 +61,14 @@
             <% elsif @network %>
                 <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
             <% elsif @news %>
-                <md-content layout="column" ng-controller="newsController" id="news">
+                <md-content layout="column" ng-controller="newsController" id="news" class="white">
             <% elsif @news_group && !@blogs %>
                 <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
             <% elsif @blogs && @news_group %>
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
                     check-scroll-bottom="get_blog_feed()" id="home">
             <% elsif @room %>
-                <md-content ng-controller="communityController" id="community" >
+                <md-content ng-controller="communityController" id="community" class="white">
             <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
                     check-scroll-bottom="get_popular_books()"

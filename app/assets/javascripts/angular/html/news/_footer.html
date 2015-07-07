@@ -1,23 +1,13 @@
-<div flex="100" flex-sm="100" >
-	<md-tabs md-selected="selectedIndex" ng-if="news" md-dynamic-height>
-		<md-tab ng-repeat="tag in news" md-selected="selectedIndex">
-			<a ng-href="/news?q={{::tag.id}}" >
-				<div layout="row" class="news_item">
-					<img ng-src="{{::tag.image_url}}" class="news_thumb" flex="20"/>
-					<div layout="column" flex="80" layout-align="start start" layout-padding layout-wrap>
-						<div ng-bind-html="tag.title | reduced_news_title" layout-wrap></div>
-						<div ng-bind-html="::tag.community_info.name" class="less_important"></div>
-					</div>
+<div layout="column">
+	<div ng-repeat="tag in news" layout-padding>
+		<a ng-href="/news?q={{::tag.id}}" >
+			<div layout="row" class="news_item" >
+				<div layout-padding><i class="material-icons">trending_up</i></div>
+				<div layout="column" flex="80" layout-align="start start"  layout-wrap>
+					<div ng-bind-html="tag.title | reduced_news_title" layout-wrap></div>
+					<div ng-bind-html="::tag.community_info.name" class="less_important"></div>
 				</div>
-				<!-- <div layout="column" class="news_item" ng-if="!info.active_circles">
-					<img ng-src="{{tag.image_url}}" class="full_width" />
-					<div layout="column" layout-align="start start" layout-padding layout-wrap>
-						<div ng-bind-html="tag.title | reduced_news_title" layout-wrap></div>
-						<div ng-bind-html="tag.description"></div>
-						<div ng-bind-html="tag.community_info.name" class="less_important"></div>
-					</div>
-				</div> -->
-			</a>
-		</md-tab>
-	</md-tabs>
+			</div>
+		</a>
+	</div>
 </div>

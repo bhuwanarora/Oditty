@@ -36,6 +36,24 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
     };
 }]);
 
+homeApp.directive('trending', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+                var room_timeout = $timeout(function(){
+                    userService.suggest_communities().then(function(data){
+                        $scope.suggest_communities = data;
+                    });
+                }, 100);
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/trending.html'
+    };
+}]);
+
 homeApp.directive('bookEmbed', ["$rootScope", "google_public_key", function($rootScope, google_public_key){
     return{
         restrict: 'A',

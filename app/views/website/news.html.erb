@@ -1,26 +1,12 @@
-<!-- <div flex layout="row" layout-align="space-between" class="primary">
-    <md-switch ng-model="info.circles" 
-               ng-click="toggle_circles()"
-               aria-label="Community Circles">
-    </md-switch>
-    <div></div>
-</div> -->
-<div ng-include src="'/assets/angular/html/shared/share.html'" class="light_grey md-whiteframe-z1"></div>
 <div layout="row" class="feed_margin">
-    <div flex="10" hide-md hide-sm></div>
+    <div flex="5" hide-md hide-sm></div>
     <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
-         flex="80" flex-md="100" flex-sm="100" layout="column"></div>
-    <div flex="10" hide-md hide-sm></div>
+         flex="90" flex-md="100" flex-sm="100" layout="row" layout-sm="column"></div>
+    <div flex="5" hide-md hide-sm></div>
 </div>
-<news-scroller layout="row" 
-    layout-align="center" 
-    layout-padding
-    class="news_footer">
-</news-scroller>
+
 <visit-news news-id="info.active_news_id" ng-if="info.active_news_id"></visit-news>
 
-<!-- <d3-circles></d3-circles> -->
-<!-- <d3-bars data="d3Data"></d3-bars> -->
 <style>
     #news .news_footer{
         width: 100%;
@@ -35,7 +21,6 @@
     #news .news_footer .md-header-items,
     #news .news_footer, 
     #news .news_footer .md-header-items-container{
-        background-color: #0C3657;
     }
 
     #news .news_footer md-tabs-canvas{

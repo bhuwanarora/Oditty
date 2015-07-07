@@ -19,20 +19,26 @@
             </div>
         </div>
         <div flex="35" flex-md="100" flex-sm="100">
-            <div layout-padding
-                ng-include src="'/assets/angular/html/author/more_info.html'">
-            </div>
             <div class="less_important bold" layout-padding>
                 Followers
             </div>
             <div layout="row" layout-wrap>
-                <div ng-include ng-init="active_tag = author" 
-                    src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+                <md-list layout="row" layout-wrap>
+                    <a ng-repeat="user in author.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" layout-margin
+                        layout="row" layout-align="center center">
+                        <img class="circular" ng-src="{{user.image_url}}"  alt="{{::user.first_name}} {{::user.last_name}}" onerror="this.src='/assets/user_profile.jpg'"/>
+                        <md-tooltip>{{::user.first_name}} {{::user.last_name}}</md-tooltip>
+                    </a>
+                </md-list>
+            </div>
+            <div layout-padding
+                ng-include src="'/assets/angular/html/author/more_info.html'">
             </div>
         </div>
     </div>
     <div flex="5" flex-md="5" hide-sm></div>
 </div>
+<md-divider></md-divider>
 <div layout="row" class="feed_margin">
     <div ng-include src="'/assets/angular/html/author/tabs.html'" class="full_width"></div>
 </div>

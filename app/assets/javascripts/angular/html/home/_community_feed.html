@@ -26,7 +26,8 @@
                 {{::communityFeed.title}}</a>
             </div>
             <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
-            <div ng-bind-html="::communityFeed.description" class="wrap" ng-show="communityFeed.description"></div>
+            <div ng-bind-html="::communityFeed.description" class="wrap" ng-show="communityFeed.description">
+            </div>
         </div>
         <div class="image_container clear" layout="column">
             <div flex class="image_wrapper">
