@@ -168,7 +168,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
-        window.location.href = "/filters";
+        window.location.href = "/home";
     }
 
     
