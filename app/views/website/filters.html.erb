@@ -1,9 +1,6 @@
-<div class="md-whiteframe-z1">
-    <div class="video_wrapper compressed_video_wrapper light_grey">
-        <!-- <img src="/assets/home.png"> -->
-    </div>
-    <div ng-include src="'/assets/angular/html/library/_header.html'" ng-hide="constant.show_book"></div>
-    <div ng-include src="'/assets/angular/html/shared/share.html'"></div>
+<div class="md-whiteframe-z1 light_grey" id="filters">
+    <div ng-include src="'/assets/angular/html/library/_header.html'" layout="row" layout-align="space-between" class="full_width"
+        layout-sm="column" layout-md="column"></div>
 </div>
 
 <section layout="row" layout-wrap class="feed_margin">
@@ -30,17 +27,30 @@
     .filters_header{
         position: relative;
         margin-top: -56px;
-        padding: 7px;
+        padding: 4px;
     }
 
     .md-sticky-clone{
         top: 0px !important;
     }
 
+    #filters md-autocomplete input{
+        cursor: pointer;
+    }
+
+    #filters md-autocomplete input:focus{
+        outline: 1px solid #2196F3;
+    }
+
+    #filters md-autocomplete input .md-placeholder{
+        color: #333 !important;
+    }
+
     md-autocomplete{
-        box-shadow: none;
-        border: 1px solid #E8E8E8;
-        margin-right: 4px;
+        min-width: inherit !important;
+        /*box-shadow: none;*/
+        /*border: 1px solid #E8E8E8;*/
+        /*margin: 6px;*/
     }
 
     .autocompletedemoBasicUsage md-content{
@@ -121,7 +131,7 @@
 
     @media (min-width:1000px)and (max-width:2200px){
         md-autocomplete{
-            min-width: 300px;
+            /*min-width: 300px;*/
         }
 
         .genres_autocomplete{
@@ -148,7 +158,7 @@
     @media (min-width:600px)and (max-width:1000px){
         md-autocomplete
         {
-            min-width: 200px;
+            /*min-width: 200px;*/
         }
 
         .genres_autocomplete{
@@ -170,7 +180,7 @@
     @media (max-width: 590px)and (max-height:1199px){
         md-autocomplete,
         .genres_autocomplete{
-            min-width: 300px;
+            /*min-width: 300px;*/
         }
 
         .time_autocomplete{

@@ -111,8 +111,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             }
         }
         else{
-            $scope.info.loading = true;
-            $scope._get_genres();
+            $scope.info.genres = PopularGenres;
         }
     }
 
@@ -150,7 +149,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 $scope.info.authors = $scope.top_authors;
             }
             else{
-                $scope._get_authors();
+                $scope.info.authors = PopularAuthors;
             }
         }
     }
@@ -192,10 +191,18 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         var genre = get_query_params("g");
         var duration = get_query_params("d");
         if(genre != null){
-            $scope.selected_genre = genre;
+            angular.forEach($scope.info.genres, function(value){
+                if(value.id == genre){
+                    $scope.info.selected_genre = value;
+                }
+            });
         }
         if(duration != null){
-            $scope.selected_duration = duration;
+            angular.forEach($scope.info.read_times, function(value){
+                if(value.id == duration){
+                    $scope.info.selected_duration = value;
+                }
+            });
         }
     }());
     
