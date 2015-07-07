@@ -1,20 +1,25 @@
 <div ng-style="{background:'{{book.color | random_color}}'}" class="rd_book_backup_cover md-whiteframe-z1" 
-        layout="column" layout-padding layout-align="space-between">
-    <h3>{{::book.title}}</h3>
-    <h5>{{::book.author_name}}</h5>
+        layout="column">
+    <div layout-padding layout-align="space-between" class="z_index_1 full_height" layout="column">
+        <div></div>
+        <div>
+            <h5>{{::book.author_name}}</h5>
+        </div>
+    </div>
+    <img src="/assets/defpicbook.png"  class="default_book_cover"/>
 </div>
 <div class="rd_slider_wrapper">
-	<div layout="column" layout-align="center" class="relative white"
-		ng-if="book.status">
-      	<md-slider flex md-discrete 
-      			class="md-warn"
-      			ng-change="rate_book(book, $event)"
-      			ng-model="book.user_rating" step="1" min="1" max="10" 
-      			aria-label="user_rating">
-      	</md-slider>
-	</div>
-	<img src="/assets/book_shadow.png" class="rd_book_shadow">
-	<img ng-src="{{book | choose_medium_thumb}}" class="rd_book_image_cover">
+    <div layout="column" layout-align="center" class="relative white"
+        ng-if="book.status">
+        <md-slider flex md-discrete 
+                class="md-warn"
+                ng-change="rate_book(book, $event)"
+                ng-model="book.user_rating" step="1" min="1" max="10" 
+                aria-label="user_rating">
+        </md-slider>
+    </div>
+    <img src="/assets/book_shadow.png" class="rd_book_shadow">
+    <img ng-src="{{book | choose_medium_thumb}}" class="rd_book_image_cover" onerror="this.src=''">
 </div>
 <div layout-padding class="wrap">
     <div class="big_title">{{::book.title}}</div>

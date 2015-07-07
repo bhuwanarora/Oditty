@@ -35,10 +35,11 @@ a:active{
 }
 
 a{
-    color: #006064;
+    color: #2196F3;
 }
 
-.header a{
+.header a,
+.home_header a{
 	color: #333;
 }
 
@@ -51,7 +52,7 @@ a{
 }
 
 .yield{
-	margin-top: 50px;
+	margin-top: 48px;
 }
 
 .header{
@@ -64,16 +65,20 @@ a{
   	top: 0px;
 }
 
-md-card{
-	/*box-shadow: none !important;*/
+.home_header{
+	min-height: 48px !important;
+  	z-index: 3;
+  	background-color: white;
+  	width: 100%;
+  	top: 0px;	
+}
+
+.border_bottom{
+  	border-bottom: 1px solid #E2E2E2;
 }
 
 .no_shadow{
 	box-shadow: none !important;
-}
-
-.header .md-button{
-	/*color: rgba(145, 140, 140, 1) !important;*/
 }
 
 .carddemoBasicUsage md-card {
@@ -81,12 +86,12 @@ md-card{
 }
 
 md-card{
-	/*margin-top: 25px !important;*/
+	border-radius: 2px;
 	background-color: white;
 }
 
 md-content{
-	max-height: 98vh !important;
+	max-height: 99vh !important;
 	outline: none !important;
 }
 
@@ -100,8 +105,9 @@ md-content{
 }
 */
 .logo{
-	padding-left: 50px;
+	padding-left: 35px;
 	font-size: 1.2em;
+	font-weight: bold;
 }
 
 .logo:hover{
@@ -113,9 +119,9 @@ md-content{
 	position: absolute;
   	z-index: 99999999;
   	left: 1px;
-  	top: -13px;
-  	width: 42px;
-  	height: 50px;
+  	top: -7px;
+  	width: 30px;
+  	height: 36px;
 }
 
 .search{
@@ -125,8 +131,12 @@ md-content{
 	padding: 0px !important;
 	border: none;
 	box-shadow: none;
-	/*font-size: 18px;*/
+	border-bottom: 1px solid black;
 	color: white !important;
+}
+
+.search md-input-container .md-placeholder{
+	color: #333;
 }
 
 .search md-input-container label,
@@ -136,7 +146,7 @@ md-content{
 }
 
 .search input{
-	padding-left: 0px;
+	padding-left: 40px !important;
 	color: #333 !important;
 }
 
@@ -144,16 +154,15 @@ md-content{
 	outline: none;
 }
 
-.search_container{
+.search_icon{
 	position: absolute;
-    left: 25%;
-    height: 50px;
+  	left: 5px;
+  	margin-top: 15px;
 }
 
-.search_container label{
-	font-size: 15px;
-	color: white !important;
-  	padding-left: 40px;
+.search_container{
+	position: relative;
+	z-index: 1;
 }
 
 .library{
@@ -197,6 +206,7 @@ md-card .image_wrapper{
  	overflow: hidden;
  	position: relative;
  	width: 100%;
+ 	margin-top: 6px;
 }
 
 .card .footer{
@@ -228,14 +238,6 @@ md-backdrop.md-opaque.md-default-theme{
 
 .md-button-left{
 	text-align: left;
-}
-
-.search_icon{
-	color: grey;
-	position: absolute;
-	z-index: 1;
-	top: 32px;
-  	margin-left: -25px;
 }
 
 md-toolbar{
@@ -777,4 +779,17 @@ md-tooltip .md-content{
 	width: 60px;
 	font-size: 16px;
 	font-family: sans-serif;
+}
+
+.default_book_cover{
+	width: 100%;
+  	height: 100%;
+  	position: absolute;
+  	top: 0px;
+}
+
+.trends{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
 }

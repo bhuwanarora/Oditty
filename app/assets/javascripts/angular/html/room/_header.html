@@ -1,5 +1,18 @@
-<div class="profile_header ">
+<div class="profile_header">
     <section layout="column" layout-wrap>
+        <div layout="column">
+            <div layout-padding>
+                <div class="big_title capitalize" ng-bind-html="active_tag.name"></div>
+                <div layout="row" layout-column ng-hide="hide_follow_links" class="less_important">
+                    <div ng-show="active_tag.view_count && active_tag.view_count != 0">
+                        <span>{{active_tag.view_count}} </span>
+                        <span ng-show="active_tag.view_count == 1">View</span>
+                        <span ng-show="active_tag.view_count != 1">Views</span>
+                    </div>
+                </div>
+            </div>
+            <img ng-src="{{active_tag.image_url}}" class="profile_pic" />
+        </div>
         <div layout="row" layout-align="end start" layout-padding class="top_section">
              <md-button aria-label="toggle_follow" ng-class="{'md-raised': !active_tag.status}" 
                 class="md-warn md-button-clear" ng-click="toggle_follow()">
@@ -8,27 +21,16 @@
                 <span ng-if="!active_tag.status" class="icon-user-add"></span>
             </md-button>
         </div>
-        <div layout="column" layout-align="center center" layout-padding>
-            <img ng-src="{{active_tag.image_url}}" class=" profile_pic" />
-            <div class="big_title bold capitalize" ng-bind-html="active_tag.name" layout-padding></div>
-            <div layout="row" layout-column layout-align="center center" ng-hide="hide_follow_links">
-                <div class="white_color" ng-show="active_tag.view_count && active_tag.view_count != 0">
-                    <span>{{active_tag.view_count}} </span>
-                    <span ng-show="active_tag.view_count == 1">View</span>
-                    <span ng-show="active_tag.view_count != 1">Views</span>
-                </div>
-            </div>
-            
+        <md-divider></md-divider>
+        <div class="less_important" ng-show="active_tag.users && active_tag.users.length > 0" layout-padding>
+                Readers in this room
         </div>
-        <!-- <div ng-include src="'/assets/angular/html/shared/share.html'" class="yellow" flex="20"></div> -->
+        <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+        <md-divider></md-divider>
     </section>
 </div>
 
 <style>
-    .profile_header{
-        color: white !important;
-        box-shadow: none;
-    }
 
     .profile_header h2{
         padding: 0px;
@@ -40,8 +42,7 @@
     }
 
     .profile_pic{
-        width: 200px;
-        border: 5px solid #E5E5E5;
+        height: 300px;
         z-index: 1;
     }
 
@@ -55,7 +56,4 @@
     }
 
 
-    .profile_header a{
-        color: white;
-    }
 </style>

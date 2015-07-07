@@ -1,4 +1,4 @@
-<md-whiteframe layout-fill>
+<md-whiteframe layout-fill flex="80" flex-sm="100">
     <div class="books_cover animate-very-fast"
          flex="60"
          flex-md="80"
@@ -19,13 +19,15 @@
             md-mode="indeterminate">
     </md-progress-linear>
 
-    <div class="less_important" layout="column" layout-padding layout-align="center center"
+    <div class="less_important" layout="column" layout-padding
         ng-if="!constant.show_book">
-        <div class="big_title" 
-            ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
-            Popular Books</div>
-        <div>{{info.books.length}} results</div>
-        <div>Scroll to see more.</div>
+        <div layout-padding>
+            <div class="big_title" 
+                ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
+                Popular Books</div>
+            <div>{{info.books.length}} results</div>
+            <div>Scroll to see more.</div>
+        </div>
     </div>
 
     <div layout-padding ng-if="info.other_info && info.other_info.name && !constant.show_book" 
@@ -120,6 +122,7 @@
         </div>
     </div>
 </md-whiteframe>
+<trending flex="20" hide-sm></trending>
 <style>
 
     .books_cover{

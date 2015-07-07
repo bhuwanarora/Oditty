@@ -361,7 +361,7 @@ angular.module('filtersApp', [])
   })
   .filter('large_thumb', function(){
     return function(input){
-      var output = "";
+      var output = "/assets/defpicbook.png";
       if(angular.isDefined(input) && input){
         var external_thumb = angular.isDefined(input.external_thumb) && input.external_thumb != null;
         if(external_thumb){

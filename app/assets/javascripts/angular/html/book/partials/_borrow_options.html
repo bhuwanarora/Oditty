@@ -1,12 +1,28 @@
-<div ng-if="borrow_users && borrow_users.length > 0" >
-    Borrow this book from a friend</div>
-<div ng-if="!borrow_users || borrow_users.length == 0">
-    Notify your friends that you want to borrow this book.</div>
+<div layout="row" layout-align="space-between" layout-sm="column">
+    <div ng-if="borrow_users && borrow_users.length > 0" class="less_important">
+        Borrow this book from a friend</div>
+    <div ng-if="!borrow_users || borrow_users.length == 0" class="less_important">
+        <div ng-hide="hide_link">
+            Or <a ng-click="notify_friends()">Notify</a> your friends that you want to borrow this book.
+        </div>
+        <div ng-show="hide_link">
+            Notification Sent.
+        </div>
+    </div>
+    <div layout="row" layout-align="space-between">
+        <div layout="column">
+            <md-button ng-class="{'md-raised': !book.i_own_this}" ng-click="toggle_bookmark(book.i_own_this)" class="md-button-clear">
+                I own this book
+            </md-button>
+        </div>
+    </div>
+</div>
+
 <md-list layout-padding ng-if="borrow_users">
     <md-item>
         <md-item-content layout="row" ng-repeat="user in borrow_users">
             <div class="md-tile-left">
-                <img class="circular" ng-src="{{user.image_url | default_profile}}">
+                <img class="circular" ng-src="{{user.image_url}}" onerror="this.src='/assets/user_profile.jpg'">
             </div>
             <div class="md-tile-content" layout="row" layout-sm="column"
               layout-align="space-between center">
@@ -16,18 +32,3 @@
         </md-item-content>
     </md-item>
 </md-list>
-<div layout="row" layout-align="space-between">
-    <div layout="column">
-        <a ng-show="!book.i_own_this" ng-click="toggle_bookmark(false)">
-            Add to "I own this"
-        </a>
-        <a ng-show="book.i_own_this" ng-click="toggle_bookmark(true)">
-            I own this
-        </a>
-    </div>
-    <div layout="column">
-        <a ng-click="notify_friends()">
-            Notify
-        </a>
-    </div>
-</div>

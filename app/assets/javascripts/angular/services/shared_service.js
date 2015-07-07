@@ -1,6 +1,7 @@
 homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "$mdDialog", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, $mdDialog){
 
     this.get_popular_books = function($scope, books){
+        console.log("get_popular_books");
         var ready_to_load = !$scope.info.loading && (angular.isUndefined($scope.constant) || !$scope.constant.show_book) && 
             (angular.isUndefined($scope.info.author_filter) || !$scope.info.author_filter) && (angular.isUndefined($scope.info.group_by_alphabet) || !$scope.info.group_by_alphabet) &&
             !$scope.info.reading_time_filter && !$scope.info.published_era_filter &&
@@ -84,11 +85,9 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         $scope.info.loading = true;
         if(angular.isUndefined(books)){
             if(angular.isUndefined($scope.info.books)){
-                books = [];
+                $scope.info.books = [];
             }
-            else{
-                books = $scope.info.books;
-            }
+            books = $scope.info.books;
         }
         var skip_count = books.length;
 
@@ -196,6 +195,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                 json = angular.extend(book, json)
                 this.push(json);
             },  books);
+            console.log("load_popular_books", books.length, $scope.info.books.length);
             $scope.info.loading = false;
         });
     }

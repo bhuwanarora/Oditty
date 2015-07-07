@@ -7,7 +7,7 @@
             </div>
         </div>
         <div ng-repeat="user in feed.users" ng-if="user.first_name">
-            <a ng-href="/profile?id={{user.id}}"><img ng-src="{{user.image_url | default_profile}}" class="circular"></a>
+            <a ng-href="/profile?id={{user.id}}"><img ng-src="{{user.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'"></a>
             &nbsp;
             <md-tooltip md-direction="top">
                 {{::user.first_name}} {{::user.last_name}}

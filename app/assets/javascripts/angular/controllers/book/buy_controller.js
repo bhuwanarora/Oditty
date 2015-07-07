@@ -3,24 +3,6 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		return ((getCookie("logged") == "") || (getCookie("logged") == null));
 	}
 
-	var _init = (function(){
-		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
-		if(angular.isUndefined($scope.book)){
-			$scope.book = $rootScope.active_book;
-		}
-		
-		if(!_unauthenticated_user()){
-			var borrow_users_timeout = $timeout(function(){
-				bookService.get_borrow_users(id).then(function(data){
-					$scope.borrow_users = data;
-				});
-			}, 100);
-			$scope.$on('destroy', function(){
-				$timeout.cancel(borrow_users_timeout);
-			});
-		}
-	}());
-
 	$scope.notify_friends = function(){
 		var unauthenticated_user = (getCookie("logged") == "") || (getCookie("logged") == null);
 		if(unauthenticated_user){
@@ -28,7 +10,13 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		}
 		else{
 			var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
-			bookService.send_borrow_notification(id);
+			if(!$scope.info.loading){
+				$scope.info.loading = true;
+				bookService.send_borrow_notification(id).then(function(){
+					$scope.info.loading = false;
+					$scope.hide_link = true;
+				});
+			}
 		}
 	}
 
@@ -43,5 +31,57 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 			sharedService.toggle_bookmark(label, status, bookmark_object);
 		}
 	}
+
+	$scope.get_prices_and_reviews = function(data){
+		if(angular.isDefined($scope.prices)){
+			$scope.prices = $scope.prices.concat(data.prices);
+		}
+		else{
+			$scope.prices = data.prices;
+		}
+		if(angular.isDefined($scope.reviews)){
+			// $scope.reviews = $scope.reviews.concat(data.reviews);
+		}
+		else{
+			$scope.reviews = data.reviews;
+		}
+	}
+
+	var _init = (function(){
+		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+		var isbn = $rootScope.active_book.isbn;
+		
+		if(angular.isUndefined($scope.book)){
+			$scope.book = $rootScope.active_book;
+		}
+		
+		if(!_unauthenticated_user()){
+			var borrow_users_timeout = $timeout(function(){
+				bookService.get_borrow_users(id).then(function(data){
+					$scope.borrow_users = data;
+				});
+			}, 100);
+			$scope.$on('destroy', function(){
+				$timeout.cancel(borrow_users_timeout);
+			});
+		}
+		
+		var all_prices_timeout = $timeout(function(){
+			bookService.all_prices(isbn).then(function(data){
+				$scope.get_prices_and_reviews(data);
+			});
+		}, 100);
+		var more_prices_timeout = $timeout(function(){
+			$scope.loading_buy_options = true;
+			bookService.more_prices(isbn).then(function(data){
+				$scope.get_prices_and_reviews(data);
+				$scope.loading_buy_options = false;
+			});
+		}, 100);
+		$scope.$on('destroy', function(){
+			$timeout.cancel(all_prices_timeout);
+			$timeout.cancel(more_prices_timeout);
+		});
+	}());
 
 }]);

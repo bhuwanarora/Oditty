@@ -9,7 +9,7 @@
 			 ng-repeat="profile in friends" 
 			 ng-click="refresh_data(profile)">
 			 <div layout="row">
-				<img ng-src="{{::profile.image_url}}" layout="row" class="square">
+				<img ng-src="{{::profile.image_url}}" layout="row" class="square" onerror="this.src='/assets/user_profile.jpg'"/>
 				<div layout-padding ng-bind-html="::profile.name"
 					ng-class="{'bold': info.active_tag.name == profile.name}"></div>
 			 </div>

@@ -1,21 +1,25 @@
-<div flex="55" flex-sm="100" flex-md="100">
-    <div class="less_important" ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
-            Readers in this room
-    </div>
-    <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
-    <div layout-padding></div>
-    <div class="less_important" layout-padding>Books related to {{active_tag.name}}</div>
-        <div layout="row" layout-wrap layout-padding>
-            <section ng-repeat="book in active_tag.books" layout-margin>
-                <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" class="clear rd_book_container md-whiteframe-z3">
+<div layout="row" layout-md="column" layout-sm="column"
+    flex="80" flex-md="80" flex-sm="100">
+    <div ng-include src="'/assets/angular/html/room/_header.html'" flex="30" flex-sm="100" flex-md="100" ></div>
+    <div flex="5" hide-md hide-sm></div>
+    <div flex="65" flex-sm="100" flex-md="100" layout="column">
+        <div class="less_important" layout-padding
+             ng-show="active_tag.books && active_tag.books.length > 0">Books related to {{active_tag.name}}</div>
+        <div layout="row" layout-wrap layout-padding ng-show="active_tag.books && active_tag.books.length > 0">
+            <section ng-repeat="book in active_tag.books" layout-margin ng-if="book.title != null">
+                <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
+                    class="clear rd_book_container md-whiteframe-z3 white">
                     <div class="book_thumb" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
                     </div>
                 </md-button>
             </section>    
         </div>
+        <div layout="column">
+            <community-feed community-feed="::community_feed" flex
+                ng-repeat="community_feed in ::active_tag.news" 
+                layout-margin>
+            </community-feed>
+        </div>
     </div>
 </div>
-<div layout="column"  flex="45" layout-padding flex-sm="100" flex-md="100">
-    <community-feed community-feed="::community_feed"
-        ng-repeat="community_feed in ::active_tag.news"></community-feed>
-</div>
+<trending flex="20" hide-sm></trending>

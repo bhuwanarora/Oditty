@@ -1,34 +1,7 @@
-homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', 'timeGroupService', 'readingTimeService', 'infinityService', 'ColorConstants', 'sharedService', '$mdBottomSheet', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, timeGroupService, readingTimeService, infinityService, ColorConstants, sharedService, $mdBottomSheet){
-
-    $scope._get_genres = function(){
-    	if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
-			$scope.info.genres = [];
-	    	genreService.get_genres().then(function(data){
-	    		angular.forEach(data, function(value){
-	    			var status = value.status != null;
-	    			var json = angular.extend(value, {"status": status});
-	    			this.push(json);
-	    		}, $scope.info.genres);
-	    	});
-		}
-        else{
-            $scope.info.loading = false;
-        }
-    }
+homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'genreService', 'authorService', 'WebsiteUIConstants', 'SearchUIConstants', '$location', 'sharedService', '$mdBottomSheet', 'PopularAuthors', 'Times', 'PopularGenres', 'ReadTimes', function($scope, $rootScope, $timeout, genreService, authorService, WebsiteUIConstants, SearchUIConstants, $location, sharedService, $mdBottomSheet, PopularAuthors, Times, PopularGenres, ReadTimes){
 
     $scope.close_filters = function(){
         $mdBottomSheet.hide();
-    }
-
-    $scope._get_authors = function(){
-        $scope.info.authors = [];
-        var skip_count = 0;
-        authorService.get_popular_authors(skip_count).then(function(data){
-            angular.forEach(data, function(value){
-                this.push(value);
-            },  $scope.info.authors);
-            $scope.top_authors = $scope.info.authors;
-        });
     }
 
     $scope.reset_filter = function(){
@@ -138,8 +111,7 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
             }
         }
         else{
-            $scope.info.loading = true;
-            $scope._get_genres();
+            $scope.info.genres = PopularGenres;
         }
     }
 
@@ -177,32 +149,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                 $scope.info.authors = $scope.top_authors;
             }
             else{
-                $scope._get_authors();
+                $scope.info.authors = PopularAuthors;
             }
         }
-    }
-
-    $scope._get_time_groups = function(){
-        timeGroupService.get_time_groups().then(function(data){
-            $scope.info.time_groups = [];
-            angular.forEach(data, function(value){
-                var json = {"icon2": "icon-calendar", "type": SearchUIConstants.Year, "custom_option": true};
-                json = angular.extend(json, value);
-                this.push(json);
-            }, $scope.info.time_groups);
-        });
-    }
-
-    $scope._get_reading_times = function(){
-        readingTimeService.get_read_times().then(function(data){
-            $scope.info.read_times = [];
-
-            angular.forEach(data, function(value){
-                var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
-                json = angular.extend(json, value);
-                this.push(json);
-            }, $scope.info.read_times);
-        });
     }
 
     $scope._detect_key = function(event){
@@ -215,23 +164,45 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
         return {"backspace_or_delete": backspace_or_delete, "keyUp": keyUp, "keyDown": keyDown, "keyLeft": keyLeft, "keyRight": keyRight, "keyEnter": enter};
     }
 
+    function get_query_params(name){
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\?&]"+name+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec(window.location.href);
+        var output = "";
+        if(results != null){
+            output = results[1];
+        }
+        return output;
+    }
+
     var _init = (function(){
+        console.log("filtersController");
         $scope.search_tag = {};
-        $scope.info.genres = [];
-        $scope.info.authors = [];
-        $scope.info.time_groups = [];
-        $scope.info.read_times = [];
-        var fetch_data = $timeout(function(){
-            $scope._get_time_groups();
-            $scope._get_reading_times();
-            $scope._get_genres();
-            $scope._get_authors();
-        }, 100);
-        $scope.$on('destroy', function(){
-            $timeout.cancel(fetch_data);
-        });
+        $scope.info.time_groups = Times;
+        $scope.info.read_times = ReadTimes;
+        $scope.info.genres = PopularGenres;
+        $scope.info.authors = PopularAuthors;
+        
         if(angular.isUndefined($rootScope.filters)){
             $rootScope.filters = {};
+        }
+
+        var genre = get_query_params("g");
+        var duration = get_query_params("d");
+        if(genre != null){
+            angular.forEach($scope.info.genres, function(value){
+                if(value.id == genre){
+                    $scope.info.selected_genre = value;
+                }
+            });
+        }
+        if(duration != null){
+            angular.forEach($scope.info.read_times, function(value){
+                if(value.id == duration){
+                    $scope.info.selected_duration = value;
+                }
+            });
         }
     }());
     

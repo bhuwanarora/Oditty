@@ -10,19 +10,19 @@
          ng-include src="'/assets/angular/html/shared/mobile_search.html'"></div>
     <div flex="40" flex-md="45" 
          ng-controller="searchController"
-         flex-sm="15"  class="z_index_1" 
+         flex-sm="15"  class="search_container" 
          layout="row" 
-         layout-align="end end" 
+         layout-align="start center" 
          layout-align-sm="start center"
          ng-include src="'/assets/angular/html/shared/search.html'">
     </div>
-    <div flex="20" hide-sm hide-md layout="row" layout-align="center center" class="z_index_1" >
+    <!-- <div flex="20" hide-sm hide-md layout="row" layout-align="center center" class="z_index_1" >
         <div ng-include="'/assets/angular/html/shared/suggestions_link.html'"></div>
-    </div>
-    <div flex="20" flex-sm="35" flex-md="25" 
+    </div> -->
+    <div flex="40" flex-sm="35" flex-md="25" 
         layout="row" layout-align="end center" ng-if="info.hide_signin" class="z_index_1" 
          ng-include src="'/assets/angular/html/shared/right_nav_options.html'"></div>
-    <div flex="20" flex-sm="35" flex-md="25" layout="row" layout-padding layout-align="end center" class="z_index_1"  
+    <div flex="40" flex-sm="35" flex-md="25" layout="row" layout-padding layout-align="end center" class="z_index_1"  
         ng-if="!info.hide_signin" ng-include src="'/assets/angular/html/shared/sign_in.html'">
     </div>
 </section>

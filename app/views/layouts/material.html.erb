@@ -32,7 +32,9 @@
         <% end %>
     </head>
 
-    <body ng-controller="appController" ng-keydown="scroll_on_keypress($event)" 
+    <body ng-controller="appController" 
+        class="<% if @filters || @profile %>white<% end %>" 
+        ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
         msd-wheel="close_popups()">
         <script>
@@ -52,14 +54,14 @@
             <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
 
 
-            <% if @home %>
-                <md-content class="white" flex ng-controller="homeController">
+            <% if @home || @signup%>
+                <md-content class="white" flex ng-controller="newHomeController">
             <% elsif @personalised_suggestions %>
                 <md-content ng-controller="personalisedController">
             <% elsif @network %>
                 <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
             <% elsif @news %>
-                <md-content layout="column" ng-controller="newsController" id="news">
+                <md-content layout="column" ng-controller="newsController" id="news" class="white">
             <% elsif @news_group && !@blogs %>
                 <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
             <% elsif @blogs && @news_group %>
@@ -67,11 +69,12 @@
                     check-scroll-bottom="get_blog_feed()" id="home">
             <% elsif @room %>
                 <md-content ng-controller="communityController" id="community" class="white">
-            <% elsif @filters || @signup%>
+            <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
-                    check-scroll-bottom="get_popular_books()" ng-model="info" id="infinity_page" class="white">
+                    check-scroll-bottom="get_popular_books()"
+                    id="infinity_page" class="white">
             <% elsif @shelves %>
-                <md-content ng-controller="roomController">
+                <md-content ng-controller="roomController" class="full_height">
             <% elsif @author %>
                 <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
                     ng-keydown="keypress_scroll($event)">
@@ -80,15 +83,15 @@
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController">
+                <div ng-controller="specificBookController" class="background">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController">
             <% end %>
             <div ng-show="info.mobile_search" flex>
-                <div class="header <% if @profile || @shelves || @network %>yellow<% end %>">
-                    <% if @home %>
+                <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @profile || @shelves || @network %>yellow<% else %>border_bottom<% end %>">
+                    <% if @home || @signup%>
                         <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                     <% else %>
                         <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
@@ -212,10 +215,7 @@
                 <script src="assets/angular/controllers/signup_controller.js"></script>
             </div>
 
-            <% if @home %>
-                <script src="assets/angular/controllers/home_controller.js"></script>
-
-            <% end %>
+           
 
             <% if @publishers %>
                 <script src='assets/angular/services/publishers_service.js'></script>
@@ -250,13 +250,11 @@
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
             <% end %>
 
-            <% if @book %>
-                
+            <% if @home || @signup%>
+                <script src="assets/angular/controllers/new_home_controller.js"></script>
             <% end %>
 
-            <% if @filters || @signup %>
-                <script src="assets/angular/services/time_group_service.js"></script>
-                <script src="assets/angular/services/reading_time_service.js"></script>
+            <% if @filters  %>
                 
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
@@ -296,9 +294,7 @@
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
             
-            <% if @home %>
-                <script src="assets/min/angular/controllers/home_group.min.js"></script>
-            <% end %>
+          
 
             <% if @news_group %>
                 <script src="assets/min/angular/controllers/news_group_group.min.js"></script>
@@ -332,7 +328,11 @@
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
             <% end %>
 
-            <% if @filters || @signup%>
+            <% if @home || @signup%>
+                <script src="assets/min/angular/controllers/new_home_group.min.js"></script>
+            <% end %>
+
+            <% if @filters %>
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
 

@@ -5,9 +5,9 @@
          ng-controller="searchController"
          flex-sm="10" 
          layout="row" 
-         layout-align="end center" 
-         layout-align-sm="start center"
-         ng-include src="'/assets/angular/html/shared/search.html'">
+         class="search_container" 
+         layout-align="start center" 
+         layout-align-sm="start center">
     </div>
     <div layout="row" layout-align="center center" flex="10" flex-md="5" flex-sm="30" 
          ng-show="info.mobile_search"></div>
@@ -23,9 +23,11 @@
     </div>
 </section>
 
-<md-sidenav class="md-sidenav-right md-whiteframe-z2 side_panel" md-component-id="signup">
-    <div ng-include="'assets/angular/html/home/partials/login_options.html'" ng-if="!hide_signin"></div>
-</md-sidenav>
+<div ng-if="!info.hide_signin">
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2 side_panel" md-component-id="signup">
+        <div ng-include="'assets/angular/html/home/partials/login_options.html'"></div>
+    </md-sidenav>
+</div>
 <style>
     .search md-input-container label,
     .search .md-input{

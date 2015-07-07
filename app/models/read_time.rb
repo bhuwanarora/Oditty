@@ -1,6 +1,6 @@
 class ReadTime < Neo
 	def initialize id
-		@id = id
+		@id = id.to_i
 		if @id == Constant::Id::TinyReadNode
 			@last_book = Constant::Id::BestTinyRead
 			@relation = Constant::Label::TinyReadRelation

@@ -499,6 +499,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     $scope.make_active = function(id){
+        $scope.info.status_state = {"width": "100% !important", "max-width": "100% !important"};
         delete $scope.selected_book;
         $scope.active_id = id;
         $scope.info.reading_status_value = id;

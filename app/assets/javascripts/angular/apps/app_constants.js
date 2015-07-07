@@ -45,6 +45,149 @@ var places = [
 
 
 var constants = {
+		"PopularAuthors":[
+			{
+				"name": "Walt Disney Company",
+				"labels": "Author",
+				"id": 396327
+			},
+			{
+				"name": "Francine Pascal",
+				"labels": "Author",
+				"id": 396616
+			},
+			{
+				"name": "Carolyn Keene",
+				"labels": "Author",
+				"id": 397411
+			},
+			{
+				"name": "Time-Life Books",
+				"labels": "Author",
+				"id": 387847
+			}
+		],
+		"Times":[
+			{
+				"name": "Contemporary",
+				"range": "2000-2014",
+				"id": 422374
+			},
+			{
+				"name": "Post Modern",
+				"range": "1939-2000",
+				"id": 422373
+			},
+			{
+				"name": "Modern",
+				"range": "1901-1939",
+				"id": 422372
+			},
+			{
+				"name": "Victorian",
+				"range": "1837-1901",
+				"id": 422371
+			},
+			{
+				"name": "Romantic",
+				"range": "1798-1837",
+				"id": 422370
+			},
+			{
+				"name": "Neo Classical",
+				"range": "1660-1798",
+				"id": 422367
+			},
+			{
+				"name": "English Renaissance",
+				"range": "1500-1660",
+				"id": 422366
+			},
+			{
+				"name": "Middle English",
+				"range": "1100-1500",
+				"id": 422362
+			},
+			{
+				"name": "Old English",
+				"range": "658-1100",
+				"id": 422359
+			}
+		],
+		"PopularGenres":[
+			{
+				"books_count": "1010",
+				"name": "wilderness",
+				"id": 385380
+			},
+			{
+				"books_count": "1011",
+				"name": "counter-culture",
+				"id": 386404
+			},
+			{
+				"books_count": "10339",
+				"name": "holiday",
+				"id": 384872
+			},
+			{
+				"books_count": "10417",
+				"name": "roman",
+				"id": 384401
+			},
+			{
+				"books_count": "10463",
+				"name": "architecture",
+				"id": 384543
+			},
+			{
+				"books_count": "10467",
+				"name": "economics",
+				"id": 384535
+			},
+			{
+				"books_count": "1052",
+				"name": "mermaids",
+				"id": 385534
+			},
+			{
+				"books_count": "10531",
+				"name": "teaching",
+				"id": 384416
+			},
+			{
+				"books_count": "10539",
+				"name": "japan",
+				"id": 384547
+			},
+			{
+				"books_count": "1063",
+				"name": "polyamory",
+				"id": 385374
+			}
+		],
+		"ReadTimes": [
+			{
+				"name": "For a flight journey",
+				"page_count_range": "<50",
+				"id": 772852
+			},
+			{
+				"name": "For a weekend getaway",
+				"page_count_range": "50-100",
+				"id": 772853
+			},
+			{
+				"name": "For a week's holiday",
+				"page_count_range": "100-250",
+				"id": 772854
+			},
+			{
+				"name": "For a month's sabbatical",
+				"page_count_range": ">250",
+				"id": 772855
+			}
+		],
 		"Emotions": emotions,
 		"IntroConstants":{
 			"NewsFeed": "<div class='tooltip_header'><div class='larger_font inline_block icon-newspaper site_color'></div><div class='inline_block header_text'>Keep track of what your friends are doing on ReadersDoor.</div></div>",

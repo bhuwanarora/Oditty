@@ -1,10 +1,21 @@
-<div layout-padding layout="row">
-	<div flex="10" flex-md="5" hide-sm></div>
-	<div layout="row" layout-align="center center" flex="80" flex-md="90" flex-sm="100" layout-wrap>
-		<join-community community="community" 
-			layout-margin
-			ng-repeat="community in suggest_communities" >
-		</join-community>
-	</div>
-	<div flex="10" flex-md="5" hide-sm></div>
-</div>
+<a layout-padding layout="row" layout-align="center center" class="bold grey_color" href="/rooms">
+    <div><i class="material-icons">trending_up</i></div>
+    <div layout-padding>Trending Rooms of Knowledge</div>
+</a>
+<md-grid-list
+    md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+    md-row-height-gt-md="1:1" md-row-height="4:3"
+    md-gutter="50px" md-gutter-gt-sm="10px">
+    <md-grid-tile ng-repeat="trend in suggest_communities"
+            md-rowspan="{{trend.span.row}}"
+            md-colspan="{{trend.span.col}}"
+            md-colspan-sm="1"
+            class="pointer"
+            ng-click="goto_room(trend.id)">
+        <img ng-src="{{trend.image_url}}" class="trends" />
+        <md-grid-tile-footer layout="row" layout-padding>
+        	<h3 class="capitalize bold">{{trend.name}}</h3>
+        	<h4>{{trend.view_count}} Views</h4>
+        </md-grid-tile-footer>
+    </md-grid-tile>
+</md-grid-list>

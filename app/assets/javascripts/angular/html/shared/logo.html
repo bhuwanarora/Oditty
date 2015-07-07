@@ -1,11 +1,14 @@
 <div ng-disabled="!info.hide_signin" 
-	ng-show="info.mobile_search" class="burger pointer  <% if (@book || @news || @infinity) %>white<% end %>" 
+	ng-show="info.mobile_search" 
+	show-sm hide-md hide
+	class="burger pointer  <% if (@book || @news || @infinity) %>white<% end %>" 
 	ng-click="toggleLeft($event)">
     <a><i class="material-icons">menu</i></a>
 </div>
+<div layout-padding show hide-sm></div>
 <div ng-show="info.mobile_search" 
      layout-align-lg="center center">
-    <a class="logo relative" href="/filters">
+    <a class="logo relative" href="/home">
         <img src="assets/rd_icon.png" />
         <span >ReadersDoor</span>
     </a>
