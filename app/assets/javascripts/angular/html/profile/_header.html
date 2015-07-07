@@ -1,5 +1,6 @@
-<div class="profile_header yellow">
-    <section layout="column" layout-wrap>
+<div class="profile_header" layout="row">
+    <section flex="10" flex-md="5" hide-sm></section>
+    <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" class="yellow md-whiteframe-z1">
         <div layout="row" layout-align="end start" layout-padding class="top_section">
             <md-button aria-label="follow_user" class="md-warn md-button-clear" 
                         ng-click="follow_user()"
@@ -13,12 +14,12 @@
                 <div ng-show="profile_user.status">Following</div>
             </md-button>
         </div>
-        <div layout="column" layout-align="center center" layout-padding>
+        <div layout="column" layout-align="center center">
             <img ng-src="{{profile_user.image_url}}" class="profile_pic" onerror="this.src='/assets/user_profile.jpg'"/>
             <div>
                 <a ng-href="/profile?id={{::profile_user.id}}">
                     <div layout="column" layout-wrap layout-align="start start">
-                        <div class="big_title" layout="row" layout-padding>
+                        <div class="big_title white_color" layout="row" layout-padding>
                             <div ng-bind="::profile_user.first_name"></div>
                             <div>&nbsp;</div>
                             <div ng-bind="::profile_user.last_name"></div>
@@ -26,49 +27,49 @@
                     </div>
                 </a>
             </div>
-            <div layout="row" layout-column layout-align="center center" ng-hide="hide_follow_links">
+            <div layout="row" layout-column layout-align="center center" ng-hide="hide_follow_links" class="light_grey full_width">
                 <a href="/network?q=0" ng-hide="hide_follow_links">
-                     <md-button class="nav_links" ng-class="{'red_color': follow_state == 0}">
+                     <md-button class="nav_links md-button-clear" ng-class="{'red_color': follow_state == 0}">
                         <div layout="column" layout-align="center center">
-                            <div><b>FOLLOWERS</b></div>
+                            <div>Followers</div>
                             <h2>{{profile_user.followed_by_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
                 
                  <a href="/network?q=1" ng-hide="hide_follow_links">
-                    <md-button class="nav_links" ng-class="{'red_color': follow_state == 1}">
+                    <md-button class="nav_links md-button-clear" ng-class="{'red_color': follow_state == 1}">
                         <div layout="column" layout-align="center center">
-                            <div><b>FOLLOWING</b></div>
+                            <div>Following</div>
                             <h2>{{profile_user.follows_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
                 <a href="/history" ng-hide="hide_follow_links">
-                    <md-button class="nav_links">
+                    <md-button class="nav_links md-button-clear">
                         <div layout="column" layout-align="center center">
-                            <div><b>HISTORY</b></div>
+                            <div>History</div>
                             <h2>{{profile_user.bookmark_count || 0}}</h2>
                         </div>
                     </md-button>
                 </a>
             </div>
-            <div layout="row" layout-column layout-align="center center" ng-show="hide_follow_links">
+            <div layout="row" layout-column layout-align="center center" ng-show="hide_follow_links" class="light_grey full_width">
                 <div class="nav_links">
                     <div layout="column" layout-align="center center">
-                        <div><b>FOLLOWERS</b></div>
+                        <div>Followers</div>
                         <h2>{{profile_user.followed_by_count || 0}}</h2>
                     </div>
                 </div>
                 <div class="nav_links">
                     <div layout="column" layout-align="center center">
-                        <div><b>FOLLOWING</b></div>
+                        <div>Following</div>
                         <h2>{{profile_user.follows_count || 0}}</h2>
                     </div>
                 </div>
                 <div class="nav_links">
                     <div layout="column" layout-align="center center">
-                        <div><b>HISTORY</b></div>
+                        <div>History</div>
                         <h2>{{profile_user.bookmark_count || 0}}</h2>
                     </div>
                 </div>
@@ -77,6 +78,7 @@
         </div>
         <!-- <div ng-include src="'/assets/angular/html/shared/share.html'" class="yellow" flex="20"></div> -->
     </section>
+    <section flex="10" flex-md="5" hide-sm></section>
 </div>
 
 <style>
@@ -84,7 +86,7 @@
         color: white !important;
         /*background-color: #f5f5f5 !important;*/
         box-shadow: none;
-        border-bottom: 1px solid #dddddd;
+        /*border-bottom: 1px solid #dddddd;*/
     }
 
     .profile_header h2{
@@ -115,6 +117,6 @@
 
 
     .profile_header a{
-        color: white;
+        color: #333;
     }
 </style>

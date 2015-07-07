@@ -1,5 +1,7 @@
-<div class="author_profile_header primary">
-    <section layout="column" layout-wrap>
+<div class="author_profile_header" layout="row">
+    <section flex="10" flex-md="5" hide-sm></section>
+    <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
+        class="md-whiteframe-z1 primary">
         <div layout="row" layout-align="end start" layout-padding class="top_section">
             <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
                 ng-hide="!info.hide_signin"
@@ -12,6 +14,7 @@
         <div ng-include src="'/assets/angular/html/author/info.html'" 
             layout-align="center center" layout-padding></div>
     </section>
+    <section flex="10" flex-md="5" hide-sm></section>
 </div>
 
 <style>

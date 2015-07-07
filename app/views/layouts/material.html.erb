@@ -90,7 +90,7 @@
                 <md-content ng-controller="publishersController">
             <% end %>
             <div ng-show="info.mobile_search" flex>
-                <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @profile || @shelves || @network %>yellow<% else %>border_bottom<% end %>">
+                <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @shelves || @network %>yellow<% else %>border_bottom<% end %>">
                     <% if @home || @signup%>
                         <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                     <% else %>
