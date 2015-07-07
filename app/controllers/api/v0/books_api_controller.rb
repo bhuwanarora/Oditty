@@ -6,7 +6,7 @@ module Api
 				user_uuid = params[:id]
 				book_uuid = params[:book_id]
 				if user_uuid && book_uuid
-					info = BookApi.get_similar_books(user_uuid, book_uuid)
+					info = Api::V0::BookApi.get_similar_books(user_uuid, book_uuid)
 					status = 200
 				else
 					info = {:message => "Invalid Request"}
@@ -39,25 +39,25 @@ module Api
 
 			def get_popular_books
 				# params = JSON.parse(params["q"])
-				books = BookApi.get_popular_books(params, session[:user_id])
+				books = Api::V0::BookApi.get_popular_books(params, session[:user_id])
 				render :json => books, :status => 200
 			end
 
 			def tooltip
-				info = BookApi.tooltip
+				info = Api::V0::BookApi.tooltip
 				render :json => info, :status => 200
 			end
 
 			def get_book_details
 				id = params[:id]
 				user_id = session[:user_id]
-				info = BookApi.get_book_details(id, user_id)
+				info = Api::V0::BookApi.get_book_details(id, user_id)
 				render :json => info, :status => 200
 			end
 
 			def get_basic_feed_info
 				id = params[:id]
-				info = BookApi.get_basic_feed_info(id)
+				info = Api::V0::BookApi.get_basic_feed_info(id)
 				render :json => info, :status => 200
 			end
 
@@ -65,8 +65,8 @@ module Api
 				id = params[:id]
 				info = $redis.get id
 				unless info
-					info = BookApi.get_primary_info(id)
-					$redis.set id, info.to_json
+					info = Api::V0::BookApi.get_primary_info(id)
+					$redis.set(id, info.to_json) if info
 				else
 					info = JSON.parse info
 				end
@@ -75,12 +75,12 @@ module Api
 
 			def moments
 				id = params[:id]
-				info = BookApi.get_timeline(id)
+				info = Api::V0::BookApi.get_timeline(id)
 				render :json => info, :status => 200
 			end
 
 			def affiliate_links
-				book = BookApi.get_book(params[:id])
+				book = Api::V0::BookApi.get_book(params[:id])
 				isbn =  book[0][0]["data"]["isbn"] rescue ""
 				bnn_links = []
 				if isbn
@@ -94,12 +94,12 @@ module Api
 			end
 
 			def add_thumbnail
-				status = BookApi.create_thumb_request(params, session[:user_id])
+				status = Api::V0::BookApi.create_thumb_request(params, session[:user_id])
 				render :json => {:message => "Request Initiated...", :status => 200}
 			end
 
 			def get_feed
-				feed = BookApi.get_feed params[:id]
+				feed = Api::V0::BookApi.get_feed params[:id]
 				render :json => feed, :status => 200
 			end
 
@@ -111,7 +111,7 @@ module Api
 
 			def get_interesting_info
 				book_id = params[:id]
-				data = BookApi.get_interesting_info book_id
+				data = Api::V0::BookApi.get_interesting_info book_id
 				render :json => data, :status => 200
 			end
 		end

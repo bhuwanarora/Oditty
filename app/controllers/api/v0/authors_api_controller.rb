@@ -31,7 +31,7 @@ module Api
 				info = $redis.get id
 				unless info
 					info = Api::V0::AuthorApi.get_basic_info id
-					$redis.set id, info.to_json
+					$redis.set(id, info.to_json)  if info
 				else
 					info = JSON.parse info
 				end
