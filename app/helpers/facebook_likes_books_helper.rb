@@ -5,12 +5,10 @@ module FacebookLikesBooksHelper
 		text = self.concatenate_hash text_array
 		community_books_relevance = self.get_communities_from_text [text]
 		default_community_books_relevance = self.get_communities_from_default node_id
-		debugger
 		all_community_books_relevance = community_books_relevance[0] + default_community_books_relevance
 		self.merge_community_to_books all_community_books_relevance
 		self.merge_node_to_community all_community_books_relevance, node_id
 		self.clean_up node_id
-		debugger
 	end
 
 	def self.clean_up node_id

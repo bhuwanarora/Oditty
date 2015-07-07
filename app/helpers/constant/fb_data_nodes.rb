@@ -19,6 +19,7 @@ module Constant::FbDataNode
 	FbDefaultCommunityRelevance = 0.987654321
 	FbDataTimeHandleSpecially = ["birthday","founded","release_date"]
 
+	#arrays defined below have not been used
 	FbAbstractCategory = ["Local Business or Place", "Company, Organization or Institution","Artist, Band or Public Figure", "Entertainment"]
 	FbCategoryLocalBusinessOrPlace = ["Airport",
 		"Arts/Entertainment/Nightlife",
