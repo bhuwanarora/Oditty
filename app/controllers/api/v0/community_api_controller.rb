@@ -3,7 +3,14 @@ module Api
 		class CommunityApiController < ApplicationController
 			def get_books
 				id = params["id"]
-				info = Api::V0::CommunityApi.get_books(id).execute[0]
+				key = "GB" + id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::CommunityApi.get_books(id).execute[0]
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 
@@ -18,6 +25,7 @@ module Api
 				unless info
 					info = Api::V0::CommunityApi.suggest_communities(user_id).execute
 					$redis.set('trends', info.to_json)
+					$redis.expire('trends', 86400)
 				else
 					info = JSON.parse info
 				end

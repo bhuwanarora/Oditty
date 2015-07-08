@@ -15,28 +15,37 @@ module Api
 			def news_info
 				id = params[:id]
 				community_id = params[:tag_id]
-				info = Api::V0::WebsiteApi.get_important_community_info(id, community_id).execute
+				key = "NI" + id.to_s + community_id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::WebsiteApi.get_important_community_info(id, community_id).execute
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse(info)
+				end
 				render :json => info, :status => 200
 			end
 
 			def basic_community_info
 				id = params[:id]
-				info = $redis.get id
+				key = "BCI" + id.to_s
+				info = $redis.get key
 				unless info
 					info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
-					$redis.set(id, info.to_json)
+					$redis.set(key, info.to_json)
 				else
-					info = JSON.parse info
+					info = JSON.parse(info)
 				end
 				render :json => info, :status => 200
 			end
 
 			def feed_community_info
 				id = params[:id]
-				info = $redis.get id
+				key = "FCI" + id.to_s
+				info = $redis.get key
 				unless info
 					info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
-					$redis.set id, info.to_json
+					$redis.set(key, info.to_json)
 				else
 					info = JSON.parse info
 				end
@@ -45,7 +54,14 @@ module Api
 
 			def chronological_news
 				id = params[:id]
-				info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
+				key = "CN" + id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 

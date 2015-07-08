@@ -123,19 +123,23 @@ module Api
 					if params[:id]
 						info = UserApi.get_relative_details(params[:id], session[:user_id])
 					else
-						info = $redis.get(session[:user_id])
+						key = "GUD" + session[:user_id].to_s
+						info = $redis.get(key)
 						unless info
 							info = UserApi.get_details(session[:user_id])
-							$redis.set(session[:user_id], info.to_json)
+							$redis.set(key, info.to_json)
+							$redis.expire(key, 2678400)
 						else
 							info = JSON.parse info
 						end
 					end
 				else
-					info = $redis.get(params[:id])
+					key = "GUD" + params[:id].to_s
+					info = $redis.get(key)
 					unless info
 						info = UserApi.get_details(params[:id])
-						$redis.set(params[:id], info.to_json)
+						$redis.set(key, info.to_json)
+						$redis.expire(key, 2678400)
 					else
 						info = JSON.parse info
 					end

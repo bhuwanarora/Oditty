@@ -4,7 +4,14 @@ module Api
 
 			def book_news
 				id = params[:id]
-				info = Api::V0::RealVirtualityApi.get_news(id).execute[0] rescue []
+				key = "BN" + id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::RealVirtualityApi.get_news(id).execute[0] rescue []
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 

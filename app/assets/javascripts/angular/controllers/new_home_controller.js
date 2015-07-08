@@ -39,8 +39,7 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
             }
         }
         else{
-            $scope.info.loading = true;
-            $scope._get_genres();
+            $scope.info.genres = PopularGenres;
         }
     }
 

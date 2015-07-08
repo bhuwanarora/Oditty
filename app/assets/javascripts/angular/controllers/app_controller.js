@@ -172,7 +172,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.$on('Facebook:statusChange', function(ev, data){
             var time = (new Date().getTime())/1000;
             if(angular.isDefined($rootScope.user.facebook_books_retrieval_time)){
-                var books_retrieval_time_difference = (time-$rootScope.user.facebook_books_retrieval_time)/(3600*24);
+                var books_retrieval_time_difference = (time-$rootScope.user.facebook_books_retrieval_time)/(3600*24*31);
                 if(books_retrieval_time_difference > 1){
                     _fetch_books();
                 }
@@ -185,7 +185,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
             }
 
             if(angular.isDefined($rootScope.user.facebook_likes_retrieval_time)){
-                var likes_retrieval_time_difference = (time-$rootScope.user.facebook_likes_retrieval_time)/(3600*24);
+                var likes_retrieval_time_difference = (time-$rootScope.user.facebook_likes_retrieval_time)/(3600*24*31);
                 if(likes_retrieval_time_difference > 1){
                     _fetch_likes();
                 }

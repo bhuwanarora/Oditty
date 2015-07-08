@@ -28,10 +28,11 @@ module Api
 
 			def get_basic_info
 				id = params[:id]
-				info = $redis.get id
+				key = "GBI" + id.to_s
+				info = $redis.get key
 				unless info
 					info = Api::V0::AuthorApi.get_basic_info id
-					$redis.set(id, info.to_json)  if info
+					$redis.set(key, info.to_json)  if info
 				else
 					info = JSON.parse info
 				end
@@ -62,7 +63,14 @@ module Api
 
 			def get_interview_details
 				author_id = params[:id]
-				info = Api::V0::AuthorApi.get_interview_details(author_id)
+				key = "GID" + author_id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::AuthorApi.get_interview_details(author_id)
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 		end

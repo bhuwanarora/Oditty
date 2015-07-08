@@ -57,25 +57,27 @@ module Api
 
 			def get_basic_feed_info
 				id = params[:id]
-				info = Api::V0::BookApi.get_basic_feed_info(id)
-				render :json => info, :status => 200
-			end
-
-			def get_primary_info
-				id = params[:id]
-				info = $redis.get id
+				key = "GBFI" + id.to_s
+				info = $redis.get key
 				unless info
-					info = Api::V0::BookApi.get_primary_info(id)
-					$redis.set(id, info.to_json) if info
+					info = Api::V0::BookApi.get_basic_feed_info(id)
+					$redis.set(key, info.to_json)
 				else
 					info = JSON.parse info
 				end
 				render :json => info, :status => 200
 			end
 
-			def moments
+			def get_primary_info
 				id = params[:id]
-				info = Api::V0::BookApi.get_timeline(id)
+				key = "GPI" + id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::BookApi.get_primary_info(id)
+					$redis.set(key, info.to_json) if info
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 
@@ -111,8 +113,15 @@ module Api
 
 			def get_interesting_info
 				book_id = params[:id]
-				data = Api::V0::BookApi.get_interesting_info book_id
-				render :json => data, :status => 200
+				key = "GIF" + book_id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::BookApi.get_interesting_info book_id
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
+				render :json => info, :status => 200
 			end
 		end
 	end
