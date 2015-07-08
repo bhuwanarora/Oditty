@@ -1,23 +1,41 @@
-<div class="author_profile_header" layout="row">
-    <section flex="10" flex-md="5" hide-sm></section>
-    <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
-        class="md-whiteframe-z1 primary">
-        <div layout="row" layout-align="end start" layout-padding class="top_section">
-            <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
-                ng-hide="!info.hide_signin"
-                ng-class="{'md-raised': !author.status}" 
-                ng-click="toggle_follow()">
-                <span ng-if="!author.status">Follow</span>
-                <span ng-if="author.status">Following</span>
-            </md-button>
-        </div>
-        <div ng-include src="'/assets/angular/html/author/info.html'" 
-            layout-align="center center" layout-padding></div>
-    </section>
-    <section flex="10" flex-md="5" hide-sm></section>
+<div class="author_profile_header" >
+    <div layout="row">
+        <section flex="10" flex-md="5" hide-sm></section>
+        <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
+            class="md-whiteframe-z1 primary">
+            <div layout="row" layout-align="end start" layout-padding class="top_section">
+                <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
+                    ng-hide="!info.hide_signin"
+                    ng-class="{'md-raised': !author.status}" 
+                    ng-click="toggle_follow()">
+                    <span ng-if="!author.status">Follow</span>
+                    <span ng-if="author.status">Following</span>
+                </md-button>
+            </div>
+            <div ng-include src="'/assets/angular/html/author/info.html'" 
+                layout-align="center center" layout-padding></div>
+            <div layout-padding class="light_grey" layout-align="center center" layout="row" id="authorNav">
+                <a ng-href="#books" class="less_important" layout-padding 
+                    ng-class="get_active_class('books')">Books</a>
+                <a ng-href="#feed" class="less_important" layout-padding 
+                    ng-class="get_active_class('feed')">Feed</a>
+                <a ng-href="#interview" class="less_important" layout-padding 
+                    ng-class="get_active_class('interview')">Interview</a>
+                <a ng-href="#wiki" class="less_important" layout-padding 
+                    ng-class="get_active_class('wiki')">Wiki</a>
+                <a ng-href="#followers" class="less_important" layout-padding 
+                    ng-class="get_active_class('followers')">Followers</a>
+            </div>
+        </section>
+        <section flex="10" flex-md="5" hide-sm></section>
+    </div>
 </div>
-
 <style>
+    #authorNav a:hover{
+        text-decoration: none !important;
+        color: #333 !important;
+    }
+
     .author_profile_header{
         color: white !important;
         box-shadow: none;

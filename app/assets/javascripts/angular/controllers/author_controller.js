@@ -137,6 +137,15 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
     }
 
+    $scope.get_active_class = function(path){
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "books");
+        if(($location.path().substr(1, path.length+1) == path) || is_init){
+            return "bold red_color";
+        } else {
+            return "";
+        }
+    }
+
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var id = regex.exec($location.absUrl())[2];

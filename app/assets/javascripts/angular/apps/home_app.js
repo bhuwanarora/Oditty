@@ -4,8 +4,23 @@ homeApp.config(["$routeProvider", function($routeProvider){
     $routeProvider.when('/discover', {
         templateUrl : 'assets/angular/views/landing_page/discover.html',
     })
+    .when('/wiki', {
+        templateUrl : 'assets/angular/html/author/wiki.html',
+    })
+    .when('/feed', {
+        templateUrl : 'assets/angular/html/author/feed.html',
+    })
+    .when('/books', {
+        templateUrl : 'assets/angular/html/author/books.html',
+    })
+    .when('/followers', {
+        templateUrl : 'assets/angular/html/author/followers.html',
+    })
+    .when('/interview', {
+        templateUrl : 'assets/angular/html/author/interview.html',
+    })
     .otherwise({
-         templateUrl : 'assets/angular/views/landing_page/main.html'
+         templateUrl : 'assets/angular/html/author/books.html'
     });
 }]);
 

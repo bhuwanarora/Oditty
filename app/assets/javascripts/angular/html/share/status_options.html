@@ -45,13 +45,17 @@
     </div>
     <div class="white" layout-padding ng-show="info.status_state" layout="row" layout-align="space-between">
         <div></div>
-        <div>
-            <md-button class="md-primary md-raised md-button-clear" ng-click="post_status()" 
-                ng-disabled="posting || (((!info.status || info.status == '') && text_selected) || (!text_selected && (info.reading_status_value != 0 && info.reading_status_value != 1 && info.reading_status_value != 2)))">
-                <span ng-show="!posting">Share</span>
-                <span ng-show="posting">Sharing</span>
-            </md-button>
-            <md-button class="md-raised md-button-clear" ng-click="make_status_inactive($event)" ng-disabled="posting">Cancel</md-button>
+        <div layout="row">
+            <div layout-margin>
+                <md-button class="md-primary md-raised md-button-clear" ng-click="post_status()" 
+                    ng-disabled="posting || (((!info.status || info.status == '') && text_selected) || (!text_selected && (info.reading_status_value != 0 && info.reading_status_value != 1 && info.reading_status_value != 2)))">
+                    <span ng-show="!posting">Share</span>
+                    <span ng-show="posting">Sharing</span>
+                </md-button>
+            </div>
+            <div layout-margin>
+                <md-button class="md-raised md-button-clear" ng-click="make_status_inactive($event)" ng-disabled="posting">Cancel</md-button>
+            </div>
         </div>
     </div>
 </div>
