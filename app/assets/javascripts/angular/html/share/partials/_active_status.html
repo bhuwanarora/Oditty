@@ -1,4 +1,4 @@
-<div ng-class="{'md-whiteframe-z4 active_extended': selected_book}" class="menu_details">
+<div ng-class="{'md-whiteframe-z1 active_extended': selected_book}" class="menu_details">
     <div ng-repeat="book in info.status_books | limitTo: 4" 
                 layout="row" layout-align="space-between"
                 ng-class="{'md-whiteframe-z1': !selected_book}"
@@ -42,7 +42,7 @@
         </div>
     </div>
 </div>
-<div class="menu_details white md-whiteframe-z4 active_extended" ng-show="selected_book">
+<div class="menu_details white md-whiteframe-z1 active_extended" ng-show="selected_book">
     <div layout-padding layout="row" layout-align="space-between center">
         <div></div>
         <div ng-click="mute_volume()" class="pointer" layout-padding>
@@ -50,6 +50,6 @@
             <i class="material-icons" ng-show="mute">volume_off</i>
         </div>
     </div>
-    <div class="white md-whiteframe-z1 margin_top" ng-show="selected_book"
+    <div class="margin_top" ng-show="selected_book"
         ng-include src="'/assets/angular/html/share/textbox.html'"></div>
 </div>
