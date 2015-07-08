@@ -9,7 +9,7 @@ class FacebookLikesBooksWorker
 		# For location create separate Nodes for City, Country, State, Street etc, and a Node with the complete address.
 		# ASHESH: Fetch and Link tags for this FacebookPage on the basis of the NLPService
 		# Fetch Books for those tags from Google Books
-		node_id = FacebookLikesBooksHelper.set_node_property_recursive(params, nil)
+		node_id = FacebookLikesBooksHelper.set_node_property_recursive(params, nil, true)
 		FacebookLikesBooksHelper.set_community_books node_id
 	end
 end

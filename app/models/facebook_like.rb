@@ -33,7 +33,7 @@ class FacebookLike < Neo
 	end
 
 	def self.set_name name
-		" SET facebook_like.set_name = \"" + name.to_s + "\" "
+		" SET facebook_like.name = \"" + name.to_s + "\" "
 	end
 
 	def self.set_created_time created_time

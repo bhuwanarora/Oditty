@@ -55,20 +55,39 @@ module FacebookLikesBooksHelper
 		" MATCH(" + src_name + ")-[rel:" + rel_type + "]-(destination) WHERE ID(" + src_name + ") = " + id_src.to_s + " WITH rel, destination, " + src_name + " "
 	end
 
-	def self.match_fb_node app_id, nodename = "node"
-		" MATCH(" + nodename + ") WHERE " + nodename + ".app_id = " + "\"" + app_id.to_s + "\" WITH " + nodename + " "
+	def self.match_fb_node app_id, labels = [], nodename = "node"
+		label_string = labels.map{|label| (":" + label)}.join("")
+		" MATCH(" + nodename + label_string + ") WHERE " + nodename + ".app_id = " + app_id.to_s + " WITH " + nodename + " "
+	end
+
+	def self.match_set_root label, properties
+		clause = self.match_fb_node( properties["id"], ["FacebookLike"])
+		clause += " SET "
+		if(label.length > 0)
+			clause += "node " + (label.map{|label_single| (":" + label_single + " ")}).join + ","
+		end
+		properties.each do |key,value|
+			if key == 'id'
+				next
+			end
+			clause += " node." + key + " = \"" + value + "\","
+		end
+		clause[clause.length - 1] = ''
+		clause
 	end
 
 	def self.merge_node label, properties
 		clause = " MERGE (node"
-		clause += (label.map{|label_single| (":" + label_single + " ")}).join
+		if( label.length > 0)
+			clause += (label.map{|label_single| (":" + label_single + " ")}).join + " "
+		end
 		if(properties["id"].present?)
-			clause += "{ app_id: \"" + properties["id"] + "\"})  ON CREATE SET node.created_at = " + Time.now.to_i.to_s + ", node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET node.updated_at = " + Time.now.to_i.to_s + " WITH node SET "
+			clause += "{ app_id: "+ properties["id"].to_s + "})  ON CREATE SET node.created_at = " + Time.now.to_i.to_s + ", node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET node.updated_at = " + Time.now.to_i.to_s + " WITH node SET "
 			properties.each do |key,value|
 				if key == 'id'
 					next
 				end
-				clause += " node." + key + " = \"" + value + "\","
+				clause += " node." + key + " = \"" + value.gsub('"','\\\\"').gsub("'","\\\\'") + "\","
 			end
 			clause[clause.length - 1] = ''
 		else
@@ -153,9 +172,8 @@ module FacebookLikesBooksHelper
 		children_id_set
 	end
 
-	def self.set_node_property_recursive params, parent_category
+	def self.set_node_property_recursive params, parent_category, is_root =false
 		app_id = params["id"]
-		clause = match_fb_node app_id
 		children_node_set = []
 		node_property = {}
 		if(params["category"].present?)
@@ -170,7 +188,13 @@ module FacebookLikesBooksHelper
 				node_property[key] = output[:node_property]
 			end
 		end
-		clause = self.merge_node(node_label, node_property) + "RETURN ID(node) AS id"
+
+		if(is_root)
+			clause = self.match_set_root(node_label, node_property) + "RETURN ID(node) AS id"
+		else
+			clause = self.merge_node(node_label, node_property) + "RETURN ID(node) AS id"
+		end
+
 		node_id = clause.execute[0]["id"]
 		children_id_set = self.handle_children node_id, children_node_set
 		self.handle_location children_node_set, children_id_set
