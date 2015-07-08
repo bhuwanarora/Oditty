@@ -1,6 +1,23 @@
-<md-button class="md-button-clear menu_details margin_top white md-whiteframe-z1"
-			ng-repeat="option in reading_options"
-			ng-hide="option.id == active_id"
-		   layout-padding ng-click="make_active(option.id)">
-	{{option.name}}
-</md-button>
+<div layout="row">
+	<div class="status_option animate-fast"
+		layout-align="center center"
+		layout-padding
+		ng-click="make_text_active()">
+		<div class="less_important center_text" layout="column" ng-class="{'dark_blue_color': text_selected}">
+			<i class="material-icons">edit</i>
+			Text
+		</div>
+	</div>
+	<div class="status_option animate-fast"
+		ng-repeat="option in reading_options"
+		layout-align="center center"
+	   	layout-padding ng-click="make_active(option.id)">
+	   	<div class="center_text less_important" 
+	   		ng-class="{'dark_blue_color': (info.reading_status_value == option.id)}" layout="column">
+	   		<i class="material-icons">{{option.icon}}</i>
+	   		<div>
+				{{option.name}}
+	   		</div>
+	   	</div>
+	</div>
+</div>

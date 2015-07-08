@@ -208,6 +208,11 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             $timeout(function(){
                 $scope.type_icon_pressed = {"margin-right": "0px"};
             }, 100);
+            $scope.make_status_inactive();
+        }
+        else{
+            $scope.posting = true;
+            $scope.info.share_loading = true;
         }
     }
 
@@ -498,24 +503,54 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
     }
 
+    $scope.stop_propagation = function(event){
+        event.stopPropagation();
+    }
+
+    $scope.make_status_active = function(event){
+        $scope.info.status_state = true;
+        if(angular.isDefined(event)){
+            event.stopPropagation();
+        }
+    }
+
+    $scope.make_text_active = function(){
+        $scope.text_selected = true;
+        $scope.init_reading_options();
+    }
+
+    $scope.make_status_inactive = function(event){
+        $scope.make_text_active();
+        $scope.info.status_state = false;
+        if(angular.isDefined(event)){
+            event.stopPropagation();
+        }
+    }
+
     $scope.make_active = function(id){
-        $scope.info.status_state = {"width": "100% !important", "max-width": "100% !important"};
         delete $scope.selected_book;
+        $scope.text_selected = false;
         $scope.active_id = id;
         $scope.info.reading_status_value = id;
         $scope.show_relevant_books();
+        $scope.make_status_active();
     }
 
     $scope.init_reading_options = function(){
         if(angular.isUndefined($scope.reading_options) || ($scope.reading_options.length != 3)){
             $scope.reading_options = [
-                {"name": "Which Book do you plan to Read?", "id": 0, "status": "Planning to Read", "emotion_status": "while planning to read"}, 
-                {"name": "What are you Currently Reading?", "id": 1, "status": "Currently Reading", "emotion_status": "while reading"}, 
-                {"name": "Which Book did you Recently Read?", "id": 2, "status": "Recently Read", "emotion_status": "after reading"}
+                {"name": "Planning to Read", "id": 0, "status": "Planning to Read", 
+                    "emotion_status": "while planning to read", "icon": "visibility", "active_class": "green_color"}, 
+                {"name": "Currently Reading", "id": 1, "status": "Currently Reading", 
+                    "emotion_status": "while reading", "icon": "local_library", "active_class": "yellow_color"}, 
+                {"name": "Recently Read", "id": 2, "status": "Recently Read", 
+                    "emotion_status": "after reading", "icon": "school", "active_class": "red_color"}
             ];
         }
         $scope.reading_status_selected = false;
-        $scope.active_id = 0;
+        delete $scope.active_id;
+        delete $scope.info.reading_status_value;
+        delete $scope.info.book;
         $scope.info.status_books = [];
         $scope.related_info = [];
         delete $scope.selected_book;
@@ -591,6 +626,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     }
 
     var _init = (function(){
+        $scope.text_selected = true;
         $scope.info.status = "";
         $scope.info.hash_tags = [];
         $scope.info.wrapper_status = "";

@@ -44,7 +44,12 @@ class Status < Neo
 		mentioned_authors_ids = @mentioned_authors_ids ? Status::Mention::MentionsAuthor.create_group(@mentioned_authors_ids, @user_id) : ""
 		hash_tags = @hash_tags ? Hashtag.create_group(@hash_tags, @user_id) : ""
 		feelings = @feelings ? Status::Feeling.create_group(@feelings, @user_id) : ""
-		match_clause + create_unique + " WITH status, book, status_node, user " + book_feed_addition + ", status " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + set_page_count_clause + Status.return_init + Status.basic_info
+		if @book_id.present?
+			with_clause = " WITH status, book, status_node, user "
+		else
+			with_clause = " WITH status, status_node, user "
+		end
+		match_clause + create_unique + with_clause + book_feed_addition + ", status " + @user_feed.create("status_node") + ", status " + book_exchange_status + reading_status_value + mentioned_users_ids + mentioned_authors_ids + hash_tags + feelings + set_page_count_clause + Status.return_init + Status.basic_info
 	end
 
 	def create_unique 

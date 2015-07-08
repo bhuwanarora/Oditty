@@ -1,36 +1,99 @@
-<div class="currently_reading roboto" 
- 	layout="column">
-    <div layout="row" class="white md-whiteframe-z1"
-        ng-include src="'/assets/angular/html/share/partials/_search.html'"></div>
-    <md-list layout="column" ng-if="!reading_status_selected && !searchText && !info.share_loading"
-    	ng-include src="'/assets/angular/html/share/partials/_reading_option.html'"></md-list>
+<div class="currently_reading roboto light_grey round_corners animate-fast"
+    ng-class="{'md-whiteframe-z4 currently_reading_active': info.status_state}"
+ 	layout="column" ng-click="stop_propagation($event)">
+    <div layout="row" class="extensive_padding">
+        <div ng-show="info.status_state" layout="row" layout-padding hide-sm>
+            <img ng-src="{{profile_user.image_url}}" class="big_circle" onerror="this.src='/assets/user_profile.jpg'"/>
+        </div>
+        <div layout="column" flex>
+            <textarea class="text_container" placeholder="Share.." 
+                ng-show="text_selected" ng-model="info.status"
+                ng-click="make_status_active($event)"></textarea>
+            <div layout="row" class="white md-whiteframe-z1" ng-hide="text_selected"
+                ng-include src="'/assets/angular/html/share/partials/_search.html'"></div>
 
-    <div ng-if="reading_status_selected">
-        <md-list layout="column" ng-if="info.status_books && (info.status_books.length > 0)"
-             ng-include src="'/assets/angular/html/share/partials/_active_status.html'"></md-list>
-        <md-list layout="column" ng-if="info.status_books && (info.status_books.length == 0 && !info.share_loading)">
-            <div class="menu_details white md-whiteframe-z1" layout-padding>
-                No results found.
+            <div ng-if="reading_status_selected && !text_selected">
+                <md-list layout="column" ng-if="info.status_books && (info.status_books.length > 0)"
+                     ng-include src="'/assets/angular/html/share/partials/_active_status.html'"></md-list>
+                <md-list layout="column" ng-if="info.status_books && (info.status_books.length == 0 && !info.share_loading)">
+                    <div class="menu_details white md-whiteframe-z1" layout-padding>
+                        No results found.
+                    </div>
+                </md-list>
+
+                <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_planning_to_read.html'" 
+                    class="active_extended"
+                    ng-if="selected_book && active_id == 0"></md-list>
+                <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_currently_reading.html'"
+                        ng-if="selected_book && active_id == 1"
+                        class="active_extended"
+                        ng-hide="info.page_count && info.current_page && hide_page_count"></md-list>
+                <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_recently_read.html'"
+                        class="active_extended"
+                        ng-if="selected_book && active_id == 2" ng-controller="recommendController"></md-list>
+                <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_feeling.html'"
+                        class="active_extended"
+                        ng-if="active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
+                <md-list layout="column" ng-if="related_info && related_info.length > 0" class="active_extended roboto"
+                    ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
             </div>
-        </md-list>
-
-        <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_planning_to_read.html'" 
-            class="active_extended"
-            ng-if="selected_book && active_id == 0"></md-list>
-        <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_currently_reading.html'"
-                ng-if="selected_book && active_id == 1"
-                class="active_extended"
-                ng-hide="info.page_count && info.current_page && hide_page_count"></md-list>
-        <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_recently_read.html'"
-                class="active_extended"
-                ng-if="selected_book && active_id == 2" ng-controller="recommendController"></md-list>
-        <md-list layout="column" ng-include src="'/assets/angular/html/share/partials/_feeling.html'"
-                class="active_extended"
-                ng-if="active_id == 1 && !active_emotion && (info.page_count && info.current_page)"></md-list>
-        <md-list layout="column" ng-if="related_info && related_info.length > 0" class="active_extended roboto"
-            ng-include src="'/assets/angular/html/share/partials/_facts.html'"></md-list>
+            <md-progress-linear ng-show="info.share_loading" class="menu_search"
+                md-mode="indeterminate">
+            </md-progress-linear>
+            <md-list ng-include src="'/assets/angular/html/share/partials/_reading_option.html'"></md-list>
+        </div>
     </div>
-    <md-progress-linear ng-show="info.share_loading" class="menu_search"
-        md-mode="indeterminate">
-	</md-progress-linear>
+    <div class="white" layout-padding ng-show="info.status_state" layout="row" layout-align="space-between">
+        <div></div>
+        <div>
+            <md-button class="md-primary md-raised md-button-clear" ng-click="post_status()" 
+                ng-disabled="posting || (((!info.status || info.status == '') && text_selected) || (!text_selected && (info.reading_status_value != 0 && info.reading_status_value != 1 && info.reading_status_value != 2)))">
+                <span ng-show="!posting">Share</span>
+                <span ng-show="posting">Sharing</span>
+            </md-button>
+            <md-button class="md-raised md-button-clear" ng-click="make_status_inactive($event)" ng-disabled="posting">Cancel</md-button>
+        </div>
+    </div>
 </div>
+<style>
+    .text_container{
+        height: 100px;
+        border: 1px solid #CDCDCD;
+        resize: vertical;
+    }
+
+    .text_container:focus{
+        outline: none;
+    }
+
+    div:focus{
+        outline: none;
+    }
+
+    .currently_reading{
+        width: 500px;
+        max-width: 98vw;
+        text-align: left;
+        border: 1px solid #CDCDCD;
+    }
+
+    .currently_reading_active{
+        width: 600px;
+        max-width: 98vw;
+    }
+
+    .status_option{
+        width: 50px;
+        white-space: inherit;
+        cursor: pointer;
+    }
+
+    .status_option .less_important{
+        font-size: 0.7em;
+    }
+
+    .status_option:hover .less_important{
+        color: rgba(19, 108, 178, 0.66) !important;
+    }
+
+</style>
