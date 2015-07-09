@@ -33,7 +33,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
         msd-wheel="close_popups('wheel')">
@@ -83,7 +83,7 @@
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController" class="background">
+                <div ng-controller="specificBookController" class="white">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>

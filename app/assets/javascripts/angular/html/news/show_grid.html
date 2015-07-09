@@ -9,9 +9,11 @@
 				</a>
 			</div>
 		</div>
-		<div layout-padding>{{::info.active_news.description}}</div>
-		<div>
-			<img ng-src="{{info.active_news.image_url}}" class="max_full_width" />
+		<div class="description_card">
+			<div>
+				<img ng-src="{{info.active_news.image_url}}" class="max_full_width" />
+			</div>
+			<div layout-padding>{{::info.active_news.description}}</div>
 		</div>
 	</div>
 	<div layout="column" layout-sm="column" class="margin_top white" flex="70" flex-md="100" flex-sm="100">
