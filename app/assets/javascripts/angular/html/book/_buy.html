@@ -10,7 +10,10 @@
     </div>
     <md-divider></md-divider>
     <div layout-padding class="less_important bold" ng-show="reviews.editorial_review">Editorial Review</div>
-    <div ng-bind-html="reviews.editorial_review" class="summary" layout-padding></div>
+    <div ng-bind-html="reviews.editorial_review || reviews.product_review" class="summary" layout-padding></div>
     <div ng-bind-html="reviews.source" layout-padding class="less_important"></div>
-    <iframe ng-src="{{reviews.user_review_iframe}}" ng-if="reviews.user_review_iframe"></iframe>
+    <iframe ng-src="{{reviews.user_review_iframe}}" seamless="seamless" class="wiki" 
+        ng-if="reviews && reviews.user_review_iframe"></iframe>
+    <!-- <iframe ng-src="{{::author.wiki_url}}" class="wiki" seamless="seamless"></iframe> -->
 </div>
+

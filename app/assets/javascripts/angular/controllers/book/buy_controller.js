@@ -1,4 +1,4 @@
-homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", "$timeout", function($scope, $rootScope, bookService, sharedService, $mdSidenav, $timeout){
+homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", "$timeout", "$sce", function($scope, $rootScope, bookService, sharedService, $mdSidenav, $timeout, $sce){
 	var _unauthenticated_user = function(){
 		return ((getCookie("logged") == "") || (getCookie("logged") == null));
 	}
@@ -44,6 +44,7 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		}
 		else{
 			$scope.reviews = data.reviews;
+			$scope.reviews.user_review_iframe = $sce.trustAsResourceUrl($scope.reviews.user_review_iframe);
 		}
 	}
 
