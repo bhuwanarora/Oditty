@@ -11,10 +11,10 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
                         $scope.show_suggestions = true;
                         angular.forEach(data, function(value, index){
                             if(index == 0 || index == 6){
-                                value.span = {"col": 4, "row": 2};
+                                value.span = {"col": 2, "row": 1};
                             }
                             else{
-                                value.span = {"col": 2, "row": 2};
+                                value.span = {"col": 1, "row": 1};
                             }
                             this.push(value);
                         }, $scope.suggest_communities);

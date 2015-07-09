@@ -1,3 +1,21 @@
+
+.rd_book_backup_cover,
+.rd_book_image_cover,
+.rd_book_container,
+.rd_slider_wrapper,
+.rd_book_shadow{
+	width: 155px;
+	min-width: 155px;
+}
+
+.rd_book_backup_cover,
+.rd_book_image_cover,
+.rd_slider_wrapper,
+.rd_book_shadow{
+  	height: 220px;
+}
+
+
 md-autocomplete md-autocomplete-wrap{
 	box-shadow: none !important;
 }
@@ -553,15 +571,15 @@ and (max-width : 800px){
 	.rd_book_container,
 	.rd_slider_wrapper,
 	.rd_book_shadow{
-		width: 120px;
-		min-width: 120px;
+		width: 140px;
+		min-width: 140px;
 	}
 
 	.rd_book_backup_cover,
 	.rd_book_image_cover,
 	.rd_slider_wrapper,
 	.rd_book_shadow{
-	  	height: 165px;
+	  	height: 170px;
 	}
 
 }
@@ -581,6 +599,26 @@ and (max-width : 800px){
     	max-height: 180px;
     	max-width: 100vw;
     }
+
+    .rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_book_container,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
+		width: 100px;
+		min-width: 100px;
+	}
+
+	.rd_book_container{
+		
+	}
+
+	.rd_book_backup_cover,
+	.rd_book_image_cover,
+	.rd_slider_wrapper,
+	.rd_book_shadow{
+	  	height: 160px;
+	}
 }
 
 @media only screen and (max-width: 767px) and (orientation: portrait) {
@@ -712,22 +750,6 @@ md-tooltip .md-content{
 
 .side_panel .login_panel{
 	width: 320px !important;
-}
-
-.rd_book_backup_cover,
-.rd_book_image_cover,
-.rd_book_container,
-.rd_slider_wrapper,
-.rd_book_shadow{
-	width: 155px;
-	min-width: 155px;
-}
-
-.rd_book_backup_cover,
-.rd_book_image_cover,
-.rd_slider_wrapper,
-.rd_book_shadow{
-  	height: 220px;
 }
 
 .rd_book_backup_cover{
