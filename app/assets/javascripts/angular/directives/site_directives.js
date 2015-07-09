@@ -57,6 +57,11 @@ homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", fu
                 });
             }
 
+            $scope.remove_suggestion = function(friend){
+                var index = $scope.suggest_friends.indexOf(friend);
+                $scope.suggest_friends.splice(index, 1);
+            }
+
             $scope.follow_user = function(id){
                 userService.follow(id, true);
                 angular.forEach($scope.suggest_friends, function(value, index){

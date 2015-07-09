@@ -6,7 +6,17 @@ class User::Suggest::FriendSuggestion < User::Suggest
 	end
 
 	def get_friends_of_friend
-		@user.match + UsersUser.match_all + User::Suggest::FriendSuggestion.where_group("friend <> user") + User::Suggest::FriendSuggestion.with_group("friend AS user", "user AS init_user") + UsersUser.match_all + ", init_user " + User::Suggest::FriendSuggestion.where_group("friend <> init_user") + User::Suggest::FriendSuggestion.with_group("DISTINCT(friend) AS user") + User::Suggest::FriendSuggestion.return_group(User.basic_info) + User::Suggest::FriendSuggestion.limit(10)
+		@user.match + " MATCH (friend:User) "\
+		" WHERE (user)-[:FollowsUser]->(:FollowsNode)-[:FollowedBy]->(friend) "\
+		" OR (friend)-[:FollowsUser]->(:FollowsNode)-[:FollowedBy]->(user) "\
+		" WITH user AS init_user, friend AS user "\
+		" MATCH (friend:User) "\
+		" WHERE ((user)-[:FollowsUser]->(:FollowsNode)-[:FollowedBy]->(friend) "\
+		" OR (friend)-[:FollowsUser]->(:FollowsNode)-[:FollowedBy]->(user)) "\
+		" AND (NOT (init_user)-->(:FollowsNode)-->(friend) AND init_user <> friend)"\
+		" WITH DISTINCT(friend) AS user"\
+		" RETURN " + User.basic_info + User::Suggest::FriendSuggestion.limit(10)
 	end
 
 end
+
