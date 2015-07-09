@@ -8,7 +8,7 @@ module Api
 				info = $redis.get key
 				unless info
 					info = Api::V0::RealVirtualityApi.get_news(id).execute[0] rescue []
-					$redis.set(key, info.to_json)
+					$redis.set(key, info.to_json) if info
 				else
 					info = JSON.parse info
 				end

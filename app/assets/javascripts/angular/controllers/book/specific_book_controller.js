@@ -36,21 +36,8 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         return ((getCookie("logged") == "") || (getCookie("logged") == null));
     }
 
-    // $scope.show_shelf_bottom_sheet = function(bookmark_object_id, bookmark_object_type){
-    //     $rootScope.bookmark_object = {"type": bookmark_object_type, "id": bookmark_object_id};
-    //     // $mdSidenav.show({
-    //     //     templateUrl: 'assets/angular/html/shared/shelf_bottom_sheet.html',
-    //     //     controller: 'shelfController'
-    //     // });
-    // };
-
     $scope.show_share_bottom_sheet = function(event){
         $mdSidenav('right_share').toggle();
-        // $mdSide.show({
-        //     templateUrl: 'assets/angular/html/shared/social_bottom_sheet.html',
-        //     controller: 'shelfController',
-        //     targetEvent: event
-        // });
     }; 
 
 
@@ -78,6 +65,15 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         // }
 
         // google.setOnLoadCallback(initialize);
+    }
+
+    $scope.get_active_class = function(path){
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "book/timeline");
+        if(($location.path().substr(1, path.length+1) == path) || is_init){
+            return "bold red_color";
+        } else {
+            return "";
+        }
     }
 
     var _init = function(){
@@ -121,6 +117,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                     }
                     $scope.book = angular.extend($scope.book, json);
                     $rootScope.active_book = $scope.book;
+                    $scope.info.book = $scope.book;
                 }
                 $scope.book_loading = false;
                 $scope.info.loading = false;
@@ -138,6 +135,8 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             left: false,
             right: true
         };
+
+        $scope.is_book = true;
 
         $scope.constant = {"show_book": true};
         

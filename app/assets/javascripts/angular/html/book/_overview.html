@@ -1,4 +1,4 @@
-<section layout="row" layout-wrap>
+<section layout="row" layout-wrap class="white md-whiteframe-z4 round_corners">
     <div flex="45" class="padding overview" 
             layout="column" 
             flex-sm="100"
@@ -24,9 +24,9 @@
     </div>
     <div flex="50" hide-sm class="relative" hide-md>
         <img ng-src="{{book | large_thumb}}" class="cover" onerror="this.src='/assets/defpicbook.png'"/>
-        <div class="absolute" ng-style="{background: '{{::book.color}}'}"></div>
     </div>
 </section>
+<div ng-include src="'/assets/angular/html/book/_book_embed.html'"></div>
 <style>
     .cover{
         width: 100%;

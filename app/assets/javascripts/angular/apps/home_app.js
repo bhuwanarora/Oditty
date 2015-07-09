@@ -19,8 +19,20 @@ homeApp.config(["$routeProvider", function($routeProvider){
     .when('/interview', {
         templateUrl : 'assets/angular/html/author/interview.html',
     })
+    .when('/book/timeline', {
+        templateUrl : 'assets/angular/html/book/_timeline.html',
+    })
+    .when('/book/buyandreview', {
+        templateUrl : 'assets/angular/html/book/_buy.html',
+    })
+    .when('/book/realvirtuality', {
+        templateUrl : 'assets/angular/html/book/_news.html',
+    })
+    .when('/book/preview', {
+        templateUrl : 'assets/angular/html/book/_overview.html',
+    })
     .otherwise({
-         templateUrl : 'assets/angular/html/author/books.html'
+         templateUrl : 'assets/angular/html/shared/default.html'
     });
 }]);
 

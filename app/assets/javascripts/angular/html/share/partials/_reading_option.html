@@ -8,7 +8,7 @@
 			Text
 		</div>
 	</div>
-	<div class="status_option animate-fast"
+	<div class="status_option animate-fast" ng-if="!is_book"
 		ng-repeat="option in reading_options"
 		layout-align="center center"
 	   	layout-padding ng-click="make_active(option.id)">

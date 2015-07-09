@@ -260,6 +260,8 @@ module Api
 				community_id = params[:id]
 				status = params[:status].downcase if params[:status]
 				Api::V0::UserApi.follow_community(user_id, community_id, status).execute
+				key = "BCI" + community_id.to_s
+				$redis.del key
 				render :json => {:message => "Success"}, :status => 200
 			end
 
