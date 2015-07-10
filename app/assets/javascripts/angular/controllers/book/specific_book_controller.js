@@ -72,7 +72,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         if(($location.path().substr(1, path.length+1) == path) || is_init){
             return "bold red_color";
         } else {
-            return "";
+            return "grey_color";
         }
     }
 

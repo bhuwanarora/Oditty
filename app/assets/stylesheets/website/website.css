@@ -357,6 +357,10 @@ md-input-container .md-input{
     font-size: 0.8em;
 }
 
+.less_important:hover{
+    color: #999999;
+}
+
 .absolute{
     position: absolute;
 }

@@ -1,8 +1,8 @@
 <div layout-padding>
-	<div layout-padding class="less_important bold" ng-show="suggest_friends && suggest_friends.length > 0">
+	<h3 layout-padding ng-show="suggest_friends && suggest_friends.length > 0" class="important_title">
 		You may know
-	</div>
-	<div layout="column" layout-padding>
+	</h3>
+	<div layout="column">
 		<div ng-repeat="friend in suggest_friends | limitTo: 4" layout-margin 
 			layout="row" layout-align="space-between" flex class="description_card">
 			<div>

@@ -142,7 +142,7 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         if(($location.path().substr(1, path.length+1) == path) || is_init){
             return "bold red_color";
         } else {
-            return "";
+            return "grey_color";
         }
     }
 

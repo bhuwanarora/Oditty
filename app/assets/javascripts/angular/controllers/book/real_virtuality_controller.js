@@ -1,14 +1,19 @@
-homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "bookService", function($scope, $rootScope, bookService){
+homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "bookService", "$location", function($scope, $rootScope, bookService, $location){
 
     var _init = (function(){
-        var book_id = $rootScope.active_book.book_id;
-        bookService.get_real_news(book_id).then(function(data){
-            if(data != null){
-                $scope.communities = data.communities;
-                $scope.active_community = $scope.communities[0];
-                $scope.active_community.news = data.news;
-            }
-        });
+        if(angular.isDefined($rootScope.active_book)){
+            var book_id = $rootScope.active_book.book_id;
+            bookService.get_real_news(book_id).then(function(data){
+                if(data != null){
+                    $scope.communities = data.communities;
+                    $scope.active_community = $scope.communities[0];
+                    $scope.active_community.news = data.news;
+                }
+            });
+        }
+        else{
+            $location.path( "/book/timeline" );
+        }
 
     }());
 

@@ -33,7 +33,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile || @book || @news %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news || @room %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
         msd-wheel="close_popups('wheel')">

@@ -1,4 +1,4 @@
-<md-whiteframe layout-fill flex="80" flex-sm="100" layout-padding>
+<md-whiteframe layout-fill flex="80" flex-md="70" flex-sm="100" layout-padding>
     <div class="books_cover animate-very-fast"
          flex="60"
          flex-md="80"
@@ -22,7 +22,7 @@
     <div class="less_important" layout="column" layout-padding
         ng-if="!constant.show_book">
         <div layout-padding>
-            <div class="big_title" 
+            <div class="important_title" 
                 ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
                 Popular Books</div>
             <div>{{info.books.length}} results</div>
@@ -105,7 +105,7 @@
         </div>
     </div>
 </md-whiteframe>
-<trending flex="20" hide-sm></trending>
+<trending flex="20" flex-md="30" hide-sm></trending>
 <style>
 
     .books_cover{
