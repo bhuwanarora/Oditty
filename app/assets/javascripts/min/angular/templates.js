@@ -354,7 +354,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/news/_footer.html',
-    "<div layout=\"column\"><div ng-repeat=\"tag in news\" layout-padding><a ng-href=\"/news?q={{::tag.id}}\"><div layout=\"row\" class=\"news_item\"><div layout-padding><i class=\"material-icons\">trending_up</i></div><div layout=\"column\" flex=\"80\" layout-align=\"start start\" layout-wrap><div ng-bind-html=\"tag.title | reduced_news_title\" layout-wrap></div><div ng-bind-html=\"::tag.community_info.name\" class=\"less_important\"></div></div></div></a></div></div>"
+    "<div layout=\"column\"><div class=\"important_title\" ng-show=\"news\"><span>More News from</span><span ng-bind-html=\"news[0].created_at | timestamp | date:'dd MMM'\"></span></div><div ng-repeat=\"tag in news\" layout-padding><a ng-href=\"/news?q={{::tag.id}}\"><div layout=\"row\" class=\"news_item\"><div layout=\"column\" flex=\"80\" layout-align=\"start start\" layout-wrap><div ng-bind-html=\"tag.title | reduced_news_title\" layout-wrap></div></div></div></a><div class=\"less_important capitalize\"><span>Popular Room,</span> <span ng-bind-html=\"::tag.community_info.name\"></span></div></div></div>"
   );
 
 
