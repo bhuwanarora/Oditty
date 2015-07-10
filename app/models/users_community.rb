@@ -15,10 +15,6 @@ class UsersCommunity < Neo
 		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community WITH user, follow_node, community MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follow_node)-[r]-() DELETE r CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node  "
 	end
 
-	def self.match
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, community "
-	end
-
 	def self.where_not
 		" WHERE NOT (user)-[:Follows]->(:FollowsNode)-[:OfCommunity]->(community) "
 	end
@@ -48,8 +44,8 @@ class UsersCommunity < Neo
 		" OPTIONAL MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
 	end
 
-	def self.match
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
+	def self.match community = "community"
+		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(" + community + ") WITH user, follows, follow_node, of_community, " + community + " "
 	end
 
 	def self.basic_info

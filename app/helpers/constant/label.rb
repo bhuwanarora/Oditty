@@ -14,4 +14,6 @@ module Constant::Label
 	Country 					= "COUNTRY"
 	Author 						= "AUTHOR"
 	Genre 						= "GENRE"
+
+	HiddenCommunity				= "HiddenCommunity"
 end

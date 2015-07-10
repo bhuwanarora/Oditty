@@ -384,6 +384,11 @@ namespace :graph do
     GraphHelper.fix_user_notification_feed
   end
 
+  desc "Makes super communities AS community and 'hide' all member communities"
+  task :handle_super_communities => :environment do
+    include SuperCommunitiesHelper
+    SuperCommunitiesHelper.handle_super_communities
+  end
 
   desc "reset_user_notification"
   task :reset_user_notification => :environment do
