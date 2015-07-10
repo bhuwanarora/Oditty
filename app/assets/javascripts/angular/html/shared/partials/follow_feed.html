@@ -7,7 +7,7 @@
                     <div layout-padding class="bold" ng-show="profile_user.first_name">{{::profile_user.first_name}}</div>
                     <div layout-padding>
                         <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
-                        <div class="status_message">{{::feed.message}}</div>
+                        <div class="status_message big_title">{{::feed.message}}</div>
                     </div>
                     <author-info info="info" ng-if="feed.author" 
                         flex="50" author="::feed.author">
