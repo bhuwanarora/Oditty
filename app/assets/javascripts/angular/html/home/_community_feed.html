@@ -20,10 +20,11 @@
                 </a>
             </div>
         </div>
-        <div class="content" layout-padding>
+        <div class="content">
             <div class="big_title">
-                <a ng-href="/news?id={{communityFeed.id || communityFeed.news_id}}">
-                {{::communityFeed.title}}</a>
+                <a ng-href="/news?id={{communityFeed.id || communityFeed.news_id}}"
+                    ng-bind-html="::communityFeed.title">
+                </a>
             </div>
             <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
         </div>

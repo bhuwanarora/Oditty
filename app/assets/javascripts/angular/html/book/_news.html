@@ -4,7 +4,7 @@
     </div>
     
     <section layout="row" layout-sm="column">
-        <div flex="40" flex-sm="100" layout="column" layout-align="start start">
+        <div flex="40" flex-sm="100" layout="column" layout-align="start end">
             <md-radio-group layout="column" layout-align="start center"
                 layout-sm="row" layout-md="row"
                 layout-padding ng-change="load_news()"
@@ -19,6 +19,8 @@
             </md-radio-group>        
         </div>
         <div flex="60" layout="column" flex-sm="100">
+            <a ng-href="/room?id={{active_community.id}}" ng-bind-html="active_community.name" class="big_title capitalize" 
+                layout-padding></a>
              <section layout="column" layout-sm="column" layout-wrap
                 ng-repeat="news in active_community.news" 
                 ng-if="active_community.news"
