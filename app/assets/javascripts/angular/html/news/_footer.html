@@ -1,6 +1,6 @@
 <div layout="column">
 	<div class="important_title" ng-show="news">
-		<span>More News from </span><span ng-bind-html="news[0].created_at | timestamp | date:'dd MMM'"></span>
+		<span>More News from&nbsp;</span><span ng-bind-html="news[0].created_at | timestamp | date:'dd MMM'"></span>
 	</div>
 	<div ng-repeat="tag in news" layout-padding>
 		<a ng-href="/news?q={{::tag.id}}" >
