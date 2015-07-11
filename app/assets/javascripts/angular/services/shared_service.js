@@ -95,17 +95,19 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                     var status = book.status != null;
                     var reading_time = _get_reading_time(book);
                     var published_era = _get_published_era(book);
-
-                    var json = {
-                            "published_era": published_era,
-                            "reading_time": reading_time,
-                            "status": status,
-                            "isBook": true,
-                            "colspan": 1,
-                            "rowspan": 1,
-                            "alphabet": book.title[0]};
-                    json = angular.extend(book, json)
-                    this.push(json);
+                    if(book.title != null){
+                        var alphabet = book.title[0];
+                        var json = {
+                                "published_era": published_era,
+                                "reading_time": reading_time,
+                                "status": status,
+                                "isBook": true,
+                                "colspan": 1,
+                                "rowspan": 1,
+                                "alphabet": alphabet};
+                        json = angular.extend(book, json)
+                        this.push(json);
+                    }
                 }, $scope.info.books);
                 delete data.books;
                 $scope.info.other_info = data;
