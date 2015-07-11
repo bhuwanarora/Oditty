@@ -274,6 +274,8 @@ module Api
 				elsif follow_action.present? && follow_action == "false"
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
+				key = "GFOF" + user_id.to_s
+				$redis.del key
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -466,7 +468,14 @@ module Api
 			def get_friends_of_friend
 				user_id = session[:user_id]
 				if user_id
-					info = Api::V0::UserApi.get_friends_of_friend(user_id)
+					key = "GFOF"+user_id.to_s
+					info = $redis.get key
+					unless info
+						info = Api::V0::UserApi.get_friends_of_friend(user_id)
+						$redis.set(key, info.to_json)
+					else
+						info = JSON.parse(info)
+					end
 				else
 					info = []
 				end
