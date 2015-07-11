@@ -1,4 +1,4 @@
-<div layout="row" layout-sm="column" >
+<div layout="row" layout-sm="column" class="white md-whiteframe-z1 full_width">
 	<div class="rd_book_container">
 		<div ng-style="{background:'{{book.color | random_color}}'}" 
 			class="rd_book_backup_cover" 
@@ -22,14 +22,19 @@
 	<div layout="column" layout-align="space-between">
 		<div>
 			<div layout-padding class="wrap">
-			    <a ng-href="/book?id={{book.book_id || book.id}}" class="big_title">{{::book.title}}</a>
-			    <div class="less_important">{{::book.author_name}}</div>
+				<div layout="row" layout-align="space-between">
+			    	<a ng-href="/book?id={{book.book_id || book.id}}" class="big_title">{{book.title}}</a>
+					<div ng-click="remove_expanded_book($index)" class="clickable_icons">
+						<i class="material-icons">close</i>
+					</div>
+				</div>
+			    <div class="less_important">{{book.author_name}}</div>
 			</div>
 			<div ng-bind-html="book.description | reduced_summary" layout-padding></div>
 		</div>
 		<div layout="row" layout-align="space-between" layout-padding>
-			<div class="bold" ng-show="book.page_count != null">{{::book.page_count}} Pages</div>
-			<div class="less_important" ng-bind-html="::book.published_year"></div>
+			<div class="bold" ng-show="book.page_count != null">{{book.page_count}} Pages</div>
+			<div class="less_important" ng-bind-html="book.published_year"></div>
 		</div>
 	</div>
 </div>

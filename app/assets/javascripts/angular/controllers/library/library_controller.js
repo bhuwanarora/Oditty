@@ -16,6 +16,56 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
+    $scope.remove_expanded_book = function(index){
+        $scope.info.books.splice(index, 1);
+        delete $scope.expanded_book;
+        delete $scope.expanded_index;
+    }
+
+    $scope.expand_book = function(index){
+        if(window.innerWidth > 1100){
+            var row_count = 5;
+        }
+        else if(window.innerWidth > 900){
+            var row_count = 4;
+        }
+        else{
+            var row_count = 3;
+        }
+        var _scroll_and_expand = function(index){
+            var book = {
+                "title": $scope.info.books[index].title,
+                "author_name": $scope.info.books[index].author_name,
+                "page_count": $scope.info.books[index].page_count,
+                "published_year": $scope.info.books[index].published_year,
+                "description": $scope.info.books[index].description,
+                "expanded": true,
+                "id": ($scope.info.books[index].id || $scope.info.books[index].book_id),
+                "isbn": $scope.info.books[index].isbn
+            }
+            $scope.expanded_index = index;
+            index = row_count*(Math.floor(index / row_count)) + row_count;
+            $scope.expanded_book = index;
+            $scope.info.books.splice(index, 0, book);
+        }
+        if(angular.isDefined($scope.expanded_index)){
+            if($scope.expanded_index == index){
+                index = row_count*(Math.floor(index / row_count)) + row_count;
+                $scope.remove_expanded_book(index);
+            }
+            else{
+                $scope.info.books.splice($scope.expanded_book, 1);
+                if(index > $scope.expanded_book){
+                    index = index - 1;
+                }
+                _scroll_and_expand(index);
+            }
+        }
+        else{
+            _scroll_and_expand(index);
+        }
+    }
+
     $scope.init_book = function(index){
         var book_id = $scope.info.books[index];
         bookService.get_basic_details(book_id).then(function(data){

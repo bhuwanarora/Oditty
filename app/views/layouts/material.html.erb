@@ -71,7 +71,7 @@
                 <md-content ng-controller="communityController" id="community" class="white">
             <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
-                    check-scroll-bottom="get_popular_books()"
+                    du-scroll-container check-scroll-bottom="get_popular_books()"
                     id="infinity_page" class="white">
             <% elsif @shelves %>
                 <md-content ng-controller="roomController" class="full_height">
