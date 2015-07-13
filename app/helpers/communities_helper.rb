@@ -10,7 +10,9 @@ module CommunitiesHelper
 			puts response.red
 			if response.is_json? 
 				response = JSON.parse(response)			
-				communities = CommunitiesHelper.handle_communities response						
+				communities = CommunitiesHelper.handle_communities response
+				wiki_url = {}
+				communities.each{|community| wiki_url[community['name']] = community['wiki_url']}
 				skip = 10000
 				timer = communities.length * skip -1
 				for i in 0..timer do
@@ -32,7 +34,7 @@ module CommunitiesHelper
 					IndexerWorker.perform_async(params)
 
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
-					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata)
+					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, wiki_url)
 					News.new(news_metadata["news_id"]).add_notification.execute
 					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
 						type = "news"
@@ -53,7 +55,7 @@ module CommunitiesHelper
 				
 			end
 		end
-		communities
+		WikiHelper.obtain_wiki_similar_communities communities
 	end
 
 	# This funnction first checks the database for books, if no books are present,
@@ -82,17 +84,17 @@ module CommunitiesHelper
 		!books.blank? && books.length >= Constant::Count::MinimumCommunityBooks
 	end
 
-	def self.map_books communities_books, news_metadata
-		batch_size_cypher = 4 
-	    communities_books.each do |community_books,relevance|	    	
-	    	community_books.each do |community, books_authors|
-	    		books,authors = books_authors.transpose
-	        	clause =  News.new(news_metadata["news_id"]).match + Community.merge(community) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)					        	
+	def self.map_books communities_books, news_metadata, wiki_url = {}
+		batch_size_cypher = 4
+		communities_books.each do |community_books,relevance|
+			community_books.each do |community, books_authors|
+				books,authors = books_authors.transpose
+				clause =  News.new(news_metadata["news_id"]).match + Community.merge(community, wiki_url[community]) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)
 	        	clause_temp = clause
 				books.each_with_index do |book,i|
 					authorlist_string = authors[i].sort.join('').search_ready						
-					unique_index = book.search_ready + authorlist_string
-					clause_temp += Book.search_by_unique_index(unique_index) + " , community " + Community.merge_book + " WITH community "
+					unique_indices = authors[i].map{|author| (book.search_ready + author.search_ready)}
+					clause_temp += Book.search_by_unique_indices(unique_indices) + " , community " + Community.merge_book + " WITH community "
 					if((i+1)%batch_size_cypher == 0)
 						clause_temp += News.return_init + Community.basic_info
 						clause_temp.execute
@@ -101,14 +103,15 @@ module CommunitiesHelper
 				end
 				if(clause_temp.length > clause.length)
 					clause_temp += News.return_init + Community.basic_info
-					community_info = clause_temp.execute[0]
-					params = {:type => "Community", :response => community_info["id"]}
-					IndexerWorker.perform_async(params)
+					clause_temp.execute
+				end
+				community_info = (clause + Community.return_group(Community.basic_info)).execute[0]
+				params = {:type => "Community", :response => community_info["id"]}
+				IndexerWorker.perform_async(params)
 
-					if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
-						type = "community"
-						VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
-					end
+				if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
+					type = "community"
+					VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)
 				end
 			end
 		end
