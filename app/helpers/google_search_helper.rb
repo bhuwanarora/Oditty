@@ -26,4 +26,12 @@ module GoogleSearchHelper
 		self.handle_output page
 	end
 
+	#Using google-search-api
+	def self.google_search query
+		output = Google::Search::Web.new do |search|
+			search.query = query
+		end
+		url_list = output.map{|elem| elem.uri}
+	end
+
 end

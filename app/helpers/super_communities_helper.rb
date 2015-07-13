@@ -150,7 +150,7 @@ module SuperCommunitiesHelper
 				" WHERE HAS(node.community_id) "\
 				" DELETE rel "\
 			" RETURN ID(supercommunity) AS id "
-		clause.execute
+		clause
 	end
 
 	def self.set_special_props node_id
@@ -172,7 +172,7 @@ module SuperCommunitiesHelper
 			while cur_id <= end_id
 				cur_id = self.set_node_info cur_id, end_id
 				if (cur_id <= end_id)
-					self.merge_edges cur_id
+					(self.merge_edges cur_id).execute
 					self.set_special_props cur_id
 				end
 				cur_id += 1
@@ -181,5 +181,61 @@ module SuperCommunitiesHelper
 		rescue Exception => e
 			self.logger.info(e.to_s)
 		end
+	end
+
+	def self.merge_two_communities destroy_community, prevail_community
+		clause = " MATCH (supercommunity) "\
+			" WHERE ID(supercommunity) = " + prevail_community[:id].to_s + " "\
+			" SET supercommunity:SuperCommunity "\
+			" WITH supercommunity "\
+			" MATCH (community:Community) "\
+			" WHERE ID(community) = " + destroy_community[:id].to_s + " AND NOT (community)-[:RootOf]-() "\
+			" MERGE (supercommunity)-[:RootOf]->(community) "\
+			" WITH community "
+		clause += self.merge_edges prevail_community[:id]
+		clause.execute
+		self.set_special_props prevail_community[:id]
+		clause = " MATCH (supercommunity:SuperCommunity)-[rootof:RootOf]-() "\
+			" WHERE ID(supercommunity) = " + prevail_community[:id].to_s + " "\
+			" WITH supercommunity, COUNT(rootof) AS roots "\
+			" WHERE roots = 1"\
+			" MATCH (supercommunity:SuperCommunity)-[rootof:RootOf]-() "\
+			" WHERE NOT HAS(rootof.score) "\
+			" REMOVE supercommunity: SuperCommunity "\
+			" DELETE rootof "
+		clause.execute
+	end
+
+	def self.handle_new_community community_info
+		begin
+			id = community_info["id"]
+			name = community_info["name"]
+			wiki_info = WikiHelper.obtain_wiki_similar_community name
+			if wiki_info[:fromdb] && id != wiki_info[:id]
+				prevail_community = wiki_info
+				destroy_community = {:name => name, :id => id, :url => wiki_info[:url]}
+				self.merge_two_communities destroy_community, prevail_community
+			end
+		rescue Exception => e
+			puts e.to_s.red
+		end
+	end
+
+	def self.merge_multiple_communities communities_info
+		if communities_info.length > 1
+			prevail_community = {:id => communities_info[0]["id"]}
+			communities_info.each_with_index do |community_info,index|
+				if index > 0
+					self.merge_two_communities({:id => community_info["id"]}, prevail_community)
+				end
+			end
+		end
+	end
+
+	def self.handle_new_communities
+		birth_time = 1434758400 #20 July 2015
+		clause = " MATCH (c:Community) WHERE c.created_at > " + birth_time.to_s + " AND NOT c:SuperCommunity RETURN ID(c) AS id, c.name AS name "
+		communities_info = clause.execute
+		communities_info.each{|community_info| handle_new_community(community_info)}
 	end
 end

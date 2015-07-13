@@ -1,7 +1,7 @@
 module WikiHelper
 	
 	def self.fetch_wiki_info community_name
-		web_search = GoogleSearchHelper.search community_name
+		web_search = GoogleSearchHelper.google_search community_name
 		wiki_info = []
 
 		web_search.each do |result_url|
@@ -17,28 +17,35 @@ module WikiHelper
 	end
 
 	def self.get_community_with_wiki wiki_title
-		clause = " MATCH (community:Community) WHERE community.wiki_url =~ \'.*[/=]" + wiki_title + "\' "\
+		clause = " MATCH (community:Community) WHERE community.wiki_url =~ \'.*[/=]" + wiki_title.gsub("'","\\\\'").gsub('"','\\\\"') + "\' "\
 		" RETURN ID(community) AS id, community.name AS name "
 		result = clause.execute
 	end
 
 	def self.obtain_wiki_similar_community community_name
-		output = {:name => community_name, :url => ""}
+		output = {:name => community_name, :url => "", :fromdb => false}
 		begin
 			wiki_info = fetch_wiki_info community_name
 			if wiki_info.present?
 				output[:url] = wiki_info[0][:url]
 				db_result = self.get_community_with_wiki(wiki_info[0][:title])
 				if db_result.present?
+					output[:fromdb] = true
 					output[:name] = db_result[0]["name"]
+					output[:id] = db_result[0]["id"]
 					if (db_result.length > 1)
-						error = " Database has more than 1 community with wiki title: #{wiki_info[0][:title]} whose IDs are :#{db_result.map{|elem| elem["ID"]}}"
+						error = " Database has more than 1 community with wiki title: #{wiki_info[0][:title]} whose IDs are :#{db_result.map{|elem| elem["id"]}}"
 						puts error.red
+						puts " Merging these communities communities ".green
+						SuperCommunitiesHelper.merge_multiple_communities db_result
+						output = {}
 					end
 				end
 			end
 		rescue Exception => e
 			puts e.to_s.red
+			sleep(40)
+			output = self.obtain_wiki_similar_community community_name
 		end
 		output
 	end

@@ -390,6 +390,12 @@ namespace :graph do
     SuperCommunitiesHelper.handle_super_communities
   end
 
+  desc " handle newly add community after cluster creation "
+  task :handle_new_community_with_supercommunity => :environment do
+    include SuperCommunitiesHelper
+    SuperCommunitiesHelper.handle_new_communities
+  end
+
   desc "reset_user_notification"
   task :reset_user_notification => :environment do
     include GraphHelper
