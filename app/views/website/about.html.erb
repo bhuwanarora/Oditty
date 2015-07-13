@@ -1,81 +1,82 @@
 <div layout-align="" layout="column">
-	<div class="cover_image">
-		<div layout="row" layout-align="center center">
-			<img src="assets/rd_icon.png"  class="logo" />
-			<h1 class="big_title">ReadersDoor</h1>
+	<div class="header"  layout="column" layout-align="center center">
+		<div class="z_index_1"  layout="column" layout-align="center center">
+			<div class="rd_title">ReadersDoor</div>
+			<div class="white_color big_title center_text">Discover yourself through books, friends, and the world.</div>
 		</div>
 		<img src="/assets/bookgrid.jpg" class="cover">
 	</div>
 	<div layout-padding layout="row">
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 		<div flex>
 			<p>
-				We are a global community for bibliophiles, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences.
+				We are a Global Community for a <br/>
+				Bibliophile, a Writer, an Interestingness Hunter and a Curious Mind at large.
 			</p>
 		</div>
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 	</div>
 	<div layout-padding>
 		<div class="big_title">VISION</div>
 		<div layout="row" layout-padding>
-			<div flex="20" flex-md="10" flex-sm></div>
+			<div flex="20" flex-md="10" hide-sm></div>
 			<div flex>
 				<p>
-					Be Facebook for Books.
+					Serve Book Lovers. Connect INFORMATION.
 				</p>
 			</div>
-			<div flex="20" flex-md="10" flex-sm></div>
+			<div flex="20" flex-md="10" hide-sm></div>
 		</div>
 	</div>
 	<div>
 		<div class="big_title">PRODUCT</div>
 		<div layout-padding layout="row">
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 		<div flex>
 			<p>
-				At ReadersDoor, we aim to bridge the gap between reality and knowledge. deriving from books and literature, which we accomplish through an all-inclusive strategy comprising of recommendations, reading lists, discussion communities, latest news concerning a particular topic or an issue.
+				We intend to enrich and enhance users’ reading experience by focusing on Virtualisation and Idealisation of their real life interactions and experiences. 
+			</p>
+			<p>We aim to bridge the gap between Reality and Knowledge, deriving from Books and News, which we accomplish through an all-inclusive strategy comprising of recommendations, reading lists, discussion communities, latest news concerning a particular topic or an issue.
 			</p>
 		</div>
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 	</div>
 	</div>
 	<div>
 		<div class="big_title">DESIGN</div>
 		<div layout-padding layout="row">
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 		<div flex>
 			<p>
-				Minimal. Simple. Bold.
+				Minimal. Modest. Bold.
 			</p>
 		</div>
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 	</div>
 	<div>
 		<div class="big_title">TECHNOLOGY</div>
 		<div layout="row">
-			<div flex="20" flex-md="10" flex-sm></div>
+			<div flex="20" flex-md="10" hide-sm></div>
 			<div layout-padding>
 				<p>
-					We use information in Books, News and Videos to connect knowledge to be served in a personalised way.
+					We see the World around in Graphs.
+					From where we generate meaningful information to serve You.
 				</p>
-				<div >
-					<img src="/assets/arjun.jpg" class="big_square">
-				</div>
 			</div>
-			<div flex="20" flex-md="10" flex-sm></div>
+			<div flex="20" flex-md="10" hide-sm></div>
 		</div>
 	</div>
 
 	<div>
 		<div class="big_title">MARKETING</div>
 		<div layout-padding layout="row">
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 		<div flex>
 			<p>
-				We are a global community for bibliophiles, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences.
+				
 			</p>
 		</div>
-		<div flex="20" flex-md="10" flex-sm></div>
+		<div flex="20" flex-md="10" hide-sm></div>
 	</div>
 	
 	
@@ -105,21 +106,19 @@
   		font-family: "din", "Calibri", "Cantarell", sans-serif;
 	}
 
-	.cover_image{
+	.header{
 		width: 100%;
 		height: 70vh;
 		overflow: hidden;
 		position: relative;
 	}
 
-	.cover_image h1{
 
-	}
-
-	.cover_image .cover{
+	.header .cover{
 		position: absolute;
 		width: 100%;
 		left: 0px;
+		top: 0px;
 	}
 
 	.big_square{
@@ -139,4 +138,19 @@
 		font: 300 20px Roboto,arial,sans-serif;
 		color: #898989;
 	}
+
+	.rd_title{
+		color: #fff;
+	  	font-weight: 600;
+	  	font-size: 40px;
+	  	text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+	}
+	.z_index_1{
+		z-index: 1;
+	}
+
+	.white_color{
+		color: white !important;
+	}
+
 </style>
