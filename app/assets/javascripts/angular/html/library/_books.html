@@ -42,30 +42,7 @@
             && !info.reading_time_filter && !info.subject_filter" layout-padding>
         <div layout="row" layout-wrap layout-align="space-between" >
             <div ng-repeat="book in info.books track by $index" layout-margin>
-                <div layout-align="start start"
-                    layout="row"
-                    ng-href="#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}" du-smooth-scroll offset="200" duration="800"
-                    ng-if="!book.expanded"
-                    class="rd_book_container">
-                    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" 
-                        ng-click="expand_book($index)"
-                        ng-if="expanded_index == $index">
-                    </div>
-                    <md-button
-                        class="clear"
-                        ng-click="expand_book($index)"
-                        ng-if="expanded_index != $index">
-                        <div  ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ></div>
-                    </md-button>
-                </div>
-                <div layout-align="start start"
-                    layout="row"
-                    id="bookContainer{{book.id || book.book_id}}"
-                    ng-if="book.expanded"
-                    class="book_container background animate-fast">
-                    <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'" >
-                    </div>
-                </div>
+                <div ng-include src="'/assets/angular/html/library/shared/expanded_book.html'"></div>
             </div>
         </div>
     </div>
@@ -111,30 +88,7 @@
             <div layout="row" layout-wrap layout-align="start">
                 <div ng-repeat="book in info.books | category_group: category"  
                     layout-margin>
-                    <div layout-align="start start"
-                        layout="row"
-                        ng-href="#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}" du-smooth-scroll offset="200" duration="800"
-                        ng-if="!book.expanded"
-                        class="rd_book_container">
-                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" 
-                            ng-click="expand_book($index)"
-                            ng-if="expanded_index == $index">
-                        </div>
-                        <md-button
-                            class="clear"
-                            ng-click="expand_book($index)"
-                            ng-if="expanded_index != $index">
-                            <div  ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ></div>
-                        </md-button>
-                    </div>
-                    <div layout-align="start start"
-                        layout="row"
-                        id="bookContainer{{book.id || book.book_id}}"
-                        ng-if="book.expanded"
-                        class="book_container background animate-fast">
-                        <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'" >
-                        </div>
-                    </div>
+                    <div ng-include src="'/assets/angular/html/library/shared/expanded_book.html'"></div>
                 </div>
             </div>
         </div>
