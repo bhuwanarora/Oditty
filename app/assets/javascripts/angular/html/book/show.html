@@ -1,73 +1,7 @@
 <div class="book animate-fast" ng-style="book_style" flex="100">
-     <md-progress-linear class="md-primary loader"
-                        ng-show="book_loading"
-                        md-mode="indeterminate">
-    </md-progress-linear>
-    
-    <div role="tabpanel"
-         id="tab1-content"
-         aria-labelledby="tab1"
-         layout-margin>
-        <div ng-include src="'/assets/angular/html/book/_overview.html'" class="white md-whiteframe-z4 round_corners"></div>
-    </div>
-    <div role="tabpanel"
-         id="tab4-content"
-         aria-labelledby="tab4" ng-if="active_book"
-         layout-margin
-         class="white round_corners md-whiteframe-z1">
-        <div ng-include src="'/assets/angular/html/book/_buy.html'"></div>
-    </div>
     <div layout="row" layout-sm="column" layout-md="column">
-        <div flex="70" flex-sm="100" flex-md="100" layout="column">
-            <!-- <div ng-include src="'/assets/angular/html/book/header.html'"></div> -->
-            <div role="tabpanel"
-                 id="tab2-content"
-                 aria-labelledby="tab2" ng-if="active_book"
-                 layout-margin
-                 class="white ">
-                <div ng-include src="'/assets/angular/html/book/_news.html'"></div>
-            </div>
-            <div role="tabpanel"
-                 id="tab3-content" ng-if="active_book"
-                 aria-labelledby="tab3"
-                 layout-margin>
-                 <div ng-include src="'/assets/angular/html/book/_timeline.html'"></div>
-            </div>
-        </div>
         <div flex="30" layout="column" flex-sm="100" flex-md="100">
-            <div layout-padding class="md-whiteframe-z2 white">
-                <div layout="row" layout-align="space-between" layout-margin layout-padding>
-                    <div class="bold less_important">
-                        Rate this book {{::book.user_rating}}/10
-                    </div>
-                </div>
-                 <md-slider flex="20" md-discrete 
-                        class="rate_slider"
-                        ng-model="::book.user_rating" ng-change="rate_book(book)"
-                        step="1" min="1" max="10" aria-label="rating">
-                </md-slider>
-            </div>
-            <md-divider></md-divider>
-            <div role="tabpanel"
-                class="md-whiteframe-z2 white" 
-                 id="tab5-content" ng-if="active_book"
-                 aria-labelledby="tab5"
-                 layout-padding>
-                <div layout="column"  ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'"
-                    ng-controller="recommendController"></div>
-            </div>
+            
         </div>
-        
     </div>
-    <div role="tabpanel"
-         id="tab6-content" ng-if="active_book"
-         aria-labelledby="tab6"
-         layout-margin
-         class="white ">
-        <div ng-include src="'/assets/angular/html/book/_book_embed.html'"></div>
-    </div>
-    
-    
-   
-    
 </div>

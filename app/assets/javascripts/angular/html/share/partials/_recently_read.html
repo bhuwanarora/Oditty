@@ -1,16 +1,2 @@
-<md-button flex layout="column"
-	class="clear light_grey_color custom_title roboto menu_details 
-		margin_top white animate-fast vertical_animate md-whiteframe-z1"
-	ng-click="toggle_recommend()">
-	<div layout-padding ng-if="!show_recommend">Select Friends to Recommend</div>
-	<div layout-padding ng-if="show_recommend && !users_list && info.share_loading">
-		You don't have enough Friends at ReadersDoor. Tell them and spread the love for books.
-	</div>
-	<div layout-padding ng-if="show_recommend && users_list">
-		<div>
-			Recommend book to Friends
-		</div>
-	</div>
-</md-button>
 <div flex layout="column" ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'" 
-	ng-if="show_recommend && users_list">
+	ng-if="show_recommend && users_list" class="md-whiteframe-z1">

@@ -1,8 +1,3 @@
-<div class="pointer primary" layout-padding
-          ng-click="init_reading_options()"
-          ng-if="(active_id == 0 && info.status_books.length != 0 && !info.share_loading) || (active_id != 0)">
-    <i class="material-icons">chevron_left</i>
-</div>
 <md-autocomplete flex
     ng-hide="selected_book"
     md-hide-dropdown="true"
@@ -13,14 +8,11 @@
     md-selected-item-change="on_select(item)"
     md-item-text="display"
     ng-keydown="handle_backspace($event)"
-    class="menu_search no_shadow"
+    class="menu_search white"
     ng-click="show_relevant_books()"
-    placeholder="{{reading_options[active_id].name}}">
+    placeholder="Search a book...">
     <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
 </md-autocomplete>
 <div class="pointer" layout-padding ng-hide="selected_book">
     <i class="material-icons">search</i>
-</div>
-<div class="less_important" ng-show="selected_book" layout-align="start center" layout="row" layout-padding>
-    <div>Reset Reading Status</div>
 </div>

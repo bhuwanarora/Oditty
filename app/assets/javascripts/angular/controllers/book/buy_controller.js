@@ -1,4 +1,4 @@
-homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", "$timeout", function($scope, $rootScope, bookService, sharedService, $mdSidenav, $timeout){
+homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sharedService", "$mdSidenav", "$timeout", "$sce", "$location", function($scope, $rootScope, bookService, sharedService, $mdSidenav, $timeout, $sce, $location){
 	var _unauthenticated_user = function(){
 		return ((getCookie("logged") == "") || (getCookie("logged") == null));
 	}
@@ -44,44 +44,54 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		}
 		else{
 			$scope.reviews = data.reviews;
+			if(angular.isDefined($scope.reviews)){
+				$scope.reviews.user_review_iframe = $sce.trustAsResourceUrl($scope.reviews.user_review_iframe);
+			}
 		}
 	}
 
 	var _init = (function(){
-		var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
-		var isbn = $rootScope.active_book.isbn;
-		
-		if(angular.isUndefined($scope.book)){
-			$scope.book = $rootScope.active_book;
-		}
-		
-		if(!_unauthenticated_user()){
-			var borrow_users_timeout = $timeout(function(){
-				bookService.get_borrow_users(id).then(function(data){
-					$scope.borrow_users = data;
+		if(angular.isDefined($rootScope.active_book)){
+			var id = ($rootScope.active_book.id) || ($rootScope.active_book.book_id);
+			var isbn = $rootScope.active_book.isbn;
+			
+			if(angular.isUndefined($scope.book)){
+				$scope.book = $rootScope.active_book;
+			}
+			
+			if(!_unauthenticated_user()){
+				var borrow_users_timeout = $timeout(function(){
+					bookService.get_borrow_users(id).then(function(data){
+						$scope.borrow_users = data;
+					});
+				}, 100);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(borrow_users_timeout);
 				});
-			}, 100);
-			$scope.$on('destroy', function(){
-				$timeout.cancel(borrow_users_timeout);
-			});
+			}
+			
+			if(isbn != null){
+				var all_prices_timeout = $timeout(function(){
+					bookService.all_prices(isbn).then(function(data){
+						$scope.get_prices_and_reviews(data);
+					});
+				}, 100);
+				var more_prices_timeout = $timeout(function(){
+					$scope.loading_buy_options = true;
+					bookService.more_prices(isbn).then(function(data){
+						$scope.get_prices_and_reviews(data);
+						$scope.loading_buy_options = false;
+					});
+				}, 100);
+				$scope.$on('destroy', function(){
+					$timeout.cancel(all_prices_timeout);
+					$timeout.cancel(more_prices_timeout);
+				});
+			}
 		}
-		
-		var all_prices_timeout = $timeout(function(){
-			bookService.all_prices(isbn).then(function(data){
-				$scope.get_prices_and_reviews(data);
-			});
-		}, 100);
-		var more_prices_timeout = $timeout(function(){
-			$scope.loading_buy_options = true;
-			bookService.more_prices(isbn).then(function(data){
-				$scope.get_prices_and_reviews(data);
-				$scope.loading_buy_options = false;
-			});
-		}, 100);
-		$scope.$on('destroy', function(){
-			$timeout.cancel(all_prices_timeout);
-			$timeout.cancel(more_prices_timeout);
-		});
+		else{
+			 $location.path( "/book/timeline" );
+		}
 	}());
 
 }]);

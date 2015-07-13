@@ -6,7 +6,7 @@ module Constant::Count
 	FollowFavoriteAuthors		= 30 
 	ArticlesShownInRoom	    	= 10
 	BooksShownInRoom        	= 10
-	PopularBooksShown			= 30
+	PopularBooksShown			= 10
 	FeedFetch					= 4 
 	BookShownInInfinty          = 10
 	MaximumCommunityBooks		= 20

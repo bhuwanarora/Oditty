@@ -1,19 +1,18 @@
 <div ng-include src="'/assets/angular/html/profile/_header.html'"></div>
 <section layout="row" layout-md="row" layout-sm="column">
-    <div flex="10" flex-md="5" hide-sm></div>
-    <div flex="80" flex-md="90" flex-sm="100"
-        layout-sm="column" layout="row" layout-align="space-between" layout-wrap
-        class="feed_margin">
+    <div flex="10" hide-md hide-sm></div>
+    <div flex="80" flex-md="100" flex-sm="100"
+        layout-sm="column" layout="row" layout-align="center" layout-wrap>
         <div ng-include src="'/assets/angular/html/share/status_options.html'"
             ng-if="!hide_follow_links" flex="100" flex-sm="100"
-            ng-controller="shareController" class="light_grey extensive_padding" 
-            ng-style="info.status_state"
+            ng-controller="shareController" layout-align="center center"
+            class="animate-slow" layout="row"
             layout-margin>
         </div>
         <div ng-include src="'/assets/angular/html/profile/left_panel.html'" flex="45" flex-sm="100"></div>
         <div ng-include src="'/assets/angular/html/profile/feed.html'" layout="column" flex="45" flex-sm="100"></div>
     </div>
-    <div flex="10" flex-md="5" hide-sm></div>
+    <div flex="10" hide-md hide-sm></div>
 </section>
 <style>
 	.currently_reading md-list{

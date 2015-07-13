@@ -1,0 +1,9 @@
+<div layout="row" layout-wrap>
+    <md-list layout="row" layout-wrap>
+        <a ng-repeat="user in author.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" layout-margin
+            layout="row" layout-align="center center">
+            <img class="circular" ng-src="{{user.image_url}}"  alt="{{::user.first_name}} {{::user.last_name}}" 		onerror="this.src='/assets/user_profile.jpg'"/>
+            <div class="less_important" layout-padding>{{::user.first_name}} {{::user.last_name}}</div>
+        </a>
+    </md-list>
+</div>

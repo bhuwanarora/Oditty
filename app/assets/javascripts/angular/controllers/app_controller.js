@@ -58,10 +58,13 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     }
 
-    $scope.close_popups = function(){
+    $scope.close_popups = function(wheel){
         $scope.show_notifications = false;
         $rootScope.shelves_visible = false;
         $scope.navigation_options = false;
+        if(angular.isUndefined(wheel)){
+            $scope.info.status_state = false;
+        }
         // $mdSidenav('left').close();
         // $mdBottomSheet.hide({"test": "test"});
     }

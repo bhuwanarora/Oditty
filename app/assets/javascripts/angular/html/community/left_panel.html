@@ -1,8 +1,8 @@
-<div class="profile_header">
+<div class="profile_header white round_corners">
     <section layout="column" layout-wrap>
         <div layout="column">
             <div layout-padding>
-                <div class="big_title capitalize" ng-bind-html="active_tag.name"></div>
+                <div class="big_title capitalize bold" ng-bind-html="active_tag.name"></div>
                 <div layout="row" layout-column ng-hide="hide_follow_links" class="less_important">
                     <div ng-show="active_tag.view_count && active_tag.view_count != 0">
                         <span>{{active_tag.view_count}} </span>
@@ -21,13 +21,16 @@
                 <span ng-if="!active_tag.status" class="icon-user-add"></span>
             </md-button>
         </div>
-        <md-divider></md-divider>
-        <div class="less_important" ng-show="active_tag.users && active_tag.users.length > 0" layout-padding>
+        
+
+        <div class="important_title" ng-show="(active_tag.users && active_tag.users.length > 0) || (active_tag.users.length == 1 && active_tag.users[0].first_name != null)" layout-padding>
+            <div>
                 Readers in this room
+            </div>
+            <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
         </div>
-        <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
-        <md-divider></md-divider>
-        <!-- <suggest-friends></suggest-friends> -->
+        
+        <suggest-friends></suggest-friends>
     </section>
 </div>
 

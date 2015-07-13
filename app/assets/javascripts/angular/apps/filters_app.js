@@ -209,6 +209,9 @@ angular.module('filtersApp', [])
             var isbn = input.isbn.split(",");
             output = "http://rd-images.readersdoor.netdna-cdn.com/"+isbn[0]+"/M.jpg";
           }
+          else{
+            output = "/assets/defpicbook.png"; 
+          }
 
         }
       }

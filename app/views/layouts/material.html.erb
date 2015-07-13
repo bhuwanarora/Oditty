@@ -33,10 +33,10 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news || @room %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
-        msd-wheel="close_popups()">
+        msd-wheel="close_popups('wheel')">
         <script>
           // (function() {
           //   var cx = '010250045073231072543:z7pnnxbf5s8';
@@ -71,7 +71,7 @@
                 <md-content ng-controller="communityController" id="community" class="white">
             <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
-                    check-scroll-bottom="get_popular_books()"
+                    du-scroll-container check-scroll-bottom="get_popular_books()"
                     id="infinity_page" class="white">
             <% elsif @shelves %>
                 <md-content ng-controller="roomController" class="full_height">
@@ -83,7 +83,7 @@
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController" class="background">
+                <div ng-controller="specificBookController" class="white">
             <% elsif @customise %>
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>

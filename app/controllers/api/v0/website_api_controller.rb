@@ -12,6 +12,26 @@ module Api
 				end
 			end
 
+			def update_redis_cache
+				id = params[:id].to_s
+				type = params[:type].to_s.downcase
+				case type
+				when "author"
+					key = "GBI" + id
+					$redis.del key
+					key = "GID" + id
+					$redis.del key
+				when "book"
+					key = "GBFI" + id
+					$redis.del key
+					key = "GPI" + id
+					$redis.del key
+					key = "GIF" + id
+					$redis.del key
+				end
+				render :json => {:message => "Success"}, :status => 200	
+			end
+
 			def news_info
 				id = params[:id]
 				community_id = params[:tag_id]

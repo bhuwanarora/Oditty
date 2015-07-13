@@ -4,8 +4,35 @@ homeApp.config(["$routeProvider", function($routeProvider){
     $routeProvider.when('/discover', {
         templateUrl : 'assets/angular/views/landing_page/discover.html',
     })
+    .when('/wiki', {
+        templateUrl : 'assets/angular/html/author/wiki.html',
+    })
+    .when('/feed', {
+        templateUrl : 'assets/angular/html/author/feed.html',
+    })
+    .when('/books', {
+        templateUrl : 'assets/angular/html/author/books.html',
+    })
+    .when('/followers', {
+        templateUrl : 'assets/angular/html/author/followers.html',
+    })
+    .when('/interview', {
+        templateUrl : 'assets/angular/html/author/interview.html',
+    })
+    .when('/book/timeline', {
+        templateUrl : 'assets/angular/html/book/_timeline.html',
+    })
+    .when('/book/buyandreview', {
+        templateUrl : 'assets/angular/html/book/_buy.html',
+    })
+    .when('/book/realvirtuality', {
+        templateUrl : 'assets/angular/html/book/_news.html',
+    })
+    .when('/book/preview', {
+        templateUrl : 'assets/angular/html/book/_overview.html',
+    })
     .otherwise({
-         templateUrl : 'assets/angular/views/landing_page/main.html'
+         templateUrl : 'assets/angular/html/shared/default.html'
     });
 }]);
 

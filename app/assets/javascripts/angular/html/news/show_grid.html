@@ -9,14 +9,16 @@
 				</a>
 			</div>
 		</div>
-		<div layout-padding>{{::info.active_news.description}}</div>
-		<div>
-			<img ng-src="{{info.active_news.image_url}}" class="max_full_width" />
+		<div class="description_card">
+			<div>
+				<img ng-src="{{info.active_news.image_url}}" class="max_full_width" />
+			</div>
+			<div layout-padding>{{::info.active_news.description}}</div>
 		</div>
 	</div>
 	<div layout="column" layout-sm="column" class="margin_top white" flex="70" flex-md="100" flex-sm="100">
 		<div layout="column" flex-sm="100" layout-sm="column" layout-padding>
-			<div class="less_important" layout-padding>
+			<div class="important_title" layout-padding>
 				Related Rooms
 			</div>
 			<div layout="row" layout-wrap>
@@ -55,7 +57,7 @@
 		            <span ng-show="!active_tag.status" class="icon-user-add"></span>
 		        </md-button>
 			</div>
-			<div class="less_important" ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
+			<div class="important_title" ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
 		        Readers in this room
 		    </div>
 			<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
