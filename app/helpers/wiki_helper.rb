@@ -60,7 +60,6 @@ module WikiHelper
 
 	def self.obtain_wiki_similar_communities tags_data
 		threads = []
-		#output << self.obtain_wiki_similar_community(tags_data[0][:name])
 		tags_data.each{ |data| threads << Thread.new(){
 			output = self.obtain_wiki_similar_community data['value']
 			data['value'] = output[:name]
