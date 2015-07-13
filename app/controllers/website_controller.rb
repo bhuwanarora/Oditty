@@ -47,6 +47,10 @@ class WebsiteController < ApplicationController
 		render :layout => "material_clean"
 	end
 
+	def careers
+		render :layout => "material_clean"
+	end
+
 	def how_it_works
 		render :layout => "landing_page"
 	end
