@@ -31,6 +31,10 @@ module Api
 			def self.get_books id
 				Community.new(id).get_books
 			end
+
+			def self.get_news(id, skip_count)
+				Community.new(id).get_news(skip_count).execute
+			end
 		end
 	end
 end

@@ -68,7 +68,7 @@
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
                     check-scroll-bottom="get_blog_feed()" id="home">
             <% elsif @room %>
-                <md-content ng-controller="communityController" id="community" class="white">
+                <md-content ng-controller="communityController" id="community" class="white" check-scroll-bottom="get_community_news()">
             <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
                     du-scroll-container check-scroll-bottom="get_popular_books()"

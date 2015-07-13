@@ -52,6 +52,13 @@ module Api
 				user_id = session[:user_id]
 				Api::V0::CommunityApi.create_visited_news(user_id, news_id)
 			end
+
+			def get_news
+				id = params[:id]
+				skip_count = params[:skip]
+				info = Api::V0::CommunityApi.get_news(id, skip_count)
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

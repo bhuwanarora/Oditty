@@ -16,6 +16,10 @@ class Community < Neo
 		" MATCH (community:Community) WITH community "
 	end
 
+	def get_news skip_count=0
+		match + Community.match_news  + " WITH news, community ORDER BY news.timestamp DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news", Community.basic_info)
+	end
+
 	def self.basic_info
 		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
 	end
