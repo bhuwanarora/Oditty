@@ -309,7 +309,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/shared/_grid.html',
-    "<div class=\"big_title bold\" layout-padding layout=\"column\" layout-align=\"center\" ng-bind-html=\"key\"></div><div layout=\"row\" layout-wrap layout-align=\"start\" class=\"light_grey\"><div ng-repeat=\"book in value\" layout-align=\"start start\" layout=\"row\" layout-margin class=\"book_container full_width md-whiteframe-z1\" ng-class=\"{'book': book.isBook}\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_container.html'\"></div></div></div>"
+    "<div class=\"big_title bold\" layout-padding layout=\"column\" layout-align=\"center\" ng-bind-html=\"key\"></div><div layout=\"row\" layout-wrap layout-align=\"start\" class=\"light_grey\"><div ng-repeat=\"book in value\" layout-align=\"start start\" layout=\"row\" layout-margin class=\"book_container full_width\" ng-class=\"{'book': book.isBook}\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_container.html'\"></div></div></div>"
   );
 
 

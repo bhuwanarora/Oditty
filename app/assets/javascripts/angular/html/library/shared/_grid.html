@@ -4,9 +4,8 @@
     <div ng-repeat="book in value"
         layout-align="start start"
         layout="row" layout-margin
-        class="book_container full_width md-whiteframe-z1"
+        class="book_container full_width"
         ng-class="{'book': book.isBook}" >
-        <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'">
-        </div>
+        <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'" ></div>
     </div>
 </div>

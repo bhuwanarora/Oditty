@@ -196,6 +196,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                     $scope.info.selected_genre = value;
                 }
             });
+            if(angular.isUndefined($scope.info.selected_genre)){
+                $scope.info.selected_genre = {"id": genre};
+            }
         }
         if(duration != null){
             angular.forEach($scope.info.read_times, function(value){
@@ -203,6 +206,9 @@ homeApp.controller('filtersController', ["$scope", "$rootScope", "$timeout", 'ge
                     $scope.info.selected_duration = value;
                 }
             });
+            if(angular.isUndefined($scope.info.selected_duration)){
+                $scope.info.selected_duration = {"id": duration};
+            }
         }
     }());
     
