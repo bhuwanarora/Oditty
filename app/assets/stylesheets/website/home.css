@@ -134,7 +134,19 @@ md-content{
 .logo{
 	padding-left: 35px;
 	font-size: 1.2em;
-	font-weight: bold;
+	/*font-weight: bold;*/
+	font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+  	letter-spacing: -0.02em;
+  	font-weight: 700;
+  	font-style: normal;
+  	/*font-size: 60px;*/
+  	margin-left: -3px;
+  	line-height: 1;
+  	letter-spacing: -0.04em;
+  	margin-top: 40px;
+  	padding-top: 0;
+  	margin-bottom: 8px;
+  	color: rgba(0,0,0,0.8);
 }
 
 .logo:hover{
