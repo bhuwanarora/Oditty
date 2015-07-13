@@ -27,6 +27,12 @@ class Book < Neo
 		" MATCH(book:Book{unique_index:\""+unique_index+"\"}) WITH book " 
 	end
 
+	def self.search_by_unique_indices unique_indices
+		clause = " MATCH (book:Book) WHERE "\
+			"" + unique_indices.map{|unique_index| ("book.unique_index = \"" + unique_index + "\"")}.join(" OR ")
+		clause += " WITH book "
+	end
+
 	def self.search_by_legacy_indexed_title indexed_title
 		" MATCH (book:Book{indexed_title:\""+indexed_title+"\"}) WITH book " 
 	end
