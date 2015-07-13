@@ -807,7 +807,7 @@ md-tooltip .md-content{
   	font-weight: 600;
   	font-size: 40px;
   	text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
-  	font-family: sans-serif;
+  	font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
 }
 
 .md-list-item-text{
