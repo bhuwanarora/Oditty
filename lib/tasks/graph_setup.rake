@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  desc "reset user feedNext circlular linked list"
+  task :reset_user_feed => :environment do
+    include CircularLinkedListHelper
+    CircularLinkedListHelper.reset_feednext_circular_list
+  end
+
   desc "set self link of type bookFeed on those books for which no feed exist "
   task :set_book_feed => :environment do
     include GraphHelper
