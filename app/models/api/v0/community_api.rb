@@ -7,7 +7,7 @@ module Api
 			end
 
 			def self.get_detailed_info(id, user_id)
-				UsersCommunity.new(user_id, id).get_info
+				UsersCommunity.new(user_id, id).get_info.execute[0]
 			end
 
 			def self.create_visited_news user_id, news_id
@@ -34,6 +34,10 @@ module Api
 
 			def self.get_news(id, skip_count)
 				Community.new(id).get_news(skip_count).execute
+			end
+
+			def self.get_videos(id)
+				Community.new(id).get_videos.execute
 			end
 		end
 	end

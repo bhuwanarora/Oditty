@@ -1,10 +1,14 @@
-<!-- <div class="md-whiteframe-z1 white" ng-include src="'/assets/angular/html/shared/share.html'" ></div> -->
-<section layout="row">
+<div ng-include src="'/assets/angular/html/community/header.html'"></div>
+<section layout="row" class="feed_margin">
 	<div flex="5" flex-md="5" hide-sm></div>
-	<div ng-include src="'/assets/angular/html/community/show.html'" 
-	         class="right_panel_container feed_margin"
-	         layout="row" layout-sm="column" layout-md="row"
-	         flex="90" flex-md="90" flex-sm="100"></div>
+	<div layout="row" layout-md="column" layout-sm="column"
+	    flex="90" flex-md="80" flex-sm="100">
+	    <div ng-include src="'/assets/angular/html/community/left_panel.html'" 
+	    	layout-padding flex="25" flex-sm="100" flex-md="100" ></div>
+	    <div flex="55" flex-sm="100" flex-md="100" layout="column" ng-view>
+	    </div>
+		<trending flex="20" hide-sm></trending>
+	</div>
 	<div flex="5" flex-md="5" hide-sm></div>
 </section>
 <style>

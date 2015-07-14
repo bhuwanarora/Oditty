@@ -67,5 +67,9 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return _deferred_post_request('/api/v0/set_like_info', params, $q, $http);
     }
 
+    this.get_community_videos = function(id){
+        return _deferred_request('/api/v0/get_community_videos?id='+id, $q, $http);
+    }
+
 
 }]);

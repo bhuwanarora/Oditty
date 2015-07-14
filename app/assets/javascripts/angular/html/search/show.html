@@ -2,7 +2,7 @@
     <md-card ng-if="!info.loading && all_results.length == 0">
         <md-card-content>
             No results found for <a ng-href="/search?q={{::display_results_for}}&type={{::active_type}}"> <b>{{::display_results_for}}</b>
-            <span ng-show="active_type"> in {{::active_type}}s</span></a>
+            <span ng-show="active_type"> in {{::active_type}}</span></a>
         </md-card-content>
     </md-card>
     <md-card ng-if="!info.loading && all_results.length != 0">

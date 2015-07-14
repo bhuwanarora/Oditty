@@ -1,0 +1,1 @@
+homeApp.controller("videoController",["$scope","$rootScope","$timeout","websiteService",function(a,b,c,d){(function(){if(angular.isDefined(a.active_tag)&&angular.isDefined(a.active_tag.id)){var b=a.active_tag.id;d.get_community_videos(b).then(function(b){a.videos=b})}else $location.path("/room/books")})()}]);

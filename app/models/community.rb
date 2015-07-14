@@ -21,7 +21,15 @@ class Community < Neo
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count, community.facebook_url AS facebook_url, community.twitter_url AS twitter_url, community.wiki_url AS wiki_url "
+	end
+
+	def match_videos
+		" MATCH (community)-[:HasVideo]->(video:Video) WITH community, video "
+	end
+
+	def get_videos
+		match + match_videos + Community.return_group(Video.basic_info)
 	end
 
 	def get_basic_info

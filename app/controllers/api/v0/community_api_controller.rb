@@ -43,7 +43,7 @@ module Api
 			def detailed_community_info
 				community_id = params[:id]
 				user_id = session[:user_id]
-				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id).execute[0]
+				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id)
 				render :json => info, :status => 200 
 			end
 
@@ -57,6 +57,19 @@ module Api
 				id = params[:id]
 				skip_count = params[:skip]
 				info = Api::V0::CommunityApi.get_news(id, skip_count)
+				render :json => info, :status => 200
+			end
+
+			def get_videos
+				id = params[:id]
+				key = "GV"+id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::CommunityApi.get_videos(id)
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 		end

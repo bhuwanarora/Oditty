@@ -21,7 +21,24 @@
                 <span ng-if="!active_tag.status" class="icon-user-add"></span>
             </md-button>
         </div>
-        
+        <div layout="row" layout-align="start center">
+            <a title="facebook" ng-show="active_tag.facebook_url"
+                class="md-whiteframe-z1 facebook" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="{{::active_tag.facebook_url}}">
+                <div>
+                    <span class="icon-facebook"></span>
+                </div>
+            </a>
+            <a title="twitter" ng-show="active_tag.twitter_handle" 
+                class="md-whiteframe-z1 twitter" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="http://twitter.com/{{::active_tag.twitter_handle}}">
+                <div>
+                    <span class="icon-twitter"></span>
+                </div>
+            </a>
+        </div>
 
         <div class="important_title" ng-show="(active_tag.users && active_tag.users.length > 0) || (active_tag.users.length == 1 && active_tag.users[0].first_name != null)" layout-padding>
             <div>

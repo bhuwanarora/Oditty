@@ -272,6 +272,7 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
                     "app/assets/javascripts/min/angular/services/news_service.js",
+                    "app/assets/javascripts/min/angular/controllers/community/video_controller.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
                 ],
 

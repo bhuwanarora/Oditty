@@ -55,7 +55,7 @@ class UsersCommunity < Neo
 	def get_info
 		clause = ""
 		if(@user_id == "")
-			@community.get_news
+			clause = @community.get_news
 		else
 			clause = @community.match + Community.match_news  + " WITH news, community ORDER BY news.timestamp DESC LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + @user.match + ", community, news " + UsersCommunity.optional_match  + ", news "  + UsersCommunity.set_view_count + Community.return_group(UsersCommunity.basic_info, "news", Community.basic_info)
 		end

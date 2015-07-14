@@ -1,8 +1,11 @@
-homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService){
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce){
     $scope.get_detailed_community_info = function(){
         newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
             var follow_node = $scope.active_tag.follow_node;
+            if($scope.active_tag.wiki_url && $scope.active_tag.wiki_url != null){
+                $scope.active_tag.wiki_url = $sce.trustAsResourceUrl($scope.active_tag.wiki_url+"?action=render");
+            }
             if(angular.isDefined(follow_node) && (follow_node != null)){
                 $scope.active_tag.status = true;
             }
@@ -16,6 +19,15 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
             setCookie("active_community", community_id, 1)
         }
         window.location.href = "/news?q="+id;
+    }
+
+    $scope.get_active_class = function(path){
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/books");
+        if(($location.path().substr(1, path.length+1) == path) || is_init){
+            return "bold red_color";
+        } else {
+            return "grey_color";
+        }
     }
 
     $scope.show_book_dialog = function(book, event){
@@ -47,12 +59,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         newsService.get_community_details($scope.active_tag.id).then(function(data){
             if(angular.isDefined(data[0])){
                 $scope.active_tag = angular.extend($scope.active_tag, data[0].most_important_tag[0]);
-                angular.forEach($scope.active_tag.books, function(value){
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var color = ColorConstants.value[random_int];
-                    value.color = color;
-                    $scope.info.loading = false;
-                });
+                $scope.info.loading = false;
             }
             else{
                 $scope.info.loading = false;
@@ -61,17 +68,19 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_community_news = function(){
-        var id = $scope.active_tag.id;
-        var skip_count = $scope.active_tag.news.length;
-        if(!$scope.info.loading){
-            $scope.info.loading = true;
-            newsService.get_community_news(id, skip_count).then(function(data){
-                if(data != null){
-                    data = data[0];
-                    $scope.info.loading = false;
-                    $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
-                }
-            });
+        if(angular.isDefined($scope.active_tag)){
+            var id = $scope.active_tag.id;
+            var skip_count = $scope.active_tag.news.length;
+            if(!$scope.info.loading){
+                $scope.info.loading = true;
+                newsService.get_community_news(id, skip_count).then(function(data){
+                    if(data != null && data.length > 0){
+                        data = data[0];
+                        $scope.info.loading = false;
+                        $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
+                    }
+                });
+            }
         }
     }
 
@@ -90,7 +99,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         else{
             alert("Bad url");
         }
-
+        $scope.is_room = true;
     }());
 
 }]);

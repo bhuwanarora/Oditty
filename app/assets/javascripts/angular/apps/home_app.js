@@ -31,6 +31,18 @@ homeApp.config(["$routeProvider", function($routeProvider){
     .when('/book/preview', {
         templateUrl : 'assets/angular/html/book/_overview.html',
     })
+    .when('/room/books', {
+        templateUrl : 'assets/angular/html/community/books.html',
+    })
+    .when('/room/news', {
+        templateUrl : 'assets/angular/html/community/feed.html',
+    })
+    .when('/room/videos', {
+        templateUrl : 'assets/angular/html/community/videos.html',
+    })
+    .when('/room/wiki', {
+        templateUrl : 'assets/angular/html/community/wiki.html',
+    })
     .otherwise({
          templateUrl : 'assets/angular/html/shared/default.html'
     });
