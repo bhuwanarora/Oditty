@@ -27,4 +27,9 @@ class Genre < Neo
 	def match
 		" MATCH (genre:Genre) WHERE ID(genre)="+@id.to_s+" WITH genre "
 	end
+
+	def get_basic_details
+		match + Genre.return_group(Genre.basic_info)
+	end
+
 end

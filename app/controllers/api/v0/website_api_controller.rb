@@ -12,6 +12,19 @@ module Api
 				end
 			end
 
+			def get_genre_details
+				id = params[:id]
+				key = "GGD"+id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::WebsiteApi.get_genre_details(id)
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
+				render :json => info, :status => 200
+			end
+
 			def update_redis_cache
 				id = params[:id].to_s
 				type = params[:type].to_s.downcase
