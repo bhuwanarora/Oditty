@@ -150,4 +150,8 @@ class Community < Neo
 	# 	match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
 	# end
 
+	def self.get_max_min_id
+		" MATCH (a:Community) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id "
+	end
+
 end

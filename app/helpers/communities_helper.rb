@@ -214,6 +214,4 @@ module CommunitiesHelper
 			end
 		end
 	end
-
-
 end
