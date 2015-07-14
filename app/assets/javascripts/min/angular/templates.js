@@ -128,7 +128,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/feed.html',
-    "<div layout=\"column\" layout-padding><div class=\"important_title\" layout-padding><div layout-padding>News clippings related to {{active_tag.name}}</div></div><community-feed community-feed=\"::community_feed\" flex ng-repeat=\"community_feed in ::active_tag.news\"></community-feed></div>"
+    "<div layout=\"column\" layout-padding><div class=\"important_title\" layout-padding><div layout-padding>News clippings related to {{active_tag.name}}</div></div><community-feed community-feed=\"::community_feed\" flex ng-repeat=\"community_feed in active_tag.news\"></community-feed></div>"
   );
 
 

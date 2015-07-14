@@ -69,7 +69,6 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 if(data != null){
                     data = data[0];
                     $scope.info.loading = false;
-                    debugger
                     $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
                 }
             });
