@@ -7,24 +7,24 @@ class UsersBook::Rate < UsersBook
 	def add rating
 		operation = "+"
 		match + create + UsersBook::Rate.set_rating(rating) +
-				 UsersBook::Rate.set_name + 
-				 UsersBook::Rate.set_isbn + 
-				 UsersBook::Rate.set_created_at + 
-				 UsersBook::Rate.set_updated_at +
-				 " WITH user, book, rating_node " + 
-				 Book.set_rating_count(operation) + 
-				 User.set_rating_count(operation) + 
-				 User.set_total_count(Constant::InteractionPoint::Rating, operation) + 
-				 " WITH user, book, rating_node " + 
-				 User::Feed.new(@user_id).create("rating_node") + 
-				 ", book" + 
-				 Book::BookFeed.new(@book_id).create("rating_node") + 
-				 UsersBook.return_init + 
-				 " rating_node.rating " 
+		 UsersBook::Rate.set_updated_at +
+		 " WITH user, book, rating_node " + 
+		 Book.set_rating_count(operation) + 
+		 User.set_rating_count(operation) + 
+		 User.set_total_count(Constant::InteractionPoint::Rating, operation) + 
+		 " WITH user, book, rating_node " + 
+		 User::Feed.new(@user_id).create("rating_node") + ", book" + 
+		 Book::BookFeed.new(@book_id).create("rating_node") + 
+		 UsersBook.return_init + " rating_node.rating " 
 	end
 
 	def create
-		" MERGE (user)-[rating_action:RatingAction]->(rating_node:RatingNode{book_id:" + @book_id.to_s + ", title:book.title, author:book.author_name, user_id:" + @user_id.to_s + "})-[rate:Rate]->(book) "	
+		" MERGE (rating_node:RatingNode{book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + "}) "\
+		" ON CREATE " + UsersBook::Rate.set_created_at +
+		" WITH rating_node, user, book "\
+		" OPTIONAL" + Book::Feed.delete_feed("rating_node") + ", user "
+		" OPTIONAL" + User::Feed.new(@user_id).delete_feed("rating_node") + ", book "
+		" MERGE (user)-[rating_action:RatingAction]->(rating_node)-[rate:Rate]->(book) "
 	end
 
 	def self.optional_match
