@@ -30,7 +30,7 @@ module CircularLinkedListHelper
 			clause += " MATCH (node {" + params[:node_key] + ": " + params[:node_key_value].to_s + "})"
 		end
 		clause += " WHERE " + params[:labels].map{|label| ("node: " + label)}.join(" OR ")
-		clause += " WITH root, node, (CASE WHEN HAS(node.created_at) THEN node.created_at ELSE COALESCE(node.timestamp,0) END) AS created_at ORDER BY created_at DESC "
+		clause += " WITH root, node, (CASE WHEN HAS(node.created_at) THEN node.created_at ELSE COALESCE(node.timestamp,0) END) AS created_at ORDER BY TOINT(created_at) DESC "
 	end
 
 	def self.create_self_loop params
@@ -43,8 +43,8 @@ module CircularLinkedListHelper
 				" CREATE UNIQUE (root)-[:" + params[:rel_type] + "{" + params[:rel_key] + ":\'" + params[:rel_key_value] + "\' }]-(root) "
 		else
 			clause += ""\
-				" NOT (root)-[:" + params[:rel_type] + "{" + params[:rel_key] + ":" + params[:rel_key_value] + " }]-() "\
-				" CREATE UNIQUE (root)-[:" + params[:rel_type] + "{" + params[:rel_key] + ":" + params[:rel_key_value] + " }]-(root) "
+				" NOT (root)-[:" + params[:rel_type] + "{" + params[:rel_key] + ":" + params[:rel_key_value].to_s + " }]-() "\
+				" CREATE UNIQUE (root)-[:" + params[:rel_type] + "{" + params[:rel_key] + ":" + params[:rel_key_value].to_s + " }]-(root) "
 		end
 		clause.execute
 	end
