@@ -1,25 +1,9 @@
 <div layout="row" layout-md="column" layout-sm="column"
     flex="80" flex-md="80" flex-sm="100">
-    <div ng-include src="'/assets/angular/html/room/_header.html'" flex="30" flex-sm="100" flex-md="100" ></div>
-    <div flex="5" hide-md hide-sm></div>
+    <div ng-include src="'/assets/angular/html/community/left_panel.html'" flex="30" flex-sm="100" flex-md="100" ></div>
     <div flex="65" flex-sm="100" flex-md="100" layout="column">
-        <div class="less_important" layout-padding
-             ng-show="active_tag.books && active_tag.books.length > 0">Books related to {{active_tag.name}}</div>
-        <div layout="row" layout-wrap layout-padding ng-show="active_tag.books && active_tag.books.length > 0">
-            <section ng-repeat="book in active_tag.books" layout-margin ng-if="book.title != null">
-                <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
-                    class="clear rd_book_container md-whiteframe-z3 white">
-                    <div class="book_thumb" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
-                    </div>
-                </md-button>
-            </section>    
-        </div>
-        <div layout="column">
-            <community-feed community-feed="::community_feed" flex
-                ng-repeat="community_feed in ::active_tag.news" 
-                layout-margin>
-            </community-feed>
-        </div>
+        <div ng-include src="'/assets/angular/html/community/books.html'"></div>
+        <div ng-include src="'/assets/angular/html/community/feed.html'"></div>
     </div>
 </div>
 <trending flex="20" hide-sm></trending>

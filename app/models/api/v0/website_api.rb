@@ -7,6 +7,11 @@ module Api
 				info
 			end
 
+			def self.get_genre_details id
+				info = Genre.new(id).get_basic_details.execute[0]
+				info
+			end
+
 			def self.get_genres user_id
 				User::Predict::GenrePrediction.new(user_id).get_favourites.execute
 			end

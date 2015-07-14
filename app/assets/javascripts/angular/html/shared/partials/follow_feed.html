@@ -1,13 +1,13 @@
 <md-card class="social no_shadow">
     <md-card-content layout="column">
         <section layout="column" layout-align="start" flex="50">
-            <div layout="row">
+            <md-list-item class="md-3-line">
                 <img ng-src="{{profile_user.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
-                <div layout="column" layout-align="start start" class="side_padding">
+                <div layout="column" layout-align="start start" class="md-list-item-text">
                     <div layout-padding class="bold" ng-show="profile_user.first_name">{{::profile_user.first_name}}</div>
                     <div layout-padding>
                         <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
-                        <div class="status_message">{{::feed.message}}</div>
+                        <div class="status_message big_title">{{::feed.message}}</div>
                     </div>
                     <author-info info="info" ng-if="feed.author" 
                         flex="50" author="::feed.author">
@@ -17,7 +17,7 @@
                     <friend-info info="info" ng-if="feed.friend"
                         flex="50" friend="::feed.friend"></friend-info>
                 </div>
-            </div>
+            </md-list-item>
         </section>
     </md-card-content>
 </md-card>

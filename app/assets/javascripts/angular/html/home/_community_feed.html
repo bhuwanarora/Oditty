@@ -22,22 +22,26 @@
         </div>
         <div class="content">
             <div class="big_title">
-                <a ng-href="/news?id={{communityFeed.id || communityFeed.news_id}}">
-                {{::communityFeed.title}}</a>
+                <a ng-href="/news?id={{communityFeed.id || communityFeed.news_id}}"
+                    ng-bind-html="::communityFeed.title">
+                </a>
             </div>
             <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM'}}</div><br/>
-            <div ng-bind-html="::communityFeed.description" class="wrap" ng-show="communityFeed.description">
-            </div>
         </div>
-        <div class="image_container clear" layout="column">
-            <div flex class="image_wrapper">
-                <img class="full_width"
-                     ng-src="{{::communityFeed.image_url}}"
-                     ng-show="communityFeed.image_url"/>
+        <div class="description_card">
+            <div class="image_container clear" layout="column">
+                <div flex class="image_wrapper">
+                    <img class="full_width"
+                         ng-src="{{::communityFeed.image_url}}"
+                         ng-show="communityFeed.image_url"/>
+                </div>
+                <a class="less_important" ng-href="{{::communityFeed.url}}"  target="_blank">
+                    {{::communityFeed.url}}
+                </a>
             </div>
-            <a class="less_important" ng-href="{{::communityFeed.url}}"  target="_blank">
-                {{::communityFeed.url}}
-            </a>
+            <div ng-bind-html="::communityFeed.description" class="wrap" layout-padding
+                ng-show="communityFeed.description">
+            </div>
         </div>
         
         <div class="footer" 
@@ -46,5 +50,5 @@
             ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
         </div>
     </md-card>
+    <div layout-padding></div>
 </div>
-<md-divider></md-divider>

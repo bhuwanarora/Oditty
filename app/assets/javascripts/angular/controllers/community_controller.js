@@ -60,6 +60,21 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         });
     }
 
+    $scope.get_community_news = function(){
+        var id = $scope.active_tag.id;
+        var skip_count = $scope.active_tag.news.length;
+        if(!$scope.info.loading){
+            $scope.info.loading = true;
+            newsService.get_community_news(id, skip_count).then(function(data){
+                if(data != null){
+                    data = data[0];
+                    $scope.info.loading = false;
+                    $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
+                }
+            });
+        }
+    }
+
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());

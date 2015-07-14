@@ -3,7 +3,14 @@ module Api
 		class CommunityApiController < ApplicationController
 			def get_books
 				id = params["id"]
-				info = Api::V0::CommunityApi.get_books(id).execute[0]
+				key = "GB" + id.to_s
+				info = $redis.get key
+				unless info
+					info = Api::V0::CommunityApi.get_books(id).execute[0]
+					$redis.set(key, info.to_json)
+				else
+					info = JSON.parse info
+				end
 				render :json => info, :status => 200
 			end
 
@@ -14,7 +21,15 @@ module Api
 
 			def suggest_communities
 				user_id = session[:user_id]
-				info = Api::V0::CommunityApi.suggest_communities(user_id).execute
+				info = $redis.get 'trends'
+				unless info
+					info = Api::V0::CommunityApi.suggest_communities(user_id).execute
+					$redis.set('trends', info.to_json)
+					$redis.expire('trends', 86400)
+				else
+					info = JSON.parse info
+				end
+
 				render :json => info, :status => 200
 			end
 
@@ -36,6 +51,13 @@ module Api
 				news_id = params[:news_id]
 				user_id = session[:user_id]
 				Api::V0::CommunityApi.create_visited_news(user_id, news_id)
+			end
+
+			def get_news
+				id = params[:id]
+				skip_count = params[:skip]
+				info = Api::V0::CommunityApi.get_news(id, skip_count)
+				render :json => info, :status => 200
 			end
 		end
 	end

@@ -163,4 +163,8 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/get_likes', $q, $http);   
     }
 
+    this.suggest_friends = function(){
+        return _deferred_request('/api/v0/get_friends_of_friend', $q, $http);
+    }
+
 }]);

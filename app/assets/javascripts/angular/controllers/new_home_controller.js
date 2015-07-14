@@ -1,21 +1,5 @@
 homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstants', 'ReadTimes', 'genreService', 'PopularGenres', function($scope, $timeout, SearchUIConstants, ReadTimes, genreService, PopularGenres){
 
-    $scope._get_genres = function(){
-        if(angular.isUndefined($scope.info.genres) || $scope.info.genres.length == 0){
-            $scope.info.genres = [];
-            genreService.get_genres().then(function(data){
-                angular.forEach(data, function(value){
-                    var status = value.status != null;
-                    var json = angular.extend(value, {"status": status});
-                    this.push(json);
-                }, $scope.info.genres);
-            });
-        }
-        else{
-            $scope.info.loading = false;
-        }
-    }
-
     $scope.show_filter_results = function(){
         var filters = "";
         if(angular.isDefined($scope.info.selected_duration) && $scope.info.selected_duration != null){
@@ -55,8 +39,7 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
             }
         }
         else{
-            $scope.info.loading = true;
-            $scope._get_genres();
+            $scope.info.genres = PopularGenres;
         }
     }
 
@@ -65,30 +48,12 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
         $scope.search_tag.read_time = "";
     }
 
-    $scope._get_reading_times = function(){
-        readingTimeService.get_read_times().then(function(data){
-            $scope.info.read_times = [];
-
-            angular.forEach(data, function(value){
-                var json = {"icon2": "icon-clock", "type": SearchUIConstants.Time, "custom_option": true};
-                json = angular.extend(json, value);
-                this.push(json);
-            }, $scope.info.read_times);
-        });
-    }
-
     var _init = (function(){
         $scope.info.read_times = [];
         $scope.info.genres = [];
         $scope.info.read_times = ReadTimes;
         $scope.info.genres = PopularGenres;
-        var fetch_data = $timeout(function(){
-            $scope._get_reading_times();
-            $scope._get_genres();
-        }, 100);
-        $scope.$on('destroy', function(){
-            $timeout.cancel(fetch_data);
-        });
+        
         $scope.filters = {"other": {}};
         $scope.search_tag = {};
 

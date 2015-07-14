@@ -1,15 +1,68 @@
 homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', '$mdDialog', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore, $mdDialog){
 
     $scope.get_popular_books = function(){
-        if(angular.isUndefined($scope.constant) || !$scope.constant.show_book){
-            if(Object.keys($rootScope.filters).length > 0){
-                if(!$scope.info.fetching_books){
-                    sharedService.filtered_books($scope);
+        var grouped = $scope.info.author_filter || $scope.info.group_by_alphabet || $scope.info.reading_time_filter || $scope.info.published_era_filter || $scope.info.subject_filter;
+        if(!grouped){
+            if(angular.isUndefined($scope.constant) || !$scope.constant.show_book){
+                if(Object.keys($rootScope.filters).length > 0){
+                    if(!$scope.info.fetching_books){
+                        sharedService.filtered_books($scope);
+                    }
+                }
+                else{
+                    sharedService.get_popular_books($scope, $scope.info.books);
                 }
             }
-            else{
-                sharedService.get_popular_books($scope);
+        }
+    }
+
+    $scope.remove_expanded_book = function(index){
+        $scope.info.books.splice(index, 1);
+        delete $scope.expanded_book;
+        delete $scope.expanded_index;
+    }
+
+    $scope.expand_book = function(index){
+        if(window.innerWidth > 1100){
+            var row_count = 5;
+        }
+        else if(window.innerWidth > 900){
+            var row_count = 4;
+        }
+        else{
+            var row_count = 3;
+        }
+        var _scroll_and_expand = function(index){
+            var book = {
+                "title": $scope.info.books[index].title,
+                "author_name": $scope.info.books[index].author_name,
+                "page_count": $scope.info.books[index].page_count,
+                "published_year": $scope.info.books[index].published_year,
+                "description": $scope.info.books[index].description,
+                "expanded": true,
+                "id": ($scope.info.books[index].id || $scope.info.books[index].book_id),
+                "isbn": $scope.info.books[index].isbn
             }
+            $scope.expanded_index = index;
+            index = row_count*(Math.floor(index / row_count)) + row_count;
+            $scope.expanded_book = index;
+            $scope.info.books.splice(index, 0, book);
+        }
+        if(angular.isDefined($scope.expanded_index)){
+            if($scope.expanded_index == index){
+                index = row_count*(Math.floor(index / row_count)) + row_count;
+                $scope.remove_expanded_book(index);
+            }
+            else{
+                $scope.info.books.splice($scope.expanded_book, 1);
+                if(index > $scope.expanded_book){
+                    index = index - 1;
+                }
+                _scroll_and_expand(index);
+            }
+        }
+        else{
+            _scroll_and_expand(index);
         }
     }
 
@@ -70,7 +123,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope._get_popular_books = function(){
         console.log("_get_popular_books");
-        sharedService.load_popular_books($scope);
+        sharedService.load_popular_books($scope, $scope.info.books);
     }
 
     $scope.show_grid = function(event){
@@ -122,6 +175,21 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         });
     };
 
+    function get_query_params(name){
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\?&]"+name+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec(window.location.href);
+        var output = "";
+        if(results != null){
+            output = results[1];
+        }
+        if(output == ""){
+            output = null;
+        }
+        return output;
+    }
+
     var _init = (function(){
         // $scope.info.author_filter = true;
         $scope.$routeParams = $routeParams;
@@ -136,14 +204,18 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $scope.active_endorse = false;
         $scope.active_bookmark = true;
         $scope.active_share = true;
-        var popular_books_timeout = $timeout(function(){
-            console.log("libraryController");
-            $scope._get_popular_books();
-        }, 100);
+        var genre = get_query_params("g");
+        var duration = get_query_params("d");
+        if(genre == null && duration == null){
+            var popular_books_timeout = $timeout(function(){
+                console.log("libraryController");
+                $scope._get_popular_books();
+            }, 100);
 
-        $scope.$on('destroy', function(){
-            $timeout.cancel(popular_books_timeout);
-        });
+            $scope.$on('destroy', function(){
+                $timeout.cancel(popular_books_timeout);
+            });
+        }
         $scope.constant = {"show_book": false};
     }());
 

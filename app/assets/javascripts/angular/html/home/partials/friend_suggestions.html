@@ -1,0 +1,29 @@
+<div layout-padding>
+	<h3 layout-padding ng-show="suggest_friends && suggest_friends.length > 0" class="important_title">
+		You may know
+	</h3>
+	<div layout="column">
+		<div ng-repeat="friend in suggest_friends | limitTo: 4" layout-margin 
+			layout="row" layout-align="space-between" flex class="description_card">
+			<div>
+				<a ng-href="/profile?id={{friend.id}}" layout="row">
+					<img class="circular" ng-src="{{friend.image_url}}">
+					<div class="less_important bold" layout-padding>{{friend.first_name}} {{friend.last_name}}</div>
+				</a>
+			</div>
+			<div layout="row" layout-align="center center">
+				<div layout-padding class="clickable_icons " ng-click="remove_suggestion(friend)">
+					<i class="material-icons less_important">close</i>
+				</div>
+				<md-button aria-label="follow_user" 
+				 		class="md-warn clear md-raised" 
+		                ng-click="follow_user(friend.id)"
+		                ng-hide="hide_follow">
+		            <div layout="row" layout-padding layout-align="center center">
+		                <i class="material-icons">person_add</i>
+		            </div>
+		        </md-button>
+			</div>
+		</div>
+	</div>
+</div>

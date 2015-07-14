@@ -44,7 +44,11 @@ class WebsiteController < ApplicationController
 	end
 
 	def about
-		render :layout => "clean"
+		render :layout => "material_clean"
+	end
+
+	def careers
+		render :layout => "material_clean"
 	end
 
 	def how_it_works

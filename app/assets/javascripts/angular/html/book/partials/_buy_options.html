@@ -6,7 +6,7 @@
 		<div class="less_important bold" flex="10">Goto Store</div>
 	</div>
 	<md-divider></md-divider>
-	<div ng-repeat="price in prices" ng-class="{'light_grey_color': !price.in_stock}">
+	<div ng-repeat="price in prices track by $index" ng-class="{'light_grey_color': !price.in_stock}">
 		<div layout-padding layout="row" layout-align="space-between">
 			<div layout-padding flex="30">
 				<div >{{price.store}}&nbsp;</div>

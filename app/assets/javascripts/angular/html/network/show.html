@@ -1,7 +1,7 @@
 <!-- <div ng-include src="'/assets/angular/html/profile/invite.html'"></div> -->
 <md-item ng-repeat="user in users_list" class="white user_card md-whiteframe-z1" layout-margin>
-    <md-item-content layout="row" layout-align="center center" flex class="user_cover_image clear">
-        <img ng-src="{{user.image_url}}" class="square user_photo" flex="60" onerror="this.src='/assets/user_profile.jpg'">
+    <md-item-content layout="row" layout-align="center center" flex class=" clear">
+        <img ng-src="{{user.image_url}}" class="square" onerror="this.src='/assets/user_profile.jpg'">
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
         <a ng-href="/profile?p={{::user.id}}">
@@ -9,7 +9,7 @@
         </a>
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
-        <md-button aria-label="toggle_follow" class="md-primary md-button-clear" 
+        <md-button aria-label="toggle_follow" class="md-warn md-button-clear" 
             ng-class="{'md-raised': !user.status}"
             ng-click="toggle_follow(user);">
             <span ng-if="!user.status" >Follow</span>
@@ -17,7 +17,7 @@
         </md-button>
     </md-item-content>
     <md-item-content layout="column" flex class="clear">
-        <div class="less_important" layout="row" layout-align="center center">Recent Books</div>
+        <div class="less_important" layout="row" layout-align="center center">Recently Visited Books</div>
         <div ng-repeat="book in user.books" class="network_book" ng-if="book.id" layout-padding>
             <a ng-href="/book?q={{::book.id}}" class="less_important bold">
                 <span ng-bind-html="book.title"></span>

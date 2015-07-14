@@ -16,6 +16,10 @@ class Community < Neo
 		" MATCH (community:Community) WITH community "
 	end
 
+	def get_news skip_count=0
+		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news", Community.basic_info)
+	end
+
 	def self.basic_info
 		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count "
 	end
@@ -96,8 +100,21 @@ class Community < Neo
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
 
-	def self.merge community
-		" MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) ON CREATE SET community.name = \"" + community + "\", community.status = 1, community.created_at=" + Time.now.to_i.to_s + ", community.updated_at=" + Time.now.to_i.to_s + ", community.follow_count = 0, community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" WITH community "  
+	def self.merge community, wiki_url = ""
+		clause = " MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) "\
+		" ON CREATE SET "\
+		" community.name = \"" + community + "\", "\
+		" community.status = 1, "\
+		" community.created_at=" + Time.now.to_i.to_s + ", "\
+		" community.updated_at=" + Time.now.to_i.to_s + ", "\
+		" community.follow_count = 0, "\
+		" community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" "
+		if !wiki_url.nil? && !wiki_url.empty?
+			clause += ", community.wiki_url = \"" + wiki_url + "\" "\
+				" ON MATCH SET "\
+				" community.wiki_url = \"" + wiki_url + "\" "
+		end
+		clause += " WITH community "
 	end
 
 	def self.merge_book
@@ -133,8 +150,12 @@ class Community < Neo
 		News.new(news_id).match + ", most_important_tag " + News.optional_match_community + " , most_important_tag  WHERE NOT ID(community) = " + @id.to_s + " WITH most_important_tag, community, has_community ORDER BY has_community.relevance DESC WITH  most_important_tag, " + Community.collect_map("other_tags" => Community.grouped_basic_info) + Article::NewsArticle.return_group(" most_important_tag ", " other_tags[0.." + (Constant::Count::CommunitiesShown+1).to_s + "] AS other_tags ")
 	end
 
-	def get_news skip_count = 0
-		match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
+	# def get_news skip_count = 0
+	# 	match + Community.match_news +  Community.order_init + " news.created_at DESC " + Community.skip(skip_count) + Community.limit(10) + " WITH community, " + Community.collect_map("news" => News.grouped_basic_info) + Community.return_group(" news", Community.collect_map("community" => Community.grouped_basic_info))
+	# end
+
+	def self.get_max_min_id
+		" MATCH (a:Community) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id "
 	end
 
 end

@@ -437,6 +437,7 @@ module Api
 					else
 						duplicate_email
 					end
+					$redis.del user_id
 				end
 			end
 
@@ -516,6 +517,11 @@ module Api
 
 			def self.search_friends(user_id, search_text)
 				info = User.new(user_id).search_friends(search_text).execute
+				info
+			end
+
+			def self.get_friends_of_friend user_id
+				info = User::Suggest::FriendSuggestion.new(user_id).get_friends_of_friend.execute
 				info
 			end
 		end

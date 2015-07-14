@@ -37,4 +37,8 @@ homeApp.service('newsService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/news_visited?id='+id, $q, $http);
     }
 
+    this.get_community_news = function(id, skip){
+        return _deferred_request('/api/v0/get_community_news?id='+id+'&skip='+skip, $q, $http);
+    }
+
 }]);

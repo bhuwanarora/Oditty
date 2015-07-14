@@ -37,7 +37,7 @@ class Article::NewsArticle < Article
 	end
 		
 	def most_important_community
-		match + Article::NewsArticle.match_communities_with_books + " ORDER BY has_community.relevance DESC " + Article::NewsArticle.limit(1) + " WITH community "
+		match + Article::NewsArticle.match_communities + " ORDER BY has_community.relevance DESC " + Article::NewsArticle.limit(1) + " WITH community "
 	end
 
 	def self.basic_info

@@ -123,10 +123,26 @@ module Api
 					if params[:id]
 						info = UserApi.get_relative_details(params[:id], session[:user_id])
 					else
-						info = UserApi.get_details(session[:user_id])
+						key = "GUD" + session[:user_id].to_s
+						info = $redis.get(key)
+						unless info
+							info = UserApi.get_details(session[:user_id])
+							$redis.set(key, info.to_json)
+							$redis.expire(key, 2678400)
+						else
+							info = JSON.parse info
+						end
 					end
 				else
-					info = UserApi.get_details(params[:id])
+					key = "GUD" + params[:id].to_s
+					info = $redis.get(key)
+					unless info
+						info = UserApi.get_details(params[:id])
+						$redis.set(key, info.to_json)
+						$redis.expire(key, 2678400)
+					else
+						info = JSON.parse info
+					end
 				end
 				render :json => info, :status => 200
 			end
@@ -244,6 +260,8 @@ module Api
 				community_id = params[:id]
 				status = params[:status].downcase if params[:status]
 				Api::V0::UserApi.follow_community(user_id, community_id, status).execute
+				key = "BCI" + community_id.to_s
+				$redis.del key
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -256,6 +274,8 @@ module Api
 				elsif follow_action.present? && follow_action == "false"
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
+				key = "GFOF" + user_id.to_s
+				$redis.del key
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -442,6 +462,23 @@ module Api
 				user_id = session[:user_id]
 				search_text = params[:q]
 				info = Api::V0::UserApi.search_friends(user_id, search_text)
+				render :json => info, :status => 200
+			end
+
+			def get_friends_of_friend
+				user_id = session[:user_id]
+				if user_id
+					key = "GFOF"+user_id.to_s
+					info = $redis.get key
+					unless info
+						info = Api::V0::UserApi.get_friends_of_friend(user_id)
+						$redis.set(key, info.to_json)
+					else
+						info = JSON.parse(info)
+					end
+				else
+					info = []
+				end
 				render :json => info, :status => 200
 			end
 		end

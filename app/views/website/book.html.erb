@@ -1,10 +1,17 @@
-<div ng-include src="'/assets/angular/html/shared/share.html'" class="md-whiteframe-z1 white"></div>
+<div class="light_grey md-whiteframe-z1" layout="row" layout-align="center center" layout-padding>
+	<a ng-href="#book/timeline" 
+		ng-class="get_active_class('book/timeline')" layout-padding>Feed</a>
+	<a ng-href="#book/buyandreview" 
+		ng-class="get_active_class('book/buyandreview')" layout-padding>Buy & Reviews</a>
+	<a ng-href="#book/realvirtuality" 
+		ng-class="get_active_class('book/realvirtuality')" layout-padding>Real Virtuality</a>
+	<a ng-href="#book/preview" 
+		ng-class="get_active_class('book/preview')" layout-padding>Preview</a>
+</div>
 <section layout="row" layout-wrap class="feed_margin">
-	<div flex="10" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
+	<div flex="5" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
 		ng-if="!book.show_info_only"></div>
-    <div flex="80" flex-sm="100" flex-md="90" layout="column"
-         ng-include src="'/assets/angular/html/book/show.html'">
-    </div>
+	<div flex="85" flex-sm="100" flex-md="90" layout="column" ng-view></div>
     <div flex="10" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
     	ng-if="!book.show_info_only"></div>
 </section>

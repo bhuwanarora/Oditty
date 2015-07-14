@@ -1,23 +1,11 @@
-<div class="big_title" layout-padding layout="column" layout-align="center">
-    <div>{{ key }}</div>
+<div class="big_title bold" layout-padding layout="column" layout-align="center" ng-bind-html="key">
 </div>
-<div layout="row" layout-wrap layout-align="start">
+<div layout="row" layout-wrap layout-align="start" class="light_grey">
     <div ng-repeat="book in value"
         layout-align="start start"
         layout="row" layout-margin
-        class="rd_book_container"
+        class="book_container full_width"
         ng-class="{'book': book.isBook}" >
-        <md-button class="white clear md-whiteframe-z3"
-                aria-label="book"
-                ng-click="show_book($event, book)">
-            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
-            
-            <!-- <img ng-src="{{book | choose_medium_thumb}}" /> -->
-        </md-button>
-        <!-- <div ng-style="{background:'{{book.color}}'}" class="book_backup_cover" 
-                layout="column" layout-padding layout-align="space-between">
-            <h3>{{book.title}}</h3>
-            <h5>{{book.author_name}}</h5>
-        </div> -->
+        <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'" ></div>
     </div>
 </div>

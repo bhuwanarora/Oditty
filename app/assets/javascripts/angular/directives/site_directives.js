@@ -11,15 +11,18 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
                         $scope.show_suggestions = true;
                         angular.forEach(data, function(value, index){
                             if(index == 0 || index == 6){
-                                value.span = {"col": 4, "row": 2};
+                                value.span = {"col": 2, "row": 1};
                             }
                             else{
-                                value.span = {"col": 2, "row": 2};
+                                value.span = {"col": 1, "row": 1};
                             }
                             this.push(value);
                         }, $scope.suggest_communities);
                     });
                 }, 100);
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(room_timeout);
+                });
             }
 
             $scope.goto_room = function(id){
@@ -36,6 +39,45 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
     };
 }]);
 
+
+homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+                var friend_timeout = $timeout(function(){
+                    userService.suggest_friends().then(function(data){
+                        $scope.suggest_friends = data;
+                        $scope.show_suggestions = true;
+                    });
+                }, 100);
+
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(friend_timeout);
+                });
+            }
+
+            $scope.remove_suggestion = function(friend){
+                var index = $scope.suggest_friends.indexOf(friend);
+                $scope.suggest_friends.splice(index, 1);
+            }
+
+            $scope.follow_user = function(id){
+                userService.follow(id, true);
+                angular.forEach($scope.suggest_friends, function(value, index){
+                    if(value.id == id){
+                        $scope.suggest_friends.splice(index, 1);
+                    }
+                });
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/partials/friend_suggestions.html'
+    };
+}]);
+
+
 homeApp.directive('trending', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
@@ -46,6 +88,10 @@ homeApp.directive('trending', ["$rootScope", "userService", "$timeout", function
                         $scope.suggest_communities = data;
                     });
                 }, 100);
+
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(room_timeout);
+                });
             }
 
             _init();

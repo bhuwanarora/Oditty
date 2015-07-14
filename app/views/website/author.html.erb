@@ -1,46 +1,13 @@
-<div class="primary md-whiteframe-z1">
-    <div ng-include src="'/assets/angular/html/author/header.html'"></div>
-    <div ng-include src="'/assets/angular/html/shared/share.html'" ></div>
-</div>
+<div ng-include src="'/assets/angular/html/author/header.html'"></div>
 <div layout="row" class="feed_margin">
-    <div flex="5" flex-md="5" hide-sm></div>
-    <div flex="90" flex-md="90" flex-sm="100" layout="row" layout-sm="column" layout-md="column"> 
-        <div flex="65" flex-md="100" flex-sm="100">
-            <div class="less_important bold" layout-padding>
-                Books Published
-            </div>
-            <div layout="row" layout-wrap>
-                <section ng-repeat="book in author.books" layout-margin>
-                    <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
-                        class="md-whiteframe-z3 clear rd_book_container" >
-                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-                    </md-button>
-                </section>
-            </div>
+    <section flex="10" flex-md="5" hide-sm></section>
+    <section flex="80" flex-md="90" layout="row" flex-sm="100">
+        <div ng-view flex="70" flex-sm="100"></div>
+        <div layout-padding flex="30" hide-sm
+            ng-include src="'/assets/angular/html/author/more_info.html'">
         </div>
-        <div flex="35" flex-md="100" flex-sm="100">
-            <div class="less_important bold" layout-padding>
-                Followers
-            </div>
-            <div layout="row" layout-wrap>
-                <md-list layout="row" layout-wrap>
-                    <a ng-repeat="user in author.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" layout-margin
-                        layout="row" layout-align="center center">
-                        <img class="circular" ng-src="{{user.image_url}}"  alt="{{::user.first_name}} {{::user.last_name}}" onerror="this.src='/assets/user_profile.jpg'"/>
-                        <md-tooltip>{{::user.first_name}} {{::user.last_name}}</md-tooltip>
-                    </a>
-                </md-list>
-            </div>
-            <div layout-padding
-                ng-include src="'/assets/angular/html/author/more_info.html'">
-            </div>
-        </div>
-    </div>
-    <div flex="5" flex-md="5" hide-sm></div>
-</div>
-<md-divider></md-divider>
-<div layout="row" class="feed_margin">
-    <div ng-include src="'/assets/angular/html/author/tabs.html'" class="full_width"></div>
+    </section>
+    <section flex="10" flex-md="5" hide-sm></section>
 </div>
 <style>
     .author_thumb{

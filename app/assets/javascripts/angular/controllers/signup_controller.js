@@ -120,9 +120,8 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             websiteService.authenticate(data_json).then(success_callback, error_callback);
         }
     }
-
-        
-    _bind_auth_listeners = function(){
+   
+    var _bind_auth_listeners = function(){
         $scope.$on('event:google-plus-signin-success', function (event, authResult){
             websiteService.handle_google_user(authResult);
             console.log("google login", authResult);
@@ -168,7 +167,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
-        window.location.href = "/filters";
+        window.location.href = "/home";
     }
 
     

@@ -1,7 +1,7 @@
 <div layout="row" layout-align="space-between" layout-sm="column">
     <div ng-if="borrow_users && borrow_users.length > 0" class="less_important">
         Borrow this book from a friend</div>
-    <div ng-if="!borrow_users || borrow_users.length == 0" class="less_important">
+    <div ng-if="!borrow_users || borrow_users.length == 0" class="important_title">
         <div ng-hide="hide_link">
             Or <a ng-click="notify_friends()">Notify</a> your friends that you want to borrow this book.
         </div>

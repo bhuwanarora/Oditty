@@ -26,4 +26,8 @@ homeApp.service('genreService', ["$http", "$q", "$rootScope", "WebsiteUIConstant
         return _deferred_request('/api/v0/categories', $q, $http);   
     }
 
+    this.get_basic_details = function(id){
+        return _deferred_request('/api/v0/genre_details?id='+id, $q, $http);
+    }
+
 }]);

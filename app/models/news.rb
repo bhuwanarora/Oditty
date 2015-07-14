@@ -184,4 +184,8 @@ class News < Neo
 	def self.get_popular_news_from_last_week
 		News.match_community + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 7 " + News.return_group(News.basic_info, News.collect_map({"communities" => Community.grouped_basic_info}), "community.count AS communities_count") + News.order_init + " communities_count DESC " + News.limit(4)
 	end
+
+	def self.match_popular_news_from_last_week
+		News.match + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 1 WITH news "
+	end
 end
