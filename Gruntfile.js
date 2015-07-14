@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             combine: {
                 files: {
                     'app/assets/stylesheets/min/site.min.css': [
-                        // 'app/assets/stylesheets/min/material_icons.min.css',
+                        'app/assets/stylesheets/min/website/material_icons.min.css',
                         'app/assets/stylesheets/min/angular_material.min.css',
                         'app/assets/stylesheets/min/website/website.min.css',
                         'app/assets/stylesheets/min/website/icomoon.min.css',
