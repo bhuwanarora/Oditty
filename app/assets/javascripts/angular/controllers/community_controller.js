@@ -76,9 +76,9 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 newsService.get_community_news(id, skip_count).then(function(data){
                     if(data != null && data.length > 0){
                         data = data[0];
-                        $scope.info.loading = false;
                         $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
                     }
+                    $scope.info.loading = false;
                 });
             }
         }
