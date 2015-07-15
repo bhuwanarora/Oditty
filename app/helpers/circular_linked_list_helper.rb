@@ -104,7 +104,6 @@ module CircularLinkedListHelper
 		clause += self.create_links params
 		clause += " RETURN ID(root) AS id"
 		output = clause.execute
-		debugger
 		if output.empty?
 			output = self.create_self_loop params
 		end
