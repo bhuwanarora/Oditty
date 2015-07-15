@@ -1,5 +1,7 @@
 module CircularLinkedListHelper
-	
+	EqualityConstraint = 'equality'
+	IneqalityConstraint = 'inequality'
+
 	def self.delete_root_links params
 		clause = " MATCH (root) "\
 			" WHERE ID(root) = " + params[:node_id].to_s + " "
@@ -29,8 +31,29 @@ module CircularLinkedListHelper
 		else
 			clause += " MATCH (node {" + params[:node_key] + ": " + params[:node_key_value].to_s + "})"
 		end
-		clause += " WHERE " + params[:labels].map{|label| ("node: " + label)}.join(" OR ")
+		clause += " WHERE " + params[:labels].map{|label| (self.apply_filters(label, params))}.join(" OR ")
 		clause += " WITH root, node, (CASE WHEN HAS(node.created_at) THEN node.created_at ELSE COALESCE(node.timestamp,0) END) AS created_at ORDER BY TOINT(created_at) DESC "
+	end
+
+	def self.apply_filters label, params
+		clause = ""
+		if params[:filters][label].present?
+			clause += "(( node :" + label
+			eq_constraints = params[:filters][label][EqualityConstraint]
+			ineq_constraints = params[:filters][label][IneqalityConstraint]
+			if eq_constraints.length > 0
+				clause += ") AND ( "
+				clause += eq_constraints.map{|constraint|  "node." + constraint[:key] + " = " + ((constraint[:value].is_a? String)? "\'#{constraint[:value]}\'" : constraint[:value].to_s)}.join(") AND (")
+			end
+			if ineq_constraints.length > 0
+				clause += ') AND ('
+				clause += ineq_constraints.map{|constraint|  "node." + constraint[:key] + " <> " + ((constraint[:value].is_a? String)? "\'#{constraint[:value]}\'" : constraint[:value].to_s)}.join(") AND (")
+			end
+			clause += "))"
+		else
+			clause = "( node :" + label + ' )'
+		end
+		clause
 	end
 
 	def self.create_self_loop params
@@ -105,10 +128,17 @@ module CircularLinkedListHelper
 		max_id = temp[0]["max_id"]
 		min_id = temp[0]["min_id"]
 		redis_key = 'feednext_reset'
+		$redis[redis_key] = 0
 		cur_id = RedisHelper.set_up_redis redis_key, min_id
 		params = {
 			:rel_type => 'FeedNext',
 			:labels => ['FollowsNode', 'BookmarkNode', 'StatusNode ', 'EndorseNode', 'RatingNode'],
+			:filters => {'BookmarkNode' =>
+							{IneqalityConstraint =>
+								[{:key => 'key', :value => 'Visited'}, {:key => 'key', :value =>'FromFacebook'}],
+							EqualityConstraint => []
+							}
+						 },
 			:node_key => 'user_id',
 			:rel_key => 'user_id',
 			:node_key_value => 0,
