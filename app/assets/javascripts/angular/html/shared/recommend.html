@@ -10,7 +10,7 @@
 		<div layout-padding ng-hide="recommending">
         	<i class="material-icons md-dark">check</i>
         </div>
-        <div layout-padding ng-show="recommending">
+        <div layout-padding ng-if="recommending">
         	<md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate">
         	</md-progress-circular>
         </div>

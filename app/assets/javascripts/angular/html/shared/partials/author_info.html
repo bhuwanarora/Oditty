@@ -5,7 +5,7 @@
         <a ng-href="/author?id={{::author.id}}">
             <div class="big_title bold capitalize">{{::author.name}}</div>
         </a>
-        <div class="less_important" ng-show="author.location">
+        <div class="less_important" ng-if="author.location">
             <span>{{::author.location}} </span>
         </div>
     </div>

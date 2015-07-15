@@ -1,6 +1,6 @@
 <section layout="row" layout-sm="column" layout-align="space-between">
     <div layout="row" layout-align="end center">
-        <div layout="row" ng-show="feed.view_count && feed.view_count != 0">
+        <div layout="row" ng-if="feed.view_count && feed.view_count != 0">
             <div ng-bind-html="feed.view_count"></div>
             <div>
                 <i class="material-icons">visibility</i>
@@ -13,7 +13,7 @@
                 {{::user.first_name}} {{::user.last_name}}
             </md-tooltip>
         </div>
-        <div ng-show="feed.follow_count > 4">
+        <div ng-if="feed.follow_count > 4">
             {{::feed.follow_count - 4}} other users
         </div>
     </div>

@@ -4,10 +4,10 @@
             <div layout-padding>
                 <div class="big_title capitalize bold" ng-bind-html="active_tag.name"></div>
                 <div layout="row" layout-column ng-hide="hide_follow_links" class="less_important">
-                    <div ng-show="active_tag.view_count && active_tag.view_count != 0">
+                    <div ng-if="active_tag.view_count && active_tag.view_count != 0">
                         <span>{{active_tag.view_count}} </span>
-                        <span ng-show="active_tag.view_count == 1">View</span>
-                        <span ng-show="active_tag.view_count != 1">Views</span>
+                        <span ng-if="active_tag.view_count == 1">View</span>
+                        <span ng-if="active_tag.view_count != 1">Views</span>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
             </md-button>
         </div>
         <div layout="row" layout-align="start center">
-            <a title="facebook" ng-show="active_tag.facebook_url"
+            <a title="facebook" ng-if="active_tag.facebook_url"
                 class="md-whiteframe-z1 facebook" layout-padding layout-align="center center" layout-margin
                 layout="row"
                 target="_blank" ng-href="{{::active_tag.facebook_url}}">
@@ -30,7 +30,7 @@
                     <span class="icon-facebook"></span>
                 </div>
             </a>
-            <a title="twitter" ng-show="active_tag.twitter_handle" 
+            <a title="twitter" ng-if="active_tag.twitter_handle" 
                 class="md-whiteframe-z1 twitter" layout-padding layout-align="center center" layout-margin
                 layout="row"
                 target="_blank" ng-href="http://twitter.com/{{::active_tag.twitter_handle}}">
@@ -40,7 +40,7 @@
             </a>
         </div>
 
-        <div class="important_title" ng-show="(active_tag.users && active_tag.users.length > 0) || (active_tag.users.length == 1 && active_tag.users[0].first_name != null)" layout-padding>
+        <div class="important_title" ng-if="(active_tag.users && active_tag.users.length > 0) || (active_tag.users.length == 1 && active_tag.users[0].first_name != null)" layout-padding>
             <div>
                 Readers in this room
             </div>

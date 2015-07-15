@@ -5,7 +5,7 @@
         <div ng-hide="hide_link">
             Or <a ng-click="notify_friends()">Notify</a> your friends that you want to borrow this book.
         </div>
-        <div ng-show="hide_link">
+        <div ng-if="hide_link">
             Notification Sent.
         </div>
     </div>

@@ -29,7 +29,7 @@
 		    <md-button ng-href="{{price.url}}" target="_blank" class="md-button-clear md-warn md-raised" flex="10">Buy</md-button>
 		</div>
 	</div>
-	<div ng-show="loading_buy_options">Fetching prices from book stores...</div>
+	<div ng-if="loading_buy_options">Fetching prices from book stores...</div>
  	<md-progress-circular class="md-warn md-hue-1" md-mode="indeterminate" 
         ng-if="loading_buy_options">
     </md-progress-circular>

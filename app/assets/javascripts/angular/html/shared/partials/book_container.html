@@ -33,7 +33,7 @@
 			<div ng-bind-html="book.description | reduced_summary" layout-padding></div>
 		</div>
 		<div layout="row" layout-align="space-between" layout-padding>
-			<div class="bold" ng-show="book.page_count != null">{{book.page_count}} Pages</div>
+			<div class="bold" ng-if="book.page_count != null">{{book.page_count}} Pages</div>
 			<div class="less_important" ng-bind-html="book.published_year"></div>
 		</div>
 	</div>

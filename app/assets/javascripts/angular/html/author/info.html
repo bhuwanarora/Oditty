@@ -7,14 +7,14 @@
                 <div class="big_title bold" layout-padding ng-bind-html="::author.name"></div>
                 <div class="small_font">Author</div>
                 <div layout="row" layout-align="space-between center">
-                    <div layout="row" layout-align="center center" ng-show="::author.location">
+                    <div layout="row" layout-align="center center" ng-if="::author.location">
                         <i class="material-icons" class="small_font">location_on</i>
                         <div ng-bind-html="::author.location" class="small_font bold"></div>
                     </div>
                 </div>
             </div>
             <div layout="row">
-                <a title="facebook" ng-show="author.facebook_url"
+                <a title="facebook" ng-if="author.facebook_url"
                     class="md-whiteframe-z1 facebook" layout-padding layout-align="center center" layout-margin
                     layout="row"
                     target="_blank" ng-href="{{::author.facebook_url}}">
@@ -22,7 +22,7 @@
                         <span class="icon-facebook"></span>
                     </div>
                 </a>
-                <a title="twitter" ng-show="author.twitter_handle" 
+                <a title="twitter" ng-if="author.twitter_handle" 
                     class="md-whiteframe-z1 twitter" layout-padding layout-align="center center" layout-margin
                     layout="row"
                     target="_blank" ng-href="http://twitter.com/{{::author.twitter_handle}}">
@@ -30,7 +30,7 @@
                         <span class="icon-twitter"></span>
                     </div>
                 </a>
-                <a title="website" ng-show="author.website_url"
+                <a title="website" ng-if="author.website_url"
                     class="md-whiteframe-z1 google-plus" layout-padding layout-align="center center" layout-margin
                     layout="row"
                     target="_blank" ng-href="{{::author.website_url}}">

@@ -68,7 +68,8 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_community_news = function(){
-        if(angular.isDefined($scope.active_tag)){
+        var is_news_tab = $location.path() == "/room/news";
+        if(angular.isDefined($scope.active_tag) && is_news_tab){
             var id = $scope.active_tag.id;
             var skip_count = $scope.active_tag.news.length;
             if(!$scope.info.loading){

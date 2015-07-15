@@ -1,7 +1,7 @@
 <div layout="row" layout-md="column" flex="80" flex-md="70" flex-sm="100" layout-sm="column">
 	<div layout-padding layout="column" class="white" flex="30" flex-md="100" flex-sm="100">
 		<div layout-padding>
-			<div class="less_important" ng-show="info.active_news">News, {{info.active_news.created_at | timestamp | date:'dd MMM'}}</div>
+			<div class="less_important" ng-if="info.active_news">News, {{info.active_news.created_at | timestamp | date:'dd MMM'}}</div>
 			<div class="big_title bold" ng-bind-html="::info.active_news.title"></div>
 			<div class="less_important">
 				<a ng-href="{{info.active_news.url}}" target="_blank">
@@ -31,10 +31,10 @@
 							<div ng-class="{'bold': active_tag.name == community.name}" class="wrap capitalize">
 								{{::community.name}}
 							</div>
-							<div class="less_important" ng-show="community.view_count && community.view_count != 0">
+							<div class="less_important" ng-if="community.view_count && community.view_count != 0">
 								<span>{{::community.view_count}} </span>
-								<span ng-show="community.view_count == 1">View</span>
-								<span ng-show="community.view_count != 1">Views</span>
+								<span ng-if="community.view_count == 1">View</span>
+								<span ng-if="community.view_count != 1">Views</span>
 							</div>
 						</div>
 					</div>
@@ -52,9 +52,9 @@
 					ng-class="{'md-raised': !active_tag.status}" 
 					layout-margin
 		            ng-click="toggle_follow()">
-		            <span ng-show="!active_tag.status">Join Room </span>
-		            <span ng-show="active_tag.status"> Joined</span>
-		            <span ng-show="!active_tag.status" class="icon-user-add"></span>
+		            <span ng-if="!active_tag.status">Join Room </span>
+		            <span ng-if="active_tag.status"> Joined</span>
+		            <span ng-if="!active_tag.status" class="icon-user-add"></span>
 		        </md-button>
 			</div>
 			<div class="important_title" ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>

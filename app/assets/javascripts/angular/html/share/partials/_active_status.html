@@ -9,7 +9,7 @@
         		<img ng-src="{{book.isbn | small_thumb}}" class="small_book_thumb">
         	</div>
             <div layout-wrap layout-padding>
-                <div layout="row" ng-show="reading_status_selected && selected_book"
+                <div layout="row" ng-if="reading_status_selected && selected_book"
     		 		 layout-align="space-between">
     		 		<div class="custom_title light_title" ng-if="!active_emotion">
     		 			<span>{{reading_options[active_id].status}} </span>
@@ -21,35 +21,35 @@
                 </div>
                 <div class="big_title" ng-class="{'bold_light_title': selected_book}">{{book.title}}</div>
                 <div class="less_important">{{book.author_name}}</div>
-                <div layout="row" ng-show="reading_status_selected && selected_book"
+                <div layout="row" ng-if="reading_status_selected && selected_book"
                      layout-align="space-between">
                     <div class="custom_title light_title pointer" ng-click="show_page_count()">
-                        <span ng-show="info.current_page"> on page <b>{{info.current_page}}</b></span>
-                        <span ng-show="info.page_count"><b>/{{info.page_count}}</b>.</span>
+                        <span ng-if="info.current_page"> on page <b>{{info.current_page}}</b></span>
+                        <span ng-if="info.page_count"><b>/{{info.page_count}}</b>.</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="clickable_icons"
             ng-click="deselect_book()" layout-padding
-            ng-show="selected_book">
+            ng-if="selected_book">
             <i class="material-icons">close</i>
         </div>
         <div class="custom_title"
             layout-padding
-        	ng-show="!selected_book">
+        	ng-if="!selected_book">
             <i class="material-icons">add</i>
         </div>
     </div>
 </div>
-<div class="menu_details white md-whiteframe-z1 active_extended" ng-show="selected_book">
+<div class="menu_details white md-whiteframe-z1 active_extended" ng-if="selected_book">
     <div layout-padding layout="row" layout-align="space-between center">
         <div></div>
         <div ng-click="mute_volume()" class="pointer" layout-padding>
-            <i class="material-icons" ng-show="!mute">volume_up</i>
-            <i class="material-icons" ng-show="mute">volume_off</i>
+            <i class="material-icons" ng-if="!mute">volume_up</i>
+            <i class="material-icons" ng-if="mute">volume_off</i>
         </div>
     </div>
-    <div class="margin_top" ng-show="selected_book"
+    <div class="margin_top" ng-if="selected_book"
         ng-include src="'/assets/angular/html/share/textbox.html'"></div>
 </div>

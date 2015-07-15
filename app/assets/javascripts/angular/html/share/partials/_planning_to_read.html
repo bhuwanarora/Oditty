@@ -7,7 +7,7 @@
 		</div>
 	</md-button>
 	<div ng-controller="buyController"
-		flex layout="column" layout-padding ng-show="hide_buy" 
+		flex layout="column" layout-padding ng-if="hide_buy" 
         ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
 </div>
 
@@ -20,6 +20,6 @@
 		</div>
 	</md-button>
 	<div ng-controller="buyController"
-		flex layout="column" layout-padding ng-show="hide_borrow" 
+		flex layout="column" layout-padding ng-if="hide_borrow" 
     	ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
 </div>

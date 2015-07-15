@@ -13,8 +13,8 @@
 			</div>
 			<md-item layout-margin ng-repeat="notification in notifications">
 				<md-list-item  class="md-3-line">
-	                <img ng-src="{{notification.image_url}}" class="circular" ng-show="notification.image_url"/>
-	                <div ng-show="notification.image_url">&nbsp;&nbsp;</div>
+	                <img ng-src="{{notification.image_url}}" class="circular" ng-if="notification.image_url"/>
+	                <div ng-if="notification.image_url">&nbsp;&nbsp;</div>
 	                <div layout="column" layout-padding class="md-list-item-text side_padding"
 	                	ng-bind-html="notification.message">
 	                </div>

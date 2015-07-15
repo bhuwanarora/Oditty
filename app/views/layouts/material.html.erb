@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html ng-app="homeApp" ng-strict-di>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -11,17 +10,10 @@
         <meta property="og:image" content="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xfp1/t31.0-8/s2048x2048/10928967_401263720044504_3799751116430229659_o.jpg" />
         <meta property="og:description" content="ReadersDoor is a global community for book readers, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences." />
         <meta property="fb:app_id" content="667868653261167"/>
-
-        
-
         <meta charset="utf-8" />
-
         <title>ReadersDoor</title>
-        <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
         <link rel="icon" type="image/png" href="assets/favicon.png">
         <script>document.write('<base href="' + document.location + '" />');</script>
-        <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,100italic,400italic|Roboto+Condensed&amp;lang=en' rel='stylesheet' type='text/css'> -->
-
         <% if Rails.env.development? %>
             <link rel="stylesheet" href="assets/website/material_icons.css" />
             <link rel="stylesheet" href="assets/angular_material.css" />
@@ -40,23 +32,7 @@
         ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
         msd-wheel="close_popups('wheel')">
-        <script>
-          // (function() {
-          //   var cx = '010250045073231072543:z7pnnxbf5s8';
-          //   var gcse = document.createElement('script');
-          //   gcse.type = 'text/javascript';
-          //   gcse.async = true;
-          //   gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-          //       '//cse.google.com/cse.js?cx=' + cx;
-          //   var s = document.getElementsByTagName('script')[0];
-          //   s.parentNode.insertBefore(gcse, s);
-          // })();
-        </script>
-        <!-- <gcse:search></gcse:search> -->
         <div layout="column" layout-fill>
-            <!-- <div ng-include src="'/assets/angular/html/shared/header.html'"></div> -->
-
-
             <% if @home || @signup%>
                 <md-content class="white" flex ng-controller="newHomeController">
             <% elsif @personalised_suggestions %>
@@ -92,7 +68,7 @@
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController">
             <% end %>
-            <div ng-show="info.mobile_search" flex>
+            <div flex>
                 <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% else %>border_bottom<% end %>">
                     <% if @home || @signup%>
                         <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
@@ -114,10 +90,9 @@
             <% end %>
             
             <md-progress-linear class="md-primary loader"
-                                ng-show="info.loading && !info.show_share"
+                                ng-if="info.loading && !info.show_share"
                                 md-mode="indeterminate">
             </md-progress-linear>
-
             <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
                     ng-if="info.cirular_loading">
             </md-progress-circular>
@@ -130,7 +105,6 @@
             <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
         </div>
          <% if Rails.env.development? || Rails.env.staging? %>
-            <!-- <link rel="stylesheet" href="assets/material_icons.css" /> -->
             <script src='assets/min/angular/vendors/angular.min.js'></script>
             <script src='assets/min/angular/vendors/angular_messages.min.js'></script>
             <script src="assets/angular/vendors/hammer.js"></script>
@@ -141,17 +115,13 @@
             <script src="assets/angular/vendors/angular_cookies.min.js"></script>
             <script src="assets/angular/vendors/angular_facebook.js"></script>
             <script src="assets/angular/vendors/angular-timer.min.js"></script>
-
             <script src='assets/min/angular/vendors/angular_animate.min.js'></script>
             <script src='assets/min/angular/vendors/angular-sanitize.min.js'></script>
             <script src='assets/min/lib/angular_scroll.min.js'></script>
             <script src='assets/min/angular/vendors/angular_filters.min.js'></script>
             <script src="assets/min/angular/vendors/angular-parallax.min.js"></script>
-
-            <!-- // <script src="assets/angular/services/third_party/d3_service.js"></script> -->
             <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
-            
             <script src="assets/angular/apps/filters_app.js"></script>
             <script src="assets/angular/apps/home_app.js"></script>
             <script src="assets/angular/apps/app_constants.js"></script>
@@ -168,15 +138,12 @@
             <script src="assets/angular/services/infinity_service.js"></script>
             <script src="assets/angular/services/shared_service.js"></script>
             <script src="assets/angular/services/network_service.js"></script>
-
             <script src="assets/angular/controllers/app_controller.js"></script>
-            
             <script src="assets/angular/controllers/notification_controller.js"></script>
             <script src="assets/angular/controllers/search_controller.js"></script>
             <script src="assets/angular/controllers/home/left_controller.js"></script>
             <script src="assets/angular/controllers/home/right_controller.js"></script>
             <script src="assets/angular/controllers/book/buy_controller.js"></script>
-
             <script src="assets/angular/controllers/recommend_controller.js"></script>
             <script src="assets/angular/controllers/home/shelf_controller.js"></script>
             <script src="assets/angular/controllers/share/share_controller.js"></script>
@@ -184,68 +151,43 @@
             <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
             <script src="assets/angular/controllers/book/timeline_controller.js"></script>
             <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
-
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
-
             <script src="assets/angular/services/search_service.js"></script>
             <script src="assets/angular/services/status_service.js"></script>
             <script src="assets/angular/services/feed_service.js"></script>
-
             <% if (@news || @news_group)%>
-                 <!-- <script src="assets/angular/vendors/jquery.min.js"></script>
-                // <script src="assets/angular/vendors/d3.min.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/d3_transform.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/extarray.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/misc.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/micro-observer.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/microplugin.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/bubble-chart.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/central-click.js"></script>
-                // <script src="assets/angular/vendors/bubble_chart/lines.js"></script>
-                // <script src="assets/angular/directives/d3_directives.js"></script> -->
             <% end %>
-
-            
             <% if @news_group %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/feed_controller.js"></script>
             <% end %>
-
             <div ng-if="info && !info.hide_signin">
                 <script src='assets/angular/services/website_service.js'></script>
                 <script src="assets/angular/controllers/signup_controller.js"></script>
             </div>
-
-           
-
             <% if @publishers %>
                 <script src='assets/angular/services/publishers_service.js'></script>
                 <script src='assets/angular/controllers/publishers_controller.js'></script>
             <% end %>
-
             <% if @personalised_suggestions %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/personalised_controller.js"></script>
             <% end %>
-
             <% if @network %>
                 <script src="assets/angular/controllers/network_controller.js"></script>
             <% end %>
-
             <% if @news %>
                 <script src="assets/angular/directives/news_directives.js"></script>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/news_controller.js"></script>
             <% end %>
-
             <% if @room %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/community/video_controller.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% end %>
-
             <% if @customise %>
                 <script src="assets/angular/controllers/customise/customise_controller.js"></script>
                 <script src="assets/angular/controllers/customise/info_controller.js"></script>
@@ -253,104 +195,77 @@
                 <script src="assets/angular/controllers/customise/books_controller.js"></script>
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
             <% end %>
-
             <% if @home || @signup%>
                 <script src="assets/angular/controllers/new_home_controller.js"></script>
             <% end %>
-
             <% if @filters  %>
-                
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
             <% end %>
-
             <% if @shelves %>
                 <script src="assets/angular/directives/room_directives.js"></script>
                 <script src="assets/angular/services/room_service.js"></script>
                 <script src="assets/angular/controllers/room/room_controller.js"></script>
             <% end %>
-
             <% if @author %>
                 <script src="assets/angular/directives/author_directives.js"></script>
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% end %>
-
             <% if @profile %>
                 <script src="assets/angular/directives/profile_directives.js"></script>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/customise/genres_controller.js"></script>
                 <script src="assets/angular/controllers/profile_controller.js"></script>
-                
             <% end %>
-
             <% if @search %>
                 <script src="assets/angular/controllers/search_page_controller.js"></script>
             <% end %>
         <% else %>
             <script src="assets/min/angular/site.min.js"></script>
-
             <% if (@news || @news_group)%>
-                <!-- // <script src="assets/min/angular/d3_group.min.js"></script>  -->
             <% end %>
-
             <div ng-if="info && !info.hide_signin">
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
-            
-          
-
             <% if @news_group %>
                 <script src="assets/min/angular/controllers/news_group_group.min.js"></script>
             <% end %>
-
             <% if @personalised_suggestions %>
                 <script src="assets/min/angular/controllers/personalised_group.min.js"></script>
             <% end %>
-
             <% if @publishers %>
                 <script src="assets/min/angular/controllers/publishers_group.min.js"></script>
             <% end %>
-
             <% if @network %>
                 <script src="assets/min/angular/controllers/network_group.min.js"></script>
             <% end %>
-
             <% if @news %>
                 <script src="assets/min/angular/controllers/news_group.min.js"></script>
             <% end %>
-
             <% if @room %>
                 <script src="assets/min/angular/controllers/community_group.min.js"></script>
             <% end %>
-
             <% if @customise %>
                 <script src="assets/min/angular/controllers/customise_group.min.js"></script>
             <% end %>
-
             <% if @book %>
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
             <% end %>
-
             <% if @home || @signup%>
                 <script src="assets/min/angular/controllers/new_home_group.min.js"></script>
             <% end %>
-
             <% if @filters %>
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% end %>
-
             <% if @shelves %>
                 <script src="assets/min/angular/controllers/room_group.min.js"></script>
             <% end %>
-
             <% if @author %>
                 <script src="assets/min/angular/controllers/author_group.min.js"></script>
             <% end %>
-
             <% if @profile %>
                 <script src="assets/min/angular/controllers/profile_group.min.js"></script>
             <% end %>
-
             <% if @search %>
                 <script src="assets/min/angular/controllers/search_group.min.js"></script>
             <% end %>
@@ -379,6 +294,5 @@
                 }
             </script>
         <% end %>
-       
     </body>
 </html>

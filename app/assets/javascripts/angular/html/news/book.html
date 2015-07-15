@@ -3,7 +3,7 @@
         <div class="dialog-content">
             <div ng-include src="'assets/angular/html/book/_overview.html'" 
             	class="white" ng-controller="specificBookController"></div>
-            <div ng-show="!info.loading" layout-padding>
+            <div ng-if="!info.loading" layout-padding>
             	<a ng-href="/book?id={{active_book.id}}">See More</a>
             </div>
         </div>

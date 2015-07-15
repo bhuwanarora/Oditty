@@ -4,7 +4,7 @@
             <md-list-item class="md-3-line">
                 <img ng-src="{{profile_user.image_url}}" class="circular"  onerror="this.src='/assets/user_profile.jpg'">
                 <div layout="column" layout-align="start start" class="md-list-item-text">
-                    <div class="bold" layout-padding ng-show="profile_user.first_name">{{::profile_user.first_name}}</div>
+                    <div class="bold" layout-padding ng-if="profile_user.first_name">{{::profile_user.first_name}}</div>
                     <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
                     <div ng-bind-html="feed.message" class="status_message big_title"></div>
                     <!-- <div ng-repeat="data in feed.data" layout-padding> -->

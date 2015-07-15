@@ -15,17 +15,17 @@
     </div>
 
     <md-progress-linear class="md-primary"
-            ng-show="info.custom_loading"
+            ng-if="info.custom_loading"
             md-mode="indeterminate">
     </md-progress-linear>
 
     <div class="less_important" layout="column" layout-padding
         ng-if="!constant.show_book">
         <div layout-padding class="important_title">
-            <div ng-show="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
+            <div ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
                 Popular Books</div>
-            <div ng-show="info.books.length">{{info.books.length}} results</div>
-            <div ng-show="info.books.length == 0">Scroll to see more.</div>
+            <div ng-if="info.books.length">{{info.books.length}} results</div>
+            <div ng-if="info.books.length == 0">Scroll to see more.</div>
         </div>
     </div>
 
@@ -33,7 +33,7 @@
         layout-align="center center" layout="column">
         <a ng-href="/author?q={{info.other_info.id}}"><h3 ng-bind-html="info.other_info.name"></h3></a>
         <div ng-bind-html="info.other_info.overview"></div>
-        <a ng-href="{{info.other_info.wiki_url}}" target="_blank" ng-show="info.other_info.wiki_url">Read more at Wiki</a>
+        <a ng-href="{{info.other_info.wiki_url}}" target="_blank" ng-if="info.other_info.wiki_url">Read more at Wiki</a>
     </div>
 
     <!-- {{info.books}} -->

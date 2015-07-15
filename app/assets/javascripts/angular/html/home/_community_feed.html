@@ -33,14 +33,14 @@
                 <div flex class="image_wrapper">
                     <img class="full_width"
                          ng-src="{{::communityFeed.image_url}}"
-                         ng-show="communityFeed.image_url"/>
+                         ng-if="communityFeed.image_url"/>
                 </div>
                 <a class="less_important" ng-href="{{::communityFeed.url}}"  target="_blank">
                     {{::communityFeed.url}}
                 </a>
             </div>
             <div ng-bind-html="::communityFeed.description" class="wrap" layout-padding
-                ng-show="communityFeed.description">
+                ng-if="communityFeed.description">
             </div>
         </div>
         

@@ -53,7 +53,7 @@
                     <md-card-content>
                         <section layout="column" layout-align="start">
                             <div ng-bind-html="feed.message" class="big_title"></div>
-                            <div class="less_important" ng-show="feed.created_at != null && feed.created_at">
+                            <div class="less_important" ng-if="feed.created_at != null && feed.created_at">
                                 {{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}
                             </div>
                         </section>

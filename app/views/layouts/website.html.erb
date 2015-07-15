@@ -73,7 +73,7 @@
       </div>
     </div>
     
-    <div ng-show="!loading" style="height:100%;">
+    <div ng-if="!loading" style="height:100%;">
       <div ng-view class="main_view animate-slow"></div>
       <%= csrf_meta_tags %>
       <%= render :partial => "shared/favicon" %>
@@ -88,6 +88,6 @@
         ga('send', 'pageview');
       </script>
     </div>
-    <div ng-show="!user.show_profile" ng-include="'/assets/angular/views/search/footer.html'"></div>
+    <div ng-if="!user.show_profile" ng-include="'/assets/angular/views/search/footer.html'"></div>
   </body>
 </html>
