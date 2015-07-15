@@ -27,7 +27,8 @@ module CommunitiesHelper
 						end
 					end
 				end			
-				unless communities_books.blank?	
+				unless communities_books.blank?
+					debugger
 					news_id = News.create(news_metadata).execute[0]["news_id"]
 					news_metadata["news_id"] = news_id
 					params = {:type => "News", :response => news_id}
