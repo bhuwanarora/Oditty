@@ -27,7 +27,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/author/guest_interview.html',
-    "<div ng-repeat=\"interview in ::data\" layout-padding><md-divider></md-divider><div layout-padding><div class=\"bold\">Q{{$index+1}}: {{::interview.question}}</div><div class=\"big_title\" ng-bind-html=\"::interview.interview_answer\"></div></div></div>"
+    "<div ng-repeat=\"interview in ::data\" layout-padding><md-divider></md-divider><div layout-padding><div class=\"bold\">Q{{$index+1}}: {{::interview.question}}</div><div class=\"description_card\" ng-bind-html=\"::interview.interview_answer\" layout-padding layout-margin></div></div></div>"
   );
 
 
