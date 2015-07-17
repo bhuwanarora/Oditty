@@ -1,29 +1,52 @@
 module CommunitiesHelper
+
+	def self.handle_one_community community
+		c_name = community['value']
+		c_books = CommunitiesHelper.fetch_books_database_net(c_name)
+		book_name,authors = (c_books[c_name]).transpose
+		output = {}
+		if CommunitiesHelper.has_required_book_count(book_name)	
+			output[:book] = c_books
+			output[:relevance] = {'relevance' => community['relevance'],
+						'relevanceOriginal' => community['relevanceOriginal']}
+			community_google_content = GoogleSearchHelper.search_multiple_types(c_name, 
+				[GoogleSearchHelper::SearchTypes[:video]])
+			c_videos = community_google_content[GoogleSearchHelper::SearchTypes[:video]]
+			if c_videos.present?
+				output[:video] = c_videos
+			end
+		end
+		output		
+	end
+
 	def self.create news_metadata
 		begin
 			if(news_metadata["available"]==false)
 				return
 			end
 			communities_books = []		
-			relevance = []	 # This is the relevance which we will use			
+			relevance = []	 # This is the relevance which we will use
+			communities_videos = {}
+			communities_web_urls = {}	
 			response = NewsHelper.fetch_tags news_metadata["news_link"]
+			debugger
 			puts response.red
 			if response.is_json? 
 				response = JSON.parse(response)			
 				communities = CommunitiesHelper.handle_communities response
-				wiki_url = {}
-				communities.each{|community| wiki_url[community['name']] = community['wiki_url']}
 				skip = 10000
+				debugger
 				timer = communities.length * skip -1
 				for i in 0..timer do
-					if (i % skip) == 0					
-						community_books = CommunitiesHelper.fetch_books_database_net(communities[i/skip]['value'])
-						temp = community_books[communities[i/skip]['value']]					
-						book_name,authors = temp.transpose
-						if CommunitiesHelper.has_required_book_count(book_name)						
-							relevance << {'relevance' => communities[i/skip]['relevance'],
-										'relevanceOriginal' => communities[i/skip]['relevanceOriginal']}
-							communities_books << community_books
+					if (i % skip) == 0
+						output = self.handle_one_community communities[i/skip]
+						if output.present?
+							community_name = communities[i/skip]['value']
+							communities_books << output[:book]
+							relevance << output[:relevance]
+							communities_videos[community_name] = output[:video]
+							communities_web_urls[community_name] = communities[i/skip]['url_list']
+							debugger
 						end
 					end
 				end			
@@ -32,9 +55,9 @@ module CommunitiesHelper
 					news_metadata["news_id"] = news_id
 					params = {:type => "News", :response => news_id}
 					IndexerWorker.perform_async(params)
-
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
-					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, wiki_url)
+					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, communities_web_urls)
+					CommunitiesHelper.map_videos communities_videos
 					News.new(news_metadata["news_id"]).add_notification.execute
 					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
 						type = "news"
@@ -84,12 +107,22 @@ module CommunitiesHelper
 		!books.blank? && books.length >= Constant::Count::MinimumCommunityBooks
 	end
 
-	def self.map_books communities_books, news_metadata, wiki_url = {}
+	def self.map_community_videos community, videos
+		Community.merge(community) + videos.map{|video| (Video.merge(video) + Video.merge_community)}.join(" WITH community ")
+	end
+
+	def self.map_videos communities_videos
+		clause = ""
+		communities_videos.each{|community,videos| clause += map_community_videos(community, videos) }
+		clause.execute
+	end
+
+	def self.map_books communities_books, news_metadata, communities_web_urls = {}
 		batch_size_cypher = 4
 		communities_books.each do |community_books,relevance|
 			community_books.each do |community, books_authors|
 				books,authors = books_authors.transpose
-				clause =  News.new(news_metadata["news_id"]).match + Community.merge(community, wiki_url[community]) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)
+				clause =  News.new(news_metadata["news_id"]).match + Community.merge(community, communities_web_urls[community]) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)
 	        	clause_temp = clause
 				books.each_with_index do |book,i|
 					authorlist_string = authors[i].sort.join('').search_ready						
