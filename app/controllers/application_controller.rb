@@ -12,14 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission
-    unless ($redis.get 'book_ids').present?
-      $redis.set 'book_ids', ""
-    end
-    session["init"] = true
-   if Constant::Id::Admin.include? session[:user_id]
-      @is_admin = true
-   end
-    puts "check_permission is_admin #{@is_admin} user_id #{session[:user_id]}".green
+    
   end
 
   protected
