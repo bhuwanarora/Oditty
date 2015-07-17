@@ -1,0 +1,99 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2 left_panel" 
+            md-component-id="left" 
+            ng-click="stop_propagation($event);" 
+            layout-align="space-between"
+            layout="column">
+	<section layout="column"
+            ng-controller="leftController">
+		<!-- <a href="/home" layout-padding class="pointer">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">home</i>
+                <div layout-padding>
+  			       Home
+                </div>
+		    </div>
+        </a>
+        <md-divider></md-divider> -->
+        <div class="less_important" layout="row" layout-align="center center" layout-padding>
+            <div>Book Discovery Options</div>
+        </div>
+        <a href="/rooms" layout-padding class="pointer">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">whatshot</i>
+                <div layout-padding>
+                    Rooms
+                </div>
+            </div>
+        </a>
+        <a href="/personalised_suggestions" layout-padding class="pointer" ng-hide="!info.hide_signin">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">accessibility</i>
+                <div layout-padding>
+                    Suggestions
+                </div>
+            </div>
+        </a>
+        <md-button layout-padding class="pointer" ng-disabled="!info.hide_signin" ng-hide="info.hide_signin">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">accessibility</i>
+                <div layout-padding>
+                    Suggestions
+                </div>
+            </div>
+        </md-button>
+        <a href="/filters" layout-padding class="pointer">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">filter_list</i>
+                <div layout-padding>
+                    Filters
+                </div>
+            </div>
+        </a>
+        <md-divider></md-divider>
+        <a href="/profile" layout-padding class="pointer" ng-hide="!info.hide_signin">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">account_circle</i>
+                <div layout-padding>
+                    Profile
+                </div>
+            </div>
+        </a>
+        <a href="/history" layout-padding class="pointer" ng-hide="!info.hide_signin">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">turned_in_not</i>
+                <div layout-padding>
+                    History
+                </div>
+            </div>
+        </a>
+        <md-button layout-padding class="pointer" ng-disabled="!info.hide_signin" ng-hide="info.hide_signin">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">account_circle</i>
+                <div layout-padding>
+                    Profile
+                </div>
+            </div>
+        </md-button>
+        <md-button layout-padding class="pointer" ng-disabled="!info.hide_signin" ng-hide="info.hide_signin">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">turned_in_not</i>
+                <div layout-padding>
+                    History
+                </div>
+            </div>
+        </md-button>
+        <md-divider></md-divider>
+        <a href="/blogs" layout-padding class="pointer">
+            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
+                <i class="material-icons light_grey_color">toys</i>
+                <div layout-padding>
+                    Blog
+                </div>
+            </div>
+        </a>
+    </section>
+    <section layout-padding layout="row" layout-align="space-between" ng-hide="!info.hide_signin">
+        <a href="/customise" class="less_important">Customise</a>
+        <a href="/signup" class="less_important">Logout</a>
+    </section>
+</md-sidenav>

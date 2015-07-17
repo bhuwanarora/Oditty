@@ -1,0 +1,48 @@
+
+
+<div ng-repeat="feed in personal_feed" flex="45" flex-sm="100">
+    <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
+    <md-divider></md-divider>
+</div>
+<div ng-if="reading_journeys" class="white" flex="45" flex-sm="100">
+	<b class="small-padding">{{user.first_name}}'s Reading Journey</b>
+	<md-divider></md-divider>
+	<md-list ng-if="!personal_feed || (personal_feed == 0)">
+		<md-card>
+			<md-card-content>
+				No recent activity.
+			</md-card-content>
+		</md-card>
+	</md-list>
+</div>
+
+<style>
+	.book_image_cover, .book_backup_cover, .slider_wrapper{
+        width: 80px;
+        height: 110px;
+        color: transparent;
+    }
+
+    .share_text{
+    	position: absolute;
+		z-index: 1;
+		color: white;
+		left: 50%;
+		top: 50%;
+		margin-left: -150px;
+		margin-top: -20px;
+		font-size: 1.2em;
+		font-family: sans-serif;
+		text-transform: uppercase;
+    }
+
+    .share_image{
+    	max-width: 500px;
+    }
+
+    .share_button{
+    	width: 500px;
+    	height: 100px;
+    }
+
+</style>

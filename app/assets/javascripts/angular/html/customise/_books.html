@@ -1,0 +1,105 @@
+<div layout="row" layout-align="center center" layout-padding>
+    <div class="big_title uppercase">Select books which have left a mark on you</div>
+</div>
+<!-- <div ng-show="did_you_mean">
+	Did you mean?
+</div> -->
+<div ng-controller="booksController" check-scroll-bottom="books_on_signup()" class="white" id="books">
+	<section layout="row">
+		<div flex="15" flex-md="10" hide-sm >
+			
+		</div>
+		<div flex-sm="100" flex-md="80" flex="70" layout="column">
+			<md-autocomplete
+				md-hide-dropdown="true"
+				class="search_book_autocomplete" 
+				flex layout-padding layout-margin
+		        md-search-text="search_tag.book"
+		        md-items="item in popular_books | filter:search_tag.book"
+		        md-search-text-change="search_books(search_tag.book)"
+		        md-selected-item-change="reset_books()"
+		        placeholder="Search books...">
+		    </md-autocomplete>
+
+			<div layout="row" layout-wrap layout-align="center">
+				<div ng-repeat="book in popular_books"
+					 layout-margin
+					 layout="column"
+					 class="relative book_container">
+					 <div ng-include src="'/assets/angular/html/shared/partials/book.html'"></div>
+				</div>
+			</div>
+		</div>
+		<div flex="15" flex-md="10" hide-sm >
+			
+		</div>
+	</section>
+</div>
+
+<style>
+
+	#books .bookmark_link{
+		color: white;
+		padding: 0px;
+		z-index: 2;
+	}
+
+	#books .cover,
+	#books .cover_gradient,	
+	#books .book_container{
+		width: 160px;
+	}
+
+	#books .cover,
+	#books .cover_gradient,
+	{
+		height: 220px;
+		z-index: 1;
+	}
+
+	#books .cover_gradient{
+		position: absolute;
+		z-index: 2;
+		background-color: rgba(0, 0, 0, 0.5);
+		top: 48px;
+  		height: 132px;
+	}
+
+	#books .info_button{
+		padding: 0px;
+		width: 160px;
+		height: 220px;
+		position: absolute;
+		/*box-shadow: inset 0 3px 8px #000000;*/
+		z-index: 2;
+	}
+
+	#books .info_button:hover{
+		border: 5px solid #ececec;
+	}
+
+
+	#books .circular_icon .icon-checkmark{
+		font-size: 2em;
+	}
+
+	#books .circular_icon{
+		width: 60px;
+		border-radius: 50%;
+		height: 60px;
+	}
+
+	#books .upper_slider_wrapper{
+		z-index: 3;
+		background-color: white;
+		height: 48px;
+  		position: absolute;
+  		left: 0px;
+  		width: 130px;
+	}
+
+	#books .search_book_autocomplete{
+		height: 54px;
+	}
+
+</style>

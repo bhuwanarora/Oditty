@@ -1,0 +1,45 @@
+.vertical_animate.ng-enter,
+.vertical_animate.ng-leave.ng-leave-active{
+	margin-top: -10px;
+	height: 0px;
+}
+
+.vertical_animate.ng-leave,
+.vertical_animate.ng-enter.ng-enter-active{
+	margin-top: 0px;
+	height: inherit;
+}
+
+.vertical_expansion.ng-enter,
+.vertical_expansion.ng-leave.ng-leave-active{
+	min-height: 0px;
+}
+
+.vertical_expansion.ng-leave,
+.vertical_expansion.ng-enter.ng-enter-active{
+	min-height: 200px;
+}
+
+#yield.ng-enter,
+#yield.ng-leave.ng-leave-active{
+	opacity: 1;
+}
+
+#yield.ng-leave,
+#yield.ng-enter.ng-enter-active{
+	opacity: 0;
+}
+
+.book_container.ng-leave.ng-leave-active,
+.book_container.ng-enter{
+	opacity: 0;
+	height: 0px;
+	overflow: hidden;
+}
+
+.book_container.ng-leave,
+.book_container.ng-enter.ng-enter-active{
+	opacity: 1;
+	height: 220px;
+	overflow: hidden;
+}

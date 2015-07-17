@@ -1,0 +1,18 @@
+<md-autocomplete flex
+    ng-hide="selected_book"
+    md-hide-dropdown="true"
+    md-selected-item="selectedItem1"
+    md-search-text="searchText"
+    md-items="item in info.status_books"
+    md-search-text-change="search_status_books(searchText)"
+    md-selected-item-change="on_select(item)"
+    md-item-text="display"
+    ng-keydown="handle_backspace($event)"
+    class="menu_search white"
+    ng-click="show_relevant_books()"
+    placeholder="Search a book...">
+    <span md-highlight-text="searchText" ng-bind-html="item.display"></span>
+</md-autocomplete>
+<div class="pointer" layout-padding ng-hide="selected_book">
+    <i class="material-icons">search</i>
+</div>

@@ -1,0 +1,25 @@
+<div class="white menu_details animate-fast vertical_animate md-whiteframe-z1 margin_top" layout="column">
+	<md-button aria-label="toggle_buy" ng-click="toggle_buy()" flex 
+		class="menu_details white clear animate-fast vertical_animate">
+		<div class="light_grey_color custom_title roboto" layout-padding>
+			<i ng-if="!hide_buy">Want to buy</i>
+			<i ng-if="hide_buy">Hide Buy Options</i>
+		</div>
+	</md-button>
+	<div ng-controller="buyController"
+		flex layout="column" layout-padding ng-if="hide_buy" 
+        ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
+</div>
+
+<div class="white menu_details animate-fast vertical_animate md-whiteframe-z1 margin_top" layout="column">
+	<md-button aria-label="toggle_borrow" ng-click="toggle_borrow()" flex 
+		class="menu_details white clear animate-fast vertical_animate">
+		<div class="light_grey_color custom_title roboto" layout-padding>
+			<i ng-if="!hide_borrow">Want to borrow</i>
+			<i ng-if="hide_borrow">Hide Borrow Options</i>
+		</div>
+	</md-button>
+	<div ng-controller="buyController"
+		flex layout="column" layout-padding ng-if="hide_borrow" 
+    	ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
+</div>

@@ -1,0 +1,18 @@
+<md-list-item class="menu_details margin_top white animate-fast vertical_animate md-whiteframe-z1"
+	layout="row" layout-align="space-between">
+	<div class="light_grey_color custom_title roboto" layout-padding>
+		<i>Currently on page</i>
+	</div>
+	<div layout="row">
+		<md-input-container class="page_count_input">
+            <input ng-model="current_page"/>
+        </md-input-container>
+        <div class="big_title" layout-padding>/</div>
+        <md-input-container class="page_count_input">
+            <input ng-model="page_count" />
+        </md-input-container>
+        <div class="pointer" ng-click="set_pages(current_page, page_count)" layout-padding>
+        	<i class="material-icons md-dark">check</i>
+        </div>
+	</div>
+</md-list-item>

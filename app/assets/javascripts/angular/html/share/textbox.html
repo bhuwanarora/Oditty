@@ -1,0 +1,32 @@
+<div layout="row" flex ng-if="info.show_share || info.embed_share" id="textbox">
+	<div layout="column" class="input_container" flex>
+		<!-- <md-input-container layout-padding layout-margin
+			style="font-family: 'Inconsolata', 'Courier New', serif;" 
+			class="textarea_container">
+	    </md-input-container> -->
+        <textarea name="text_area" class="textarea_container" 
+        		  ng-keypress="play_type_key($event)" 
+        		  set-focus="info.show_share || info.embed_share" 
+        		  ng-keydown="handle_text_input($event)"
+        		  placeholder="Share your reading journey..." 
+        		  ng-model="info.status">
+        </textarea>
+	</div>
+</div>
+<style>
+	#textbox md-input-container.md-icon-float>label{
+		margin-left: 0px;
+	}
+
+	#textbox .textarea_container{
+	    border: 1px solid #D8D8D8;
+  		margin-top: 10px;
+  		background-color: white;
+  		resize: vertical;
+  		height: 100px;
+	}
+
+	#textbox .textarea_container:focus{
+		outline: none;
+	}
+</style>

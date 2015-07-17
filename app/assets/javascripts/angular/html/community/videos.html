@@ -1,0 +1,24 @@
+<md-list ng-controller="videoController" layout="column"  layout-wrap layout-align="center">
+	<md-list-item ng-repeat="video in videos" layout-margin layout="row" flex layout-sm="column">
+		<a ng-href="{{video.url}}" target="_blank">
+			<img ng-src="{{video.thumbnail}}" class="video_thumb md-3-line">
+		</a>
+		<div layout="column" flex class="md-list-item-text">
+				<div ng-bind-html="video.title" class="important_title"></div>
+			<div layout="row" layout-align="space-between" layout-padding>
+				<div ng-bind-html="video.published_date | timestamp| date:'dd MMM'" class="less_important"></div>
+				<!-- <div ng-bind-html="Number((video.duration/60).toFixed(2))" class="less_important bold"></div> -->
+			</div>
+		</div>
+	</md-list-item>
+</md-list>
+<style>
+	.video_thumb{
+		height: 100px;
+	}
+
+	.video_container,
+	.video_thumb{
+		width: 150px;
+	}
+</style>

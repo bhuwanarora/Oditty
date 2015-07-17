@@ -1,0 +1,46 @@
+<div ng-controller="shareController" 
+    ng-if="info.mobile_search" 
+    class="share_container">
+    <!-- <md-button class="md-warn md-fab md-whiteframe-z3 fixed_share "
+                ng-hide="active_shelf || info.show_share"
+                aria-label="Share reading journey"
+                ng-click="show_share_page($event)"
+                ng-style="type_icon_pressed">
+        <span class="icon-book-alt2"></span>
+        <md-tooltip md-direction="left">
+              Share your reading journey
+        </md-tooltip>
+    </md-button> -->
+    <md-fab-speed-dial md-direction="left"
+        ng-class="'md-scale'"
+        class="fixed_share "
+        ng-hide="active_shelf || info.show_share"
+        aria-label="Share reading journey"
+        ng-style="type_icon_pressed">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn" ng-click="show_share_page($event)">
+                <i class="material-icons">send</i>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <section layout-margin>
+                <md-button aria-label="Currently Reading a Book" class=" md-raised md-button-clear "
+                    ng-click="show_share_page($event, 1)">
+                    Currently Reading a Book
+                </md-button>
+            </section>
+            <section layout-margin>
+                <md-button aria-label="Planning To Read a Book" class="md-raised md-button-clear"
+                    ng-click="show_share_page($event, 0)">
+                    Planning To Read a Book
+                </md-button>
+            </section>
+            <section layout-margin>
+                <md-button aria-label="Recently Read a Book" class="md-raised md-button-clear"
+                    ng-click="show_share_page($event, 2)">
+                    Recently Read a Book
+                </md-button>
+            </section>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div>

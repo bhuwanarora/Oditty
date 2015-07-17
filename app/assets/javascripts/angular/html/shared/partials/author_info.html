@@ -1,0 +1,12 @@
+<div class="follow_content" layout="row" ng-if="author">
+    <img ng-src="{{author.id | author_thumb}}" class="circular"
+    	 onerror="this.src='/assets/author_profile.jpg'">
+    <div layout-padding>
+        <a ng-href="/author?id={{::author.id}}">
+            <div class="big_title bold capitalize">{{::author.name}}</div>
+        </a>
+        <div class="less_important" ng-if="author.location">
+            <span>{{::author.location}} </span>
+        </div>
+    </div>
+</div>

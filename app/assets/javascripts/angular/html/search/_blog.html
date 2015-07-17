@@ -1,0 +1,16 @@
+<md-card>
+    <md-card-content>
+        <section layout="row" layout-align="space-between center">
+        </section><br/>
+        <section layout="column">
+            <div layout="column" layout-wrap class="side_padding">
+                <div class="big_title"><a ng-href="/room?id={{::result.id}}">{{::result.title}}</a></div>
+                <div class="less_important">Blog</div>
+                <div class="margin_top" ng-bind-html="::result.excerpt"></div>
+            </div>
+            <div layout="row" layout-align="start start">
+                <img ng-src="{{::result.image_url}}"/>
+            </div>
+        </section>
+    </md-card-content>
+</md-card>

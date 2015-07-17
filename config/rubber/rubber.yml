@@ -1,0 +1,51 @@
+app_name: readers-door
+app_user: app
+admin_email: "bhuwanarora0@gmail.com"
+timezone: US/Eastern
+domain: readersdoor.com
+cloud_providers:
+  aws:
+    region: ap-southeast-1
+    access_key: AKIAIRVORNBM7ELGRKUA
+    secret_access_key: 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
+    account: 672564320288
+    key_name: rd
+    key_file: "/Users/bhuwan/ReadersDoor/ec2/ssh/rd"
+    image_type: m1.small
+    image_id: ami-20702c72
+  # digital_ocean:
+  #   region: Singapore 1
+  #   image_id: Ubuntu 12.04.4 x64
+  #   image_type: 512MB
+  #   private_networking: true
+  # fog:
+  #   credentials:
+  #     provider: rackspace
+  #     rackspace_api_key: 'XXX'
+  #     rackspace_username: 'YYY'
+  #   image_type: 123
+  #   image_id: 123
+cloud_provider: aws
+web_port: 80
+web_ssl_port: 443
+web_tools_port: 8080
+web_tools_ssl_port: 8443
+security_groups:
+  default:
+    description: The default security group
+    rules:
+      - source_group_name: default
+        source_group_account: "#{cloud_providers.aws.account}"
+      - protocol: tcp
+        from_port: 22
+        to_port: 22
+        source_ips: [0.0.0.0/0]
+assigned_security_groups: [default]
+auto_security_groups: false
+isolate_security_groups: true
+prompt_for_security_group_sync: false
+private_networks: [0.0.0.0]
+packages: [postfix, build-essential, git-core, libxslt-dev, ntp]
+gems: [open4, aws-s3, bundler, [rubber, "#{Rubber.version}"]]
+stop_on_error_cmd: "function error_exit { exit 99; }; trap error_exit ERR"
+staging_roles: "#{known_roles.reject {|r| r =~ /slave/ || r =~ /^db$/ }.join(',')}"

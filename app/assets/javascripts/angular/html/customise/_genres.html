@@ -1,0 +1,19 @@
+<div layout="row" layout-align="center center" layout-padding>
+    <div class="big_title uppercase">Subjects that interest you</div>
+</div>
+<div ng-controller="genresController" class="white" style="padding-bottom: 40px;">
+	<section layout="row">
+		<div flex="15" flex-md="10" hide-sm></div>
+		<div flex="70"
+			 flex-md="80"
+			 flex-sm="100"
+			  layout="row" layout-wrap layout-align="center">
+			<div layout="column" layout-padding class="center_text" 
+				 style="width: 170px;" 
+				 ng-repeat="genre in info.genres  | orderBy:genre.name">
+				<div ng-include src="'/assets/angular/html/shared/partials/genre.html'"></div>
+			</div>
+		</div>
+		<div flex="15" flex-md="10" hide-sm></div>
+	</section>
+</div>

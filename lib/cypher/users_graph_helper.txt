@@ -1,0 +1,397 @@
+# ************************************************
+#RATE
+	MATCH (u:User), (b:Book) 
+	WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID 
+	CREATE UNIQUE (u)-[:RatingAction]->(m:RatingNode{book_id:BOOK_ID, 
+													title:b.title, 
+													author:b.author_name, 
+													user_id:USER_ID, 
+													name:u.email, 
+													isbn:b.isbn})-[:Rate]->(b) 
+	SET m.rating=RATING, m.timestamp=TIMESTAMP 
+	WITH u, b, m
+
+	OPTIONAL MATCH (x)-[r1:FeedNext{user_id:USER_ID}]->(m)-[r2:FeedNext{user_id:USER_ID}]->(y) 
+	FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
+		FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |	
+			CREATE  (a)-[:FeedNext{user_id:USER_ID}]->(b) 
+			DELETE r1, r2)) WITH u, b, m
+
+	MATCH (u)-[old:FeedNext]->(old_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(m)-[:FeedNext{user_id:USER_ID}]->(old_feed) 
+	DELETE old 
+	WITH u, b, m
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(m)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+	DELETE old WITH u, b, m
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f) 
+	WHERE f <> u 
+	WITH u, b, f
+
+	MATCH (f)-[old:Ego]-(old_ego) 
+	CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) 
+	DELETE old
+
+	SET b.rating_count = b.rating_count + 1  
+	SET u.rating_count = u.rating_count + 1
+# ************************************************
+
+
+
+# ************************************************
+#BOOKMARK BOOK
+	MATCH (u:User), (b:Book)
+	WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
+	CREATE UNIQUE (u)-[lr:Labelled]->(l:Label{name: BOOKMARK_NAME})-[:BookmarkedOn]->(bm: BookmarkNode{label:BOOKMARK_NAME, book_id:BOOK_ID, user_id:USER_ID})-[:BookmarkAction]->(b)
+	SET bm.title = b.title, 
+	bm.author = b.author_name,
+	bm.name = u.email, 
+	bm.isbn = b.isbn,
+	bm.timestamp = TIMESTAMP
+	WITH u, b, bm, l, lr
+
+	MATCH (u)-[old:FeedNext]->(type_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(bm)-[:FeedNext{user_id:USER_ID}]->(type_feed) 
+	DELETE old 
+	WITH u, b, bm, l, lr
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(bm)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+	DELETE old 
+	WITH u, b, bm, l, lr
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f) 
+	WHERE f <> u 
+	WITH u, b, f, l, lr 
+
+	MATCH (f)-[old:Ego]-(old_ego) 
+	CREATE UNIQUE (f)-[:Ego{user_id:ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego) 
+	DELETE old 
+
+	SET b.bookmark_count = b.bookmark_count + 1  
+	SET u.bookmark_count = u.bookmark_count + 1
+	SET l.bookmark_count = l.bookmark_count + 1
+	SET lr.bookmark_count = lr.bookmark_count + 1
+
+# ************************************************
+
+
+
+# ************************************************
+#REMOVE BOOKMARK
+
+	MATCH (u:User), (b:Book), (l:Label) 
+	WHERE ID(u)=1633203 AND ID(b)=1171522 AND l.name = "I OWN THIS BOOK" 
+	WITH u, b, l 
+
+	MATCH (u)-[lr:Labelled]->(l)-[r1:BookmarkedOn]->(r2:BookmarkNode)-[r3:BookmarkAction]->(b) 
+	DELETE r1, r3 
+	WITH u, b, lr, l, r2 
+
+	MATCH (s)-[f1:FeedNext{user_id:1633203}]->(r2)-[f2:FeedNext{user_id:1633203}]->(e) 
+	CREATE (s)-[:FeedNext{user_id:1633203}]->(e) 
+	DELETE f1, f2 
+	WITH u, b, lr, l, r2 
+
+	MATCH (s)-[b1:BookFeed{user_id:1633203}]->(r2)-[b2:BookFeed{user_id:1633203}]->(e) 
+	CREATE (s)-[:BookFeed{user_id:1633203}]->(e) 
+	DELETE b1, b2, r2 
+	WITH u, b, lr, l 
+
+	SET b.bookmark_count = CASE WHEN b.bookmark_count IS NULL THEN 0 ELSE b.bookmark_count - 1 END, 
+	u.bookmark_count = CASE WHEN u.bookmark_count IS NULL THEN 0 ELSE u.bookmark_count - 1 END, 
+	l.bookmark_count = CASE WHEN l.bookmark_count IS NULL THEN 0 ELSE l.bookmark_count - 1 END, 
+	lr.bookmark_count = CASE WHEN lr.bookmark_count IS NULL THEN 0 ELSE lr.bookmark_count - 1 END
+
+# ************************************************
+
+
+# ************************************************
+#GET BOOKMARKED BOOKS
+	MATCH (u:User)
+	WHERE ID(u)=USER_ID
+	WITH u
+	MATCH (u)-[:Labelled]->(l:Label)-[:BookmarkedOn]->(:BookmarkNode)-[:BookmarkAction]->(b:Book)
+	RETURN b, l
+
+# ************************************************
+
+
+# ************************************************
+# MARK AS READ
+
+	MATCH (u:User), (b:Book) 
+	WHERE ID(u)=2241449 AND ID(b)=1743400 
+	CREATE UNIQUE (u)-[:MarkAsReadAction]->(m:MarkAsReadNode{timestamp:1407005955, book_id:1743400, title:b
+.title, author:b.author_name, user_id:2241449})-[:MarkAsRead]->(b) 
+	SET m.name = u.name, m.email=u.email, m.isbn = b.isbn 
+	WITH u, b, m 
+
+	MATCH (u)-[old:FeedNext]->(old_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:2241449}]->(m)-[:FeedNext{user_id:2241449}]->(old_feed) 
+	DELETE old 
+	WITH u, b, m 
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:2241449}]->(m)-[:BookFeed{user_id:2241449}]->(old_feed) 
+	DELETE old 
+	WITH u, b, m 
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f:User) 
+	WITH u, b, f 
+	OPTIONAL MATCH (f)-[old:Ego]->(old_ego) 
+	WHERE old_ego <> u 
+	FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | 
+		FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | 
+			CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(f)}]->(p) 
+			DELETE old)) 
+	WITH u, b 
+	SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 1 ELSE toInt(b.readers_count) + 1 END, 
+	u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 1 ELSE toInt(u.book_read_count) + 1 END, 
+	u.total_count = CASE WHEN u.total_count IS NULL THEN 5 ELSE toInt(u.total_count) + 5 END
+
+# ************************************************
+
+
+
+
+
+
+
+# ************************************************
+# MARK AS UNREAD
+	MATCH (u:User), (b:Book) 
+	WHERE ID(u)=1633203 AND ID(b)=1160304 
+	WITH u, b 
+
+	MATCH (u)-[r1:MarkAsReadAction]->(m:MarkAsReadNode)-[r2:MarkAsRead]->(b) 
+	DELETE r1, r2 
+	WITH u, b, m 
+
+	OPTIONAL MATCH (u)-[r1:RatingAction]->(rn:RatingNode)-[r2:Rate]->(b) 
+	FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | 
+		FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | 
+			SET q.rating_count = CASE WHEN q.rating_count IS NULL THEN 0 ELSE toInt(q.rating_count) - 1 END,
+			  p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - 10 END, 
+			  p.rating_count = CASE WHEN p.rating_count IS NULL THEN 0 ELSE toInt(p.rating_count) - 1 END 
+			  DELETE r1, r2))  
+	WITH u, b, m, rn 
+
+	OPTIONAL MATCH (u)-[r1:TimingAction]->(tn:TimingNode)-[r2:Timer]->(b) 
+	FOREACH (p IN CASE WHEN r1 IS NULL THEN [] ELSE [u] END | 
+		FOREACH (q IN CASE WHEN r2 IS NULL THEN [] ELSE [b] END | 
+			SET p.total_count = CASE WHEN p.total_count IS NULL THEN 0 ELSE toInt(p.total_count) - 10 END 
+			DELETE r1, r2)) 
+	WITH u, b, m, rn, tn 
+
+	MATCH (x)-[r1:FeedNext{user_id:1633203}]->(m)-[r2:FeedNext{user_id:1633203}]->(y) 
+	CREATE  (x)-[:FeedNext{user_id:1633203}]->(y) 
+	DELETE r1, r2 
+	WITH u, b, m, rn, tn 
+
+	OPTIONAL MATCH (x)-[r1:FeedNext{user_id:1633203}]->(rn)-[r2:FeedNext{user_id:1633203}]->(y) 
+	FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
+		FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |  
+			CREATE  (a)-[:FeedNext{user_id:1633203}]->(b) 
+			DELETE r1, r2)) 
+	WITH u, b, m, rn, tn 
+
+	OPTIONAL MATCH (x)-[r1:FeedNext{user_id:1633203}]->(rn)-[r2:FeedNext{user_id:1633203}]->(y) 
+	FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
+		FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |      
+			CREATE  (a)-[:FeedNext{user_id:1633203}]->(b) 
+			DELETE r1, r2))  
+	WITH u, b, m, rn, tn 
+
+	MATCH (x)-[r1:BookFeed{user_id:1633203}]->(m)-[r2:BookFeed{user_id:1633203}]->(y) 
+	CREATE  (x)-[:BookFeed{user_id:1633203}]->(y) 
+	DELETE r1, r2, m WITH u, b, rn, tn  
+
+	OPTIONAL MATCH (x)-[r1:BookFeed{user_id:1633203}]->(rn)-[r2:BookFeed{user_id:1633203}]->(y) 
+	FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
+		FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |     
+			CREATE  (a)-[:BookFeed{user_id:1633203}]->(b) 
+			DELETE r1, r2, rn)) 
+	WITH u, b, tn 
+
+	OPTIONAL MATCH (x)-[r1:BookFeed{user_id:1633203}]->(tn)-[r2:BookFeed{user_id:1633203}]->(y) 
+	FOREACH (a IN CASE WHEN x IS NULL THEN [] ELSE [x] END | 
+		FOREACH (b IN CASE WHEN y IS NULL THEN [] ELSE [y] END |       
+			CREATE  (a)-[:BookFeed{user_id:1633203}]->(b) 
+			DELETE r1, r2, tn)) 
+	WITH u, b 
+	
+	SET b.readers_count = CASE WHEN b.readers_count IS NULL THEN 0 ELSE toInt(b.readers_count) - 1 END, 
+	u.book_read_count = CASE WHEN u.book_read_count IS NULL THEN 0 ELSE toInt(u.book_read_count) - 1 END, 
+	u.total_count = CASE WHEN u.total_count IS NULL THEN 0 ELSE toInt(u.total_count) - 5 END
+
+#ego feed update
+#update mark as read cache for the book
+#update popularity index for the book
+#update popularity index for the author
+
+#update mark as read cache for the user
+#update bookworm index for the user
+
+#update news feed for the book
+#update news feed for the user
+# ************************************************
+
+
+# ************************************************
+
+	MATCH (u:User), (b:Book)
+	WHERE ID(u)=USER_ID AND ID(b)=BOOK_ID
+	CREATE UNIQUE (u)-[:Commented]->(t:Tweet{tweet:tweet["tweet"], timestamp:TIMESTAMP})-[:CommentedOn]->(b)
+	WITH u, b, t
+
+	MATCH (u)-[old:FeedNext]->(old_feed)
+	CREATE UNIQUE (u)-[:FeedNext{user_id:USER_ID}]->(t)-[:FeedNext{user_id:USER_ID}]->(old_feed)
+	DELETE old
+	WITH u, b, t
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:USER_ID}]->(t)-[:BookFeed{user_id:USER_ID}]->(old_feed) 
+	DELETE old 
+	WITH u, b, t 
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f)
+	WHERE f <> u
+	WITH u, b, f
+
+	MATCH (f)-[old:Ego]-(old_ego)
+	CREATE UNIQUE (f)-[:Ego{user_id: ID(f)}]->(u)-[:Ego{user_id:ID(f)}]->(old_ego)
+	DELETE old
+
+	SET u.comment_count = u.comment_count + 1
+	SET b.comment_count = b.comment_count + 1
+
+# ************************************************
+
+
+
+# ************************************************
+#CLEAN TEST USER DATA
+
+	#delete news feed
+		MATCH (a)-[r:FeedNext]->(b)
+		WHERE a <> b
+		DELETE r
+
+		MATCH (a)-[r:Ego]->(b)
+		DELETE r
+
+	#delete book feed
+		MATCH (a)-[r:BookFeed]->(b)
+		WHERE a <> b
+		DELETE r
+
+	#delete rating actions
+		MATCH (:User)-[r1:RatingAction]->(r2:RatingNode)-[r3:Rate]->(:Book)
+		DELETE r1, r2, r3
+
+	#delete timing actions
+		MATCH (:User)-[r1:TimingAction]->(r2:TimingNode)-[r3:Timer]->(:Book)
+		DELETE r1, r2, r3
+
+	#delete bookmark actions
+		MATCH (:User)-[r1:Labelled]-(r2:Label)-[r3:BookmarkedOn]->(r4:BookmarkNode)-[r5:BookmarkAction]-(:Book)
+		DELETE r3, r4, r5
+
+	#delete markasread actions
+		MATCH (:User)-[r1:MarkAsReadAction]->(r2:MarkAsReadNode)-[r3:MarkAsRead]->(:Book)
+		DELETE r1, r2, r3
+
+	#delete comment actions
+		MATCH (:User)-[r1:Commented]->(r2:Tweet)-[r3:CommentedOn]->(:Book)
+		DELETE r1, r2, r3
+
+		MATCH (:User)-[r1:RecommendedTo]->()-[r2:RecommendedAction]->(r3:RecommendNode)-[r4:Recommended]->()
+		DELETE r1, r2, r3, r4
+
+	#delete edit actions
+		# MATCH (:User)-[r1:DataEdit]->(r2:ThumbRequest)-[r3:DataEditRequest]->(:Book)
+		# DELETE r1, r2, r3
+
+	#reset bookfeed
+		MATCH  (b:Book)
+		CREATE UNIQUE (b)-[:BookFeed]->(b)
+
+		MATCH (u:User)
+		CREATE UNIQUE (u)-[:FeedNext]->(u)
+		CREATE UNIQUE (u)-[:Ego{user_id:ID(u)}]->(u)
+		SET u.total_count = 0, u.bookmark_count = 0, u.book_read_count = 0, u.rating_count = 0
+
+		MATCH (u:User), (l:Label)
+		CREATE UNIQUE (u)-[:Labelled]->(l)
+
+# ************************************************
+#RECOMMEND
+	MATCH (u:User), (b:Book), (friend:User) 
+	WHERE ID(u)=1637498 AND ID(b)=1077018 AND ID(friend)=1633203 
+	CREATE UNIQUE (u)-[:RecommendedTo]->(friend)-[:RecommendedAction]->(rn:RecommendNode{book_id:1077018, title:b.title, author:b.author_name, user_id:1637498, friend_id:1633203, timestamp:1407261405, email:u.email, friend_email:friend.email, isbn:b.isbn})-[:Recommended]->(b) 
+	SET rn.name=u.name, rn.friend_name=friend.name
+	WITH u, friend, b, rn 
+
+	MATCH (u)-[old:FeedNext]->(old_feed) 
+	CREATE UNIQUE (u)-[:FeedNext{user_id:1637498}]->(rn)-[:FeedNext{user_id:1637498}]->(old_feed) 
+	DELETE old 
+	WITH u, friend, b, rn 
+
+	MATCH (b)-[old:BookFeed]->(old_feed) 
+	CREATE UNIQUE (b)-[:BookFeed{user_id:1637498}]->(rn)-[:BookFeed{user_id:1637498}]->(old_feed) 
+	DELETE old 
+	WITH u, friend, b, rn 
+
+	OPTIONAL MATCH (u)<-[:Follow]-(f:User) 
+	OPTIONAL MATCH (x1)-[r1:Ego{user_id:ID(f)}]->(u)-[r2:Ego{user_id:ID(f)}]->(x2) 
+	FOREACH (s IN CASE WHEN r1 IS NULL THEN [] ELSE [r1] END | 
+		FOREACH (t IN CASE WHEN r2 IS NULL THEN [] ELSE [r2] END | 
+			CREATE (x1)-[:Ego{user_id:ID(f)}]->(x2) 
+			DELETE s, t)) 
+	WITH u, friend, b, f 
+
+	OPTIONAL MATCH (f)-[old:Ego{user_id:ID(f)}]->(old_ego) 
+	FOREACH(p IN CASE WHEN old_ego IS NULL THEN [] ELSE [old_ego] END | 
+		FOREACH (q IN CASE WHEN f IS NULL THEN [] ELSE [f] END | 
+			CREATE (q)-[:Ego{user_id:ID(q)}]->(u)-[:Ego{user_id:ID(q)}]->(p) 
+			DELETE old)) 
+	WITH DISTINCT u, friend, b 
+
+	SET u.total_count = CASE WHEN u.total_count IS NULL THEN 1 ELSE u.total_count + 10 END, 
+	b.recommended_count = CASE WHEN b.recommended_count IS NULL THEN 1 ELSE b.recommended_count + 1 END
+
+
+#FB
+MERGE (user:User{fb_id:100001789393216}) 
+MERGE (user)-[:FacebookAuth]->(fu:FacebookUser) 
+SET user.thumb = CASE WHEN user.thumb IS NULL THEN "" ELSE user.thumb END 
+SET user.name = CASE WHEN user.name IS NULL THEN "Bhuwan Arora" ELSE user.name END  
+SET fu.id="100001789393216" 
+SET fu.first_name="Bhuwan" 
+SET fu.gender="male" 
+SET fu.last_name="Arora" 
+SET fu.link="https://www.facebook.com/bhuwanarora67" 
+SET fu.locale="en_US" 
+SET fu.name="Bhuwan Arora" 
+SET fu.timezone="5.5" 
+SET fu.updated_time="2014-09-01T21:26:58+0000" 
+SET fu.username="bhuwanarora67" 
+SET fu.verified="true" 
+SET fu.profile_status="0" 
+SET fu.logged="true" 
+CREATE UNIQUE (user)-[:FavoriteAthletes]->(:FavoriteAthlete{id: "20242388857",name: "Usain Bolt"})
+CREATE UNIQUE (user)-[:FavoriteAthletes]->(:FavoriteAthlete{id: "210372585775323",name: "Mukteshwar Marathon"}) 
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "119624318086241",name: "Christopher Johnson McCandless"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "103742866330458",name: "A. C. Bhaktivedanta Swami Prabhupada"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "190367266432",name: "Radhanath Swami [Official]"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "107974492563164",name: "Socrates"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "103795519659023",name: "Plato"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "112442595433810",name: "Hermann Hesse"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "511713478850955",name: "Emily Dickinson"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "112442595433810",name: "Hermann Hesse"})
+CREATE UNIQUE (user)-[:InspirationalPeople]->(:InspirationalPerson{id: "511713478850955",name: "Emily Dickinson"})
+CREATE UNIQUE (user)-[:Sports]->(:Sport{id: "218503464833351",name: "athletics"})  
+RETURN ID(user)

@@ -1,0 +1,10 @@
+<div layout="row" layout-sm="column" layout-md="column">
+    <div flex="50" layout="column" layout-padding flex-sm="100" flex-md="100"
+        ng-include src="'/assets/angular/html/author/feed.html'">
+    </div>
+    <div flex="5" hide-sm hide-md></div>
+    <guest-interview info="info" author="author" ng-if="author.id" 
+        flex="45" flex-sm="100" flex-md="100">
+    </guest-interview>
+    
+</div>

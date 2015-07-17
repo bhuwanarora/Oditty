@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="1442px" height="1442px" viewBox="0 0 1442 1442" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12002) - http://www.bohemiancoding.com/sketch -->
+    <defs>
+        <circle id="path-1" cx="396" cy="396" r="396"></circle>
+        <circle id="path-3" cx="396" cy="396" r="396"></circle>
+        <circle id="path-5" cx="396" cy="396" r="396"></circle>
+        <circle id="path-7" cx="396" cy="396" r="396"></circle>
+        <circle id="path-9" cx="396" cy="396" r="396"></circle>
+        <circle id="path-11" cx="396" cy="396" r="396"></circle>
+        <circle id="path-13" cx="396" cy="396" r="396"></circle>
+        <circle id="path-15" cx="396" cy="396" r="396"></circle>
+        <circle id="path-17" cx="396" cy="396" r="396"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Article_Welcome_Tile_B-(1)-Copy" sketch:type="MSLayerGroup" transform="translate(1.000000, 1.000000)">
+            <g id="Layer_1"></g>
+            <g id="Background" fill="#00BCD4" sketch:type="MSShapeGroup">
+                <g id="Background_2_">
+                    <rect id="Rectangle-path" x="0" y="0" width="1440" height="1440"></rect>
+                </g>
+            </g>
+            <g id="Artwork">
+                
+                <g id="Group" stroke="#FFFFFF" stroke-width="1.5" sketch:type="MSShapeGroup">
+                    <path d="M0,466 L1440,466" id="Shape" opacity="0.2"></path>
+                    <path d="M0,975 L1440,975" id="Shape" opacity="0.2"></path>
+                    <path d="M0,0 L1440,1440" id="Shape" opacity="0.2"></path>
+                    <path d="M1440,0 L0,1440" id="Shape" opacity="0.2"></path>
+                    <path d="M846,0 L846,1440" id="Shape" opacity="0.2"></path>
+                    <path d="M594,0 L594,1440" id="Shape" opacity="0.2"></path>
+                    <path d="M1440,846 L0,846" id="Shape" opacity="0.2"></path>
+                    <path d="M1440,594 L0,594" id="Shape" opacity="0.2"></path>
+                    <circle id="Oval" opacity="0.2" cx="720" cy="720" r="180"></circle>
+                    <path d="M0,720 L1440,720" id="Shape" opacity="0.4"></path>
+                    <path d="M720,0 L720,1440" id="Shape" opacity="0.4"></path>
+                    <circle id="Oval" opacity="0.4" cx="720" cy="720" r="396"></circle>
+                    <path d="M1008,378 C1037.2,378 1061,401.8 1061,431 L1061,1007 C1061,1036.2 1037.2,1060 1008,1060 L432,1060 C402.8,1060 379,1036.2 379,1007 L379,431 C379,401.8 402.8,378 432,378 L1008,378 L1008,378 Z" id="Shape" opacity="0.4"></path>
+                    <path d="M954,324 L486,324 C456.3,324 432,348.3 432,378 L432,1062 C432,1091.7 456.3,1116 486,1116 L954,1116 C983.7,1116 1008,1091.7 1008,1062 L1008,378 C1008,348.3 983.7,324 954,324 L954,324 Z" id="Shape" opacity="0.4"></path>
+                    <path d="M1062,432 L378,432 C348.3,432 324,456.3 324,486 L324,954 C324,983.7 348.3,1008 378,1008 L1062,1008 C1091.7,1008 1116,983.7 1116,954 L1116,486 C1116,456.3 1091.7,432 1062,432 L1062,432 Z" id="Shape" opacity="0.4"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

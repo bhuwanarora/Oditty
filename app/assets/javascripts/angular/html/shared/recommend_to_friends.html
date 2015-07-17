@@ -1,0 +1,21 @@
+<div class="important_title white" layout-padding>
+	Recommend this Book
+</div>
+<div class="menu_details book_page white" layout-padding>
+	<div layout="row" ng-if="users_list" class=" white">
+	    <md-autocomplete flex
+	    	md-hide-dropdown="true"
+	        md-items="item in users_list"
+	        md-search-text="searchFriend"
+	        md-search-text-change="search_friends(searchFriend)"
+	        class="menu_search no_shadow"
+	        placeholder="Search Friends...">
+	    </md-autocomplete>
+	    <div class="pointer" layout-padding>
+	    	<i class="material-icons">search</i>
+	    </div>
+	</div>
+	<div flex layout="column"
+	    ng-include src="'/assets/angular/html/share/partials/_recommend_options.html'">
+	</div>
+</div>

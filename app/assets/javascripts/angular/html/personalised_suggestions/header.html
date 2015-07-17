@@ -1,0 +1,49 @@
+<md-radio-group ng-if="!info.infinity && !constant.show_book" 
+    class="books_tab light_grey" layout-wrap
+    layout="row" ng-model="info.active_tab">
+   <!--  <md-radio-button value="small_read"
+    ng-disabled="info.loading"
+        class="custom_tab md-button md-button-clear" ng-click="show_small_reads()">
+        Easy Reads
+    </md-radio-button> -->
+    <md-radio-button value="favourite_author" 
+        ng-disabled="info.loading"
+        class="custom_tab md-button md-button-clear" ng-click="show_books_for_author()">
+        Author Suggestions
+    </md-radio-button>
+    <!-- <md-radio-button value="favourite_category" 
+        ng-disabled="info.loading"
+        class="custom_tab md-button md-button-clear" ng-click="show_books_for_category()">
+        Category Suggestions
+    </md-radio-button> -->
+    <!-- <md-radio-button value="favourite_era" 
+        ng-disabled="info.loading"
+        class="custom_tab md-button md-button-clear" ng-click="show_books_for_era()">
+        Era Suggestions
+    </md-radio-button> -->
+    <!-- <md-radio-button value="unexplored_subject" 
+        ng-disabled="info.loading"
+        class="custom_tab md-button md-button-clear" ng-click="show_unexplored_subject_books()">
+        Unexplored Category Suggestions
+    </md-radio-button> -->
+    <md-radio-button value="friend_shelves" 
+        ng-disabled="info.loading"
+        class="custom_tab md-button md-button-clear" ng-click="show_books_on_friend_shelves()">
+        Friends Suggestions
+    </md-radio-button>
+</md-radio-group>
+<style>
+    .custom_tab{
+        font-family: sans-serif;
+        font-size: 0.9em;
+        border-bottom: 1px solid #F5F5F5;
+        text-align: left;
+        font-weight: normal;
+    }
+
+    .md-checked{
+        font-weight: bold !important;
+    }
+
+
+</style>

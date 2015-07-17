@@ -1,0 +1,71 @@
+<div class="author_profile_header" >
+    <div layout="row">
+        <section flex="10" flex-md="5" hide-sm></section>
+        <div layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
+            class="md-whiteframe-z1 primary">
+            <div layout="row" layout-align="end start" layout-padding class="top_div">
+                <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
+                    ng-hide="!info.hide_signin"
+                    ng-class="{'md-raised': !author.status}" 
+                    ng-click="toggle_follow()">
+                    <span ng-if="!author.status">Follow</span>
+                    <span ng-if="author.status">Following</span>
+                </md-button>
+            </div>
+            <div ng-include src="'/assets/angular/html/author/info.html'" 
+                layout-align="center center" layout-padding></div>
+            <div layout-padding class="light_grey" layout-align="center center" layout="row" id="authorNav">
+                <a ng-href="#books" layout-padding 
+                    ng-class="get_active_class('books')">Books</a>
+                <a ng-href="#feed" layout-padding 
+                    ng-class="get_active_class('feed')">Feed</a>
+                <a ng-href="#interview" layout-padding 
+                    ng-class="get_active_class('interview')">Interview</a>
+                <a ng-href="#wiki" layout-padding 
+                    ng-class="get_active_class('wiki')">Wiki</a>
+                <a ng-href="#followers" layout-padding 
+                    ng-class="get_active_class('followers')">Followers</a>
+            </div>
+        </div>
+        <section flex="10" flex-md="5" hide-sm></section>
+    </div>
+</div>
+<style>
+    #authorNav a:hover{
+        text-decoration: none !important;
+        color: #333 !important;
+    }
+
+    .author_profile_header{
+        color: white !important;
+        box-shadow: none;
+    }
+
+    .author_profile_header h2{
+        padding: 0px;
+        margin: 0px 0px !important;
+    }
+
+    .author_profile_header h5{
+        margin: 5px 0px;
+    }
+
+    .profile_pic{
+        border-radius: 50%;
+        width: 200px;
+        height: 200px;
+        border: 5px solid #E5E5E5;
+        z-index: 1;
+    }
+
+    .author_profile_header .nav_links{
+        padding: 4px 8px !important;
+        font-size: 0.8em;
+    }
+
+    .author_profile_header .top_section{
+        min-height: 50px;
+    }
+
+
+</style>

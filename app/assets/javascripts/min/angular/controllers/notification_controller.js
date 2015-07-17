@@ -1,0 +1,1 @@
+homeApp.controller("notificationController",["$scope","feedService","$timeout",function(a,b,c){a.stop_propagation=function(a){a.stopPropagation()}}]);

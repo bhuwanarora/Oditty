@@ -1,0 +1,23 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2 details_panel" 
+            md-is-open="show_details"
+            md-component-id="right" 
+            ng-click="stop_propagation($event);"
+            layout-padding>
+    <div ng-include src="'/assets/angular/html/community/show.html'" class="white"></div>
+</md-sidenav>
+<style>
+    .details_panel{
+        width: 60vw;
+        min-width: 60vw;
+        position: fixed;
+    }
+
+    .news_cover{
+    	width: 100%;
+    }
+
+    .details_panel p{
+        margin: 0px;
+        line-height: 1.4em;
+    }
+</style>

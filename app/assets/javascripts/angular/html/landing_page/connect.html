@@ -1,0 +1,71 @@
+<div class="animate-fast top_pad" ng-if="show_content">
+	<div id="ConnectInner"></div>
+	<div layout="column" layout-fill>
+		<div layout="row" layout-align="center center" class="top_view"
+			style="background: url('https://s3-ap-southeast-1.amazonaws.com/rd-genres/home3.jpg');">
+			<div flex="5"></div>
+			<div flex-gt-md="50" flex-md="50" flex-sm="90">
+				<h3 class="title" layout-padding layout-wrap>
+					<div>Get connected</div> 
+					<div>with like minded</div>
+					<div>souls</div>
+				</h3>
+			</div>
+			<div flex="5"></div>
+			<div flex="40" layout="row" layout-align="end center" hide-sm>
+				<!-- <img src="assets/Connect.png" class="img_resize"> -->
+			</div>
+		</div>
+	
+		<div layout="row" layout-align="start start" class="foot_view">
+			<div layout="column" class="left_container" flex="25" flex-sm="15" layout-fill>
+				<div layout="row" layout-align="start start" class="list" ng-class="{'site_color': nested_page_id == 1}">
+					<span flex="20" flex-sm="100" flex-md="10" class='icon-' show-sm hide-lg></span>
+					<span flex="80" flex-md="90" hide-sm>Communities</span>
+				</div>
+				<div layout="row" layout-align="start start" class="list" ng-class="{'site_color': nested_page_id == 2}">
+					<span flex="20" flex-sm="100" flex-md="10" class='icon-' show-sm hide-lg></span>
+					<span flex="80" flex-md="90" hide-sm>Authors</span>
+				</div>
+				<div layout="row" layout-align="start start" class="list" ng-class="{'site_color': nested_page_id == 3}">
+					<span flex="20" flex-sm="100" flex-md="10" class='icon-' show-sm hide-lg></span>
+					<span flex="80" flex-md="90" hide-sm>Friends</span>
+				</div>
+			</div>
+			
+			<div ng-if="current_page_id == 3" flex="75" flex-sm="85" layout="column" 					
+					layout-fill>
+				<div ng-if="nested_page_id == 1" class="animate-fast" layout="column" 
+						layout-fill layout-padding>
+			  		<div class="description" layout-wrap layout-padding>
+						Connect and discuss with people on a common topic.
+					</div>
+					<md-divider layout-fill></md-divider>
+					<div layout-padding>
+			    		<img src="assets/community.png" class="img_fullsize">
+			  		</div>
+				</div>
+				<div ng-if="nested_page_id == 2" class="animate-fast" layout="column" 
+						layout-fill layout-padding>
+					<div class="description" layout-wrap layout-padding>
+						Follow and reach out to contemporary authors.
+					</div>
+					<md-divider layout-fill></md-divider>
+					<div layout-padding>
+			    		<img src="assets/author_post.png" class="img_fullsize">
+			  		</div>
+				</div>
+				<div ng-if="nested_page_id == 3" class="animate-fast" layout="column" 
+						layout-fill layout-padding>
+					<div class="description"  layout-wrap layout-padding>
+						Stay updated with your friends reading journeys.
+					</div>
+					<md-divider layout-fill></md-divider>
+					<div layout-padding>
+		    			<img src="assets/friends.png" class="img_fullsize"/>
+		  			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,151 @@
+<div class="md-whiteframe-z3" ng-include src="'/assets/angular/html/new_home/filters.html'" id="homefilters">
+</div>
+<section layout="row" layout-wrap class="feed_margin">
+    <div flex="10" flex-md="5" hide-sm></div>
+    <div flex="80" flex-md="90" flex-sm="100" layout="column" layout-padding>
+        <suggest-communities></suggest-communities>
+    </div>
+    <div flex="10" flex-md="5" hide-sm></div>
+</section>
+<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
+<div class="small_title" layout="column" layout-align="center center">
+    <div class="less_important" layout-padding>Discover yourself through books, friends and the world.</div>
+    <div class="less_important" layout-padding>© Singularity Technologies Pvt. Ltd.</div>
+</div>
+
+
+<style>
+    #homefilters md-autocomplete input{
+        cursor: pointer;
+    }
+
+    #homefilters md-autocomplete input:focus{
+        outline: 1px solid #2196F3;
+    }
+
+    #homefilters md-autocomplete input .md-placeholder{
+        color: #333 !important;
+    }
+
+    .subheaderdemoBasicUsage .face{
+        border-radius: 30px;
+        border: 1px solid #ddd;
+        width: 48px;
+        margin: 16px; 
+    }
+
+    .filters_header{
+        position: relative;
+        margin-top: -56px;
+        padding: 7px;
+    }
+
+    md-autocomplete{
+        box-shadow: none;
+        border: 1px solid #E8E8E8;
+        margin-right: 4px;
+    }
+
+    .autocompletedemoBasicUsage md-content{
+        min-height: 500px; 
+    }
+
+    .md-subheader:not(.md-sticky-no-effect).md-sticky-clone{
+        margin: 0px !important;
+    }
+
+    md-tab md-tab-label{
+        overflow: initial;
+    }
+
+    .md-button{
+        text-transform: none !important;
+        color: inherit;
+    }
+
+    .infinity_page .custom_title{
+        font-size: 1.2em;
+        font-family: sans-serif;
+    }
+
+    .video_wrapper{
+        position: absolute;
+        width: 100vw;
+        overflow: hidden;
+        top: 50px;
+    }
+
+    .init_filters_header,
+    .video_wrapper{
+        height: 73vh;
+    }    
+
+    @media (min-width:1000px)and (max-width:2200px){
+        md-autocomplete{
+            min-width: 300px;
+        }
+
+        .genres_autocomplete{
+            min-width: 400px;
+        }
+
+        .time_autocomplete{
+            min-width: 120px;
+            width: 120px;
+        }
+
+        .video_wrapper video,
+        .video_wrapper img{
+            width: 100%;
+        }
+
+    }
+
+    @media (min-width:600px)and (max-width:1000px){
+        md-autocomplete
+        {
+            min-width: 200px;
+        }
+
+        .genres_autocomplete{
+            min-width: 80%;
+        }
+
+        .video_wrapper video,
+        .video_wrapper img{
+            width: 100%;
+            min-height: 73vh;
+        }
+
+    }
+
+    @media (max-width: 590px)and (max-height:1199px){
+        md-autocomplete,
+        .genres_autocomplete{
+            min-width: 300px;
+        }
+
+        .time_autocomplete{
+            min-width: 300px;
+            width: 120px;   
+        }
+
+        .full_width_sm{
+            min-width: 300px;
+        }
+
+        .video_wrapper video,
+        .video_wrapper img{
+            height: 100%;
+            min-height: 73vh;
+        }
+
+    }
+
+    .filters_header md-autocomplete ul li{
+        line-height: 16px;
+        padding: 10px 15px;
+        height: inherit;
+    }
+
+</style>

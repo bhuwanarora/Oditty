@@ -1,0 +1,25 @@
+<div layout="row" layout-align="space-between">
+	<div class="status_option animate-fast"
+		layout-align="center center"
+		layout-padding
+		ng-click="make_text_active()">
+		<div class="less_important center_text" layout="column" ng-class="{'dark_blue_color': text_selected}">
+			<i class="material-icons" layout-padding>edit</i>
+			Text
+		</div>
+	</div>
+	<div layout="row">
+		<div class="status_option animate-fast" ng-if="!is_book"
+			ng-repeat="option in reading_options"
+			layout-align="center center"
+		   	layout-padding ng-click="make_active(option.id)">
+		   	<div class="center_text less_important" 
+		   		ng-class="{'dark_blue_color': (info.reading_status_value == option.id)}" layout="column">
+		   		<i class="material-icons" layout-padding>{{option.icon}}</i>
+		   		<div>
+					{{option.name}}
+		   		</div>
+		   	</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<div class="white round_corners md-whiteframe-z1">
+	<div class="important_title" layout-padding>
+		Trending
+	</div>
+	<div ng-repeat="community in suggest_communities" layout="column" layout-padding>
+		<div layout="row">
+			<div layout-padding><i class="material-icons">trending_up</i></div>
+			<div layout='column'>
+				<a ng-href="/room?id={{::community.id}}" layout="column">
+					<div ng-bind-html="::community.name" class="capitalize"></div>
+				</a>
+				<div class="less_important">
+					{{::community.view_count}} Views
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

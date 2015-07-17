@@ -1,0 +1,216 @@
+body.landing-page {
+  background-image: url('bg.jpg');
+  height: 100%;
+}
+
+.landing-page .subscribe{
+  height: 100%;
+  width: 50%;
+  float: left;
+  margin-left: 25%;
+  background-image: url('collage_pg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.landing-page .subscribe .details{
+  width: 100.5%;
+  height: 100%;
+  background-image: url('bg.jpg');
+  opacity: 0.9;
+  box-shadow: inset 29px 0px 25px -25px rgba(0,0,0,0.45), inset -29px 0px 25px -25px rgba(0,0,0,0.45);
+}
+
+.landing-page .subscribe .details h2{
+  position: absolute;
+  height: 10%;
+  padding: 1% 0% 1% 0%;
+  width: 50%;
+  margin-top: 8%;
+  letter-spacing: 0.1em;
+  font-size: 1.5em;
+  font-weight: 100;
+  font-family: -webkit-pictograph;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.landing-page .subscribe .details .social_subscribe{
+  position: absolute;
+  width: 16%;
+  height: 1%;
+  padding: 18%;
+  padding-top: 1%;
+  margin-top: 16%;
+}
+
+.landing-page .subscribe .details .header .success{
+  position: absolute;
+  width: 46%; 
+  margin-top: 10%;
+  padding: 2%;
+  text-align: center;
+  font-family: serif;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.landing-page .subscribe .details .social_subscribe .email_subscription{
+  background: url('bg.jpg');
+  width: 200%;
+  height: 25%;
+  font-size: 1.6em;
+  padding: 4%;
+  text-align: center;
+  margin-left: -60%;
+  margin-top: 4%;
+  font-family: -webkit-pictograph;
+  color: rgba(0, 0, 0, 0.64);
+  border-bottom-color: rgba(0, 0, 0, 0.4);
+  outline: none;
+  border-width: 0px;
+}
+
+.landing-page .quotes{
+  position: absolute;
+  text-align: center;
+  width: 42%;
+  margin: 35% 0% 0% 0%;
+  padding: 4%;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: serif;
+  font-weight: 100;
+  line-height: 2em;
+}
+.landing-page .quotes .quote{
+  font-size: 1.4em !important;
+}
+.landing-page .quotes .author{
+  font-size: 1.2em !important;
+}
+.landing-page .tab-right:hover{
+  background: none !important;
+}
+
+.landing-page .brand_details{
+  height: 100%;
+  width: 25%;
+  float: right;
+}
+
+.landing-page #menu .site-nav li a:hover {
+  text-decoration: none;
+  background-image: -webkit-linear-gradient( top, hsla(0, 0%, 0%, 0.3), hsla(0, 0%, 0%, 0.3) );
+  background-image:    -moz-linear-gradient( top, hsla(0, 0%, 0%, 0.3), hsla(0, 0%, 0%, 0.3) );
+  background-image:         linear-gradient( top, hsla(0, 0%, 0%, 0.3), hsla(0, 0%, 0%, 0.3) );
+}
+
+.landing-page #menu .site-nav .nav-chocolate a { 
+  background: rgb(86, 138, 175);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 42%;
+}
+
+.landing-page #menu .site-nav .nav-cornflowerblue a { 
+  background: rgb(57, 116, 158);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 38%;
+}
+
+.landing-page #menu .site-nav .nav-darkcyan a { 
+  background: rgb(27, 59, 82); 
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 42%;
+}
+
+.landing-page #menu .site-nav .nav-dimgrey a { 
+  background: rgb(111, 161, 195);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 32%;
+}
+
+.landing-page #menu .site-nav .nav-brown a { 
+  background-color: rgb(139, 187, 219); 
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 27%;
+}
+
+.landing-page #menu .site-nav .nav-yellowgreen a { 
+  background-color: rgb(166, 199, 221);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 28%;
+}
+
+.landing-page #menu .site-nav .nav-my a { 
+  width: 45%;
+  margin-top: 5%;
+  font: initial;
+  padding: 2%;
+  margin-left: 1%;
+}
+
+.landing-page #menu .site-nav .nav-darkseagreen a { 
+  background: rgb(42, 93, 129);; 
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 2px;
+  width: 50%;
+}
+
+.landing-page #menu .site-nav li {
+  list-style: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  height: 1%;
+  line-height: 2em;
+  text-align: left;
+}
+
+.landing-page #menu .site-nav {
+  display: block;
+  box-shadow: none;
+}
+
+.bookmark{
+  box-shadow: 6px 2px 10px -1px rgba(0, 0, 0, 0.9) inset;
+  font-family: serif;
+}
+
+
+.site-nav,
+.site-nav li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#menu .site-nav {
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 2em;
+}
+
+#menu .site-nav li a {
+  display: block;
+  padding-left: 4%;
+  padding-right: 1%;
+  position: relative;
+}
+
+#menu .site-nav li a:hover {
+  text-decoration: none;
+}
+
+#menu .site-nav li a:before {
+  content: '';
+  display: block;
+  position: absolute;
+}

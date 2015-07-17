@@ -1,0 +1,154 @@
+.header{
+	margin-top: 50px;
+}
+
+.books{
+	width: 400px;
+}
+
+.book_name, .highlighter{
+	background-color: #918FB5;
+	color: white;
+	padding: 2px;
+	margin: 2px;
+	cursor: crosshair;
+}
+
+.search_box{
+	width: 180px;
+	height: 20px;
+}
+
+.active{
+	background-color: rgba(62, 122, 229, 0.15);
+}
+
+.delete{
+	cursor: pointer;
+}
+
+.hidden_input{
+	display: none;
+}
+
+.limit_height{
+	max-height: 50px;
+	overflow-y: scroll;
+}
+
+.limit_height:hover{
+	max-height: 600px;
+}
+
+.vertical_padder{
+	height: 100px;
+}
+
+tr:hover{
+	background-color: #F3F3F3;
+}
+
+td{
+	cursor: default;
+}
+
+table img{
+	width: 50px;
+}
+
+.cover_photo{
+	width: 150px;
+	margin: 5px;
+	cursor: pointer;
+	border: 4px solid transparent;
+}
+
+.active_photo{
+	border: 4px solid #427def;
+}
+
+.main-header{
+	position: fixed;
+	top: 0px;
+	padding: 10px;
+	background-color: #427fed;
+	float: left;
+	left: 0px;
+	right: 0px;
+}
+
+.main_footer{
+	position: fixed;
+	bottom: 0px;
+	padding: 10px;
+	background-color: #F5F5F5;
+	left: 0px;
+	right: 0px;
+}
+
+.main_footer input{
+	width: 500px;
+	padding: 7px;
+}
+
+.main_footer .footer_status{
+	float: right;
+	color: #427fed;
+	font-weight: bold;
+}
+
+.main-header a{
+	color: white;
+	text-decoration: none;
+	margin-left: 10px;
+}
+
+table{
+	margin-top: 40px;
+}
+
+a, .site_color{
+	color: #427fed;
+	cursor: pointer;
+}
+
+.user_grid{
+	list-style: none;
+	padding: 10px;
+	background-color: #F5F5F5;
+	width: 47%;
+	display: block;
+	float: left;
+	overflow-x: scroll;
+	margin: 3px;
+	max-height: 300px;
+}
+
+.remove_trend{
+	color: red;
+	cursor: pointer;
+}
+
+.thumb{
+	width: 30px;
+}
+
+.inactive{
+	opacity: 0.4;
+}
+
+#datepicker{
+	margin-top: 100px;
+	width: 200px;
+	font-size: 1.2em;
+}
+
+.inline_block{
+	float: left;
+	display: inline-block;
+	padding: 20px;
+}
+
+.right{
+	float: right;
+}

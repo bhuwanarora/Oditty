@@ -1,0 +1,17 @@
+MATCH (a)-[r:FeedNext]->(b) 
+DELETE (r)
+WITH a, b
+MATCH (u:User)-[r1:MarkAsReadAction]->(r2)-[r3:MarkAsRead]->() 
+DELETE r1, r2, r3
+WITH a, b
+MATCH (u:User)-[r1:RatingAction]->(r2)-[r3:Rate]->() 
+DELETE r1, r2, r3
+WITH a, b
+MATCH (u:User)-[r1:Commented]->(r2)-[r3:CommentedOn]->() 
+DELETE r1, r2, r3
+WITH a, b
+MATCH (u:User)-[r1:TimingAction]->(r2)-[r3:Timer]->() 
+DELETE r1, r2, r3
+WITH a, b
+MATCH (u:User)
+CREATE UNIQUE (u)-[:FeedNext]->(u)

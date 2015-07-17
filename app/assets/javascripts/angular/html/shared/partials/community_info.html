@@ -1,0 +1,13 @@
+<div class="follow_content" layout="row" ng-if="community">
+    <img ng-src="{{::community.image_url}}" class="square">
+    <div layout-padding>
+        <a ng-href="/room?id={{::community.id}}">
+            <div class="big_title bold capitalize">{{::community.name}}</div>
+        </a>
+        <div class="less_important" ng-if="community.view_count && community.view_count != 0">
+            <span>{{::community.view_count}} </span>
+            <span ng-if="community.view_count == 1">View</span>
+            <span ng-if="community.view_count != 1">Views</span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div layout="row" ng-class="{'white md-whiteframe-z1': !show_shelf, 'dark_grey': show_shelf}" 
+	ng-click="toggle()"
+	layout-align="space-between">
+	<div layout-padding layout-wrap flex 
+		ng-class="{'bold': show_shelf}">
+		{{shelf.shelf}}
+	</div>
+	<div layout-padding>
+		<i class="material-icons less_important" ng-show="!show_shelf">add</i>
+		<i class="material-icons less_important" ng-show="show_shelf">close</i>
+	</div>
+</div>
+<div ng-show="show_shelf" layout-padding layout-margin class="dark_grey">
+	<div layout="row" layout-align="space-between" layout-padding>
+		<div></div>
+		<md-button class="md-button-clear md-raised md-warn" 
+					ng-click="add_books_to_shelf(shelf, $event)">
+			<span>Add Book</span>
+			
+		</md-button>
+	</div>
+	<div ng-init="books = shelf.books" layout-padding
+		 ng-include src="'/assets/angular/html/shared/partials/spine.html'"></div>
+</div>
+<md-divider></md-divider>

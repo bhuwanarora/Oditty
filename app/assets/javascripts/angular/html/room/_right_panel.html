@@ -1,0 +1,14 @@
+<md-progress-linear class="md-primary"
+                    ng-show="shelf_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
+<section layout-padding>
+	<article-shelf shelf="shelf"
+		ng-repeat="shelf in articles_grouped_by_shelves">
+	</article-shelf>
+</section>
+<style>
+	.grid_content{
+		height: 200px !important;
+	}
+</style>

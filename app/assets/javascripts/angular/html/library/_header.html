@@ -1,0 +1,59 @@
+<div ng-controller="filtersController" class="full_width">
+    <div layout="row" layout-align="space-between center"  layout-sm="column"
+         ng-include src="'/assets/angular/html/library/shared/_filters.html'" layout-md="row" layout-wrap
+         class="filter_header" flex></div>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2 left_nav" md-component-id="sort_by_sidenav">
+        <br/>
+        <div flex="100" ng-include src="'/assets/angular/html/library/shared/_left_panel.html'" layout-fill></div>
+    </md-sidenav>
+
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2 right_nav" md-component-id="alphabets_sidenav">
+        <div flex="100" ng-include src="'/assets/angular/html/library/shared/_right_panel.html'" layout-fill></div>
+    </md-sidenav>
+</div>
+
+
+<style>
+    .filter_header{
+        z-index: 1;
+        min-height: 70px;
+    }
+
+    .filters_header md-autocomplete ul li{
+        line-height: 16px;
+        padding: 10px 15px;
+        height: inherit;
+    }
+
+    .icon_angle{
+        position: absolute;
+        right: 15px;
+        top: 15px;
+    }
+
+    .relative{
+        position: relative;
+    }
+
+    .clear_button{
+        z-index: 1;
+        height: 38px;
+        color: #8B8B8B !important;
+    }
+    
+    .left_nav{
+        min-width: 250px;
+        width: 250px;
+        margin-top: -10px !important;
+        position: fixed !important;
+    }
+
+    .right_nav{
+        min-width: 50px;
+        width: 50px;
+        margin-top: -10px !important;
+        position: fixed !important;
+        margin-right: 50px;
+    }
+
+</style>

@@ -1,0 +1,50 @@
+<md-card class="social">
+    <md-card-content>
+        <section layout="row" layout-align="start">
+            <div layout="row">
+                <img ng-src="{{user.image_url}}" class="profile_thumb circular" onerror="this.src='/assets/user_profile.jpg'">
+                <div layout="column" layout-align="start start">
+                    <h2>Shekhar Sahu</h2>
+                    <div>Shared on 10Feb</div>
+                </div>
+            </div>
+        </section>
+        <div class="side_padding">
+            Tastiest Books in recent times...hed Out's breakthrough song and the first single from Paracosm share the
+        </div>
+        <div class="social_content" layout="row">
+            <div class="padding" flex="30">
+                <img src="https://s-media-cache-ak0.pinimg.com/236x/8f/af/5e/8faf5e39ee67c2c8e6c073a3f0af6ddf.jpg" class="book_thumb">
+            </div>
+            <div flex="70">
+                <h3>To Kill a Mocking bird</h3>
+                <div>By Harper Lee</div>
+                <p>
+                    The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+                    two most important words in Ernest Greene's musical language: feel it. It's a simple request, as    well...
+                </p>
+            </div>
+        </div>
+    </md-card-content>
+    <md-card-content class="footer" ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
+    </md-card-content>
+</md-card>
+<style>
+    .profile_thumb{
+        width: 70px;
+        height: 70px;
+        padding: 10px;
+    }
+
+    .social_content{
+        order: 1;
+    }
+
+    .social h2{
+        margin: 16px 0px 0px 0px !important;
+    }
+
+    .social .book_thumb{
+        width: 100%;
+    }
+</style>

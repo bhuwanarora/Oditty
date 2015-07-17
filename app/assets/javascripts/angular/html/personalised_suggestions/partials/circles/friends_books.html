@@ -1,0 +1,12 @@
+<div ng-if="friends">
+	<d3-click-circles news-tags="friends" 
+        on-click="refresh_data(active_item)"
+        on-center-click="goto_user_profile()" 
+        community-page="true"
+        ng-if="friends.length > 0">
+        <div class="bubbleChart animate-fast"></div>
+    </d3-click-circles>
+</div>
+<a ng-href="/network?q=1" ng-if="!friends" class="less_important" layout-padding>
+	<br/>You don't have enough friends. Follow more people.<br/><br/>
+</a>

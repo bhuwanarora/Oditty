@@ -1,0 +1,80 @@
+<div class="profile_header white round_corners">
+    <section layout="column" layout-wrap>
+        <div layout="column">
+            <div layout-padding>
+                <div class="big_title capitalize bold" ng-bind-html="active_tag.name"></div>
+                <div layout="row" layout-column ng-hide="hide_follow_links" class="less_important">
+                    <div ng-if="active_tag.view_count && active_tag.view_count != 0">
+                        <span>{{active_tag.view_count}} </span>
+                        <span ng-if="active_tag.view_count == 1">View</span>
+                        <span ng-if="active_tag.view_count != 1">Views</span>
+                    </div>
+                </div>
+            </div>
+            <img ng-src="{{active_tag.image_url}}" class="profile_pic" />
+        </div>
+        <div layout="row" layout-align="end start" layout-padding class="top_section">
+             <md-button aria-label="toggle_follow" ng-class="{'md-raised': !active_tag.status}" 
+                class="md-warn md-button-clear" ng-click="toggle_follow()">
+                <span ng-if="!active_tag.status">Join Room&nbsp;</span>
+                <span ng-if="active_tag.status">Joined</span>
+                <span ng-if="!active_tag.status" class="icon-user-add"></span>
+            </md-button>
+        </div>
+        <div layout="row" layout-align="start center">
+            <a title="facebook" ng-if="active_tag.facebook_url"
+                class="md-whiteframe-z1 facebook" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="{{::active_tag.facebook_url}}">
+                <div>
+                    <span class="icon-facebook"></span>
+                </div>
+            </a>
+            <a title="twitter" ng-if="active_tag.twitter_handle" 
+                class="md-whiteframe-z1 twitter" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="http://twitter.com/{{::active_tag.twitter_handle}}">
+                <div>
+                    <span class="icon-twitter"></span>
+                </div>
+            </a>
+        </div>
+
+        <div class="important_title" ng-if="(active_tag.users && active_tag.users.length > 0) || (active_tag.users.length == 1 && active_tag.users[0].first_name != null)" layout-padding>
+            <div>
+                Readers in this room
+            </div>
+            <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+        </div>
+        
+        <suggest-friends></suggest-friends>
+    </section>
+</div>
+
+<style>
+
+    .profile_header h2{
+        padding: 0px;
+        margin: 0px 0px !important;
+    }
+
+    .profile_header h5{
+        margin: 5px 0px;
+    }
+
+    .profile_pic{
+        height: 300px;
+        z-index: 1;
+    }
+
+    .profile_header .nav_links{
+        padding: 4px 8px !important;
+        font-size: 0.8em;
+    }
+
+    .profile_header .top_section{
+        min-height: 50px;
+    }
+
+
+</style>

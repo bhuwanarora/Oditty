@@ -1,0 +1,35 @@
+<md-sidenav class="md-sidenav-right notifications light_grey" 
+		md-component-id="notifications" 
+		ng-click="stop_propagation($event)"
+		msd-wheel="stop_propagation($event)"
+		layout="column" layout-align="start start">
+	<div ng-if="info.loading" class="less_important" layout-padding>
+		Loading Notifications...
+	</div>
+	<div ng-if="!info.loading">
+		<md-list layout-padding ng-if="notifications && notifications.length > 0">
+			<div layout="row" layout-align="center center" layout-padding ng-if="notifications">
+				<div layout-padding flex="100">Notifications</div>
+			</div>
+			<md-item layout-margin ng-repeat="notification in notifications">
+				<md-list-item  class="md-3-line">
+	                <img ng-src="{{notification.image_url}}" class="circular" ng-if="notification.image_url"/>
+	                <div ng-if="notification.image_url">&nbsp;&nbsp;</div>
+	                <div layout="column" layout-padding class="md-list-item-text side_padding"
+	                	ng-bind-html="notification.message">
+	                </div>
+	            </md-list-item>
+	            <md-divider></md-divider>
+			</md-item>
+		</md-list>
+		<md-list layout-padding ng-if="!notifications || notifications.length == 0">
+			<md-item layout-margin>
+				<md-item-content>
+					<div class="md-tile-content side_padding">
+						No new notifications
+					</div>
+				</md-item-content>
+			</md-item>
+		</md-list>
+	</div>
+</md-sidenav>

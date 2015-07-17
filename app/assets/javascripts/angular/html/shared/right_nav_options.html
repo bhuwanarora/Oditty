@@ -1,0 +1,28 @@
+<div hide-sm hide-md ng-if="info.mobile_search" 
+    ng-include src="'/assets/angular/html/shared/partials/discovery_options.html'"></div>
+<div class="pointer"  layout-padding
+    ng-click="toggle_notifications($event)">
+    <i class="material-icons"  ng-if="(!user.notification_count || user.notification_count == 0) && !info.notifications_seen">notifications_none</i>
+    <i class="material-icons red_color" ng-if="user.notification_count > 0 && !info.notifications_seen">notifications_active</i>
+    <span ng-bind-html="user.notification_count" ng-if="user.notification_count > 0 && !info.notifications_seen"></span>
+    <i class="material-icons light_grey_color" ng-if="info.notifications_seen">notifications_none</i>
+    <md-tooltip >
+        Notifications
+    </md-tooltip>
+</div>
+<div>
+    <a href="/profile" ng-if="info.mobile_search" hide-sm>
+        <div class="profile_link pointer" layout="row" layout-align="center center">
+            <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">
+            <i class="material-icons md-48" ng-if="!user.image_url">account_circle</i>
+            <md-tooltip >
+                Profile
+            </md-tooltip>
+            <div ng-bind-html="user.first_name" layout-padding></div>
+        </div>
+    </a>
+</div>
+<div layout-padding>
+    <a href="/signup">Logout</a>
+</div>
+<!-- <div ng-if="info.mobile_search" ng-include src="'/assets/angular/html/shared/site_options.html'"></div> -->

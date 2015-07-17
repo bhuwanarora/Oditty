@@ -1,0 +1,24 @@
+<div layout="row" class="light_grey">
+    <md-tabs md-selected="data.selectedIndex" flex>
+        <md-tab id="tab1" aria-controls="tab1-content" class="padding" ng-disabled="info.loading"
+            md-on-select="scroll_to('tab1')">
+            <div layout="row">
+                <img ng-src="{{book.isbn | small_thumb}}" width="40px" height="50px" layout-padding 
+                        onerror="this.src='/assets/defpicbook.png'"/>
+            </div>
+        </md-tab>
+        <md-tab id="tab2" aria-controls="tab2-content" class="padding" ng-disabled="info.loading"
+            md-on-select="scroll_to('tab2')">
+            Real Virtuality
+        </md-tab>
+        <md-tab id="tab3" aria-controls="tab3-content" class="padding" ng-disabled="info.loading"
+            md-on-select="scroll_to('tab3')">
+            Timeline
+        </md-tab>
+        <md-tab id="tab6" aria-controls="tab6-content" class="padding" 
+            ng-disabled="info.loading || info.book_not_found"
+            md-on-select="scroll_to('tab6')">
+            Preview
+        </md-tab>
+    </md-tabs>
+</div>

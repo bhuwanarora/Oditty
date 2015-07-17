@@ -1,0 +1,143 @@
+<audio id="audiotag1" src="assets/typewriter2.m4a" preload="auto"></audio>
+<audio id="audiotag2" src="assets/typewriter2.m4a" preload="auto"></audio>
+<audio id="audiotag3" src="assets/typewriter3.m4a" preload="auto"></audio>
+
+<div ng-controller="shareController" ng-if="info.show_share || info.show_book_share" class="share_wrapper">
+	<div class="share animate-fast" 
+		 layout="row" 
+		 layout-sm="column"
+		 layout-align="start start" layout-padding>
+		<div flex="10" flex-sm="100">
+			<div ng-click="back($event)" layout="row" ng-hide="info.embed_share"
+				layout-align="center center" class="pointer">
+				<h1 layout-padding>
+					<i class="material-icons">arrow_back</i>
+					<!-- <span class="icon-angle-left"></span> -->
+				</h1>
+			</div>
+		</div>
+		<div flex="80" layout="column" flex-sm="100" class="full_width">
+			<div ng-include src="'/assets/angular/html/share/searched_books.html'" ng-if="info.show_book_share"></div>
+			<div ng-include src="'/assets/angular/html/share/status_options.html'" class="status_options"
+				ng-if="info.show_share"></div>
+		</div>
+	    <div flex="10" hide-sm></div>
+	</div>
+</div>
+
+<style>
+	.share_book{
+		width: 300px;
+	}
+
+	.user_image{
+		position: fixed;
+		top: 70vh;
+		width: 72px;
+		height: 72px;
+		z-index: 1;
+		/*margin-right: -20px;*/
+	}
+
+	.share{
+		z-index: 3;
+	}
+
+	/*.select_mood{
+		font-size: 29px;
+		color: rgba(197, 197, 197, 1);
+		width: 70px;
+		height: 70px;
+		padding: 0px;
+		margin-top: -25px;
+		margin-left: 80px;
+		z-index: 2;
+		position: relative;
+	}*/
+
+	.custom_button:hover{
+		font-weight: bold;
+		color: black;
+	}
+
+	.custom_button{
+		cursor: pointer;
+		color: #757575;
+		/*color: white;*/
+	}
+
+	
+
+	.compact_status{
+		position: fixed;
+		top: 10px;
+		margin-left: 100px;
+		z-index: 4;
+	}
+
+	.searched_books{
+		position: fixed;
+		height: 300px !important;
+		left: 50px;
+		top: 100px;
+	}
+
+	.currently_reading{
+		font-size: 0.9em;
+		font-family: sans-serif;
+		min-height: 60px;
+		/*width: 450px;*/
+	}
+
+	.menu_search{
+		box-shadow: none;
+	  	border-bottom: rgb(237, 237, 237) solid 1px;
+	  	outline: none;
+	  	background-color: transparent;
+	}
+
+	.overlap{
+		margin-top: -2px !important;
+	}
+
+	.menu_search input:focus{
+		border-bottom: rgb(203, 203, 203) solid 1px;
+		outline: none;
+	}
+
+	.page_count_input{
+		width: 40px;
+	  	margin: 0px;
+	  	height: 32px;
+	  	padding: 0px;
+	}
+
+	.currently_reading md-list{
+		padding: 0px !important;
+	}
+
+	.light_title{
+		color: #7E7E7E;
+	}
+
+	.bold_light_title{
+		color: #717171;
+  		font-weight: 700;
+	}
+
+	.roboto{
+		font-family: 'roboto';
+	}
+
+	.active_extended{
+		width: 103%;
+  		margin-left: -10px;
+	}
+
+	.status_options{
+		max-width: 500px;
+	}
+
+	
+
+</style>

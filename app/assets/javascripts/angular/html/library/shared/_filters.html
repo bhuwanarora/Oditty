@@ -1,0 +1,86 @@
+<div></div>
+<a href="/personalised_suggestions">
+    <md-button class="md-primary important_title">
+        Suggestions for You
+    </md-button>
+</a>
+
+<div layout-padding></div>
+<div layout="row" flex-md="100" layout-md="row" layout-sm="column" flex-sm="100" 
+    layout-align="center center">
+    
+    <div>
+        <md-autocomplete  class="white" layout-margin
+            md-selected-item="info.selected_genre"
+            md-search-text="search_tag.genre"
+            md-items="item in info.genres"
+            md-search-text-change="search_genres(search_tag.genre)"
+            md-selected-item-change="select_genre(info.selected_genre)"
+            md-item-text="item.name || item.root_category_name"
+            md-min-length="0"
+            placeholder="Select a Genre">
+            <div>
+                <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
+                <div class="less_important">{{item.books_count}} books</div>
+            </div>
+        </md-autocomplete>
+    </div>
+    
+    <div>
+        <md-autocomplete class="white" layout-margin
+            md-selected-item="info.selected_duration"
+            md-search-text="search_tag.read_time"
+            md-items="item in info.read_times"
+            md-selected-item-change="select_reading_time(info.selected_duration)"
+            md-item-text="item.page_count_range"
+            md-min-length="0"
+            placeholder="No. of Pages">
+            <div layout="column">
+                {{item.page_count_range}}
+            </div>
+        </md-autocomplete>
+    </div>
+    
+    <div>
+        <md-autocomplete class="white" layout-margin
+            md-selected-item="info.selected_author"
+            md-search-text="search_tag.author"
+            md-items="item in info.authors"
+            md-search-text-change="search_authors(search_tag.author)"
+            md-selected-item-change="select_author(info.selected_author)"
+            md-item-text="item.name"
+            md-min-length="0"
+            placeholder="Author">
+            <span md-highlight-text="search_tag.author">{{item.name}}</span>
+        </md-autocomplete>
+    </div>
+    
+    <div>
+        <md-autocomplete class="white" layout-margin
+            md-selected-item="info.selected_year"
+            md-search-text="search_tag.time_group"
+            md-items="item in info.time_groups"
+            md-selected-item-change="select_publishing_year(info.selected_year)"
+            md-item-text="item.name"
+            md-min-length="0"
+            placeholder="Publishing Era">
+            <div layout="column">
+                <span md-highlight-text="search_tag.time_group">{{item.name}}</span>
+                <div class="less_important">
+                    {{item.range}}
+                </div>
+            </div>
+        </md-autocomplete>
+    </div>
+    
+    <div layout="row" layout-align-sm="space-around center" flex="10" flex-sm="100" 
+        class="full_width_sm">
+        <md-button class="white clear_button" flex="100" 
+            flex-sm="100" ng-click="reset_filter()" ng-disabled="info.loading">
+            Reset
+        </md-button>
+    </div>
+</div>
+<div layout-padding></div>
+<!-- <div flex-md="100" flex-sm="100"> -->
+<!-- </div> -->

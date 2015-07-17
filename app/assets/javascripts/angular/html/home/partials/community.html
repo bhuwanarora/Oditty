@@ -1,0 +1,9 @@
+<div layout="row" layout-align="space-between center" layout-padding>
+	<a aria-label="toggle_join" ng-class="{'md-raised': !community.status}" 
+		ng-href="/room?q={{::community.id}}">
+		<div layout="column" layout-align="center center">
+			<img ng-src="{{::community.image_url}}" class="big_circle">
+			<div ng-bind-html="::community.name"></div>
+		</div>
+	</a>	
+</div>

@@ -1,0 +1,15 @@
+<div class="splash-header">
+  <div class="brand">
+    <h1 style="color: rgba(240, 255, 255, 0.1); padding: 1%;"></h1>
+    <% if @image_url %>
+      <img src="<%= @image_url %>" style="float:left; width: 70px; height: 70px; margin-left: 10px;">
+    <% end %>
+    <h2 style="color: rgba(65, 65, 65, 0.73);"><% unless @notice %>Subscribe & Stay Updated<% end %></h2>
+    <% unless @notice %>
+      <%= render :partial => "website/_shared/subscribe" %>
+    <% else %>
+      <%= render :partial => "website/_shared/subscription_success" %>
+    <% end %>
+    <%= render :partial => "website/_shared/quotes" %>
+  </div> 
+</div>

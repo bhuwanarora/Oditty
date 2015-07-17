@@ -1,0 +1,1 @@
+homeApp.controller("roomController",["$scope","$rootScope","$timeout","roomService","ColorConstants",function(a,b,c,d,e){}]);

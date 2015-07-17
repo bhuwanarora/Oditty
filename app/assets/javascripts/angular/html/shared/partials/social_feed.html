@@ -1,0 +1,37 @@
+<md-card class="social no_shadow">
+    <md-card-content>
+        <section layout="column" layout-align="start">
+            <md-list-item class="md-3-line">
+                <img ng-src="{{profile_user.image_url}}" class="circular"  onerror="this.src='/assets/user_profile.jpg'">
+                <div layout="column" layout-align="start start" class="md-list-item-text">
+                    <div class="bold" layout-padding ng-if="profile_user.first_name">{{::profile_user.first_name}}</div>
+                    <div class="less_important">{{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}</div>
+                    <div ng-bind-html="feed.message" class="status_message big_title"></div>
+                    <!-- <div ng-repeat="data in feed.data" layout-padding> -->
+                    <!-- </div> -->
+                    <basic-book ng-if="feed.book" book="::feed.book"></basic-book>
+                </div>
+            </md-list-item>
+        </section>
+    </md-card-content>
+</md-card>
+<style>
+    .profile_thumb{
+        width: 70px;
+        height: 70px;
+        padding: 10px;
+    }
+
+    .social_content{
+        order: 1;
+    }
+
+    .social .book_thumb{
+        width: 100%;
+    }
+
+    .status_message a{
+        font-weight: bold;
+        text-decoration: underline;
+    }
+</style>

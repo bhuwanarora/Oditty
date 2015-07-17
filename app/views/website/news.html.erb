@@ -1,0 +1,64 @@
+<div layout="row" class="feed_margin">
+    <div flex="5" hide-md hide-sm></div>
+    <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
+         flex="90" flex-md="100" flex-sm="100" layout="row" layout-sm="column"></div>
+    <div flex="5" hide-md hide-sm></div>
+</div>
+
+<visit-news news-id="info.active_news_id" ng-if="info.active_news_id"></visit-news>
+
+<style>
+    #news .news_footer{
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    #news .news_footer .md-paginator.md-next, 
+    #news .news_footer .md-paginator.md-prev{
+        background-color: transparent !important;
+    }
+
+    #news .news_footer .md-header-items,
+    #news .news_footer, 
+    #news .news_footer .md-header-items-container{
+    }
+
+    #news .news_footer md-tabs-canvas{
+        height: 60px;
+    }
+    
+
+    #news .news_footer md-tabs.md-default-theme .md-tab{
+        background-color: white;
+        padding: 0px;
+        line-height: 14px;
+        margin-right: 5px;
+    }
+
+    #news .news_footer md-tabs.md-default-theme md-ink-bar{
+        color: transparent !important;
+        background: transparent !important;
+    }
+
+    #news .news_thumb{
+        width: 100px;
+        height: 60px;
+    }
+
+    #news .news_item{
+        text-transform: none !important;
+        max-width: 300px;
+        white-space: initial;
+        text-align: left;
+    }
+
+    #news .news_footer .md-header,
+    #news .news_footer md-tab md-tab-label{
+        height: 60px;
+    }
+
+    #news .max_full_width{
+        max-width: 100%;
+        max-height: 60vh;
+    }
+</style>

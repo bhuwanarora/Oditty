@@ -1,0 +1,124 @@
+<md-whiteframe flex="80" flex-md="70" flex-sm="100" layout-padding>
+    <div class="books_cover animate-very-fast"
+         flex="60"
+         flex-md="80"
+         flex-sm="100"
+         ng-if="constant.show_book"
+         aria-label="book"
+         ng-click="show_grid($event)"
+         layout="row"
+         layout-align="start center">
+        <div class="padding" layout="row">
+            <div layout-padding><span class="icon-angle-left"></span></div>
+            <div layout-padding>Back</div>
+        </div>
+    </div>
+
+    <md-progress-linear class="md-primary"
+            ng-if="info.custom_loading"
+            md-mode="indeterminate">
+    </md-progress-linear>
+
+    <div class="less_important" layout="column" layout-padding
+        ng-if="!constant.show_book">
+        <div layout-padding class="important_title">
+            <div ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
+                Popular Books</div>
+            <div ng-if="info.books.length">{{info.books.length}} results</div>
+            <div ng-if="info.books.length == 0">Scroll to see more.</div>
+        </div>
+    </div>
+
+    <div layout-padding ng-if="info.other_info && info.other_info.name && !constant.show_book" 
+        layout-align="center center" layout="column">
+        <a ng-href="/author?q={{info.other_info.id}}"><h3 ng-bind-html="info.other_info.name"></h3></a>
+        <div ng-bind-html="info.other_info.overview"></div>
+        <a ng-href="{{info.other_info.wiki_url}}" target="_blank" ng-if="info.other_info.wiki_url">Read more at Wiki</a>
+    </div>
+
+    <!-- {{info.books}} -->
+    <div ng-style="grid_style" 
+            ng-if="!info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
+            && !info.reading_time_filter && !info.subject_filter" layout-padding>
+        <div layout="row" layout-wrap layout-align="space-between" >
+            <div ng-repeat="book in info.books track by $index" layout-margin>
+                <div ng-include src="'/assets/angular/html/library/shared/expanded_book.html'"></div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="info.author_filter && !info.group_by_alphabet && !info.published_era_filter 
+            && !info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
+        <div ng-repeat="(key, value) in info.books | groupBy: 'author_name'" layout-padding>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
+        </div>
+    </div>
+   
+    <div ng-if="info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
+            && !info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
+        <div ng-repeat="(key, value) in info.books | groupBy: 'alphabet'" layout-padding>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
+        </div>
+    </div>
+
+    <div ng-if="!info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
+            && info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
+        <div ng-repeat="(key, value) in info.books | groupBy: 'reading_time'" layout-padding>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
+        </div>
+    </div>
+
+    <div ng-if="!info.group_by_alphabet && !info.author_filter && info.published_era_filter 
+            && !info.reading_time_filter && !info.subject_filter"
+            ng-style="grid_style" >
+        <div ng-repeat="(key, value) in info.books | groupBy: 'published_era'" layout-padding>
+            <div ng-include src="'/assets/angular/html/library/shared/_grid.html'"></div>
+        </div>
+    </div>
+
+    <div ng-if="!info.group_by_alphabet && !info.author_filter && !info.published_era_filter 
+            && !info.reading_time_filter && info.subject_filter"
+            layout="row" layout-align="space-between"
+            ng-style="grid_style" >
+        <div ng-repeat="category in info.categories" layout-padding>
+            <h3>{{category.name}}</h3>
+            <div layout="row" layout-wrap layout-align="start">
+                <div ng-repeat="book in info.books | category_group: category"  
+                    layout-margin>
+                    <div ng-include src="'/assets/angular/html/library/shared/expanded_book.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</md-whiteframe>
+<trending flex="20" flex-md="30" hide-sm></trending>
+<style>
+
+    .books_cover{
+        background-color: #f5f5f5;
+        position: absolute;
+        z-index: 2;
+        width: 60%;
+        font-size: 13px;
+        height: 43px;
+        cursor: pointer;
+    }
+
+    .books_cover:hover{
+        font-weight: bold;
+    }
+
+     .book_backup_cover{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        color: white;
+        white-space: normal;
+    }
+
+</style>

@@ -1,0 +1,49 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right_share"
+    ng-click="stop_propagation($event)">
+    <md-toolbar class="md-accent">
+        <h1 class="md-toolbar-tools">Share</h1>
+    </md-toolbar>
+    <md-list layout="column">
+        <md-item layout-padding>
+            <md-button aria-label="Facebook" class="md-button-clear"
+                class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" 
+                data-layout="link">
+                <md-inline-list-icon icon="icon-facebook"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Facebook</span>
+            </md-button>
+        </md-item>
+        <md-item layout-padding>
+            <md-button aria-label="Twitter" class="md-button-clear"  href="https://twitter.com/share" class="twitter-share-button" data-text="www.readersdoor.com" data-via="readers_door">
+                <md-inline-list-icon icon="icon-twitter"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Twitter</span>
+            </md-button>
+        </md-item>
+        <md-item layout-padding>
+            <md-button aria-label="Google+" class="md-button-clear">
+                <md-inline-list-icon icon="icon-google+"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Google+</span>
+            </md-button>
+        </md-item>
+        <md-item layout-padding>
+            <md-button aria-label="Linkedin" class="md-button-clear">
+                <md-inline-list-icon icon="icon-linkedin"></md-inline-list-icon>
+                <span class="md-inline-list-icon-label">Linkedin</span>
+            </md-button>
+        </md-item>
+    </md-list>
+</md-sidenav>
+
+<div id="fb-root"></div>
+<script>
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=667868653261167";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    
+</script>

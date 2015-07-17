@@ -1,0 +1,1 @@
+homeApp.service("shelfService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.get_all_shelves=function(){return _deferred_request("/api/v0/labels",b,a)},this.add_new_label=function(c,d){return _deferred_request("/api/v0/add_new_label?label="+c+"&type="+d,b,a)},this.bookmark=function(c){return _deferred_post_request("/api/v0/bookmark",c,b,a)}}]);

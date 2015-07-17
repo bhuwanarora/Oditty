@@ -1,0 +1,56 @@
+.main-header.ng-enter,
+.main-header.ng-leave.ng-leave-active,
+.tab-main.ng-enter,
+.tab-main.ng-leave.ng-leave-active{
+	margin-top: -100px;
+	opacity: 0;
+}
+
+.main-header.ng-leave,
+.main-header.ng-enter-active,
+.tab-main.ng-leave,
+.tab-main.ng-enter-active{
+	margin-top: 0px;
+	opacity: 1;
+}
+
+.inbox-area.ng-enter,
+.inbox-area.ng-leave.ng-leave-active{
+	margin-top: 100px;
+	opacity: 0;
+}
+
+.inbox-area.ng-leave,
+.inbox-area.ng-enter-active{
+	margin-top: 0px;
+	opacity: 1;
+}
+
+.content-box.ng-enter{
+	margin-top: 0px;
+	opacity: 0;
+}
+
+.content-box.ng-leave.ng-leave-active{
+	opacity: 1;
+}
+
+.content-box.ng-leave{
+	opacity: 1;
+}
+
+.content-box.ng-enter-active{
+	margin-top: 70px;
+	opacity: 0;
+}
+
+.header-title.ng-enter,
+.header-title.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.header-title.ng-leave,
+.header-title.ng-enter-active{
+	opacity: 1;
+}
+

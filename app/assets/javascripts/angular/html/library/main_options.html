@@ -1,0 +1,32 @@
+<div class="relative" flex-md="100">
+    <md-autocomplete  class="genres_autocomplete white"
+        md-selected-item="info.selected_genre"
+        md-search-text="search_tag.genre"
+        md-items="item in info.genres"
+        md-search-text-change="search_genres(search_tag.genre)"
+        md-selected-item-change="select_genre(info.selected_genre)"
+        md-item-text="item.name || item.root_category_name"
+        md-min-length="0"
+        placeholder="Select a Genre">
+        <div>
+            <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
+            <div class="less_important">{{item.books_count}} books</div>
+        </div>
+    </md-autocomplete>
+</div>
+<br/>
+<div class="relative" hide-sm hide-md>
+    <md-autocomplete class="time_autocomplete white"
+        md-selected-item="info.selected_duration"
+        md-search-text="search_tag.read_time"
+        md-items="item in info.read_times"
+        md-selected-item-change="select_reading_time(info.selected_duration)"
+        md-item-text="item.page_count_range"
+        md-min-length="0"
+        placeholder="No. of Pages">
+        <div layout="column">
+            {{item.page_count_range}}
+        </div>
+
+    </md-autocomplete>
+</div>

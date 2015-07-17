@@ -1,0 +1,7 @@
+<md-progress-linear class="md-primary"
+                    ng-show="shelf_loading"
+                    md-mode="indeterminate">
+</md-progress-linear>
+<section layout-padding>
+	<book-shelf ng-repeat="shelf in book_shelves" shelf="shelf" info="info"></book-shelf>
+</section>

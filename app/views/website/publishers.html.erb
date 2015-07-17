@@ -1,0 +1,29 @@
+<section layout="row" layout-padding class="primary">
+	<div flex="10" flex-md="5" hide-sm></div>
+	<div layout-padding flex="80" flex-md="90" flex-sm="100" layout="row" flex layout-align="space-between">
+		<div class="rd_title">
+			{{publisher.name | uppercase}}
+		</div>
+	</div>
+	<div flex="10" flex-md="5" hide-sm></div>
+</section>
+<div ng-include src="'/assets/angular/html/shared/share.html'" class="primary"></div>
+<section layout="row" class="feed_margin">
+	<div flex="5" flex-md="5" hide-sm></div>
+	<div ng-include src="'/assets/angular/html/publisher/show.html'"
+		layout="row" layout-sm="column" layout-md="column"
+	    flex="90" flex-md="90" flex-sm="100"></div>
+	<div flex="5" flex-md="5" hide-sm></div>
+</section>
+<style>
+	.users{
+		bottom: 0px;
+		left: 0px;
+		position: absolute;
+	}
+
+	.max_full_width{
+		max-width: 100%;
+		max-height: 70vh;
+	}
+</style>

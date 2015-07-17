@@ -1,0 +1,19 @@
+<md-content layout="column" layout-align="center center" layout-padding class="book_scroller">
+	<section layout-sm="row">
+		<md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
+				   class="clear" layout-margin
+				   ng-repeat="book in active_tag.books">
+			<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
+			</div>
+		</md-button>
+	</section>
+</md-content>
+
+<style>
+    
+    .book_scroller .md-button{
+        width: 130px;
+        height: 180px;
+        margin-top: 10px;
+    }
+</style>

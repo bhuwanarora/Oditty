@@ -1,0 +1,51 @@
+<md-list >
+    <md-card ng-if="!info.loading && all_results.length == 0">
+        <md-card-content>
+            No results found for <a ng-href="/search?q={{::display_results_for}}&type={{::active_type}}"> <b>{{::display_results_for}}</b>
+            <span ng-if="active_type"> in {{::active_type}}</span></a>
+        </md-card-content>
+    </md-card>
+    <md-card ng-if="!info.loading && all_results.length != 0">
+        <md-card-content>
+            {{::all_results.length}} Search results for <a ng-href="/search?q={{::display_results_for}}&type={{::active_type}}"> <b>{{::display_results_for}}</b> in {{::active_type}}'s</a>
+        </md-card-content>
+    </md-card>
+</md-list>
+<md-list ng-if="all_results && all_results.length > 0">
+    <div ng-repeat="result in all_results">
+        <div ng-include src="'/assets/angular/html/search/_book.html'" 
+                ng-if="(result | search_item_type) == 'Book'"></div>
+        <div ng-include src="'/assets/angular/html/search/_author.html'" 
+                ng-if="(result | search_item_type) == 'Author'"></div>
+        <div ng-include src="'/assets/angular/html/search/_blog.html'" 
+            ng-if="(result | search_item_type) == 'Blog'"></div>
+        <div ng-include src="'/assets/angular/html/search/_community.html'" 
+            ng-if="(result | search_item_type) == 'Room'"></div>
+        <div ng-include src="'/assets/angular/html/search/_news.html'" 
+            ng-if="(result | search_item_type) == 'News'"></div>
+        <div ng-include src="'/assets/angular/html/search/_user.html'" 
+            ng-if="(result | search_item_type) == 'User'"></div>
+    </div>
+</md-list>
+
+
+<style>
+    .left_image{
+        max-width: 100%;
+        max-height: 140px;
+    }
+
+    .listopia_thumb{
+        width: 70px;
+        height: 100px;
+    }
+
+    .large_circular{
+        border-radius: 50%;
+        max-width: 100%;
+    }
+
+    md-card{
+        margin-top: 15px !important;
+    }
+</style>
