@@ -298,6 +298,18 @@
                     ] 
                 }
             </script>
+            <script type="application/ld+json">
+                {
+                   "@context": "http://schema.org",
+                   "@type": "WebSite",
+                   "url": "http://readersdoor.com/",
+                   "potentialAction": {
+                     "@type": "SearchAction",
+                     "target": "http://readersdoor.com/search?q={search_term_string}",
+                     "query-input": "required name=search_term_string"
+                   }
+                }
+            </script>
         <% end %>
     </body>
 </html>
