@@ -518,3 +518,7 @@ md-select-label{
     cursor: pointer;
     color: #404040;
 }
+
+.no_overflow{
+    overflow: hidden;
+}

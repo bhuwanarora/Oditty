@@ -1,10 +1,10 @@
 
 
-<div ng-repeat="feed in personal_feed" flex="45" flex-sm="100">
+<div ng-repeat="feed in personal_feed">
     <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
     <md-divider></md-divider>
 </div>
-<div ng-if="reading_journeys" class="white" flex="45" flex-sm="100">
+<!-- <div ng-if="reading_journeys" class="white" flex="45" flex-sm="100">
 	<b class="small-padding">{{user.first_name}}'s Reading Journey</b>
 	<md-divider></md-divider>
 	<md-list ng-if="!personal_feed || (personal_feed == 0)">
@@ -14,7 +14,7 @@
 			</md-card-content>
 		</md-card>
 	</md-list>
-</div>
+</div> -->
 
 <style>
 	.book_image_cover, .book_backup_cover, .slider_wrapper{
