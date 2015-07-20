@@ -135,6 +135,10 @@ input:focus{
 .white_color{
     color: white !important;
 }
+
+.white_color:hover{
+    border-bottom-color: white !important;
+}
   
 .dark_blue_color{
     color: #136CB2 !important;
@@ -517,4 +521,8 @@ md-select-label{
 .clickable_icons{
     cursor: pointer;
     color: #404040;
+}
+
+.no_overflow{
+    overflow: hidden;
 }
