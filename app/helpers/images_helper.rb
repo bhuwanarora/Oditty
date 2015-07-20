@@ -1,4 +1,5 @@
 module ImagesHelper
+	require 'cgi'
 	def self.init_base_url
 		@base_url = "https://s3-ap-southeast-1.amazonaws.com/rd-genres/"
 	end
@@ -55,7 +56,7 @@ module ImagesHelper
 			users = clause.execute
 			users.each do |user|
 				begin
-					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{user["image_url"]}"
+					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{CGI.escape(user["image_url"])}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 					redis.set("user_id_image_processed", user["id"])
@@ -81,7 +82,7 @@ module ImagesHelper
 			communitites = clause.execute
 			communitites.each do |community|
 				begin
-					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{community["image_url"]}"
+					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{CGI.escape(community["image_url"])}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 					redis.set("community_id_image_processed", community["id"])
@@ -108,7 +109,7 @@ module ImagesHelper
 			newss.each do |news|
 				puts news["id"].to_s.green
 				begin
-					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{news["image_url"]}"
+					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{CGI.escape(news["image_url"])}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
 					redis.set("news_id_image_processed", news["id"])
