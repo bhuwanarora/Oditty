@@ -18,12 +18,25 @@ module UniqueIndexHelper
 	}
 
 	ReplacementHash = {
-		"." 	=> "",
-		"@"		=> "",
-		"_"		=> "",
+		"-"		=> "",
+		":"		=> "",
 		"\'"	=> "",
+		"!"		=> "",
+		"["		=> "",
+		"]"		=> "",
+		"\\"	=> "",
+		"@"		=> "",
 		"\""	=> "",
+		"~"		=> "",
+		"{"		=> "",
+		"}"		=> "",
+		"("		=> "",
+		")"		=> "",
+		"." 	=> "",
+		","		=> "",
+		"_"		=> "",
 		"/"		=> ""
+
 	}
 
 	def self.set_unique_indices_internal nodename, indices, indexbasis
