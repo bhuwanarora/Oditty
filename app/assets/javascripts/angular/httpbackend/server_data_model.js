@@ -26,6 +26,132 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_feed_news = function(){
+        var data = [
+            {
+                id: 5250357,
+                url: "http://www.lepoint.fr/monde/attaque-par-un-requin-le-surfeur-mick-fanning-s-en-sort-indemne-19-07-2015-1949914_24.php",
+                image_url: "http://www.lepoint.fr/images/commun/logos/le_point.fr.png",
+                title: "Attaqué par un requin, le surfeur Mick Fanning s'en sort indemne",
+                description: "VIDÉO. Le triple champion du monde de surf participait à une compétition en Afrique du Sud quand il a été attaqué par un squale. La scène a été filmée.",
+                created_at: 1437364569,
+                label: [
+                    "News"
+                ],
+                bookmark_count: 0,
+                view_count: 0,
+                follow_count: 0,
+                communities: [
+                    {
+                        view_count: null,
+                        name: "Mick Fanning",
+                        id: 5250358,
+                        image_url: "http://www.azquotes.com/public/pictures/authors/bb/0a/bb0a662e54d380718065244383cd5bec/5476903d93348_mick_fanning.jpg"
+                    }
+                ],
+                users: [
+                    {
+                        first_name: null,
+                        last_name: null,
+                        id: null,
+                        image_url: null
+                    }
+                ]
+            },
+            {
+                id: 5250359,
+                url: "http://www.ouest-france.fr/argentine-video-un-magnifique-en-coup-du-foulard-3572044",
+                image_url: "http://www.ouest-france.fr/sites/default/files/styles/image-900x500/public/2015/07/19/video.le-magnifique-en-coup-du-foulard.jpg?itok=Wy6pwhw-",
+                title: "Football. VIDEO. Un magnifique but en coup du foulard",
+                description: "En Argentine, Carlos Tevez faisait son grand retour dans le stade du Boca Junior. Mais hier, c'est l'attaquant Jonathan Calleri qui a marqué les esprits avec un",
+                created_at: 1437364615,
+                label: [
+                    "News"
+                ],
+                bookmark_count: 0,
+                view_count: 0,
+                follow_count: 0,
+                communities: [
+                    {
+                        view_count: null,
+                        name: "Carlos Tevez",
+                        id: 5250360,
+                        image_url: "http://i.telegraph.co.uk/multimedia/archive/02619/carlos-tevez_2619963b.jpg"
+                    }
+                ],
+                users: [
+                    {
+                        first_name: null,
+                        last_name: null,
+                        id: null,
+                        image_url: null
+                    }
+                ]
+            },
+            {
+                id: 5250361,
+                url: "http://www.ghanaweb.com/GhanaHomePage/NewsArchive/Why-I-refused-to-give-school-headmistress-chalk-369537",
+                image_url: "http://cdn.ghanaweb.com/imagelib/pics/30696810.jpg",
+                title: "Why I refused to give school headmistress chalk – Veep’s wife",
+                description: "The Second Lady, Mrs Matilda Amissah-Arthur, has opened up on what led...",
+                created_at: 1437364672,
+                label: [
+                    "News"
+                ],
+                bookmark_count: 0,
+                view_count: 0,
+                follow_count: 0,
+                communities: [
+                    {
+                        view_count: null,
+                        name: "Kukurantumi",
+                        id: 5250365,
+                        image_url: "http://www.forafricalibrary.org/images/2011/May_2011_068_med.jpg"
+                    }
+                ],
+                users: [
+                    {
+                        first_name: null,
+                        last_name: null,
+                        id: null,
+                        image_url: null
+                    }
+                ]
+            },
+            {
+                id: 5250355,
+                url: "http://www.eurosport.fr/cyclisme/tour-de-france/2015/froome-en-remet-une-couche-sur-jalabert_sto4827106/story.shtml",
+                image_url: "http://i.eurosport.com/2015/07/19/1643836-34874614-1600-900.jpg",
+                title: "Froome en remet une couche sur Jalabert",
+                description: "TOUR DE FRANCE - Plutôt apaisé à l'arrivée de l'étape de dimanche, Chris Froome est remonté dans les tours en soirée. Par deux tweets adressés à Laurent Jalabert. Ce dernier, interrogé par la télévision anglaise, a nié avoir dit que la démonstration de force de l'Anglais frôlait le \"ridicule\".",
+                created_at: 1437364554,
+                label: [
+                    "News"
+                ],
+                bookmark_count: 0,
+                view_count: 0,
+                follow_count: 0,
+                communities: [
+                    {
+                        view_count: null,
+                        name: "Laurent Jalabert",
+                        id: 5250356,
+                        image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Laurent_JALABERT.jpg/220px-Laurent_JALABERT.jpg"
+                    }
+                ],
+                users: [
+                    {
+                        first_name: null,
+                        last_name: null,
+                        id: null,
+                        image_url: null
+                    }
+                ]
+            }
+        ];
+        return data;
+    }
+
     this.get_feed_community_info = function(){
         var data = {
             view_count: 0,
