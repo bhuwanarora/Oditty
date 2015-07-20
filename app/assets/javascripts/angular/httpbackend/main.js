@@ -5,6 +5,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET('/api/v0/feed_news').respond(function(method, url, data) {
+        var data = ServerDataModel.get_feed_news();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET(/api\/v0\/user_details\?.*/).respond(function(method, url, data) {
         var data = ServerDataModel.user_details();
         return [200, data, {}];
