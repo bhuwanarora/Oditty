@@ -86,4 +86,12 @@ class Neo
 	def self.order_by property
 		Neo.order_init + property + " "
 	end
+
+	def self.replace_string replacement_hash, neo4j_string
+		output_neo4j_string = neo4j_string
+		replacement_hash.each do |to_replace, replace_with|
+			output_neo4j_string = " REPLACE (" + output_neo4j_string + ", " + to_replace + ", " + replace_with + ") "
+		end
+		output_neo4j_string
+	end
 end
