@@ -3,7 +3,7 @@
     <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" class="yellow md-whiteframe-z1">
         <div layout="column" layout-align="center center">
             <img ng-src="{{profile_user.image_url}}" class="profile_pic" onerror="this.src='/assets/user_profile.jpg'"/>
-            <div>
+            <div layout="row"  layout-align="center center">
                 <a ng-href="/profile?id={{::profile_user.id}}">
                     <div layout="column" layout-wrap layout-align="start start">
                         <div class="big_title white_color" layout="row" layout-padding>
@@ -12,6 +12,9 @@
                             <div ng-bind="::profile_user.last_name"></div>
                         </div>
                     </div>
+                </a>
+                <a href="/customise" class="white_color">
+                    <span class="material-icons">edit</span>
                 </a>
             </div>
             <md-subheader ng-hide="hide_follow_links" class="light_grey full_width no_overflow"
