@@ -7,7 +7,7 @@
                 <a layout="column" layout-align="center center" ng-href="/room?id={{::community.id}}" 
                     class="animate-fast vertical_expansion" 
                     ng-if="!communityFeed.expand">
-                    <img ng-src="{{::community.image_url}}" class="square" alt="{{::community.name}}" />
+                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="square" alt="{{::community.name}}" />
                     <md-tooltip>
                         {{::community.name}}
                     </md-tooltip>
@@ -15,7 +15,7 @@
                 <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
                     class="animate-fast vertical_expansion"
                     ng-if="communityFeed.expand">
-                    <img ng-src="{{::community.image_url}}" class="circular" alt="{{::community.name}}" />
+                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="circular" alt="{{::community.name}}" />
                     <md-tooltip>{{::community.name}}</md-tooltip>
                 </a>
             </div>
