@@ -199,8 +199,7 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
                     'app/assets/javascripts/min/lib/angular_scroll.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_filters.min.js',
-                    "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js",
-                    "app/assets/javascripts/min/angular/vendors/angular_mocks.min.js"
+                    "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js"
                 ],
 
                 'app/assets/javascripts/min/angular/apps.js': [
