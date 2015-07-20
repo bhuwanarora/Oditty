@@ -188,7 +188,8 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/vendors/angular_material.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_facebook.js',
-                    'app/assets/javascripts/min/angular/vendors/angular-timer.min.js'
+                    'app/assets/javascripts/min/angular/vendors/angular-timer.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_mocks.min.js'
                 ],
 
                 'app/assets/javascripts/min/angular/vendors.min.js': [
