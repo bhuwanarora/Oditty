@@ -196,6 +196,7 @@ md-content{
 .search_icon{
 	position: absolute;
   	left: 5px;
+  	top: 0px;
   	margin-top: 15px;
 }
 
