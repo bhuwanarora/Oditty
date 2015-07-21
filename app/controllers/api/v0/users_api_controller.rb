@@ -19,7 +19,7 @@ module Api
 
 			def get_social_feed
 				if session[:user_id]
-					url = Rails.application.config.feed_service+"/api/v0/social_feed?skip="+params[:skip].to_s+"&count="+params[:count].to_s+"&user_id="+session[:user_id]
+					url = Rails.application.config.feed_service+"/api/v0/social_feed?skip="+params[:skip].to_s+"&count="+params[:count].to_s+"&user_id="+session[:user_id].to_s
 					info = Net::HTTP.get(URI.parse(url))
 				else
 					info = []
