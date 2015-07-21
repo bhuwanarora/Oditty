@@ -17,7 +17,7 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         if(angular.isUndefined(count)){
             count = 10;
         }
-        return _deferred_request('/api/v0/social_feed?skip='+skip+'&count='+count, $q, $http, "http://161.202.19.237/");
+        return _deferred_request('/api/v0/social_feed?skip='+skip+'&count='+count, $q, $http, "http://161.202.19.237");
     }
 
     this.recover_password = function(data){
