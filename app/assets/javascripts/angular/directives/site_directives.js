@@ -1,3 +1,39 @@
+homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+                $scope.info.loading = true;
+                var room_timeout = $timeout(function(){
+                    userService.suggest_communities().then(function(data){
+                        $scope.info.loading = false;
+                        $scope.suggest_communities = [];
+                        $scope.show_suggestions = true;
+                        angular.forEach(data, function(value, index){
+                            value.span = {"col": 1, "row": 1};
+                            this.push(value);
+                        }, $scope.suggest_communities);
+                    });
+                }, 100);
+                $scope.$on('destroy', function(){
+                    $timeout.cancel(room_timeout);
+                });
+            }
+
+            $scope.goto_room = function(id){
+                window.location.href = "/room?p="+id;
+            }
+
+            $scope.toggle_suggestions = function(){
+                $scope.show_suggestions = !$scope.show_suggestions;
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/partials/community_suggestions.html'
+    };
+}]);
+
 homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
@@ -10,12 +46,7 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
                         $scope.suggest_communities = [];
                         $scope.show_suggestions = true;
                         angular.forEach(data, function(value, index){
-                            if(index == 0 || index == 6){
-                                value.span = {"col": 2, "row": 1};
-                            }
-                            else{
-                                value.span = {"col": 1, "row": 1};
-                            }
+                            value.span = {"col": 1, "row": 1};
                             this.push(value);
                         }, $scope.suggest_communities);
                     });

@@ -41,7 +41,9 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                 "description": $scope.info.books[index].description,
                 "expanded": true,
                 "id": ($scope.info.books[index].id || $scope.info.books[index].book_id),
-                "isbn": $scope.info.books[index].isbn
+                "isbn": $scope.info.books[index].isbn,
+                "root_category": $scope.info.books[index].root_category,
+                "bookmark_count": $scope.info.books[index].bookmark_count
             }
             $scope.expanded_index = index;
             index = row_count*(Math.floor(index / row_count)) + row_count;

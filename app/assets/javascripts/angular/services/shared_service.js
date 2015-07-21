@@ -180,8 +180,6 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         }
 
         bookService.get_popular_books(params).then(function(data){
-           
-
             angular.forEach(data, function(book){
                 if(angular.isDefined($scope.info.categories)){
                     angular.forEach(book.root_category, function(category){
@@ -209,11 +207,12 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                         "isBook": true,
                         "colspan": 1,
                         "rowspan": 1,
-                        "alphabet": book.title[0]};
+                        "alphabet": book.title[0],
+                        "root_category": book.root_category};
                 json = angular.extend(book, json)
                 this.push(json);
             },  books);
-            console.log("load_popular_books", books.length, $scope.info.books.length);
+            console.log("load_popular_books", books.length, $scope.info.books.length, books);
             // $scope.info.books = books;
             $scope.info.loading = false;
         });
