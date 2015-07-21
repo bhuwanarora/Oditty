@@ -331,6 +331,10 @@ module GraphHelper
 		" DELETE answered "\
 		" WITH " + original + "," + duplicate + " "\
 		" "\
+		" MATCH (question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
+		" SET answerof.author_id = ID(" + original + ") "\
+		" WITH " + original + ", " + duplicate + " "\
+		" "\
 		" OPTIONAL MATCH(" + duplicate + ")<-[follows:OfAuthor]-(followsnodes:FollowsNode) "\
 		" FOREACH (followsnode in ( CASE WHEN followsnodes IS NULL THEN [] ELSE [followsnodes] END)| "\
 		" MERGE(" + original + ")<-[:OfAuthor]-(followsnode) " \
