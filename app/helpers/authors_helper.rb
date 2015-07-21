@@ -20,6 +20,7 @@ module AuthorsHelper
 				break
 			else
 				cur_id = output[0]["id"]
+				cur_id += 1
 			end
 			$redis[redis_key] = cur_id
 		end
