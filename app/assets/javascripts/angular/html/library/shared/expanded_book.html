@@ -8,10 +8,10 @@
         ng-if="expanded_index == $index">
     </div>
     <md-button
-        class="clear"
+        class="clear md-whiteframe-z1"
         ng-click="expand_book($index)"
         ng-if="expanded_index != $index">
-        <div  ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" ></div>
+        <div  ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
     </md-button>
 </div>
 <div layout-align="start start"
