@@ -17,7 +17,7 @@ class User::Suggest::CommunitySuggestion < User::Suggest
 	end
 
 	def self.get_trending_communities
-		News.match_popular_news_from_last_week + News.match_community + User::Suggest::CommunitySuggestion.where_group("community.view_count IS NOT NULL") + User::Suggest::CommunitySuggestion.with_group("DISTINCT community As community") + User::Suggest::CommunitySuggestion.return_group(Community.basic_info) + User::Suggest::CommunitySuggestion.order_by("community.view_count DESC") + User::Suggest::CommunitySuggestion.limit(10)
+		News.match_popular_news_from_last_week + News.match_community + User::Suggest::CommunitySuggestion.where_group("community.view_count IS NOT NULL") + User::Suggest::CommunitySuggestion.with_group("DISTINCT community As community") + User::Suggest::CommunitySuggestion.return_group(Community.basic_info) + User::Suggest::CommunitySuggestion.order_by("community.view_count DESC") + User::Suggest::CommunitySuggestion.limit(12)
 	end
 
 end
