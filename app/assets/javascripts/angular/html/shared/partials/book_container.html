@@ -1,40 +1,95 @@
-<div layout="row" layout-sm="column" class="white md-whiteframe-z1 full_width">
-	<div class="rd_book_container">
-		<div ng-style="{background:'{{book.color | random_color}}'}" 
-			class="rd_book_backup_cover" 
-	        layout="column">
-	    <img src="/assets/defpicbook.png"  class="default_book_cover"/>
+<div class="white md-whiteframe-z1 full_width" layout="column">
+	<div layout="row" layout-sm="column">
+		<div class="rd_book_container">
+			<div ng-style="{background:'{{book.color | random_color}}'}" 
+				class="rd_book_backup_cover" 
+		        layout="column">
+		    <img src="/assets/defpicbook.png"  class="default_book_cover"/>
+			</div>
+			<div class="rd_slider_wrapper">
+			    <div layout="column" layout-align="center" class="relative white"
+			        ng-if="book.status">
+			        <md-slider flex md-discrete 
+			                class="md-warn"
+			                ng-change="rate_book(book, $event)"
+			                ng-model="book.user_rating" step="1" min="1" max="10" 
+			                aria-label="user_rating">
+			        </md-slider>
+			    </div>
+			    <img src="/assets/book_shadow.png" class="rd_book_shadow">
+			    <img ng-src="{{book | choose_medium_thumb}}" class="rd_book_image_cover" onerror="this.src=''">
+			</div>
 		</div>
-		<div class="rd_slider_wrapper">
-		    <div layout="column" layout-align="center" class="relative white"
-		        ng-if="book.status">
-		        <md-slider flex md-discrete 
-		                class="md-warn"
-		                ng-change="rate_book(book, $event)"
-		                ng-model="book.user_rating" step="1" min="1" max="10" 
-		                aria-label="user_rating">
-		        </md-slider>
-		    </div>
-		    <img src="/assets/book_shadow.png" class="rd_book_shadow">
-		    <img ng-src="{{book | choose_medium_thumb}}" class="rd_book_image_cover" onerror="this.src=''">
+		<div layout="column" layout-align="space-between">
+			<div>
+				<div layout-padding class="wrap">
+					<div layout="row" layout-align="space-between">
+						<div layout="row" layout-align="center center">
+				    		<a ng-href="/book?id={{book.book_id || book.id}}" class="big_title">{{book.title}}</a>
+							<div layout="row" class="less_important">
+							    <div class="primary white_color round_corners" layout-padding layout-margin 
+							    	ng-show="book.bookmark_count">
+							    	{{book.bookmark_count}}
+							    	<md-tooltip>
+							    		{{book.bookmark_count}} Bookmarks
+							    	</md-tooltip>
+							    </div>
+							    <div class="primary white_color round_corners" layout-padding layout-margin
+							    	ng-show="book.readers_count">
+							    	{{book.readers_count}} 
+							    	<md-tooltip>
+							    		{{book.readers_count}} Readers
+							    	</md-tooltip>
+							    </div>
+							    <div class="primary white_color round_corners" layout-padding layout-margin
+							    	ng-show="book.comment_count">
+							    	{{book.comment_count}} 
+							    	<md-tooltip>
+							    		{{book.comment_count}} Comments
+							    	</md-tooltip>
+							    </div>
+						    </div>
+						</div>
+						<div ng-click="remove_expanded_book($index)" class="clickable_icons">
+							<i class="material-icons">close</i>
+						</div>
+					</div>
+				    <div class="less_important">{{book.author_name}}</div>
+				</div>
+				<div ng-bind-html="book.description | reduced_summary" layout-padding></div>
+			</div>
+			<div layout="row" layout-align="space-between" layout-padding>
+				<div class="bold" ng-if="book.page_count != null">{{book.page_count}} Pages</div>
+				<div class="less_important" ng-bind-html="book.published_year"></div>
+			</div>
 		</div>
 	</div>
-	<div layout="column" layout-align="space-between">
-		<div>
-			<div layout-padding class="wrap">
-				<div layout="row" layout-align="space-between">
-			    	<a ng-href="/book?id={{book.book_id || book.id}}" class="big_title">{{book.title}}</a>
-					<div ng-click="remove_expanded_book($index)" class="clickable_icons">
-						<i class="material-icons">close</i>
+	<md-divider></md-divider>
+	<div layout="row" layout-align="space-between">
+		<div layout="column" layout-align="space-between">
+			<div class="less_important bold" layout-padding>
+				Tags
+			</div>
+			<div layout="row">
+				<div ng-repeat="category in book.root_category" layout-padding 
+					layout-align="center center">
+					<div ng-show="category.name && category.name != null" layout="row" >
+						<img ng-src="https://s3-ap-southeast-1.amazonaws.com/rd-genres/{{category.aws_key}}"
+							class="circular" />
+						<md-tooltip layout-padding>
+							{{category.name}}
+						</md-tooltip>
+					</div>
+					<div ng-show="!category.name || category.name == null" class="less_important">
+						No tags found.
 					</div>
 				</div>
-			    <div class="less_important">{{book.author_name}}</div>
 			</div>
-			<div ng-bind-html="book.description | reduced_summary" layout-padding></div>
 		</div>
-		<div layout="row" layout-align="space-between" layout-padding>
-			<div class="bold" ng-if="book.page_count != null">{{book.page_count}} Pages</div>
-			<div class="less_important" ng-bind-html="book.published_year"></div>
+		<div layout="row" layout-align="center center" layout-padding>
+			<md-button class="md-button-clear md-raised md-warn" ng-href="/book?id={{book.id || book.book_id}}">
+				Checkout Feed, Buy & Read Reviews
+			</md-button>
 		</div>
 	</div>
 </div>
