@@ -18,8 +18,12 @@ module Api
 			end
 
 			def get_social_feed
-				url = Rails.application.config.feed_service+"/api/v0/social_feed?skip="+params[:skip].to_s+"&count="+params[:count].to_s
-				info = Net::HTTP.get(URI.parse(url))
+				if session[:user_id]
+					url = Rails.application.config.feed_service+"/api/v0/social_feed?skip="+params[:skip].to_s+"&count="+params[:count].to_s+"&user_id="+session[:user_id]
+					info = Net::HTTP.get(URI.parse(url))
+				else
+					info = []
+				end
 				render :json => info, :status => 200
 			end
 
