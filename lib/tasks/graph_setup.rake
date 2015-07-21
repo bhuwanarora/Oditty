@@ -198,6 +198,12 @@ namespace :graph do
     Neo4jHelper.index_authors
   end
 
+  desc " set search_index and indexed_main_author_name for authors"
+  task :set_author_search_indices => :environment do
+    include AuthorsHelper
+    AuthorsHelper.set_search_indices
+  end
+
   desc "grid init"
   task :grids => :environment do
     include Neo4jHelper
