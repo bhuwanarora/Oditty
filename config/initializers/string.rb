@@ -75,6 +75,6 @@ class String
     end
 
     def database_ready
-        self.gsub('"','\"')
+        self.gsub('"','\"').gsub("'","\'")
     end
 end

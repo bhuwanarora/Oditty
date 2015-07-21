@@ -11,7 +11,7 @@ ReadersDoor::Application.configure do
   config.user_bucket = "rd-images"
   config.news_bucket = "rd-images"
   config.google_public_key = 'AIzaSyAV495wghmWMcTENY9CsrUpvVPzJpNOaxo'
-  config.image_service = "http://52.10.230.9"
+  config.image_service = "http://52.26.47.173"
   config.neo4j_server_port = 7474
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
