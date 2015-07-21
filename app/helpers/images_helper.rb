@@ -84,7 +84,7 @@ module ImagesHelper
 				begin
 					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{CGI.escape(community["image_url"])}"
 					puts url.to_s.red
-					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					response = JSON.parse(Net::HTTP.get(URI.parse(url)))
 					redis.set("community_id_image_processed", community["id"])
 				rescue Exception => e
 					puts e.to_s.red
