@@ -86,4 +86,16 @@ class Neo
 	def self.order_by property
 		Neo.order_init + property + " "
 	end
+
+	def self.replace_string replacement_hash, neo4j_string
+		output_neo4j_string = "LOWER (" + neo4j_string + ")"
+		replacement_hash.each do |to_replace, replace_with|
+			if to_replace == "'"
+				output_neo4j_string = " REPLACE (" + output_neo4j_string + ", \"\\'\", \'" + replace_with + "\') "
+			else
+				output_neo4j_string = " REPLACE (" + output_neo4j_string + ", \'" + to_replace + "\', \'" + replace_with + "\') "
+			end
+		end
+		output_neo4j_string
+	end
 end
