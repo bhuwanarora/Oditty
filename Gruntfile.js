@@ -218,7 +218,6 @@ module.exports = function(grunt) {
                 ],
 
                 'app/assets/javascripts/min/angular/site.min.js': [
-                    'app/assets/javascripts/min/angular/vendors.min.js',
                     'app/assets/javascripts/min/angular/apps.js',
                     'app/assets/javascripts/min/angular/services.js',
                     'app/assets/javascripts/min/angular/directives.js',
