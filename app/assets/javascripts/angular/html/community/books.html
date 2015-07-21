@@ -3,7 +3,7 @@
     <div layout="row" layout-wrap layout-padding ng-if="active_tag.books && active_tag.books.length > 0">
         <section ng-repeat="book in active_tag.books" layout-margin ng-if="book.title != null">
             <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
-                class="clear rd_book_container md-whiteframe-z3 white">
+                class="clear rd_book_container md-whiteframe-z1 white">
                 <div class="book_thumb" ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'">
                 </div>
             </md-button>
