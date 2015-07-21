@@ -1,20 +1,20 @@
 module UniqueIndexHelper
 	UniqueIndices = {
-		EntityLabel::Author 	=> ["search_index", "indexed_main_author_name"],
-		EntityLabel::Book		=> [],
-		EntityLabel::User 		=> []
+		Constant::EntityLabel::Author 		=> ["search_index", "indexed_main_author_name"],
+		Constant::EntityLabel::Book			=> [],
+		Constant::EntityLabel::User 		=> []
 	}
 
 	UniqueIndexBasis = {
-		EntityLabel::Author 	=> ["name"],
-		EntityLabel::Book		=> ["title", "author_name"],
-		EntityLabel::User 		=> []
+		Constant::EntityLabel::Author 		=> ["name"],
+		Constant::EntityLabel::Book			=> ["title", "author_name"],
+		Constant::EntityLabel::User 		=> []
 	}
 
 	LabelToNodeName = {
-		EntityLabel::Author 	=> "author",
-		EntityLabel::Book		=> "book",
-		EntityLabel::User		=> "user"
+		Constant::EntityLabel::Author 		=> "author",
+		Constant::EntityLabel::Book			=> "book",
+		Constant::EntityLabel::User			=> "user"
 	}
 
 	ReplacementHash = {
@@ -24,7 +24,6 @@ module UniqueIndexHelper
 		"!"		=> "",
 		"["		=> "",
 		"]"		=> "",
-		"\\"	=> "",
 		"@"		=> "",
 		"\""	=> "",
 		"~"		=> "",
@@ -35,7 +34,8 @@ module UniqueIndexHelper
 		"." 	=> "",
 		","		=> "",
 		"_"		=> "",
-		"/"		=> ""
+		"/"		=> "",
+		" "		=> ""
 
 	}
 
@@ -44,17 +44,17 @@ module UniqueIndexHelper
 			|basis| Neo.replace_string(
 				ReplacementHash, nodename + "." + basis)
 		}.join(" + ")
-		" SET " + indices.map{|index| (nodename + "." + index + " = \'" + index_string + "\'")}.join(", ")
+		" SET " + indices.map{|index| (nodename + "." + index + " = " + index_string)}.join(", ")
 	end
 
 	def self.set_unique_indices entity_label
 		clause = ""
 		case entity_label
-		when EntityLabel::Author
-			clause = UniqueIndexHelper.set_unique_indices_internal LabelToNodeName(
-				entity_label,
-				UniqueIndices(entity_label),
-				UniqueIndexBasis(entity_label) )
+		when Constant::EntityLabel::Author
+			clause = UniqueIndexHelper.set_unique_indices_internal(
+				LabelToNodeName[entity_label],
+				UniqueIndices[entity_label],
+				UniqueIndexBasis[entity_label] )
 		end
 		clause
 	end

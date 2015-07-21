@@ -2,8 +2,8 @@ module AuthorsHelper
 	
 	def self.get_authors start_id, step_size
 		" MATCH(author: Author) "\
-		" WHERE ID(author) >= " + start_id.to_s + " AND ID(author) <= " + (step_size + start_id).to_s + " "\
-		" WITH author "
+		" WHERE ID(author) >= " + start_id.to_s + " "\
+		" WITH author ORDER BY ID(author) LIMIT " + (step_size).to_s + " "
 	end
 
 	def self.set_search_indices
@@ -13,7 +13,7 @@ module AuthorsHelper
 		author_batch_limit = 1000
 		while cur_id <= end_id
 			clause = AuthorsHelper.get_authors cur_id, author_batch_limit
-			clause += UniqueIndexHelper.set_unique_indices(EntityLabel::Author)
+			clause += UniqueIndexHelper.set_unique_indices(Constant::EntityLabel::Author)
 			clause += " RETURN MAX(ID(author)) AS id"
 			output = clause.execute
 			if output.empty?
