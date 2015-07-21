@@ -58,7 +58,7 @@ module ImagesHelper
 				begin
 					url = "#{Rails.application.config.image_service}/api/v0/user_versions?id=#{user["id"]}&&bucket=#{Rails.application.config.user_bucket}&&url=#{CGI.escape(user["image_url"])}"
 					puts url.to_s.red
-					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					response = JSON.parse(Net::HTTP.get(URI.parse(url)))
 					redis.set("user_id_image_processed", user["id"])
 				rescue Exception => e
 					puts e.to_s.red
@@ -111,7 +111,7 @@ module ImagesHelper
 				begin
 					url = "#{Rails.application.config.image_service}/api/v0/news_versions?id=#{news["id"]}&&bucket=#{Rails.application.config.news_bucket}&&url=#{CGI.escape(news["image_url"])}"
 					puts url.to_s.red
-					response = JSON.parse(Net::HTTP.get(URI.parse(URI.encode(url))))
+					response = JSON.parse(Net::HTTP.get(URI.parse(url)))
 					redis.set("news_id_image_processed", news["id"])
 				rescue Exception => e
 					puts e.to_s.red
