@@ -207,8 +207,369 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_personal_feed = function(){
+        var data = [
+            {
+                label: "StatusNode",
+                created_at: 1436957699,
+                data: {
+                    feed: {
+                        id: "5245852"
+                    },
+                    content: "Testing reload functionality."
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436953096,
+                data: {
+                   feed: {
+                        id: "5245850"
+                    },
+                    community: {
+                        id: 4976756,
+                        name: "Singapore"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436891020,
+                data: {
+                    feed: {
+                        id: "5245062"
+                    },
+                    community: {
+                        id: 5244964,
+                        name: "Pluto"
+                    }
+                }
+            },
+            {
+                label: "RatingNode",
+                created_at: 1436856497,
+                data: {
+                    feed: {
+                        id: "5244155",
+                        rating: 3
+                    },
+                    book: {
+                        id: 390053,
+                        title: "Harry Potter and the Sorcerer's Stone"
+                    },
+                    author: {
+                        id: 390054,
+                        name: "J. K. Rowling"
+                    }
+                }
+            },
+            {
+                label: "EndorseNode",
+                created_at: 1436631310,
+                data: {
+                    feed: {
+                       id: "5242627"
+                    },
+                    book: {
+                        id: 390265,
+                        title: "The Book Thief"
+                    },
+                    author: {
+                        id: 5118397,
+                        name: "Markus Zusak"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436631141,
+                data: {
+                    feed: {
+                       id: "5242626"
+                    },
+                    community: {
+                        id: 5021274,
+                        name: "Apple Inc."
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436630823,
+                data: {
+                    feed: {
+                        id: "5242621"
+                    },
+                    friend: {
+                        id: 4986324,
+                        name: "Bhuwan Arora"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436630789,
+                data: {
+                    feed: {
+                        id: "5242620"
+                    },
+                    community: {
+                        id: 5007924,
+                        name: "Oculus Rift"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436530134,
+                data: {
+                    feed: {
+                        id: "5115984"
+                    },
+                    community: {
+                        id: 5024989,
+                        name: "SpaceX"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436445660,
+                data: {
+                    feed: {
+                        id: "5115224"
+                    },
+                    friend: {
+                        id: 4960099,
+                        name: "Niraj Singh"
+                    }
+                }
+            },
+            {
+                label: "StatusNode",
+                created_at: 1436372461,
+                data: {
+                    feed: {
+                        id: "5114500"
+                    },
+                    content: "test"
+                }
+            }
+        ];
+        return data;
+    }
+
     this.get_social_feed = function(){
-        var data = [];
+        var data = [
+            {
+                label: "FollowsNode",
+                created_at: 1437400555,
+                data: {
+                    feed: {
+                        id: "5250421"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    community: {
+                        id: 4978625,
+                        name: "Machine press"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1437399853,
+                data: {
+                    feed: {
+                        id: "5250419"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    community: {
+                        id: 4982924,
+                        name: "Territorial disputes of China"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1437386045,
+                data: {
+                    feed: {
+                        id: "5250409"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    community: {
+                        id: 4977692,
+                        name: "Team sports"
+                    }
+                }
+            },
+            {
+                label: "BookmarkNode",
+                created_at: 1437236236,
+                data: {
+                    feed: {
+                        id: "5249741",
+                        key: "Read"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    book: {
+                        id: 390027,
+                        title: "To Kill a Mockingbird"
+                    },
+                    author: {
+                        id: 3709741,
+                        name: "Harper Lee"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1437137889,
+                data: {
+                    feed: {
+                        id: "5248285"
+                    },
+                    user: {
+                        id: 4986324,
+                        name: "Bhuwan Arora",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p200x200/66784_415130785223231_1615890777_n.jpg?oh=b5d38fc55d843df4b3208036c79889f1&oe=56572F17&__gda__=1444457657_b4ec8085de3d6a82d7f6a51debe0ffa7"
+                    },
+                    author: {
+                        id: 4975556,
+                        name: null
+                    }
+                }
+            },
+            {
+                label: "BookmarkNode",
+                created_at: 1436959372,
+                data: {
+                    feed: {
+                        id: "5245856",
+                        key: "IntendingToRead"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    book: {
+                        id: 453570,
+                        title: "Light My Fire"
+                    },
+                    author: {
+                        id: 407555,
+                        name: "Katie MacAlister"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436959362,
+                data: {
+                    feed: {
+                        id: "5245854"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    community: {
+                        id: 5104533,
+                        name: "Fifty Shades of Grey"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436854860,
+                data: {
+                    feed: {
+                        id: "5244150"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    friend: {
+                        id: 4960099,
+                        name: "Niraj Singh"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436854811,
+                data: {
+                    feed: {
+                        id: "5244149"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    friend: {
+                        id: 4084079,
+                        name: "Bhuwan Arora"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436854808,
+                data: {
+                    feed: {
+                        id: "5244148"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    friend: {
+                        id: 4986324,
+                        name: "Bhuwan Arora"
+                    }
+                }
+            },
+            {
+                label: "FollowsNode",
+                created_at: 1436854799,
+                data: {
+                    feed: {
+                        id: "5244147"
+                    },
+                    user: {
+                        id: 4974698,
+                        name: "Ashesh Mishra",
+                        thumb: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041"
+                    },
+                    friend: {
+                        id: 4105710,
+                        name: "Prachi Jain"
+                    }
+                }
+            }
+        ];
         return data;
     }
 
