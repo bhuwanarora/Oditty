@@ -2,35 +2,34 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
     return {
         restrict: 'E',
         controller: ["$scope", function($scope){
-            var _init = function(){
-                $scope.info.loading = true;
-                var room_timeout = $timeout(function(){
-                    userService.suggest_communities().then(function(data){
-                        $scope.info.loading = false;
-                        $scope.suggest_communities = [];
-                        $scope.show_suggestions = true;
-                        angular.forEach(data, function(value, index){
-                            value.span = {"col": 1, "row": 1};
-                            this.push(value);
-                        }, $scope.suggest_communities);
+            $scope.get_feed = function(){
+                if(!$scope.info.feed_loading){
+                    $scope.info.feed_loading = true;
+                    if(angular.isDefined($scope.social_feed)){
+                        var skip = $scope.social_feed.length;
+                    }
+                    else{
+                        var skip = 0;
+                    }
+                    userService.get_social_feed(skip).then(function(data){
+                        $scope.info.feed_loading = false;
+                        $scope.social_feed = data;
                     });
+                }
+            }
+
+            var _init = function(){
+                var room_timeout = $timeout(function(){
+                    $scope.get_feed();
                 }, 100);
                 $scope.$on('destroy', function(){
                     $timeout.cancel(room_timeout);
                 });
             }
 
-            $scope.goto_room = function(id){
-                window.location.href = "/room?p="+id;
-            }
-
-            $scope.toggle_suggestions = function(){
-                $scope.show_suggestions = !$scope.show_suggestions;
-            }
-
             _init();
         }],
-        templateUrl: '/assets/angular/html/home/partials/community_suggestions.html'
+        templateUrl: '/assets/angular/html/home/partials/social_feed.html'
     };
 }]);
 

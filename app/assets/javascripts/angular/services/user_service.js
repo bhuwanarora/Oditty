@@ -10,6 +10,16 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return user_id;
     }
 
+    this.get_social_feed = function(skip, count){
+        if(angular.isUndefined(skip)){
+            skip = 0;
+        }
+        if(angular.isUndefined(count)){
+            count = 10;
+        }
+        return _deferred_request('/api/v0/social_feed?skip='+skip+'&count='+count, $q, $http, "http://161.202.19.237/");
+    }
+
     this.recover_password = function(data){
         return _deferred_request('/api/v0/recover_password?'+data, $q, $http);
     }
