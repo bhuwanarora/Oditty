@@ -16,6 +16,11 @@ class UsersAuthor < Neo
 		" MERGE (user)-[follows:Follows]->(follows_node:FollowsNode{user_id:" + @user_id.to_s + ", author_id: " + @author_id.to_s + "}) MERGE (follows_node)-[:OfAuthor]->(author) ON CREATE SET follows_node.created_at = " + Time.now.to_i.to_s + ", follows_node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET follows_node.updated_at = " + Time.now.to_i.to_s + "  WITH user, follows_node, author, follows "
 	end
 
+	def self.match
+		" MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_author:OfAuthor]->(author) "\
+		" WITH user, author "
+	end
+
 	def remove
 		" MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_author:OfAuthor]->(author) DELETE follows, of_author WITH user, follows_node, author OPTIONAL MATCH (n1)-[r1:FeedNext]->(follows_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follows_node)-[r]-() OPTIONAL MATCH (n3)-[r3:AuthorFeedNext]->(follows_node)-[r4:AuthorFeedNext]->(n4)  CREATE UNIQUE (n1)-[:FeedNext]->(n2)   CREATE UNIQUE (n3)-[:AuthorFeedNext]->(n4)  DELETE r WITH follows_node "
 	end

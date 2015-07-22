@@ -18,8 +18,6 @@ class NotificationStructure < Neo
 				notifications_formatted << get_notification_follows_node(notification)
 			elsif type == Constant::NodeLabel::RecommendNode
 				notifications_formatted << get_notification_recommend_node(notification)
-			elsif type == Constant::NodeLabel::EndorseNode
-				notifications_formatted << get_notification_endorse_node(notification)
 			elsif type == Constant::NodeLabel::BorrowNode
 				notifications_formatted << get_notification_borrow_node(notification)
 			end
@@ -33,16 +31,6 @@ class NotificationStructure < Neo
 				:user_id => notification[:notification]["friend_id"],
 				:created_at => notification[:created_at],
 			}
-		notification[:notification] = temp
-		notification
-	end
-
-	def get_notification_endorse_node notification
-		temp = {
-			:book_id => notification[:notification]["book_id"],
-			:user_id => notification[:notification]["user_id"],
-			:created_at => notification[:notification]["created_at"]
-		}
 		notification[:notification] = temp
 		notification
 	end
