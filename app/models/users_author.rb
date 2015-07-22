@@ -22,7 +22,22 @@ class UsersAuthor < Neo
 	end
 
 	def remove
-		" MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_author:OfAuthor]->(author) DELETE follows, of_author WITH user, follows_node, author OPTIONAL MATCH (n1)-[r1:FeedNext]->(follows_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follows_node)-[r]-() OPTIONAL MATCH (n3)-[r3:AuthorFeedNext]->(follows_node)-[r4:AuthorFeedNext]->(n4)  CREATE UNIQUE (n1)-[:FeedNext]->(n2)   CREATE UNIQUE (n3)-[:AuthorFeedNext]->(n4)  DELETE r WITH follows_node "
+		" MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_author:OfAuthor]->(author) "\
+		" DELETE follows, of_author "\
+		" WITH DISTINCT follows_node, user, author "\
+		" OPTIONAL MATCH (n1)-[r1:FeedNext]->(follows_node)-[r2:FeedNext]->(n2) "\
+		" WITH follows_node, n1, n2, r1, r2, user, author "\
+		" WHERE r1.user_id = r2.user_id "\
+		" CREATE UNIQUE (n1)-[:FeedNext{user_id: r1.user_id}]->(n2) "\
+		" WITH DISTINCT follows_node, user, author "\
+		" OPTIONAL MATCH (n3)-[r3:AuthorFeedNext]->(follows_node)-[r4:AuthorFeedNext]->(n4) "\
+		" WITH n3, r3, follows_node, r4, n4, user, author "\
+		" WHERE r3.author_id = r4.author_id "\
+		" CREATE UNIQUE (n3)-[:AuthorFeedNext{author_id: r3.author_id}]->(n4) "\
+		" WITH DISTINCT follows_node, user, author "\
+		" OPTIONAL MATCH (follows_node)-[r]-() "\
+		" DELETE r "\
+		" WITH follows_node "
 	end
 
 	def follow 

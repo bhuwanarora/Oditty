@@ -10,12 +10,12 @@ class FeedWorker
 		case entity_type
 		when Constant::EntityLabel::User
 			case action
-			when Feed::Create
-				Feed::UserFeedHelper.update_redis_on_create(feed_id, user_id)
-			when Feed::Update
-				Feed::UserFeedHelper.update_redis_on_update(feed_id, user_id)
-			when Feed::Delete
-				Feed::UserFeedHelper.update_redis_on_delete(feed_id, user_id)
+			when FeedHelper::ActionCreate
+				FeedHelper::UserFeedHelper.update_redis_on_create(feed_id, user_id)
+			when FeedHelper::ActionUpdate
+				FeedHelper::UserFeedHelper.update_redis_on_update(feed_id, user_id)
+			when FeedHelper::ActionDelete
+				FeedHelper::UserFeedHelper.update_redis_on_delete(feed_id, user_id)
 			end
 		end
 	end

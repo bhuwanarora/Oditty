@@ -74,16 +74,16 @@ module Api
 				user_id = session[:user_id]
 				if status 
 					Api::V0::UserApi.add_bookmark(user_id, id, type, shelf).execute
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:media_id => id,
-						:action => Feed::ActionCreate
+						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::BookmarkNode)
 				else
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:media_id => id,
-						:action => Feed::ActionDelete
+						:action => FeedHelper::ActionDelete
 						}, Constant::NodeLabel::BookmarkNode)
 					Api::V0::UserApi.remove_bookmark(user_id, id, type, shelf).execute
 				end
@@ -272,10 +272,10 @@ module Api
 				book_id = params[:id]
 				rating = params[:data]
 				Api::V0::UserApi.rate_book(book_id, user_id, rating).execute
-				UserFeedHelper.handle_redis({
+				FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:book_id => book_id,
-						:action => Feed::ActionCreate
+						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::RatingNode)
 				render :json => {:message => "Success"}, :status => 200
 			end
@@ -285,18 +285,18 @@ module Api
 				community_id = params[:id]
 				status = params[:status].downcase if params[:status]
 				if status == "false"
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:community_id => community_id,
-						:action => Feed::ActionDelete
+						:action => FeedHelper::ActionDelete
 						}, Constant::NodeLabel::FollowsNode)
 				end
 				Api::V0::UserApi.follow_community(user_id, community_id, status).execute
 				if status == "true"
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:community_id => community_id,
-						:action => Feed::ActionCreate
+						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::FollowsNode)
 				end
 				key = "BCI" + community_id.to_s
@@ -310,16 +310,16 @@ module Api
 				user_id = session[:user_id]
 				if follow_action.present? && follow_action == "true"
 					Api::V0::UserApi.follow_user(user_id, friend_id).execute
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:friend_id => friend_id,
-						:action => Feed::ActionCreate
+						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::FollowsNode)
 				elsif follow_action.present? && follow_action == "false"
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
-						:author_id => friend_id,
-						:action => Feed::ActionDelete
+						:friend_id => friend_id,
+						:action => FeedHelper::ActionDelete
 						}, Constant::NodeLabel::FollowsNode)
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
@@ -430,16 +430,16 @@ module Api
 				status =  params[:status]
 				if status 
 					info = Api::V0::UserApi.endorse_book(book_id, user_id).execute
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:book_id => book_id,
-						:action => Feed::ActionCreate
+						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::EndorseNode)
 				else
-					UserFeedHelper.handle_redis({
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:book_id => book_id,
-						:action => Feed::ActionDelete
+						:action => FeedHelper::ActionDelete
 						}, Constant::NodeLabel::EndorseNode)
 					info = Api::V0::UserApi.remove_endorse(book_id, user_id).execute
 				end
