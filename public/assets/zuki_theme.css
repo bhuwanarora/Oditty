@@ -1,0 +1,170 @@
+#colophon #site-info {
+	display: none;
+}
+
+#wpadminbar {
+	display: none;
+	height: 0;
+}
+
+#masthead {
+	padding: 10px;
+	background-color: #00BCD4;
+}
+
+html {
+	margin-top: 0 !important;
+}
+
+.entry-thumbnail img {
+	width: auto;
+	max-height: 400px;
+}
+
+.entry-content a {
+	color: #BE350B !important;
+}
+
+#featured-content {
+	display: none;
+}
+
+#site-nav {
+	padding: 0;
+}
+
+#site-nav ul li {
+	margin: 0 5px;
+	height: inherit !important;
+}
+
+#site-nav ul li a {
+	color: white !important;
+	font-size: 15px;
+	font-family: sans-serif;
+	padding: 2px;
+}
+
+.front-content .rp-big-one-content h2.entry-title {
+	font-size: 20px;
+}
+
+.entry-author {
+	visibility: hidden;
+	height: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.front-fullwidth .widget_zuki_recentposts_big, .front-content .widget_zuki_recentposts_big {
+}
+
+.widget-area .widget {
+	border: none;
+}
+
+#colophon h3.social-nav-title,
+#footerwidgets-wrap .widget h3.widget-title,
+#footerwidgets-wrap .widget-area a,
+#footerwidgets-wrap .e-entry-title {
+	color: white !important;
+}
+
+#colophon {
+	background-color: #263238;
+}
+
+#footerwidgets-wrap {
+	padding: 10px;
+	background-color: #37474F;
+}
+
+#footerwidgets-wrap .widget-area {
+	border-top: none;
+}
+
+#footerwidgets-wrap .widget-title {
+	float: none !important;
+}
+
+.widget-area .widget-title {
+	padding: 10px;
+	margin: 30px 0;
+	float: left;
+	font-size: 20px !important;
+	display: -webkit-inline-box;
+	font: 300 20px Roboto, arial, sans-serif;
+	color: #898989;
+}
+
+#container {
+	margin: 0 auto;
+	background-color: white;
+}
+
+.widget-area .widget {
+	padding: 50px 0;
+}
+
+#front-fullwidth-center {
+	background-color: #EcECEC;
+	padding: 10px;
+}
+
+#zuki_recentposts_medium-24  .rp-medium-one {
+	background-color: #fff;
+	width: 80%;
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+	padding: 10px;
+	margin: 10px;
+	min-width: 300px;
+}
+
+.category #primary,
+.single #primary {
+	padding: 20px;
+}
+
+.single-author .entry-meta .author {
+	display: inline;
+}
+
+.page-id-4058 .entry-content {
+	padding: 0 25% 5% !important;
+	font-size: 18px !important;
+	color: #4c4c4c !important;
+	text-align: center !important;
+	line-height: 32px !important;
+}
+
+.rp-small-one .entry-title {
+	font-size: 17px !important;
+	display: initial !important;
+}
+
+.entry-title {
+	font-size: 28px !important;
+	letter-spacing: -.02em !important;
+	line-height: 1.15 !important;
+	font-weight: 500 !important;
+	font-family: sans-serif !important;
+}
+
+.summary {
+	font-size: 14px !important;
+	color: #999999 !important;
+	font-family: "din", "Calibri", "Cantarell", sans-serif !important;
+}
+
+.entry-content {
+	font-size: 18px !important;
+	color: #4c4c4c !important;
+	line-height: 32px !important;
+	font-family: "din", "Calibri", "Cantarell", sans-serif !important;
+}
+
+.page-id-4058 #masthead,
+.page-id-4058 #footerwidgets-wrap,
+.page-id-4058 footer {
+	display: none !important;
+}

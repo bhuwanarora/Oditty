@@ -10,10 +10,11 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
                     }
                     else{
                         var skip = 0;
+                        $scope.social_feed = [];
                     }
                     userService.get_social_feed(skip).then(function(data){
                         $scope.info.feed_loading = false;
-                        $scope.social_feed = data;
+                        $scope.social_feed = $scope.social_feed.concat(data);
                     });
                 }
             }
