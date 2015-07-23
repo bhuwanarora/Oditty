@@ -1,5 +1,3 @@
-
-
 homeApp.directive('joinCommunity', ["$rootScope", "newsService", "$mdSidenav", function($rootScope, newsService, $mdSidenav){
     return {
         restrict: 'E',
