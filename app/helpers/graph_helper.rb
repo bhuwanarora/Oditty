@@ -374,6 +374,7 @@ module GraphHelper
 				" RETURN ID(original),ID(duplicate) LIMIT 1"
 		output = clause.execute
 		if (output.length >0)
+			debugger
 			id_orig = output[0]["ID(original)"]
 			id_dup = output[0]["ID(duplicate)"]
 			GraphHelper.copy_properties_author(id_orig,id_dup)
