@@ -526,3 +526,9 @@ md-select-label{
 .no_overflow{
     overflow: hidden;
 }
+
+md-grid-list md-grid-tile md-grid-tile-header, 
+md-grid-list md-grid-tile md-grid-tile-footer{
+    min-height: 48px !important;
+    height: initial !important;
+}

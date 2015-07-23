@@ -1,3 +1,119 @@
+homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _rooms = function(){
+                var rooms = [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Political Philosophy",
+                        "id": 4972796
+                    },
+                    {
+                        "name" : "Art History",
+                        "id": 4977592
+                    },
+                    {
+                        "name" : "Sports",
+                        "id": 5024590
+                    },
+                    {
+                        "name" : "Brain",
+                        "id": 4988942
+                    },
+                    {
+                        "name" : "Religion",
+                        "id": 5023062
+                    },
+                    {
+                        "name" : "Technology",
+                        "id": 5021552
+                    },
+                    {
+                        "name" : "Health",
+                        "id": 5020478
+                    },
+                    {
+                        "name" : "Blanching(Cooking)",
+                        "id": 5107299
+                    },
+                    {
+                        "name" : "Military Sociology",
+                        "id": 5020956
+                    },
+                    {
+                        "name" : "Medicine",
+                        "id": 5020467
+                    },
+                    {
+                        "name" : "British Monarchy",
+                        "id": 5007072
+                    },
+                    {
+                        "name" : "Movies",
+                        "id": 4978987
+                    },
+                    {
+                        "name" : "Pro-Democracy Demonstrators",
+                        "id": 4998148
+                    },
+                    {
+                        "name" : "Economics",
+                        "id": 5020765
+                    },
+                    {
+                        "name" : "Ghost",
+                        "id": 5014454
+                    },
+                    {
+                        "name" : "Adorable Selfie",
+                        "id": 4996889
+                    },
+                    {
+                        "name" : "Moorish Architecture",
+                        "id": 4980447
+                    },
+                    {
+                        "name" : "Walt Disney Co",
+                        "id": 5100214
+                    },
+                    {
+                        "name" : "Biology",
+                        "id": 5023104
+                    },
+                    {
+                        "name" : "Quantum Gravity",
+                        "id": 5013921
+                    },
+                    {
+                        "name" : "Time",
+                        "id": 4980633
+                    },
+                    {
+                        "name" : "Star Wars Exhibit",
+                        "id": 4993023
+                    },
+                    {
+                        "name" : "Ancient Species",
+                        "id": 4982520
+                    }
+                ];
+                return rooms;
+            }
+
+            var _init = function(){
+                $scope.rooms = _rooms();
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/home/partials/browse_rooms.html'
+    };
+}]);
+
 homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
