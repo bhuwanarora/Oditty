@@ -2,7 +2,7 @@
 	<div class="important_title" layout-padding>
 		Trending
 	</div>
-	<div ng-repeat="community in suggest_communities" layout="column" 
+	<div ng-repeat="community in suggest_communities | limitTo: 5" layout="column" 
 		layout-align="center start" layout-padding>
 		<div layout="row" class="less_important">
 			<!-- <div layout-padding><i class="material-icons">trending_up</i></div> -->

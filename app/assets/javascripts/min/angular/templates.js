@@ -217,13 +217,18 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/home/partials/browse_rooms.html',
+    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Rooms of Knowledge</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in rooms\" md-rowspan=\"1\" md-colspan=\"1\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"capitalize bold\">{{trend.name}}</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
+  );
+
+
   $templateCache.put('/assets/angular/html/home/partials/community.html',
     "<div layout=\"row\" layout-align=\"space-between center\" layout-padding><a aria-label=\"toggle_join\" ng-class=\"{'md-raised': !community.status}\" ng-href=\"/room?q={{::community.id}}\"><div layout=\"column\" layout-align=\"center center\"><img ng-src=\"{{::community.image_url}}\" class=\"big_circle\"><div ng-bind-html=\"::community.name\"></div></div></a></div>"
   );
 
 
   $templateCache.put('/assets/angular/html/home/partials/community_suggestions.html',
-    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Trending Rooms of Knowledge</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in suggest_communities\" md-rowspan=\"{{trend.span.row}}\" md-colspan=\"{{trend.span.col}}\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><h3 class=\"capitalize bold\">{{trend.name}}</h3><h4>{{trend.view_count}} Views</h4></md-grid-tile-footer></md-grid-tile></md-grid-list>"
+    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"feed_margin grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Trending</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in suggest_communities | limitTo : 6\" md-rowspan=\"{{trend.span.row}}\" md-colspan=\"{{trend.span.col}}\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"capitalize bold\">{{trend.name}}</div><div class=\"less_important white_color\">{{trend.view_count}} Views</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
   );
 
 
@@ -904,7 +909,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/trending.html',
-    "<div class=\"white round_corners md-whiteframe-z1\"><div class=\"important_title\" layout-padding>Trending</div><div ng-repeat=\"community in suggest_communities\" layout=\"column\" layout-align=\"center start\" layout-padding><div layout=\"row\" class=\"less_important\"><div layout=\"column\"><a ng-href=\"/room?id={{::community.id}}\" layout=\"column\"><div ng-bind-html=\"::community.name\" class=\"capitalize\"></div></a><div class=\"less_important\">{{::community.view_count}} Views</div></div></div></div></div>"
+    "<div class=\"white round_corners md-whiteframe-z1\"><div class=\"important_title\" layout-padding>Trending</div><div ng-repeat=\"community in suggest_communities | limitTo: 5\" layout=\"column\" layout-align=\"center start\" layout-padding><div layout=\"row\" class=\"less_important\"><div layout=\"column\"><a ng-href=\"/room?id={{::community.id}}\" layout=\"column\"><div ng-bind-html=\"::community.name\" class=\"capitalize\"></div></a><div class=\"less_important\">{{::community.view_count}} Views</div></div></div></div></div>"
   );
 
 
