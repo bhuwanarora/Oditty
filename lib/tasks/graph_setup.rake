@@ -413,4 +413,10 @@ namespace :graph do
     include GraphHelper
     GraphHelper.reset_user_notification
   end
+
+  desc " tests some function which one wants to test. "
+  task :test_function => :environment do
+    include GraphHelper
+    GraphHelper.test_function
+  end
 end
