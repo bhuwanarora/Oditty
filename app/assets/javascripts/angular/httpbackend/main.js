@@ -70,7 +70,7 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
-    $httpBackend.whenGET(/api\/v0\/social_feed\?.*/).respond(function(method, url, data){
+    $httpBackend.whenGET(/api\/v0\/get_social_feed\?.*/).respond(function(method, url, data){
         var data = ServerDataModel.get_social_feed();
         return [200, data, {}];
     });
