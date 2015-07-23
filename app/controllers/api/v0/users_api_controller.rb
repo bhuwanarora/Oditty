@@ -310,6 +310,7 @@ module Api
 				user_id = session[:user_id]
 				if follow_action.present? && follow_action == "true"
 					Api::V0::UserApi.follow_user(user_id, friend_id).execute
+					debugger
 					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:friend_id => friend_id,

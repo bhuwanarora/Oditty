@@ -1,6 +1,7 @@
 module FeedHelper::UserFeedHelper
 	
-	def self.update_redis_on_create(feed_id, user_id)
+	def self.update_redis_on_create(feed_id, user_id, update = false)
+		api_string = (update == false)?("/api/v0/add_feed"):("/api/v0/update_feed")
 		clause = ""\
 			" MATCH (feed) "\
 			" WHERE ID(feed) =" + feed_id.to_s + " "\
@@ -17,7 +18,7 @@ module FeedHelper::UserFeedHelper
 	end
 
 	def self.update_redis_on_update feed_id, user_id
-		FeedHelper::UserFeedHelper.update_redis_on_create feed_id, user_id
+		FeedHelper::UserFeedHelper.update_redis_on_create feed_id, user_id, true
 	end
 
 	def self.update_redis_on_delete(feed_id, user_id)
@@ -38,13 +39,11 @@ module FeedHelper::UserFeedHelper
 		when Constant::NodeLabel::RatingNode
 			feed_id = FeedHelper::UserFeedHelper.get_rating_node_id params
 		end
-		debugger
 		FeedHelper::UserFeedHelper.handle_action feed_id, params[:user_id], params[:action]
 	end
 
 	def self.get_follows_node_id params
 		feed_id = nil
-		debugger
 		if params[:author_id].present?
 			feed_id = (UsersAuthor.new(params[:author_id], params[:user_id]).match + UsersAuthor.match + ", follows_node RETURN ID(follows_node) AS id ").execute[0]["id"]
 		elsif params[:friend_id].present?
@@ -56,7 +55,9 @@ module FeedHelper::UserFeedHelper
 	end
 
 	def self.get_bookmark_node_id params
-		(User.new(params[:user_id]).match + " MATCH (media) WHERE ID(media) = " + params[:media_id].to_s + Bookmark.match("media") + " RETURN ID(bookmark_node) AS id ").execute[0]["id"]
+		(User.new(params[:user_id]).match + " MATCH (media) WHERE ID(media) = " + params[:media_id].to_s + Bookmark.match("media") + ""\
+		" WHERE label.key <>\'Visited\' AND label.key <>\'FromFacebook\' "\
+		" RETURN ID(bookmark_node) AS id ").execute[0]["id"]
 	end
 
 	def self.get_status_node_id params
@@ -64,11 +65,11 @@ module FeedHelper::UserFeedHelper
 	end
 
 	def self.get_endorse_node_id params
-		(UsersBook.new(params[:book_id],params[:user_id]).match + " WITH user, book " + UsersBook::Endorse.match + " RETURN ID(endose) AS id ").execute[0][id]
+		(UsersBook.new(params[:book_id],params[:user_id]).match + UsersBook::Endorse.match + " RETURN ID(endorse) AS id ").execute[0]["id"]
 	end
 
 	def self.get_rating_node_id params
-		(UsersBook.new(params[:book_id],params[:user_id]).match + " WITH user, book " + UsersBook.match_rating + " RETURN ID(rating_node) AS id").execute[0]["id"]
+		(UsersBook.new(params[:book_id],params[:user_id]).match + UsersBook.match_rating + " RETURN ID(rating_node) AS id").execute[0]["id"]
 	end
 
 	def self.handle_action feed_id, user_id, action

@@ -92,7 +92,7 @@ class Status < Neo
 	end
 
 	def self.basic_info
-		" status.user_id AS updated_by, status.content AS status, ID(status) AS status_id "
+		" status.user_id AS updated_by, status.content AS status, ID(status_node) AS status_id "
 	end
 
 	def set_book_page_count
