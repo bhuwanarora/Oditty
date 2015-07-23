@@ -14,7 +14,11 @@ class UsersBook < Neo
 	end
 
 	def self.optional_match_rating
-		" OPTIONAL MATCH (user)-[:RatingAction]->(rating_node:RatingNode)-[:Rate]->(book) "
+		" OPTIONAL" + UsersBook.match_rating
+	end
+
+	def self.match_rating
+		" MATCH (user)-[:RatingAction]->(rating_node:RatingNode)-[:Rate]->(book) "
 	end
 
 	def self.optional_match_timing_node

@@ -19,11 +19,11 @@ class UsersBook::Rate < UsersBook
 	end
 
 	def create
-		" MERGE (rating_node:RatingNode{book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + "}) "\
+		" MERGE (rating_node:RatingNode{book_id:" + @book_id.to_s + ", user_id:" + @user_id.to_s + "}) " +
 		" ON CREATE " + UsersBook::Rate.set_created_at +
-		" WITH rating_node, user, book "\
-		" OPTIONAL" + Book::Feed.delete_feed("rating_node") + ", user "
-		" OPTIONAL" + User::Feed.new(@user_id).delete_feed("rating_node") + ", book "
+		" WITH rating_node, user, book " +
+		Book::BookFeed.delete_feed_optional("rating_node",["user","book"]) +
+		User::Feed.new(@user_id).delete_feed_optional("rating_node", ["user","book"]) +
 		" MERGE (user)-[rating_action:RatingAction]->(rating_node)-[rate:Rate]->(book) "
 	end
 
