@@ -4,7 +4,6 @@ module Api
 			def create
 				user_id = session[:user_id] 
 				info = Api::V0::StatusApi.create(user_id, params).execute
-				debugger
 				FeedHelper::UserFeedHelper.handle_redis({
 					:user_id => user_id,
 					:feed_id => info[0]["status_id"],
