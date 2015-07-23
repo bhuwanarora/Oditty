@@ -29,6 +29,26 @@ class User::Feed < User
 		" MATCH (s)-[f1:FeedNext{user_id:"+@user_id.to_s+"}]->("+object+")-[f2:FeedNext{user_id:"+@user_id.to_s+"}]->(e) CREATE (s)-[:FeedNext{user_id:"+@user_id.to_s+"}]->(e) DELETE f1, f2  WITH user, " + object + " "
 	end
 
+	def delete_feed_optional object, with_elements
+		" OPTIONAL MATCH (s)-[f1:FeedNext{user_id:"+@user_id.to_s+"}]->("+object+")-[f2:FeedNext{user_id:"+@user_id.to_s+"}]->(e) "\
+		" WITH " + object + with_elements.map{|elem| (", " + elem)}.join("") + ", COLLECT([s,e]) AS path_nodes, COLLECT([f1,f2]) AS path_edges "\
+		" FOREACH (elem in (CASE WHEN path_nodes[1] IS NULL THEN [] ELSE path_nodes END )| "\
+			"FOREACH (node1 IN [elem[0]] | "\
+				" FOREACH (node2 IN [elem[1]] | "\
+					" CREATE (node1)-[f1:FeedNext{user_id:"+@user_id.to_s+"}]->(node2) "\
+				")"\
+			")"\
+		")"\
+		" FOREACH (elem in (CASE WHEN path_edges[0] IS NULL THEN [] ELSE path_edges END)| "\
+			"FOREACH (rel1 IN [elem[0]] | "\
+				" FOREACH (rel2 IN [elem[1]] | "\
+					" DELETE rel1, rel2 "\
+				" )"\
+			" )"\
+		" )"\
+		" WITH " + object + with_elements.map{|elem| (", " + elem)}.join("") + " "
+	end
+
 	def create object
 		" MATCH (user)-[old:FeedNext{user_id:ID(user)}]->(old_feed) "\
 		" CREATE UNIQUE (user)-[:FeedNext{user_id:" + @user_id.to_s + "}]->(" + object + ")-[:FeedNext{user_id:" + @user_id.to_s + "}]->(old_feed) "\
