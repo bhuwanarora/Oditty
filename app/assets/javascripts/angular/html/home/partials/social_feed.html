@@ -24,6 +24,13 @@
 		<div ng-if="feed.label == 'RatingNode'">
 			<a ng-href="/profile?id={{feed.data.user.id}}">{{::feed.data.user.name}}</a>&nbsp;gave {{::feed.data.feed.rating}} to&nbsp;<a ng-href="/book?id={{feed.data.book.id}}">{{::feed.data.book.title}}</a>&nbsp;by&nbsp;<a ng-href="/author?q={{::feed.data.author.id}}">{{::feed.data.author.name}}</a>.
 		</div>
+		<div ng-if="feed.label == 'StatusNode'">
+			<div><a ng-href="/profile?id={{feed.data.user.id}}">{{::feed.data.user.name}}</a></div>
+			<div ng-bind-html="::feed.data.content"></div>
+		</div>
+		<div ng-if="feed.label == 'EndorseNode'">
+			<div><a ng-href="/profile?id={{feed.data.user.id}}">{{::feed.data.user.name}}</a>&nbsp;endorsed&nbsp;<a ng-href="/book?id={{feed.data.book.id}}">{{::feed.data.book.title}}</a>&nbsp;by&nbsp;<a ng-href="/author?q={{::feed.data.author.id}}">{{::feed.data.author.name}}</a>.</div>
+		</div>
 		<br/>
 		<md-divider></md-divider>
 	</div>
