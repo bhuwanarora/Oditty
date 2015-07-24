@@ -1,4 +1,5 @@
 module NLPHelper
+	require 'treat'
 	include Treat::Core::DSL
 	NLPNameTags = {"person" => "Person", "location" => "Location", "organization" => "Organization"}
 	
