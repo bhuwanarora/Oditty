@@ -218,7 +218,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/browse_rooms.html',
-    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Rooms of Knowledge</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in rooms\" md-rowspan=\"1\" md-colspan=\"1\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"capitalize bold\">{{trend.name}}</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
+    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Rooms of Knowledge</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in rooms\" md-rowspan=\"1\" md-colspan=\"1\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"less_important white_color\">{{trend.name}}</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
   );
 
 
@@ -228,7 +228,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/community_suggestions.html',
-    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"feed_margin grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Trending</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in suggest_communities | limitTo : 6\" md-rowspan=\"{{trend.span.row}}\" md-colspan=\"{{trend.span.col}}\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"capitalize bold\">{{trend.name}}</div><div class=\"less_important white_color\">{{trend.view_count}} Views</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
+    "<a layout-padding layout=\"row\" layout-align=\"center center\" class=\"feed_margin grey_color very_important_title\" href=\"/rooms\"><div layout-padding>Trending</div></a><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in suggest_communities | limitTo : 6\" md-rowspan=\"{{trend.span.row}}\" md-colspan=\"{{trend.span.col}}\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"less_important white_color\">{{trend.name}}</div><div class=\"less_important white_color\">{{trend.view_count}} Views</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
   );
 
 
@@ -549,7 +549,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/left_panel.html',
-    "<suggest-friends></suggest-friends><div ng-if=\"!hide_follow_links\"><div layout-padding><user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\"></user-communities></div></div>"
+    "<social-feed></social-feed><suggest-friends></suggest-friends><div ng-if=\"!hide_follow_links\"><div layout-padding><user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\"></user-communities></div></div>"
   );
 
 
