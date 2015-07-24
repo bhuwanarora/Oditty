@@ -332,8 +332,8 @@ module GraphHelper
 		" WITH " + original + "," + duplicate + " "\
 		" "\
 		" OPTIONAL MATCH (question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
-		" FOREACH (answer IN (CASE WHEN answerof IS NULL THEN [] ELSE [answerof] END)| "\
-			" SET answerof.author_id = ID(" + original + ") "\
+		" FOREACH (answer_rel IN (CASE WHEN answerof IS NULL THEN [] ELSE [answerof] END)| "\
+			" SET answer_rel.author_id = ID(" + original + ") "\
 		") "\
 		" WITH " + original + ", " + duplicate + " "\
 		" "\
