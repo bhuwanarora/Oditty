@@ -40,6 +40,10 @@ class WebsiteController < ApplicationController
 		redirect_to coming_soon_path(:notice => status)
 	end
 
+	def quiz
+		render :layout => "material"
+	end
+
 	def index
 	end
 
