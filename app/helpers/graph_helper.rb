@@ -331,8 +331,10 @@ module GraphHelper
 		" DELETE answered "\
 		" WITH " + original + "," + duplicate + " "\
 		" "\
-		" MATCH (question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
-		" SET answerof.author_id = ID(" + original + ") "\
+		" OPTIONAL MATCH (question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
+		" FOREACH (answer IN (CASE WHEN answerof IS NULL THEN [] ELSE [answerof] END)| "\
+			" SET answerof.author_id = ID(" + original + ") "\
+		") "\
 		" WITH " + original + ", " + duplicate + " "\
 		" "\
 		" OPTIONAL MATCH(" + duplicate + ")<-[follows:OfAuthor]-(followsnodes:FollowsNode) "\
@@ -374,7 +376,6 @@ module GraphHelper
 				" RETURN ID(original),ID(duplicate) LIMIT 1"
 		output = clause.execute
 		if (output.length >0)
-			debugger
 			id_orig = output[0]["ID(original)"]
 			id_dup = output[0]["ID(duplicate)"]
 			GraphHelper.copy_properties_author(id_orig,id_dup)
