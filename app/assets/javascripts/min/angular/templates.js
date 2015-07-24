@@ -549,7 +549,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/left_panel.html',
-    "<social-feed></social-feed><suggest-friends></suggest-friends><div ng-if=\"!hide_follow_links\"><div layout-padding><user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\"></user-communities></div></div>"
+    "<social-feed></social-feed><div ng-if=\"!hide_follow_links\"><div layout-padding><user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\"></user-communities></div></div><suggest-friends></suggest-friends>"
   );
 
 
