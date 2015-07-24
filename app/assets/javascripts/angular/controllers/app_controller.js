@@ -10,6 +10,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
     //     }
     // }
 
+
     $scope.show_signin_options = function(event){
         $mdSidenav('signup').toggle();
         event.stopPropagation();

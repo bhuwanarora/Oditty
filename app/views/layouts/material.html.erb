@@ -70,6 +70,8 @@
                 <md-content ng-controller="customiseController" class="white" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController">
+            <% else %>
+                <md-content>
             <% end %>
             <div flex>
                 <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% else %>border_bottom<% end %>">
@@ -225,6 +227,8 @@
             <% end %>
             <% if @search %>
                 <script src="assets/angular/controllers/search_page_controller.js"></script>
+            <% end %>
+            <% if @quiz %>
             <% end %>
         <% else %>
             <script src="assets/min/angular/vendors.min.js"></script>
