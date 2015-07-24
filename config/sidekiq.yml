@@ -15,3 +15,7 @@
   - facebook_books
   - facebook_likes_books
   - facebook_likes
+:limits:
+	versioner:1
+:process_limits:
+	versioner:1
