@@ -3,6 +3,7 @@ module NLPHelper
 	NLPNameTags = {"person" => "Person", "location" => "Location", "organization" => "Organization"}
 	
 	def self.get_name_tags sentence_string
+		debugger
 		name_tag_list = []
 		sent = sentence sentence_string
 		sent.apply(:chunk, :segment, :tokenize, :name_tag)

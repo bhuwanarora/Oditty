@@ -47,6 +47,7 @@ module CommunitiesHelper
 							communities_videos[community_name] = output[:video]
 							communities_web_urls[community_name] = communities[i/skip]['url_list']
 							debugger
+							break
 						end
 					end
 				end			
