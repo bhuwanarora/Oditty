@@ -331,7 +331,7 @@ module GraphHelper
 		" DELETE answered "\
 		" WITH " + original + "," + duplicate + " "\
 		" "\
-		" OPTIONAL MATCH (question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
+		" OPTIONAL MATCH (question:Question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
 		" FOREACH (answer_rel IN (CASE WHEN answerof IS NULL THEN [] ELSE [answerof] END)| "\
 			" SET answer_rel.author_id = ID(" + original + ") "\
 		") "\
