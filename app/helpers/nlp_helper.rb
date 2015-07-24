@@ -1,10 +1,10 @@
 module NLPHelper
-	require 'treat'
-	include Treat::Core::DSL
 	NLPNameTags = {"person" => "Person", "location" => "Location", "organization" => "Organization"}
 	
 	def self.get_name_tags sentence_string
 		debugger
+		require 'treat'
+		extend Treat::Core::DSL
 		name_tag_list = []
 		sent = sentence sentence_string
 		sent.apply(:chunk, :segment, :tokenize, :name_tag)
