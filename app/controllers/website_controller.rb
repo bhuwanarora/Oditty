@@ -41,6 +41,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def quiz
+		@quiz = true
 		render :layout => "material"
 	end
 
