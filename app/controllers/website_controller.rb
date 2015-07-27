@@ -42,7 +42,12 @@ class WebsiteController < ApplicationController
 
 	def quiz
 		@quiz = true
-		render :layout => "material"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {:title => "Which Love Story is Your Life Like?, ReadersDoor", :meta_type => "Quiz", :image_url => "http://readersdoor.com/assets/quiz.png"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
 	end
 
 	def index
