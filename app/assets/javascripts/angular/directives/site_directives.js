@@ -104,6 +104,10 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                 return rooms;
             }
 
+            $scope.goto_room = function(id){
+                window.location.href = "/room?p="+id;
+            }
+
             var _init = function(){
                 $scope.rooms = _rooms();
             }
