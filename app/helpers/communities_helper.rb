@@ -44,7 +44,6 @@ module CommunitiesHelper
 							relevance << output[:relevance]
 							communities_videos[community_name] = output[:video]
 							communities_web_urls[community_name] = communities[i/skip]['url_list']
-							break
 						end
 					end
 				end			
