@@ -46,6 +46,7 @@ module CommunitiesHelper
 							relevance << output[:relevance]
 							communities_videos[community_name] = output[:video]
 							communities_web_urls[community_name] = communities[i/skip]['url_list']
+							break
 						end
 					end
 				end			
@@ -54,8 +55,10 @@ module CommunitiesHelper
 					news_metadata["news_id"] = news_id
 					params = {:type => "News", :response => news_id}
 					IndexerWorker.perform_async(params)
+					debugger
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
 					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, communities_web_urls)
+					debugger
 					CommunitiesHelper.map_videos communities_videos
 					News.new(news_metadata["news_id"]).add_notification.execute
 					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
@@ -107,12 +110,14 @@ module CommunitiesHelper
 	end
 
 	def self.map_community_videos community, videos
-		Community.merge(community) + videos.map{|video| (Video.merge(video) + Video.merge_community)}.join(" WITH community ")
+		Community.merge(community) + videos.map{|video| (Video.merge(video) + ", community " + Video.merge_community)}.join(" WITH community ")
 	end
 
 	def self.map_videos communities_videos
+		debugger
 		clause = ""
 		communities_videos.each{|community,videos| clause += map_community_videos(community, videos) }
+		clause += " RETURN ID(community) AS id "
 		clause.execute
 	end
 
