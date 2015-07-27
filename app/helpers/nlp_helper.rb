@@ -1,8 +1,7 @@
 module NLPHelper
 	NLPNameTags = {"person" => "Person", "location" => "Location", "organization" => "Organization"}
-	
+	#Treat.libraries.stanford.jar_path = '/usr/local/lib/ruby/gems/2.0.0/gems/stanford-core-nlp-0.5.1'
 	def self.get_name_tags sentence_string
-		debugger
 		require 'treat'
 		extend Treat::Core::DSL
 		name_tag_list = []
