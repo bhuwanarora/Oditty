@@ -33,7 +33,7 @@
                         md-search-text-change="search_genres(search_tag.genre)"
                         md-item-text="item.name || item.root_category_name"
                         md-min-length="0"
-                        placeholder="Select a Genre">
+                        placeholder="Search for a Genre">
                         <div>
                             <div md-highlight-text="search_tag.genre" class="capitalize">{{item.name}}</div>
                             <div class="less_important">{{item.books_count}} books</div>
@@ -47,7 +47,7 @@
                         md-items="item in info.read_times"
                         md-item-text="item.page_count_range"
                         md-min-length="0"
-                        placeholder="No. of Pages">
+                        placeholder="Pages to read">
                         <div layout="column">
                             {{item.page_count_range}}
                         </div>

@@ -1,6 +1,7 @@
 homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
     return {
         restrict: 'E',
+        scope: {'reduced': '='},
         controller: ["$scope", function($scope){
             var _rooms = function(){
                 var rooms = [
@@ -12,10 +13,10 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "name" : "Political Philosophy",
                         "id": 4972796
                     },
-                    {
-                        "name" : "Art History",
-                        "id": 4977592
-                    },
+                    // {
+                    //     "name" : "Art History",
+                    //     "id": 4977592
+                    // },
                     {
                         "name" : "Sports",
                         "id": 5024590
@@ -40,10 +41,10 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "name" : "Blanching(Cooking)",
                         "id": 5107299
                     },
-                    {
-                        "name" : "Military Sociology",
-                        "id": 5020956
-                    },
+                    // {
+                    //     "name" : "Military Sociology",
+                    //     "id": 5020956
+                    // },
                     {
                         "name" : "Medicine",
                         "id": 5020467
@@ -52,18 +53,18 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "name" : "British Monarchy",
                         "id": 5007072
                     },
-                    {
-                        "name" : "Movies",
-                        "id": 4978987
-                    },
+                    // {
+                    //     "name" : "Movies",
+                    //     "id": 4978987
+                    // },
                     {
                         "name" : "Pro-Democracy Demonstrators",
                         "id": 4998148
                     },
-                    {
-                        "name" : "Economics",
-                        "id": 5020765
-                    },
+                    // {
+                    //     "name" : "Economics",
+                    //     "id": 5020765
+                    // },
                     {
                         "name" : "Ghost",
                         "id": 5014454
@@ -95,11 +96,11 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                     {
                         "name" : "Star Wars Exhibit",
                         "id": 4993023
-                    },
-                    {
-                        "name" : "Ancient Species",
-                        "id": 4982520
                     }
+                    // {
+                    //     "name" : "Ancient Species",
+                    //     "id": 4982520
+                    // }
                 ];
                 return rooms;
             }
