@@ -29,13 +29,11 @@ module CommunitiesHelper
 			communities_videos = {}
 			communities_web_urls = {}	
 			response = NewsHelper.fetch_tags news_metadata["news_link"]
-			debugger
 			puts response.red
 			if response.is_json? 
 				response = JSON.parse(response)			
 				communities = CommunitiesHelper.handle_communities response
 				skip = 10000
-				debugger
 				timer = communities.length * skip -1
 				for i in 0..timer do
 					if (i % skip) == 0
@@ -55,10 +53,8 @@ module CommunitiesHelper
 					news_metadata["news_id"] = news_id
 					params = {:type => "News", :response => news_id}
 					IndexerWorker.perform_async(params)
-					debugger
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
 					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, communities_web_urls)
-					debugger
 					CommunitiesHelper.map_videos communities_videos
 					News.new(news_metadata["news_id"]).add_notification.execute
 					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
@@ -114,7 +110,6 @@ module CommunitiesHelper
 	end
 
 	def self.map_videos communities_videos
-		debugger
 		clause = ""
 		communities_videos.each{|community,videos| clause += map_community_videos(community, videos) }
 		clause += " RETURN ID(community) AS id "
