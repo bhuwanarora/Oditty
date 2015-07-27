@@ -1,5 +1,9 @@
 body, html{
     background-color: #E5E5E5;
+    font-size: 18px;
+    /*line-height: 1.45em;*/
+    font-weight: 400;
+    font-family: "Myriad Set Pro", "Lucida Grande", "Helvetica Neue", "Helvetica", "Arial", "Verdana", "sans-serif";
 }
 
 hr{

@@ -142,7 +142,6 @@ module CommunitiesHelper
 				community_info = (clause + Community.return_group(Community.basic_info)).execute[0]
 				params = {:type => "Community", :response => community_info["id"]}
 				IndexerWorker.perform_async(params)
-
 				if community_info.present? && community_info["image_url"].present? && community_info["id"].present?
 					type = "community"
 					VersionerWorker.perform_async(community_info["id"], community_info["image_url"], type)

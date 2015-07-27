@@ -198,6 +198,12 @@ namespace :graph do
     Neo4jHelper.index_authors
   end
 
+  desc " set search_index and indexed_main_author_name for authors"
+  task :set_author_search_indices => :environment do
+    include AuthorsHelper
+    AuthorsHelper.set_search_indices
+  end
+
   desc "grid init"
   task :grids => :environment do
     include Neo4jHelper
@@ -406,5 +412,11 @@ namespace :graph do
   task :reset_user_notification => :environment do
     include GraphHelper
     GraphHelper.reset_user_notification
+  end
+
+  desc " tests some function which one wants to test. "
+  task :test_function => :environment do
+    include GraphHelper
+    GraphHelper.test_function
   end
 end

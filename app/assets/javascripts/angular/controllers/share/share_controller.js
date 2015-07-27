@@ -200,7 +200,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
             statusService.post_status(status).then(function(){
                 $scope.posting = false;
                 $scope.info.share_loading = false;
-                // $scope.post_again = true;
+                window.location.reload();
             });
             $scope.info.status = "";
             $scope.info.wrapper_status = "";

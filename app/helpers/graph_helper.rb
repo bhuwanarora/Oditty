@@ -677,4 +677,8 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.test_function
+		FeedWorker.perform_async(5251859,4974698,Constant::EntityLabel::User)
+	end
+
 end

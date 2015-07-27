@@ -39,6 +39,7 @@ gem 'rails_admin_nestable'
 gem 'elasticsearch-model'
 gem 'elasticsearch-rails'
 gem 'sidekiq'
+gem 'sidekiq-limit_fetch', '~> 2.4.2'
 gem "resque"
 # gem 'angularjs-rails'
 # gem 'angular-ui-router-rails'
