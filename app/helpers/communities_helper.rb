@@ -213,4 +213,38 @@ module CommunitiesHelper
 			end
 		end
 	end
+
+	def self.handle_bookless_community community_id
+		circular_linked_lists = {'FeedNext' => ['user_id']}
+		preseve_links_type = ['RootOf']
+		clause = ""\
+			" MATCH (community:Community) "\
+			" WHERE ID(community) = " + community_id.to_s + " "\
+			" WITH community "\
+			" MATCH (community)-[:OfCommunity]-(node:FollowsNode) "\
+			"" + CircularLinkedList.remove_element(circular_linked_lists) + " "\
+			" OPTIONAL MATCH (node)-[r]-() "\
+			"" + Neo.delete_element_optional_match)('r') + ""
+			" DELETE node "\
+			" WITH community "\
+			" OPTIONAL MATCH (community)-[rel]-() "\
+			" WHERE NOT (" + preseve_links_type.map{|type| ("rel:" + type)}.join(" OR ") + ") "\
+			"" + Neo.delete_element_optional_match("rel") + ""\
+			" REMOVE community:Community "\
+			" SET community: " + Constant::NodeLabel::BooklessCommunity " "\
+			" RETURN ID(community) AS id"
+		output = clause.execute
+		if output.empty?
+			puts (" Bookless Community Handling of id: " + community_id.to_s + " unsuccesful").red
+		end
+	end
+
+	def self.handle_bookless_communities
+		local_redis_key = 'bookless_communities_key'
+		clause = " MATCH (community:Community) "\
+			" WHERE NOT (community)-[:RelatedBooks]->(book:Book) "\
+			" RETURN ID(community) AS id "
+		id_list = clause.execute.map{|elem| elem['id']}
+		id_list.each{|community_id| CommunitiesHelper.handle_bookless_community(community_id)}
+	end
 end

@@ -159,4 +159,44 @@ module CircularLinkedListHelper
 		end
 
 	end
+
+	def self.stringify value
+		output = ""
+		if value.is_a? String
+			output = "\'" + value.database_ready + "\'"
+		else
+			output = value.to_s
+		end
+		output
+	end
+
+	def self.remove_element_from_one_list rel_label, key_properties, with_elems
+		rel_filter = (key_properties.empty?)? "": (" WHERE " + key_properties.map{|property| ( "left_rel." + property + "=" + "right_rel".property )}.join(" AND "))
+
+		rel_output_property = (key_properties.empty?)? "": (key_properties.map{|property| (property + ":" + "left_rel." + property)}.join(", "))
+
+		" OPTIONAL MATCH (left_node)-[left_rel:" + rel_label + "]->(node)-[right_rel:" + rel_label + "]->(right_node) "\
+		" " + rel_filter + " "\
+		" WITH COLLECT([left_node,right_node]) AS nodes, left_rel, right_rel " + with_elems.map{|elem| (elem)}.join(", ") + " "\
+		"" + Neo.delete_element_optional_match('left_rel') + Neo.delete_element_optional_match('right_rel') + " "\
+		" FOREACH (elem in (CASE WHEN nodes[1] IS NULL THEN [] ELSE nodes END )| "\
+			"FOREACH (node1 IN [elem[0]] | "\
+				" FOREACH (node2 IN [elem[1]] | "\
+					" MERGE (left_node)-[:" + rel_label + rel_output_property + "]->(right_node) "\
+				")"\
+			")"\
+		")"\
+		" WITH " + with_elems.map{|elem| (elem)}.join(", ")
+	end
+
+	def self.remove_element_with_id id, relationship, with_elems
+		clause = " MATCH (node) "\
+				" WHERE ID(node) = " + id.to_s + " "\
+				" WITH node "
+		clause += CircularLinkedListHelper.remove_element relationship, with_elems
+	end
+
+	def self.remove_element relationship, with_elems = ['node']
+		clause += relationship.map{|label,key_properties| (CircularLinkedListHelper.remove_element_from_one_list(label, key_properties))}.join("")
+	end
 end

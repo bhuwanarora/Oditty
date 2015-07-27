@@ -98,4 +98,10 @@ class Neo
 		end
 		output_neo4j_string
 	end
+
+	def self.delete_element_optional_match collection_name
+		" FOREACH (elem IN (CASE WHEN " + collection_name + " IS NULL THEN [] ELSE [collection_name] END) |
+			DELETE elem "\
+			")"
+	end
 end
