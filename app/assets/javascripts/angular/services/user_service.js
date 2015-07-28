@@ -20,6 +20,16 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/get_social_feed?skip='+skip+'&count='+count, $q, $http);
     }
 
+    this.get_global_feed = function(skip, count){
+        if(angular.isUndefined(skip)){
+            skip = 0;
+        }
+        if(angular.isUndefined(count)){
+            count = 10;
+        }
+        return _deferred_request('/api/v0/get_global_feed?skip='+skip+'&count='+count, $q, $http);
+    }
+
     this.recover_password = function(data){
         return _deferred_request('/api/v0/recover_password?'+data, $q, $http);
     }
