@@ -18,7 +18,7 @@ class Video < Neo
 	def self.merge_community google_rank = -1
 		clause = " MERGE (video)-[has_video:HasVideo]->(community) "
 		if google_rank.present? && google_rank > 0
-			clause += " SET has_video.rank = " + google_rank.to_s + " "
+			clause += " ON CREATE SET has_video.rank = " + google_rank.to_s + " "
 		end
 		clause += " WITH video, community, has_video "
 	end
@@ -30,7 +30,8 @@ class Video < Neo
 			" video.thumbnail = \'" + video[:thumbnail].to_s + "\', "\
 			" video.duration = " + video[:duration].to_s + ", "\
 			" video.publisher = \'" + video[:publisher].to_s + "\', "\
-			" video.published_date = \'" + video[:published_date].to_s + "\' "\
+			" video.published_date = \'" + video[:published_date].to_s + "\', "\
+			" video.created_at = " + Time.now.to_i.to_s + " "\
 		" WITH video "
 	end
 end

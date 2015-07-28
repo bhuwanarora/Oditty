@@ -105,13 +105,13 @@ module CommunitiesHelper
 	end
 
 	def self.map_community_videos community, videos
-		Community.merge(community) + videos.map{|video| (Video.merge(video) + ", community " + Video.merge_community)}.join(" WITH community ")
+		Community.merge(community) + videos.map{|video| (Video.merge(video) + ", community " + Video.merge_community(video[:rank]))}.join(" WITH community ")
 	end
 
 	def self.map_videos communities_videos
 		clause = ""
-		communities_videos.each{|community,videos| clause += map_community_videos(community, videos) }
-		clause += " RETURN ID(community) AS id "
+		communities_videos.each{|community,videos| clause += map_community_videos(community, videos) + " WITH community AS ignore " }
+		clause += " RETURN ID(ignore) AS id "
 		clause.execute
 	end
 

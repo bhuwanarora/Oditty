@@ -61,7 +61,7 @@ module GoogleSearchHelper
 				:duration	=> item.duration,
 				:publisher	=> item.publisher,
 				:published_date => item.published.to_time.to_i,
-				:rank 		=> google_rank
+				:rank 		=> (google_rank + 1)
 			}}
 	end
 
