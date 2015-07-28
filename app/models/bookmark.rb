@@ -198,7 +198,7 @@ class Bookmark < Neo
 	def remove  
 		operation = "-"
 		feednext_clause = User::Feed.new(@user_id).delete_feed("bookmark_node") + ", " + @media + ", labelled, label "
-		mediafeed_next_clause = @media == "book" ? @media_feed_class.delete_feed("bookmark_node", @user_id) + ", labelled, label " : ""
+		mediafeed_next_clause = (@media == "book")?(@media_feed_class.delete_feed("bookmark_node") + ", labelled, label " ):""
 		puts "REMOVE BOOKMARKED".green
 		match + @media_label_class.optional_match_path + delete_bookmark_relations + set_properties(operation) + feednext_clause + mediafeed_next_clause + Bookmark.delete_bookmark
 	end

@@ -3,6 +3,8 @@ class VersionerWorker
 	include Sidekiq::Worker
 	sidekiq_options :queue => :versioner
 	def perform(id, url, type)
+		Sidekiq::Queue['versioner'].limit = 1
+		Sidekiq::Queue['versioner'].process_limit = 1
 		if id.present? && url.present? && type.present?
 			type.downcase!
 			case type
