@@ -5,14 +5,18 @@ module NLPHelper
 		require 'treat'
 		extend Treat::Core::DSL
 		name_tag_list = []
-		sent = sentence sentence_string
-		sent.apply(:chunk, :segment, :tokenize, :name_tag)
-		sent.words.each do |word|
-			NLPNameTags.each do |category,label|
-				if word[:name_tag].to_s == category
-					name_tag_list << label
+		begin
+			sent = sentence sentence_string
+			sent.apply(:chunk, :segment, :tokenize, :name_tag)
+			sent.words.each do |word|
+				NLPNameTags.each do |category,label|
+					if word[:name_tag].to_s == category
+						name_tag_list << label
+					end
 				end
 			end
+		rescue Exception => e
+			puts e.to_s.red
 		end
 		name_tag_list.uniq{|category| category}
 	end
