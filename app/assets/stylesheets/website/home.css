@@ -118,9 +118,13 @@ md-content{
 }
 
 .super_container{
-	margin-top: 52px !important;
     max-height: 92vh !important;
+}
+
+.super_container,
+.super_div_container{
     outline: none !important;
+	margin-top: 52px !important;
 }
 
 .burger{
