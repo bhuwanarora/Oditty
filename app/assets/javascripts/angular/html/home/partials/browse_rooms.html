@@ -24,16 +24,16 @@
         </md-grid-tile>
     </md-grid-list>
 </div>
-<div ng-if="reduced" class="feed_ticker">
-    <div layout="row" layout-align="center center">
-        <a layout-padding layout="row" layout-align="center center" class="grey_color important_title" href="/rooms">
-            <div layout-padding>Rooms of Knowledge</div>
+<div ng-if="reduced" >
+    <div layout="row">
+        <a layout-padding layout="row" class="important_title" href="/rooms">
+            <div>Rooms of Knowledge</div>
         </a>
-        <div class="primary round_corners less_important white_color" layout-padding>New</div>
     </div>
-
-    <div ng-repeat="trend in rooms" layout="row" layout-padding>
-        <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="square" />
-        <div layout-align="center center" layout="row"><a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a></div>
+    <div class="feed_ticker">
+        <div ng-repeat="trend in rooms" layout="row" layout-padding>
+            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="square" />
+            <div layout-align="center center" layout="row"><a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a></div>
+        </div>
     </div>
 </div>

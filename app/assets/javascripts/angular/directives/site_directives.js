@@ -122,6 +122,7 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
 homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
+        scope: {"global": "=", "info": "="},
         controller: ["$scope", function($scope){
             $scope.get_feed = function(){
                 if(!$scope.info.feed_loading){
@@ -133,10 +134,18 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
                         var skip = 0;
                         $scope.social_feed = [];
                     }
-                    userService.get_social_feed(skip).then(function(data){
-                        $scope.info.feed_loading = false;
-                        $scope.social_feed = $scope.social_feed.concat(data);
-                    });
+                    if(angular.isDefined($scope.global) && $scope.global){
+                        userService.get_global_feed(skip).then(function(data){
+                            $scope.info.feed_loading = false;
+                            $scope.social_feed = $scope.social_feed.concat(data);
+                        });
+                    }
+                    else{
+                        userService.get_social_feed(skip).then(function(data){
+                            $scope.info.feed_loading = false;
+                            $scope.social_feed = $scope.social_feed.concat(data);
+                        });
+                    }
                 }
             }
 
