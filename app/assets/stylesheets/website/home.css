@@ -78,10 +78,6 @@ a{
   	border: 1px solid #ddd;
 }
 
-.yield{
-	margin-top: 48px;
-}
-
 .header{
 	/*box-shadow: none;*/
   	min-height: 48px !important;
@@ -118,8 +114,13 @@ md-card{
 }
 
 md-content{
-	max-height: 99vh !important;
 	outline: none !important;
+}
+
+.super_container{
+	margin-top: 52px !important;
+    max-height: 92vh !important;
+    outline: none !important;
 }
 
 .burger{
@@ -879,6 +880,8 @@ md-tooltip .md-content{
 
 .feed_ticker{
 	max-height: 300px !important;
+	overflow-x: hidden;
+    word-wrap: break-word;
 	overflow-y: scroll;
 	background-color: white !important;
 }

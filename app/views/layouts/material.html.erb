@@ -39,39 +39,44 @@
             <% if @home || @signup%>
                 <md-content class="white" flex ng-controller="newHomeController">
             <% elsif @personalised_suggestions %>
-                <md-content ng-controller="personalisedController">
+                <md-content ng-controller="personalisedController" class="super_container">
             <% elsif @network %>
-                <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()">
+                <md-content ng-controller="networkController" id="network" check-scroll-bottom="load_users()"
+                    class="super_container">
             <% elsif @news %>
-                <md-content layout="column" ng-controller="newsController" id="news" class="white">
+                <md-content layout="column" ng-controller="newsController" id="news" class="white super_container">
             <% elsif @news_group && !@blogs %>
-                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" class="white">
+                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" 
+                    class="white super_container">
             <% elsif @blogs && @news_group %>
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
-                    check-scroll-bottom="get_blog_feed()" id="home">
+                    check-scroll-bottom="get_blog_feed()" id="home" class="super_container">
             <% elsif @room %>
-                <md-content ng-controller="communityController" id="community" class="white" check-scroll-bottom="get_community_news()">
+                <md-content ng-controller="communityController" id="community" class="super_container white" 
+                    check-scroll-bottom="get_community_news()">
             <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
                     du-scroll-container check-scroll-bottom="get_popular_books()"
-                    id="infinity_page" class="white">
+                    id="infinity_page" class="white super_container">
             <% elsif @shelves %>
-                <md-content ng-controller="roomController" class="full_height">
+                <md-content ng-controller="roomController" class="super_container full_height">
             <% elsif @author %>
-                <md-content ng-controller="authorController" layout="row" layout-wrap class="white"
+                <md-content ng-controller="authorController" layout="row" layout-wrap class="super_container white"
                     ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
-                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white">
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="super_container white">
             <% elsif @search %>
-                <md-content layout="row" layout-wrap ng-controller="searchPageController" check-scroll-bottom="show_all_results()">
+                <md-content layout="row" layout-wrap ng-controller="searchPageController" 
+                    class="super_container"
+                    check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController" class="white">
+                <div ng-controller="specificBookController" class="super_container white">
             <% elsif @customise %>
-                <md-content ng-controller="customiseController" class="white" flex="100">
+                <md-content ng-controller="customiseController" class="super_container white" flex="100">
             <% elsif @publishers %>
-                <md-content ng-controller="publishersController">
+                <md-content ng-controller="publishersController" class="super_container">
             <% else %>
-                <md-content>
+                <md-content class="super_container">
             <% end %>
             <div flex>
                 <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% else %>border_bottom<% end %>">

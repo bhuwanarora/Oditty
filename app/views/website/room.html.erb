@@ -7,11 +7,7 @@
 	    	layout-padding flex="25" flex-sm="100" flex-md="100" ></div>
 	    <div flex="55" flex-sm="100" flex-md="100" layout="column" ng-view>
 	    </div>
-	    <div flex="20" hide-sm hide-md>
-	    	<social-feed info="info"></social-feed>
-	    	<br/>
-	    	<br/>
-			<browse-rooms reduced="true"></browse-rooms>
+	    <div flex="20" hide-sm hide-md ng-include src="'/assets/angular/html/community/right_panel.html'">
 	    </div>
 	</div>
 	<div flex="10" flex-md="5" hide-sm></div>
