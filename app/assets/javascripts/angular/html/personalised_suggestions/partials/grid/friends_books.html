@@ -1,8 +1,8 @@
-<div class="important_title" layout="row" layout-padding layout-align="center">
+<h3 layout="row" layout-padding layout-align="center">
 	<div>
 		Books From your friends Reading Journey
 	</div>
-</div>
+</h3>
 <div ng-if="friends" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
 		<md-button aria-label="refresh_profile" class="margin_top clear md-whiteframe-z1"
@@ -17,8 +17,8 @@
 	</div>
 	<div flex="70" layout-padding flex-sm="100">
 		<div layout-padding>
-			<a class="big_title" ng-href="/profile?q={{info.active_tag.id}}" 
-				ng-bind-html="info.active_tag.name"></a>
+			<h2><a ng-href="/profile?q={{info.active_tag.id}}" 
+				ng-bind-html="info.active_tag.name"></a></h2>
 		</div>
 		<div layout="row" layout-wrap>
 			<section layout-margin ng-repeat="book in info.active_tag.books" class="rd_book_container">

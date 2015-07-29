@@ -1,6 +1,6 @@
-<div layout-padding class="important_title" ng-if="communities.length">
+<h3 layout-padding ng-if="communities.length">
     {{communities.length}} Rooms Joined
-</div>
+</h3>
 <div layout="row" layout-wrap>
 	<div ng-repeat="community in communities" layout-padding>
 		<a ng-href="/room?q={{::community.id}}"  class="capitalize">

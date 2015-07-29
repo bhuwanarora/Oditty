@@ -1,7 +1,7 @@
 <div ng-controller="realVirtualityController" class="white book_page">
-    <div class="important_title" layout-padding>
+    <h3 layout-padding>
         Real Virtuality is seeing the world through the eyes of a book.
-    </div>
+    </h3>
     
     <section layout="row" layout-sm="column">
         <div flex="40" flex-sm="100" layout="column" layout-align="start end">
@@ -19,8 +19,8 @@
             </md-radio-group>        
         </div>
         <div flex="60" layout="column" flex-sm="100">
-            <a ng-href="/room?id={{active_community.id}}" ng-bind-html="active_community.name" class="big_title capitalize" 
-                layout-padding></a>
+            <h2><a ng-href="/room?id={{active_community.id}}" ng-bind-html="active_community.name" 
+                layout-padding></a></h2>
              <section layout="column" layout-sm="column" layout-wrap
                 ng-repeat="news in active_community.news" 
                 ng-if="active_community.news"

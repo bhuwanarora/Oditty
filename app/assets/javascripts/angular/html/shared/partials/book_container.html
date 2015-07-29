@@ -25,7 +25,7 @@
 				<div layout-padding class="wrap">
 					<div layout="row" layout-align="space-between">
 						<div layout="row" layout-align="center center">
-				    		<a ng-href="/book?id={{book.book_id || book.id}}" class="big_title">{{book.title}}</a>
+				    		<h2><a ng-href="/book?id={{book.book_id || book.id}}">{{book.title}}</a></h2>
 							<div layout="row" class="less_important">
 							    <div class="primary white_color round_corners" layout-padding layout-margin 
 							    	ng-show="book.bookmark_count">

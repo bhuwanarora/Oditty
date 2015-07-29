@@ -5,7 +5,7 @@
                 <div layout="column" layout-md="row" layout-sm="column">
                     <div flex-md="30" flex-sm="100">
                         <div layout="column" layout-padding hide-md>
-                            <a ng-href="/book?q={{book.id || book.book_id}}" class="big_title bold">{{::book.title}}</a>
+                            <h2><a ng-href="/book?q={{book.id || book.book_id}}" class="bold">{{::book.title}}</a></h2>
                             <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
                         </div>
                         <div class="relative">
@@ -18,7 +18,7 @@
                         layout-md="column" class="description_card" 
                         layout-padding>
                         <div layout="column" layout-padding show-md hide>
-                            <a ng-href="/book?q={{book.id || book.book_id}}" class="big_title">{{::book.title}}</a>
+                            <h2><a ng-href="/book?q={{book.id || book.book_id}}">{{::book.title}}</a></h2>
                             <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
                         </div>
                         <div>
@@ -66,9 +66,9 @@
     <div flex="25" layout="column" hide-sm>
         <div layout-padding class="md-whiteframe-z1 white">
             <div layout="row" layout-align="space-between"  layout-padding>
-                <div class="important_title white">
+                <h3 class="white">
                     Rate this book {{::book.user_rating}}/10
-                </div>
+                </h3>
             </div>
              <md-slider flex="20" md-discrete 
                     class="rate_slider"

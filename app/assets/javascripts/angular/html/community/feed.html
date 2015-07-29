@@ -1,9 +1,9 @@
 <div layout="column" layout-padding>
-    <div class="important_title" layout-padding>
+    <h3 layout-padding>
         <div layout-padding>
             News clippings related to {{active_tag.name}}
         </div>
-    </div>
+    </h3>
     <community-feed community-feed="::community_feed" flex
         ng-repeat="community_feed in active_tag.news">
     </community-feed>

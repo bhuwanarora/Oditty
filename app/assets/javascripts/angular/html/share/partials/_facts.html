@@ -19,7 +19,7 @@
     </md-list-item>
     <md-list-item ng-repeat="info in related_info" layout="column">
         <div ng-if="info.label == 'Author'" layout="column">
-            <div class="big_title" layout-padding>{{info.name}}</div>
+            <h2 layout-padding>{{info.name}}</h2>
             <div layout="row">
                 <img ng-src="{{info.id | author_thumb}}" flex="30">
                 <div class="custom_title" layout-padding flex="70">

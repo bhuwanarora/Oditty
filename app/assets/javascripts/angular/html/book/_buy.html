@@ -1,7 +1,7 @@
 <div ng-controller="buyController" layout="column" class="book_page white" layout-padding >
-    <div class="important_title" layout-padding>
+    <h3 layout-padding>
     	Get this book
-    </div>
+    </h3>
     <div layout="column" layout-sm="column" class="full_height">
         <div flex layout="column" layout-padding
             ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
@@ -9,7 +9,7 @@
             ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
     </div>
     <md-divider></md-divider>
-    <div layout-padding class="important_title" ng-if="reviews.editorial_review">Editorial Review</div>
+    <h3 layout-padding ng-if="reviews.editorial_review">Editorial Review</h3>
     <div ng-bind-html="reviews.editorial_review || reviews.product_review" class="summary" layout-padding></div>
     <div ng-bind-html="reviews.source" layout-padding class="less_important"></div>
     <iframe ng-src="{{reviews.user_review_iframe}}" seamless="seamless" class="wiki" 

@@ -21,12 +21,12 @@
 
     <div class="less_important" layout="column" layout-padding
         ng-if="!constant.show_book">
-        <div layout-padding class="important_title">
+        <h3 layout-padding>
             <div ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
                 Popular Books</div>
             <div ng-if="info.books.length">{{info.books.length}} results</div>
             <div ng-if="info.books.length == 0">Scroll to see more.</div>
-        </div>
+        </h3>
     </div>
 
     <div layout-padding ng-if="info.other_info && info.other_info.name && !constant.show_book" 

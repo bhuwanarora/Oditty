@@ -1,8 +1,10 @@
 <div ng-if="!reduced">
     <div layout="row" layout-align="center center">
-        <a layout-padding layout="row" layout-align="center center" class="grey_color very_important_title" href="/rooms">
-            <div layout-padding>Rooms of Knowledge</div>
-        </a>
+            <h1 layout-padding>
+            <a layout-padding layout="row" layout-align="center center" class="grey_color" href="/rooms">
+                Rooms of Knowledge
+            </a>
+            </h1>
         <div class="primary round_corners less_important white_color" layout-padding>New</div>
     </div>
 
@@ -26,9 +28,9 @@
 </div>
 <div ng-if="reduced" >
     <div layout="row">
-        <a layout-padding layout="row" class="important_title" href="/rooms">
+        <h3><a layout-padding layout="row" href="/rooms">
             <div>Rooms of Knowledge</div>
-        </a>
+        </a></h3>
     </div>
     <div class="feed_ticker">
         <div ng-repeat="trend in rooms" layout="row" layout-padding>
