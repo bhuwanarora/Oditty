@@ -2,7 +2,7 @@
     <img ng-src="{{friend.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
     <div layout-padding>
         <a ng-href="/profile?id={{::friend.id}}">
-            <div class="big_title bold capitalize">{{::friend.first_name}} {{::friend.last_name}}</div>
+            <h2 class="bold">{{::friend.first_name}} {{::friend.last_name}}</h2>
         </a>
         <div class="less_important" ng-if="friend.bookmark_count">
             <span>{{::friend.bookmark_count}} Bookmarks</span>

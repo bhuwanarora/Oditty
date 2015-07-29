@@ -76,11 +76,11 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 				method: 'send',
 				title: 'Hey! Check this awesome book discovery website..',
 				message: 'Spread the love for books',
-				link: 'http://www.readersdoor.com/'
+				link: 'http://www.oditty.me/'
 			}, $scope.say_thanks());
 		}
 		else{
-			window.location.replace("https://www.facebook.com/dialog/send?app_id=667868653261167&link=http://www.readersdoor.com&redirect_uri=http://readersdoor.com/network?q=0");
+			window.location.replace("https://www.facebook.com/dialog/send?app_id=667868653261167&link=http://www.oditty.me&redirect_uri=http://oditty.me/network?q=0");
 		}
 	}
 

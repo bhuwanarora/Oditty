@@ -43,7 +43,7 @@ class WebsiteController < ApplicationController
 	def quiz
 		@quiz = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			@info = {:title => "Which Love Story is Your Life Like?, ReadersDoor", :meta_type => "Quiz", :image_url => "http://readersdoor.com/assets/quiz.png"}
+			@info = {:title => "Which Love Story is Your Life Like?, Oditty", :meta_type => "Quiz", :image_url => "http://oditty.me/assets/quiz.png"}
 			render :layout => "social"
 		else
 			render :layout => "material"
@@ -151,7 +151,7 @@ class WebsiteController < ApplicationController
 			puts "bot_incoming".red
 			@info = Book.new(id).get_basic_info.execute[0]
 			@info["original_url"] = request.original_url
-			@info["title"] = @info['title'] + " by " + @info['author_name'] + ", ReadersDoor"
+			@info["title"] = @info['title'] + " by " + @info['author_name'] + ", Oditty"
 			@info["meta_type"] = "book"
 			if @info["isbn"]
 				@info["image_url"] = "http://rd-images.readersdoor.netdna-cdn.com/" + @info["isbn"].split(",").first + "/M.jpg";
@@ -209,8 +209,8 @@ class WebsiteController < ApplicationController
 			user_id = nil
 			puts "bot_incoming".red
 			@info = Author.new(author_id).get_basic_info.execute[0]
-			@info["meta_type"] = "readersdoor:author"
-			@info["title"] = @info["name"] + ", ReadersDoor"
+			@info["meta_type"] = "oditty:author"
+			@info["title"] = @info["name"] + ", Oditty"
 			@info["original_url"] = request.original_url
 			@info["image_url"] = "http://rd-authors.readersdoor.netdna-cdn.com/" + @info["id"].to_s + "/M.png"
 			render :layout => "social"
@@ -238,8 +238,8 @@ class WebsiteController < ApplicationController
 			id = params[:q] || params[:id]
 			puts "bot_incoming".red
 			@info = News.new(id).get_basic_info.execute[0]
-			@info["meta_type"] = "readersdoor:news"
-			@info["title"] = @info["title"] + ", ReadersDoor"
+			@info["meta_type"] = "oditty:news"
+			@info["title"] = @info["title"] + ", Oditty"
 			@info["original_url"] = request.original_url
 			render :layout => "social"
 		else

@@ -2,7 +2,7 @@
     <img ng-src="{{::community.image_url}}" class="square">
     <div layout-padding>
         <a ng-href="/room?id={{::community.id}}">
-            <div class="big_title bold capitalize">{{::community.name}}</div>
+            <h2><div class="bold">{{::community.name}}</div></h2>
         </a>
         <div class="less_important" ng-if="community.view_count && community.view_count != 0">
             <span>{{::community.view_count}} </span>

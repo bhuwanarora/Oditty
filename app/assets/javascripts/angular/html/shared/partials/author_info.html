@@ -3,7 +3,7 @@
     	 onerror="this.src='/assets/author_profile.jpg'">
     <div layout-padding>
         <a ng-href="/author?id={{::author.id}}">
-            <div class="big_title bold capitalize">{{::author.name}}</div>
+            <h2 class="bold">{{::author.name}}</h2>
         </a>
         <div class="less_important" ng-if="author.location">
             <span>{{::author.location}} </span>

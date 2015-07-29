@@ -1,8 +1,8 @@
-<div class="important_title" layout="row" layout-padding layout-align="center">
+<h3 layout="row" layout-padding layout-align="center">
 	<div>
 		Author Suggestions on the basis of your Reading Journey
 	</div>
-</div>
+</h3>
 <div ng-if="books_from_favourite_author" layout="row" layout-padding layout-sm="column">
 	<div flex="30" layout="column" flex-sm="100">
 		<md-button aria-label="refresh_author" class="margin_top clear" 
@@ -21,8 +21,8 @@
 	</div>
 	<div flex="70" layout-padding flex-sm="100">
 		<div layout-padding>
-			<a class="big_title" ng-href="/author?q={{info.active_tag.id}}" 
-				ng-bind-html="info.active_tag.name"></a>
+			<h2><a ng-href="/author?q={{info.active_tag.id}}" 
+				ng-bind-html="info.active_tag.name"></a></h2>
 			<div class="description_card" ng-bind-html="info.active_tag.overview"
 				layout-padding></div>
 		</div>
