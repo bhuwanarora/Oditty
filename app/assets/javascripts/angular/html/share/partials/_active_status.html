@@ -19,7 +19,7 @@
     		 			<span>{{reading_options[active_id].emotion_status}} </span>
     		 		</div>
                 </div>
-                <div class="big_title" ng-class="{'bold_light_title': selected_book}">{{book.title}}</div>
+                <h2 ng-class="{'bold_light_title': selected_book}">{{book.title}}</h2>
                 <div class="less_important">{{book.author_name}}</div>
                 <div layout="row" ng-if="reading_status_selected && selected_book"
                      layout-align="space-between">

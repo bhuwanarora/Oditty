@@ -2,7 +2,7 @@
 	<div layout-padding layout="column" class="white" flex="30" flex-md="100" flex-sm="100">
 		<div layout-padding>
 			<div class="less_important" ng-if="info.active_news">News, {{info.active_news.created_at | timestamp | date:'dd MMM'}}</div>
-			<div class="big_title bold" ng-bind-html="::info.active_news.title"></div>
+			<h2 class="bold" ng-bind-html="::info.active_news.title"></h2>
 			<div class="less_important">
 				<a ng-href="{{info.active_news.url}}" target="_blank">
 					{{::info.active_news.url}}
@@ -18,9 +18,9 @@
 	</div>
 	<div layout="column" layout-sm="column" class="margin_top white" flex="70" flex-md="100" flex-sm="100">
 		<div layout="column" flex-sm="100" layout-sm="column" layout-padding>
-			<div class="important_title" layout-padding>
+			<h3 layout-padding>
 				Related Rooms
-			</div>
+			</h3>
 			<div layout="row" layout-wrap>
 				<md-button aria-label="refresh_community" ng-repeat="community in newsTags"  class="md-button-clear"
 					ng-click="refresh_data(community)" 
@@ -45,7 +45,7 @@
 		<div layout="column" layout-padding>
 			<div layout="row" layout-align="space-between" layout-padding>
 				<a ng-href="/room?id={{active_tag.id}}">
-					<div class="big_title bold capitalize">{{active_tag.name}}</div>
+					<h2 class="bold">{{active_tag.name}}</h2>
 				</a>
 				<md-button aria-label="toggle_follow"class="md-button-clear md-warn" 
 					ng-disabled="info.loading"
@@ -57,9 +57,9 @@
 		            <span ng-if="!active_tag.status" class="icon-user-add"></span>
 		        </md-button>
 			</div>
-			<div class="important_title" ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
+			<h3 ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
 		        Readers in this room
-		    </div>
+		    </h3>
 			<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
 			<div layout="row" layout-padding layout-wrap>
 				<div layout-margin ng-repeat="book in active_tag.books" ng-if="book.title">

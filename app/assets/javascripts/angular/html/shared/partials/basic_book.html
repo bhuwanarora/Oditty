@@ -1,5 +1,5 @@
 <div layout="column">
-	<a class="big_title bold" ng-href="/book?q={{::book.id}}" ng-bind-html="::book.title" ng-if="book.title"></a>
+	<h2><a class="bold" ng-href="/book?q={{::book.id}}" ng-bind-html="::book.title" ng-if="book.title"></a></h2>
 	<div class="less_important" ng-if="book.author_name">
 		By <a ng-href="/author?q={{::book.author_id}}" ng-bind-html="::book.author_name"></a>
 	</div>

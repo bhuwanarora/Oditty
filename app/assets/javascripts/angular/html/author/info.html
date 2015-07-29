@@ -4,7 +4,7 @@
             <img ng-src="{{author.id | author_thumb}}" 
                  class="author_image" onerror="this.src='/assets/author_profile.jpg'"/>
             <div layout="column"  layout-align="center center"  layout-padding>
-                <div class="big_title bold" layout-padding ng-bind-html="::author.name"></div>
+                <h2 class="bold" layout-padding ng-bind-html="::author.name"></h2>
                 <div class="small_font">Author</div>
                 <div layout="row" layout-align="space-between center">
                     <div layout="row" layout-align="center center" ng-if="::author.location">

@@ -2,8 +2,9 @@
 	<section>
 	    <md-list>
 	        <md-item>
+	        	<h2>
 				<md-button aria-label="toggle_follow" ng-if="!active_tag.status"
-			        class=" md-raised user_circular circular big_title"
+			        class=" md-raised user_circular circular"
 			        layout-padding
 			        ng-click="toggle_follow()">
 			        <span ng-if="!active_tag.status" class="icon-user-add"></span>
@@ -11,7 +12,7 @@
 			        	Join {{active_tag.name}}
 			        </md-tooltip>
 
-			    </md-button>
+			    </md-button></h2>
 			</md-item>
 	        <md-item ng-repeat="user in active_tag.users">
 	            <md-item-content>
