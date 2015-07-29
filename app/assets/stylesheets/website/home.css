@@ -121,6 +121,10 @@ md-content{
     max-height: 92vh !important;
 }
 
+.yield{
+	margin-top: 50px !important;
+}
+
 .super_container,
 .super_div_container{
     outline: none !important;
