@@ -89,7 +89,7 @@
                         
                     <% end %>
                 </div>
-                <div id="yield" class="yield">
+                <div id="yield" class="<% if @home || @signup %> yield <% end %>">
                     <%= yield %>
                 </div>
             </div>
