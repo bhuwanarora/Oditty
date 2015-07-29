@@ -366,6 +366,12 @@ namespace :graph do
     CommunitiesHelper.reset_book_links created_before
   end
 
+  desc "makes communities with no books invisible from website "
+  task :handle_bookless_communities => :environment do
+    include CommunitiesHelper
+    CommunitiesHelper.handle_bookless_communities
+  end
+
   desc "bookmark_count for user"
   task :set_user_bookmark_count => :environment do
     include GraphHelper
