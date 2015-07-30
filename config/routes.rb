@@ -134,7 +134,7 @@ ReadersDoor::Application.routes.draw do
   get "trending_community_books"        => "books#trending_community_books",     :as => "trending_community_books"
   get "delete_book_relationship"        => "books#delete_book_relationship",       :as => "delete_book_relationship"
   get "help"                           => "website#help",                        :as => "help"
-  get "about"                           => "website#about",                        :as => "about"
+  get "vision"                           => "website#vision",                        :as => "vision"
   get "careers"                           => "website#careers",                        :as => "careers"
   get "team"                           => "website#team",                        :as => "team"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
