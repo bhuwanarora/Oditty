@@ -53,7 +53,7 @@ class WebsiteController < ApplicationController
 	def index
 	end
 
-	def about
+	def vision
 		render :layout => "material_clean"
 	end
 
