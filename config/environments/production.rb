@@ -10,7 +10,7 @@ ReadersDoor::Application.configure do
   config.community_bucket = "rd-images"
   config.user_bucket = "rd-images"
   config.news_bucket = "rd-images"
-  config.google_public_key = 'AIzaSyAV495wghmWMcTENY9CsrUpvVPzJpNOaxo'
+  config.google_public_key = ['AIzaSyBj9-R7iOj2lUuJovA9ITK_aPOtmdo3CPU','AIzaSyDbCyV9BqcDI8Hy0N_hE3mft7JMOB8n2Ro','AIzaSyBttf3q2dr-NfCP3BndIkZmq2P0WSaReSQ','AIzaSyDp2_Chh4EwJoivti1HPlgXj36HFuu1u18','AIzaSyAZEOl-HUtyjd2Lhsru3qRBXaXXC4mEF2w','AIzaSyD15mkYlsdQ7UoncOYfudpnCXRBm8iXw3I','AIzaSyBRYd4EpgLR5Q0Lte1S8lFU1dnbo_cqm0U']
   config.image_service = "http://54.149.23.150"
   config.feed_service = "http://161.202.19.237"
   config.neo4j_server_port = 7474

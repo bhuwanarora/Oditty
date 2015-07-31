@@ -6,4 +6,6 @@ module Constant::NodeLabel
 	StatusNode		= "StatusNode"
 	BookmarkNode	= "BookmarkNode"
 	RatingNode		= "RatingNode"
+
+	BooklessCommunity = "BooklessCommunity"
 end
