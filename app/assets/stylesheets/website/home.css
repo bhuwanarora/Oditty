@@ -158,6 +158,7 @@ md-content{
 .logo img{
   	z-index: 99999999;
   	width: 80px;
+  	margin-top: 7px;
 }
 
 .search{
