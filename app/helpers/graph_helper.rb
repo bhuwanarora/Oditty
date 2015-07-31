@@ -675,7 +675,17 @@ module GraphHelper
 	end
 
 	def self.test_function
-		FeedWorker.perform_async(5251859,4974698,Constant::EntityLabel::User)
+		clause = ""\
+				" MATCH (author:Author) "\
+				" WHERE HAS(author.born) "\
+				" RETURN author.born AS born LIMIT 10"
+		output = clause.execute.map{|elem| elem["born"]}
+		output.each do |born_string|
+			debugger
+			date = TimeHelper.get_birthday born_string, Constant::EntityLabel::Author
+			puts born_string.red
+			puts date.to_s.green
+		end
 	end
 
 end

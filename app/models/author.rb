@@ -96,7 +96,7 @@ class Author < Neo
 	end
 
 	def self.social_info
-		" author.official_website AS website_url, author.facebook_url AS facebook_url, author.twitter_handle AS twitter_handle "
+		" author.official_website AS website_url, author.facebook_url AS facebook_url, author.twitter_handle AS twitter_handle, author.born AS born "
 	end
 
 	def get_details user_id
