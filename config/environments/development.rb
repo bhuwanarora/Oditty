@@ -36,7 +36,7 @@ ReadersDoor::Application.configure do
   config.community_bucket = "rd-arjun"
   config.user_bucket = "rd-arjun"
   config.news_bucket = "rd-arjun"
-  config.google_public_key = 'AIzaSyDPDaicSFnNjbYqviSzne1hDsKkPXc3mK0'
+  config.google_public_key = ['AIzaSyBj9-R7iOj2lUuJovA9ITK_aPOtmdo3CPU','AIzaSyDbCyV9BqcDI8Hy0N_hE3mft7JMOB8n2Ro','AIzaSyBttf3q2dr-NfCP3BndIkZmq2P0WSaReSQ','AIzaSyDp2_Chh4EwJoivti1HPlgXj36HFuu1u18','AIzaSyAZEOl-HUtyjd2Lhsru3qRBXaXXC4mEF2w','AIzaSyD15mkYlsdQ7UoncOYfudpnCXRBm8iXw3I','AIzaSyBRYd4EpgLR5Q0Lte1S8lFU1dnbo_cqm0U']
   config.neo4j_server_port = 3232
   config.feed_service = "http://161.202.19.237"
 end
