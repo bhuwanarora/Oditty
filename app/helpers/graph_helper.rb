@@ -678,10 +678,10 @@ module GraphHelper
 		clause = ""\
 				" MATCH (author:Author) "\
 				" WHERE HAS(author.born) "\
-				" RETURN author.born AS born LIMIT 10"
+				" RETURN author.born AS born LIMIT 100"
 		output = clause.execute.map{|elem| elem["born"]}
 		output.each do |born_string|
-			debugger
+			#born_string = "Baptised 26 April 1564 (birth date unknown), Stratford-upon-Avon, Warwickshire, England"
 			date = TimeHelper.get_birthday born_string, Constant::EntityLabel::Author
 			puts born_string.red
 			puts date.to_s.green
