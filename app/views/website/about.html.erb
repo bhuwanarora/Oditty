@@ -8,6 +8,91 @@
 		<!-- <img src="/assets/bookgrid.jpg" class="cover"> -->
 	</div>
 	<md-divider></md-divider>
+	<div layout-padding layout="row" class="box" style="background: #D03C31;">
+		<div flex="20" flex-md="10" hide-sm></div>
+		<div flex layout="column" layout-align="center center" layout-padding>
+			<div>
+				<h2>READ LIFE</h2>
+				
+			</div>
+		</div>
+		<div flex="20" flex-md="10" hide-sm></div>
+	</div>
+	<div layout="row" layout-padding class="box" style="background: #00BCD4; color: white;">
+		<div flex="20" flex-md="10" hide-sm></div>
+		<div flex layout="column" layout-align="center center" layout-padding>
+			<div>
+				<h2>DISCOVER YOURSELF</h2>
+			</div>
+		</div>
+		<div flex="20" flex-md="10" hide-sm></div>
+	</div>
+	<div class="box" style="background: #009688;" layout="row">
+		<div flex="20" flex-md="10" hide-sm></div>
+		<div flex layout="column" layout-align="center center" layout-padding>
+			<div>
+				<h2>Through BOOKS</h2>
+				
+			</div>
+		</div>
+		<div flex="20" flex-md="10" hide-sm></div>
+	</div>
+	<div class="box" style="background: #CDDC39;" layout="row">
+		<div flex="20" flex-md="10" hide-sm></div>
+		<div flex layout="column" layout-align="center center" layout-padding>
+			<h2>Through FRIENDS</h2>
+			
+		</div>
+		<div flex="20" flex-md="10" hide-sm></div>
+	</div>
+	<div class="box" style="background: #03A9F4;" layout="row">
+		<div flex="20" flex-md="10" hide-sm></div>
+		<div flex layout="column" layout-align="center center" layout-padding>
+			<h2>And Through The WORLD.</h2>
+		</div>
+		<div flex="20" flex-md="10" hide-sm></div>
+	</div>
+
+	<div class="box" style="background: #E91E63;" layout="row">
+		<div flex="20" flex-md="10" hide-sm></div>
+		<div flex layout="column" layout-align="center center" layout-padding>
+			<p class="white_color">
+				BOOKS + FRIENDS + NEWS
+			</p>
+		</div>
+		<div flex="20" flex-md="10" hide-sm></div>
+	</div>
+	<div class="box" style="background: #8BC34A;" layout="column" layout-align="center center" >
+		<h2>
+			Be the part of our Vision. <br/>Mail us at <a href="mailto:apply@oditty.me">apply@oditty.me</a>.
+		</h2>
+	</div>
+	<div layout="row" layout-align="center center" class="margin_top">
+		<div>
+			<img src="/assets/bhuwan.jpg" class="circular" layout-padding>
+			<div layout-padding layout-align="center center" layout="column">
+				<h3><a href="http://oditty.me/profile?id=4986324">Bhuwan</a></h3>
+				<div class="less_important">b@oditty.me</div>
+			</div>
+		</div>
+		<div layout-padding></div>
+		<div>
+			<img src="/assets/ashesh.jpg" class="circular" layout-padding>
+			<div layout-padding layout-align="center center" layout="column">
+				<h3><a href="http://oditty.me/profile?id=4974698">Ashesh</a></h3>
+				<div class="less_important">ashesh@oditty.me</div>
+			</div>
+		</div>
+		<div layout-padding></div>
+		<div>
+			<img src="/assets/prachi.jpg" class="circular" layout-padding>
+			<div layout-padding layout-align="center center" layout="column">
+				<h3><a href="http://oditty.me/profile?q=4105710">Prachi</a></h3>
+				<div class="less_important">prachi@oditty.me</div>
+			</div>
+		</div>
+	</div>
+	<md-divider></md-divider>
 	<p>
 		Join the Team for <b>Now</b> or till <b>Then</b>. Mail us at apply@oditty.me
 	</p>
@@ -93,10 +178,49 @@
 </div>
 
 <style>
+	.less_important{
+		color: #999999;
+    	font-size: 0.9em;
+	}
+
+	.circular{
+		border-radius: 50%;
+		width: 150px;
+		height: 150px;
+	}
+
+	.margin_top{
+		margin: 100px 0px !important;
+	}
+
+
 	.job_container{
 		width: 200px;
 		text-align: center;
 		cursor: pointer;
+	}
+
+	h2{
+		  font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+		  letter-spacing: -0.02em;
+		  font-weight: 700;
+		  font-style: normal;
+		  font-size: 60px;
+		  margin-left: -3px;
+		  line-height: 1;
+		  letter-spacing: -0.04em;
+		  margin-top: 40px;
+		  padding-top: 0;
+		  margin-bottom: 8px;
+		  color: white;
+		  text-align: center;
+	}
+
+
+	h3{
+		font: 300 20px Roboto,arial,sans-serif;
+		color: #898989;
+		margin: 0px;
 	}
 
 	.job_container:hover{
@@ -113,6 +237,7 @@
 	p{
 		font-family: 'museo_sans300', sans-serif;
   		-webkit-font-smoothing: antialiased;
+  		/*color: white;*/
   		color: #3F4D51;
   		font-size: 20px;
   		margin-left: -1px;
@@ -214,5 +339,13 @@
 		font-size: 80px;
 		color: #FF2268;
 	}
+
+	.fold{
+		position: absolute;
+		right: 0px;
+		bottom: 0px;
+	}
+
+
 
 </style>

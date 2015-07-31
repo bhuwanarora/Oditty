@@ -135,7 +135,7 @@ ReadersDoor::Application.routes.draw do
   get "delete_book_relationship"        => "books#delete_book_relationship",       :as => "delete_book_relationship"
   get "help"                           => "website#help",                        :as => "help"
   get "vision"                           => "website#vision",                        :as => "vision"
-  get "careers"                           => "website#careers",                        :as => "careers"
+  get "about"                           => "website#about",                        :as => "about"
   get "team"                           => "website#team",                        :as => "team"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
   # The priority is based upon order of creation: first created -> highest priority.

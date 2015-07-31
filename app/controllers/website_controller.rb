@@ -57,7 +57,7 @@ class WebsiteController < ApplicationController
 		render :layout => "material_clean"
 	end
 
-	def careers
+	def about
 		render :layout => "material_clean"
 	end
 
