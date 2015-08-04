@@ -83,7 +83,7 @@ class Book < Neo
 	end
 
 	def self.get_books_by_isbn isbn_array
-		" MATCH (book:Book) WHERE " + isbn_arr.map{|isbn| ( "book.isbn =~\'.*" + isbn.to_s.strip + ".*\'")}.join(" OR ") + ""\
+		" MATCH (book:Book) WHERE " + isbn_array.map{|isbn| ( "book.isbn =~\'.*" + isbn.to_s.strip + ".*\'")}.join(" OR ") + ""\
 		" WITH book "
 	end
 
