@@ -15,10 +15,15 @@
         md-hide-dropdown="true"
         class="search_book_autocomplete" 
         flex layout-padding layout-margin
-        md-search-text="search_tag.book"
+        md-search-text="search_text"
         md-items="item in popular_books"
-        md-search-text-change="search_books(search_tag.book)"
+        md-search-text-change="search_books(search_text)"
         md-selected-item-change="add_book(item)"
+        md-item-text="item.title"
+        md-selected-item="selected_item_search"
         placeholder="Search and books...">
+        <md-not-found>
+            No matches found.
+        </md-not-found>
     </md-autocomplete>
 </div>
