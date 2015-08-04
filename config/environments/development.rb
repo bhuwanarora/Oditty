@@ -38,4 +38,5 @@ ReadersDoor::Application.configure do
   config.news_bucket = "rd-arjun"
   config.google_public_key = 'AIzaSyDPDaicSFnNjbYqviSzne1hDsKkPXc3mK0'
   config.neo4j_server_port = 8000
+  config.search_service_url = "http://119.81.63.26"
 end
