@@ -19,6 +19,12 @@ module Api
 				clause = User::Suggest::CommunitySuggestion.get_trending_communities
 			end
 
+			def self.add_book id, book_id, user_id
+				@community = Community.new(id)
+				clause = @community.match + @community.add_book(book_id, user_id)
+				clause.execute
+			end
+
 			def self.top_communities user_id, skip_count
 				if user_id
 					clause  = UsersCommunity.top_communities  user_id, skip_count
