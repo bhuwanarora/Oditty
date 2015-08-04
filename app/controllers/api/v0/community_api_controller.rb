@@ -1,6 +1,7 @@
 module Api
 	module V0
 		class CommunityApiController < ApplicationController
+
 			def get_books
 				id = params["id"]
 				key = "GB" + id.to_s
@@ -12,6 +13,18 @@ module Api
 					info = JSON.parse info
 				end
 				render :json => info, :status => 200
+			end
+
+			def add_book
+				id = params[:id]
+				book_id = params[:book_id]
+				user_id = session[:user_id]
+				if user_id
+					info = Api::V0::CommunityApi.add_book(id, book_id, user_id)
+					key = "BCI" + id.to_s
+					$redis.del key
+				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def popular_communities

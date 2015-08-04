@@ -12,6 +12,13 @@ class Community < Neo
 		" MATCH (community:Community) WHERE ID(community) = " + @id.to_s + " WITH community "
 	end
 
+	def add_book book_id, user_id
+		" MATCH (book:Book) WHERE ID(book)=" + book_id.to_s + " WITH book, community "\
+		" MATCH (user:User) WHERE ID(user)=" + user_id.to_s + " WITH user, book, community "\
+		" CREATE UNIQUE (book)<-[:RelatedBooks]-(community) "\
+		" CREATE UNIQUE (book)<-[:AddedToCommunity{community_id:" + @id.to_s + "}]-(user) "
+	end
+
 	def self.match
 		" MATCH (community:Community) WITH community "
 	end
