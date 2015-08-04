@@ -33,12 +33,15 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 	}
 
 	$scope.get_prices_and_reviews = function(data){
-		if(angular.isDefined($scope.prices)){
-			$scope.prices = $scope.prices.concat(data.prices);
+		if(angular.isUndefined($scope.prices)){
+			$scope.prices = [];
 		}
-		else{
-			$scope.prices = data.prices;
-		}
+		angular(data.prices, function(price){
+			if(price != null){
+				this.push(price);
+			}
+		}, $scope.prices);
+		
 		if(angular.isDefined($scope.reviews)){
 			// $scope.reviews = $scope.reviews.concat(data.reviews);
 		}

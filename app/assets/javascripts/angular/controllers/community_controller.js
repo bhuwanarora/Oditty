@@ -1,8 +1,9 @@
-homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce){
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', 'bookService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce, bookService){
+    
     $scope.get_detailed_community_info = function(){
         newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
-            var follow_node = $scope.active_tag.follow_node;
+            var follow_node = $scope.active_tag.follows_node;
             if($scope.active_tag.wiki_url && $scope.active_tag.wiki_url != null){
                 $scope.active_tag.wiki_url = $sce.trustAsResourceUrl($scope.active_tag.wiki_url+"?action=render");
             }
@@ -10,6 +11,26 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 $scope.active_tag.status = true;
             }
         });
+    }
+
+    $scope.search_books = function(q){
+        $scope.info.loading = true;
+        $scope.popular_books = [];
+        bookService.search_books(q, 10).then(function(data){
+            $scope.info.loading = false;
+            $scope.did_you_mean = true;
+            angular.forEach(data, function(value){
+                if(angular.isUndefined(value.fuzzy)){
+                    this.push(value);
+                }
+            }, $scope.popular_books);
+        });
+    }
+
+    $scope.add_book = function(book){
+        var book_id = book.id || book.book_id;
+        userService.add_book($scope.active_tag.id, book_id);
+        window.location.reload();
     }
 
     $scope.goto_news_page = function(id, community_id){
@@ -99,6 +120,9 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
         else{
             alert("Bad url");
+        }
+        if(angular.isUndefined($scope.popular_books)){
+            $scope.popular_books = [];
         }
         $scope.is_room = true;
     }());
