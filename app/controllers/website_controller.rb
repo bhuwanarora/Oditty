@@ -61,7 +61,7 @@ class WebsiteController < ApplicationController
 		render :layout => "material_clean"
 	end
 
-	def team
+	def work
 		render :layout => "material_clean"
 	end
 
@@ -75,10 +75,6 @@ class WebsiteController < ApplicationController
 		session.clear
 		@signup = true
 		render :home, :layout => "material"
-	end
-
-	def jobs
-		render :layout => "clean"
 	end
 
 	def privacy

@@ -136,7 +136,7 @@ ReadersDoor::Application.routes.draw do
   get "help"                           => "website#help",                        :as => "help"
   get "vision"                           => "website#vision",                        :as => "vision"
   get "about"                           => "website#about",                        :as => "about"
-  get "team"                           => "website#team",                        :as => "team"
+  get "work"                           => "website#work",                        :as => "work"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
