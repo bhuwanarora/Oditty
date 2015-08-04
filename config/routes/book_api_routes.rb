@@ -20,6 +20,7 @@ ReadersDoor::Application.routes.draw do
       match "update_visited"                         => 'books_api#update_visited',                     :via => [:put, :get, :post]
       match "get_interesting_info"                   => 'books_api#get_interesting_info',               :via => [:put, :get, :post]
       match "map_fb_book"                            => 'books_api#map_fb_book',                        :via => [:put, :get, :post]
+      match "get_book_by_isbn"                       => 'books_api#get_book_by_isbn', :via => [:get]
     end
   end
 end

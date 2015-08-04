@@ -123,6 +123,18 @@ module Api
 				end
 				render :json => info, :status => 200
 			end
+
+			def get_book_by_isbn
+				isbn = params[:isbn]
+				status = 500
+				begin
+					info = Api::V0::BookApi.get_book_info_by_isbn(isbn)
+					status = 200
+				rescue Exception => e
+					puts e.to_s.red
+				end
+				render :json => info, :status => 200
+			end
 		end
 	end
 end

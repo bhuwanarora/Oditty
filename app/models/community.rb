@@ -12,12 +12,19 @@ class Community < Neo
 		" MATCH (community:Community) WHERE ID(community) = " + @id.to_s + " WITH community "
 	end
 
+	def add_book book_id, user_id
+		" MATCH (book:Book) WHERE ID(book)=" + book_id.to_s + " WITH book, community "\
+		" MATCH (user:User) WHERE ID(user)=" + user_id.to_s + " WITH user, book, community "\
+		" CREATE UNIQUE (book)<-[:RelatedBooks]-(community) "\
+		" CREATE UNIQUE (book)<-[:AddedToCommunity{community_id:" + @id.to_s + "}]-(user) "
+	end
+
 	def self.match
 		" MATCH (community:Community) WITH community "
 	end
 
 	def get_news skip_count=0
-		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news", Community.basic_info)
+		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
 
 	def self.basic_info
@@ -41,7 +48,7 @@ class Community < Neo
 	end
 
 	def books_users_info 
-		match + Community.grouped_books_users + Community.return_init + " most_important_tag "
+		match + Community.grouped_books_users + Community.return_group("most_important_tag", Community.basic_info)
 	end
 
 	def feed_info

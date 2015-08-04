@@ -3,15 +3,16 @@ ReadersDoor::Application.configure do
 
   # Code is not reloaded between requests.
   config.cache_classes = true
-  config.nlp_service = "http://52.27.104.2/"
+  config.nlp_service = "http://52.11.182.15/"
   config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"
   config.blog_url = " https://public-api.wordpress.com/rest/v1.1/sites/literaturerun.wordpress.com/posts/?number=10&pretty=1&order=ASC&fields=title,date,short_URL,excerpt,discussion,like_count,featured_image,tags,is_reblogged,attachments&after="
   config.neo4j_url = "http://localhost:7474"
   config.community_bucket = "rd-images"
   config.user_bucket = "rd-images"
   config.news_bucket = "rd-images"
-  config.google_public_key = 'AIzaSyAV495wghmWMcTENY9CsrUpvVPzJpNOaxo'
-  config.image_service = "http://52.26.47.173"
+  config.google_public_key = ['AIzaSyBj9-R7iOj2lUuJovA9ITK_aPOtmdo3CPU','AIzaSyDbCyV9BqcDI8Hy0N_hE3mft7JMOB8n2Ro','AIzaSyBttf3q2dr-NfCP3BndIkZmq2P0WSaReSQ','AIzaSyDp2_Chh4EwJoivti1HPlgXj36HFuu1u18','AIzaSyAZEOl-HUtyjd2Lhsru3qRBXaXXC4mEF2w','AIzaSyD15mkYlsdQ7UoncOYfudpnCXRBm8iXw3I','AIzaSyBRYd4EpgLR5Q0Lte1S8lFU1dnbo_cqm0U']
+  config.image_service = "http://54.149.23.150"
+  config.feed_service = "http://161.202.19.237"
   config.neo4j_server_port = 7474
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers

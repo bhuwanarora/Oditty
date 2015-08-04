@@ -8,11 +8,11 @@ class UsersCommunity < Neo
 	end
 
 	def create
-		" MERGE (user)-[follows:Follows]->(follow_node:FollowsNode{user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "}) MERGE (follow_node)-[:OfCommunity]->(community) ON CREATE SET follow_node.created_at = " + Time.now.to_i.to_s + ", follow_node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET follow_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follow_node, community, follows "
+		" MERGE (user)-[follows:Follows]->(follows_node:FollowsNode{user_id:" + @user_id.to_s + ", community_id: " + @community_id.to_s + "}) MERGE (follows_node)-[:OfCommunity]->(community) ON CREATE SET follows_node.created_at = " + Time.now.to_i.to_s + ", follows_node.updated_at = " + Time.now.to_i.to_s + " ON MATCH SET follows_node.updated_at = " + Time.now.to_i.to_s + " WITH user, follows_node, community, follows "
 	end
 
 	def remove
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community WITH user, follow_node, community MATCH (n1)-[r1:FeedNext]->(follow_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follow_node)-[r]-() DELETE r CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follow_node  "
+		" MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_community:OfCommunity]->(community) DELETE follows, of_community WITH user, follows_node, community MATCH (n1)-[r1:FeedNext]->(follows_node)-[r2:FeedNext]->(n2) OPTIONAL MATCH (follows_node)-[r]-() DELETE r CREATE UNIQUE (n1)-[:FeedNext]->(n2) WITH follows_node  "
 	end
 
 	def self.where_not
@@ -20,12 +20,12 @@ class UsersCommunity < Neo
 	end
 
 	def follow
-		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follow_node") + ", community " + UsersCommunity.return_group(Community.basic_info)
+		match + Community.set_follow_count + create + User::Feed.new(@user_id).create("follows_node") + ", community " + UsersCommunity.return_group(Community.basic_info)
 	end
 
 	def unfollow
 		operation = "-"
-		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user, community DELETE follow_node WITH DISTINCT community " + UsersCommunity.return_group(Community.basic_info)
+		match + Community.set_follow_count(operation) + " WITH user, community " + remove + " , user, community DELETE follows_node WITH DISTINCT community " + UsersCommunity.return_group(Community.basic_info)
 	end
 
 	def self.set_view_count
@@ -33,23 +33,23 @@ class UsersCommunity < Neo
 	end
 
 	def self.delete
-		UsersCommunity.optional_match + " OPTIONAL MATCH (follow_node)-[relation]-() DELETE relation "
+		UsersCommunity.optional_match + " OPTIONAL MATCH (follows_node)-[relation]-() DELETE relation "
 	end
 
 	# def comment
-	# 	@user.match(user_id) + @community.match + ", user " + match + merge_comment + User::Feed.new(@user_id).create("follow_node") + Community::Feed.create("follow_node") + User::Feed.create("follow_node")  
+	# 	@user.match(user_id) + @community.match + ", user " + match + merge_comment + User::Feed.new(@user_id).create("follows_node") + Community::Feed.create("follows_node") + User::Feed.create("follows_node")  
 	# end
 
 	def self.optional_match
-		" OPTIONAL MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, follows, follow_node, of_community, community  "
+		" OPTIONAL MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_community:OfCommunity]->(community) WITH user, follows, follows_node, of_community, community  "
 	end
 
 	def self.match community = "community"
-		" MATCH (user)-[follows:Follows]->(follow_node:FollowsNode)-[of_community:OfCommunity]->(" + community + ") WITH user, follows, follow_node, of_community, " + community + " "
+		" MATCH (user)-[follows:Follows]->(follows_node:FollowsNode)-[of_community:OfCommunity]->(" + community + ") WITH user, follows, follows_node, of_community, " + community + " "
 	end
 
 	def self.basic_info
-		" ID(follow_node) AS follow_node "
+		" ID(follows_node) AS follows_node "
 	end
 
 	def get_info

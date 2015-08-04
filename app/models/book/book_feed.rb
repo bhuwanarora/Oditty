@@ -9,11 +9,31 @@ class Book::BookFeed < Book
 		" MATCH (book)-[old:BookFeed]->(old_feed) CREATE UNIQUE (book)-[:BookFeed]->(" + object + ")-[:BookFeed]->(old_feed) DELETE old WITH user, book, " + object + " "
 	end
 
-	def self.delete_feed(object) 
+	def self.delete_feed object
 		" MATCH (s)-[b1:BookFeed]->("+object+")-[b2:BookFeed]->(e) "\
 		" CREATE (s)-[:BookFeed]->(e) "\
 		" DELETE b1, b2 "\
 		" WITH book, "+ object + " "
+	end
+
+	def self.delete_feed_optional object, with_elements
+		" OPTIONAL MATCH (s)-[b1:BookFeed]->(" + object + ")-[b2:BookFeed]->(e) "\
+		" WITH " + object + ", COLLECT([s, e]) AS path_nodes, COLLECT([b1, b2]) AS path_edges " + with_elements.map{|elem| (", " + elem)}.join("") + " "\
+		" FOREACH (elem in (CASE WHEN path_nodes[1] IS NULL THEN [] ELSE path_nodes END )| "\
+			"FOREACH (node1 IN [elem[0]] | "\
+				" FOREACH (node2 IN [elem[1]] | "\
+					" CREATE (node1)-[:BookFeed]->(node2) "\
+				")"\
+			")"\
+		")"\
+		" FOREACH (elem in (CASE WHEN path_edges[0] IS NULL THEN [] ELSE path_edges END)| "\
+			"FOREACH (rel1 IN [elem[0]] | "\
+				" FOREACH (rel2 IN [elem[1]] | "\
+					" DELETE rel1, rel2 "\
+				" )"\
+			" )"\
+		" )"\
+		" WITH  "+ object + " " + with_elements.map{|elem| (", " +elem)}.join("") + " "
 	end
 
 	def get_feed skip_count=0
