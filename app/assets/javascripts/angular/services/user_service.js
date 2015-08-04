@@ -88,6 +88,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         }
     }
 
+    this.add_book = function(id, book_id){
+        return _deferred_request('/api/v0/add_book?id='+id+'&book_id='+book_id, $q, $http);
+    }
+
     this.get_personal_notifications = function(){
         return _deferred_request('/api/v0/personal_notifications', $q, $http);
     }
