@@ -166,6 +166,17 @@ module Api
 				book
 			end
 
+			def self.get_book_info_by_isbn isbn_string
+				output = []
+				isbn = BookHelper.parse_isbn_string isbn_string.to_s
+				isbn_list = isbn.map{|key,value| (value)}.delete_if(&:empty?)
+				if isbn_list.present?
+					clause = Book.get_books_by_isbn(isbn_list) +  Book.return_group(Book.basic_info)
+					output = clause.execute
+				end
+				output[0]
+			end
+
 		end
 	end
 end

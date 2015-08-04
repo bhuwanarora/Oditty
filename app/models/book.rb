@@ -77,6 +77,16 @@ class Book < Neo
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label "
 	end
 
+	def self.get_book_by_isbn isbn
+		" MATCH (book:Book) WHERE book.isbn =~\'.*" + isbn.to_s.strip + ".*\' "\
+		" WITH book "
+	end
+
+	def self.get_books_by_isbn isbn_array
+		" MATCH (book:Book) WHERE " + isbn_array.map{|isbn| ( "book.isbn =~\'.*" + isbn.to_s.strip + ".*\'")}.join(" OR ") + ""\
+		" WITH book "
+	end
+
 	def get_display_info
 		match + match_author + Book.return_group(Book.basic_info, " book.description AS description", "ID(author) AS author_id")
 	end
