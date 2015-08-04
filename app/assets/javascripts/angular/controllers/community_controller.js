@@ -2,7 +2,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     $scope.get_detailed_community_info = function(){
         newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
             $scope.active_tag = angular.extend($scope.active_tag, data);
-            var follow_node = $scope.active_tag.follow_node;
+            var follow_node = $scope.active_tag.follows_node;
             if($scope.active_tag.wiki_url && $scope.active_tag.wiki_url != null){
                 $scope.active_tag.wiki_url = $sce.trustAsResourceUrl($scope.active_tag.wiki_url+"?action=render");
             }
