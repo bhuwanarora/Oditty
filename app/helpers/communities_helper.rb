@@ -32,7 +32,6 @@ module CommunitiesHelper
 					news_metadata["news_id"] = news_id
 					params = {:type => "News", :response => news_id}
 					IndexerWorker.perform_async(params)
-
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
 					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, wiki_url)
 					News.new(news_metadata["news_id"]).add_notification.execute
