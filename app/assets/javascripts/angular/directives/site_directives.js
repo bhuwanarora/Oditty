@@ -10,6 +10,10 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 4998086
                     },
                     {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    },
+                    {
                         "name" : "Political Philosophy",
                         "id": 4972796
                     },
@@ -50,17 +54,13 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 5020467
                     },
                     {
-                        "name" : "British Monarchy",
-                        "id": 5007072
+                        "name" : "Pornography Ring",
+                        "id": 5002021
                     },
                     // {
                     //     "name" : "Movies",
                     //     "id": 4978987
                     // },
-                    {
-                        "name" : "Pro-Democracy Demonstrators",
-                        "id": 4998148
-                    },
                     // {
                     //     "name" : "Economics",
                     //     "id": 5020765
@@ -74,8 +74,8 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 4996889
                     },
                     {
-                        "name" : "Moorish Architecture",
-                        "id": 4980447
+                        "name" : "Travel",
+                        "id": 4980414
                     },
                     {
                         "name" : "Walt Disney Co",
@@ -94,8 +94,8 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 4980633
                     },
                     {
-                        "name" : "Star Wars Exhibit",
-                        "id": 4993023
+                        "name" : "Space",
+                        "id": 4975850
                     }
                     // {
                     //     "name" : "Ancient Species",
