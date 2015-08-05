@@ -331,6 +331,12 @@ module GraphHelper
 		" DELETE answered "\
 		" WITH " + original + "," + duplicate + " "\
 		" "\
+		" OPTIONAL MATCH (question:Question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
+		" FOREACH (answer_rel IN (CASE WHEN answerof IS NULL THEN [] ELSE [answerof] END)| "\
+			" SET answer_rel.author_id = ID(" + original + ") "\
+		") "\
+		" WITH " + original + ", " + duplicate + " "\
+		" "\
 		" OPTIONAL MATCH(" + duplicate + ")<-[follows:OfAuthor]-(followsnodes:FollowsNode) "\
 		" FOREACH (followsnode in ( CASE WHEN followsnodes IS NULL THEN [] ELSE [followsnodes] END)| "\
 		" MERGE(" + original + ")<-[:OfAuthor]-(followsnode) " \
@@ -361,17 +367,43 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.log_setup file_name
+		@@logger ||= Logger.new("#{Rails.root}/log/#{file_name}.log")
+	end
+
+	def self.log_info log_hash, message_tag
+		output_string = log_hash.map{|key,value| (key + ":" + value.to_s)}.join(", ")
+		@@logger.info(message_tag + ": " + output_string)
+	end
+
+	def self.count_authors_with_prefix_index indexed_main_author_name_prefix
+		clause = "START original=node:node_auto_index('indexed_main_author_name:" + indexed_main_author_name_prefix +"*" + "') "\
+		"  RETURN COUNT (original) AS count "
+		query_exec = clause.execute
+		if query_exec.empty?
+			output = 0
+		else
+			output = query_exec[0]["count"]
+		end
+		output
+	end
+
 	def self.merge_duplicate_authors_in_range_auto_index(starting_regex)
 		puts "Removing duplicate authors with search_index starting with: " + starting_regex
 		clause = "START original=node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "')  WITH original "\
 			"START duplicate = node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "') "\
 			"WHERE ( (ID(original) <> ID(duplicate)) "\
 			"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
-				" RETURN ID(original),ID(duplicate) LIMIT 1"
+				" RETURN ID(original), original.name, ID(duplicate), duplicate.name LIMIT 1"
 		output = clause.execute
 		if (output.length >0)
 			id_orig = output[0]["ID(original)"]
 			id_dup = output[0]["ID(duplicate)"]
+			name_o = output[0]["original.name"]
+			name_d = output[0]["duplicate.name"]
+			GraphHelper.log_info({
+				'original_id' => id_orig, 'original author name' => name_o, 'duplicate_id' => id_dup, 'duplicate author name' => name_d
+			}, " Duplicate Author removal")
 			GraphHelper.copy_properties_author(id_orig,id_dup)
 			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
 				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
@@ -412,6 +444,21 @@ module GraphHelper
 		matched
 	end
 	
+	def self.next_regex_recursive prefix_search_index, array_position
+		output = prefix_search_index
+		if array_position >= 0
+			if prefix_search_index[array_position] != 'z'
+				prefix_search_index[array_position] = prefix_search_index[array_position].ord.next.chr
+			else
+				prefix_search_index[array_position] = 'a'
+				output = GraphHelper.next_regex_recursive(prefix_search_index, array_position - 1)
+			end
+		else
+			output = ""
+		end
+		output
+	end
+
 	def self.next_regex(first_letter, second_letter, third_letter)
 		if (third_letter == 'z')
 			third_letter = 'a'
@@ -427,24 +474,35 @@ module GraphHelper
 		[first_letter,second_letter, third_letter]
 	end
 
-	def self.merge_duplicate_authors		
-		author_id_key = 'dup_author_regex'		
-		if(!$redis[author_id_key].nil?)			
-			cur_state = $redis[author_id_key]
-			fl = cur_state[0]
-			sl = cur_state[1]
-			tl = cur_state[2]
-		else
-			$redis[author_id_key] = "aaa"
-			fl = "a"
-			sl = "a"
-			tl = "a"
+	def self.manage_author_index_prefix prefix_search_index, reduction_allowed = true
+		count_max_threshold = 300
+		output_index = prefix_search_index
+		count = GraphHelper.count_authors_with_prefix_index prefix_search_index
+		if count > count_max_threshold
+			output_index = GraphHelper.manage_author_index_prefix(prefix_search_index + "a", false)
+		elsif prefix_search_index[-1] == 'a' && prefix_search_index.length > 1 && reduction_allowed == true
+			temp_index = output_index[0,output_index.length - 1]
+			output_index = GraphHelper.manage_author_index_prefix(temp_index)
 		end
-		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
-			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index("" + fl + sl + tl)
-			if(matched == 0 )				
-				(fl,sl,tl) = GraphHelper.next_regex(fl,sl,tl)
-				$redis[author_id_key] = "" + fl + sl + tl
+		output_index
+	end
+
+	def self.merge_duplicate_authors		
+		author_id_key = 'dup_author_regex'
+		GraphHelper.log_setup author_id_key
+		cur_index = ""
+		if(!$redis[author_id_key].nil?)			
+			cur_index = $redis[author_id_key]
+		else
+			cur_index = "aaa"
+			$redis[author_id_key] = cur_index
+		end
+		while (cur_index != "")
+			cur_index = GraphHelper.manage_author_index_prefix cur_index
+			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index(cur_index)
+			if matched == 0
+				cur_index = GraphHelper.next_regex_recursive(cur_index, cur_index.length - 1)
+				$redis[author_id_key] = cur_index
 			end
 		end
 	end
