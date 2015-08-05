@@ -40,7 +40,7 @@ module NewsHelper
 	end
 
 	def self.fetch_tags news_link
-		query = Rails.application.config.nlp_service + "api/v0/parser?q=" + news_link 
+		query = Rails.application.config.nlp_service + "api/v0/parser?q=" + URI.encode(news_link,/\W/)
 		puts query
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
