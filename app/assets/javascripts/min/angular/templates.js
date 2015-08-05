@@ -233,7 +233,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/community_suggestions.html',
-    "<h1 layout-padding><a layout-padding layout=\"row\" layout-align=\"center center\" class=\"feed_margin grey_color\" href=\"/rooms\">Trending</a></h1><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"6\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in suggest_communities | limitTo : 6\" md-rowspan=\"2\" md-colspan=\"1.5\" md-colspan-sm=\"1\" class=\"pointer\" ng-click=\"goto_room(trend.id)\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"less_important white_color\">{{trend.name}}</div><div class=\"less_important white_color\">{{trend.view_count}} Views</div></md-grid-tile-footer></md-grid-tile></md-grid-list>"
+    "<h1 layout-padding><a layout-padding layout=\"row\" layout-align=\"center center\" class=\"feed_margin grey_color\" href=\"/rooms\">Trending</a></h1><md-grid-list md-cols-sm=\"1\" md-cols-md=\"2\" md-cols-gt-md=\"4\" md-row-height-gt-md=\"1:1\" md-row-height=\"4:3\" md-gutter=\"50px\" md-gutter-gt-sm=\"10px\"><md-grid-tile ng-repeat=\"trend in suggest_communities | limitTo : 6\" md-rowspan=\"1\" md-colspan=\"1\" md-colspan-sm=\"1\" class=\"pointer\"><a ng-href=\"/room?id={{trend.id}}\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png\" class=\"trends\"><md-grid-tile-footer layout=\"row\" layout-padding><div class=\"less_important white_color\">{{trend.name}}</div><div class=\"less_important white_color\">{{trend.view_count}} Views</div></md-grid-tile-footer></a></md-grid-tile></md-grid-list>"
   );
 
 
@@ -354,7 +354,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/library/shared/expanded_book.html',
-    "<div layout-align=\"start start\" layout=\"row\" ng-href=\"#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}\" du-smooth-scroll offset=\"200\" duration=\"800\" ng-if=\"!book.expanded\" class=\"rd_book_container\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\" ng-click=\"expand_book($index)\" ng-if=\"expanded_index == $index\"></div><md-button class=\"clear md-whiteframe-z1\" ng-click=\"expand_book($index)\" ng-if=\"expanded_index != $index\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></div><div layout-align=\"start start\" layout=\"row\" id=\"bookContainer{{book.id || book.book_id}}\" ng-if=\"book.expanded\" class=\"book_container background animate-fast\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_container.html'\"></div></div>"
+    "<div layout-align=\"start start\" layout=\"row\" ng-href=\"#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}\" du-smooth-scroll offset=\"200\" duration=\"800\" ng-if=\"!book.expanded\" class=\"rd_book_container\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\" ng-click=\"expand_book($index)\" class=\"relative\" ng-if=\"expanded_index == $index\"></div><md-button class=\"clear md-whiteframe-z1\" ng-click=\"expand_book($index)\" ng-if=\"expanded_index != $index\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\" class=\"relative\"></div></md-button></div><div layout-align=\"start start\" layout=\"row\" id=\"bookContainer{{book.id || book.book_id}}\" ng-if=\"book.expanded\" class=\"book_container background animate-fast\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_container.html'\"></div></div>"
   );
 
 
@@ -764,7 +764,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/bookmark.html',
-    "<div class=\"md-whiteframe-z1 blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves()\" ng-if=\"custom\"><i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves()\"><span>Add to Shelf</span> <i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\" ng-show=\"shelves_loading\"></md-progress-circular><span ng-hide=\"shelves_loading\">{{count || 0}}</span></div>"
+    "<div class=\"md-whiteframe-z1 blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves($event)\" ng-if=\"custom\"><i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves($event)\"><span>Add to Shelf</span> <i class=\"material-icons\" ng-hide=\"shelves_loading\" ng-if=\"count\">bookmark</i><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\" ng-show=\"shelves_loading\"></md-progress-circular><span ng-hide=\"shelves_loading\" ng-if=\"count\">{{count || 0}}</span></div>"
   );
 
 
@@ -864,7 +864,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/book_thumb.html',
-    "<div ng-style=\"{background:'{{book.color | random_color}}'}\" class=\"rd_book_backup_cover\" layout=\"column\"><img src=\"/assets/defpicbook.png\" class=\"default_book_cover\"></div><div class=\"rd_slider_wrapper\"><div layout=\"column\" layout-align=\"center\" class=\"relative white\" ng-if=\"book.status\"><md-slider flex md-discrete class=\"md-warn\" ng-change=\"rate_book(book, $event)\" ng-model=\"book.user_rating\" step=\"1\" min=\"1\" max=\"10\" aria-label=\"user_rating\"></md-slider></div><img src=\"/assets/book_shadow.png\" class=\"rd_book_shadow\"> <img ng-src=\"{{book | choose_medium_thumb}}\" class=\"rd_book_image_cover\" onerror=\"this.src=&quot;&quot;\"></div><div layout-padding class=\"wrap\"><div>{{book.title}}</div><div class=\"less_important\">{{book.author_name}}</div></div><br>"
+    "<div ng-style=\"{background:'{{book.color | random_color}}'}\" class=\"rd_book_backup_cover\" layout=\"column\"><img src=\"/assets/defpicbook.png\" class=\"default_book_cover\"></div><div class=\"rd_slider_wrapper\"><div layout=\"column\" layout-align=\"center\" class=\"relative white\" ng-if=\"book.status\"><md-slider flex md-discrete class=\"md-warn\" ng-change=\"rate_book(book, $event)\" ng-model=\"book.user_rating\" step=\"1\" min=\"1\" max=\"10\" aria-label=\"user_rating\"></md-slider></div><img src=\"/assets/book_shadow.png\" class=\"rd_book_shadow\"> <img ng-src=\"{{book | choose_medium_thumb}}\" class=\"rd_book_image_cover\" onerror=\"this.src=&quot;&quot;\"></div><div layout-padding class=\"wrap\"><div>{{book.title}}</div><div class=\"less_important\">{{book.author_name}}</div></div><br><br><div class=\"bookmark\"><bookmark bookmark-id=\"book.id || book.book_id\" bookmark-type=\"'Book'\" ng-if=\"book\" shelves=\"book.shelves\"></bookmark></div>"
   );
 
 
@@ -969,7 +969,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/shelves_sidenav.html',
-    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-accent\"><h1 class=\"md-toolbar-tools\">Your Personal Shelves</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div></md-sidenav>"
+    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-accent\"><h1 class=\"md-toolbar-tools\">Add to Your Shelf</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div><div layout-padding>You can checkout your History of Books and News Clippings <a href=\"/history\">here</a>.</div></md-sidenav>"
   );
 
 
