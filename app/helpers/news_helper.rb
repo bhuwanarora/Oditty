@@ -53,6 +53,32 @@ module NewsHelper
 		end
 	end
 
+	def self.delete_communit_links news_id
+		clause = News.new(news_id).match + News.match_community + " DELETE has_community "\
+		" RETURN news.url AS url"
+		url = clause.execute[0]["url"]
+	end
+
+	def self.handle_wrong_community_linkage news_id
+		begin
+			news_link = NewsHelper.delete_communit_links news_id
+			news_metadata = {"available" => true, "news_link" => news_link}
+			CommunitiesHelper.create news_metadata
+		rescue Exception => e
+			puts e.to_s.red
+		end
+	end
+
+	def self.handle_wrong_communities_linkage
+		clause = " MATCH (news:News) "\
+				" WHERE news.url =~'.*&.*'"\
+				" RETURN ID(news) AS id"
+		id_list = clause.execute.map{|elem| elem["id"]}
+		id_list.each do |news_id|
+			NewsHelper.handle_wrong_community_linkage news_id
+		end
+	end
+
 	def self.send_newsletter
 		info = News.get_popular_news_from_last_week.execute
 		params = {

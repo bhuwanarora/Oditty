@@ -426,6 +426,12 @@ namespace :graph do
     GraphHelper.reset_user_notification
   end
 
+  desc "handle wrongly linked news"
+  task :reset_news_to_community_for_wrongly_linked_news => :environment do
+    include NewsHelper
+      NewsHelper.handle_wrong_communities_linkage
+  end
+
   desc " tests some function which one wants to test. "
   task :test_function => :environment do
     include GraphHelper
