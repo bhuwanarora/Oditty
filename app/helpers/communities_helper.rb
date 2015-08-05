@@ -5,7 +5,7 @@ module CommunitiesHelper
 				return
 			end
 			communities_books = []		
-			relevance = []	 # This is the relevance which we will use			
+			relevance = []	 # This is the relevance which we will use
 			response = NewsHelper.fetch_tags news_metadata["news_link"]
 			puts response.red
 			if response.is_json? 
