@@ -380,7 +380,7 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
                 return ((getCookie("logged") == "") || (getCookie("logged") == null));
             }
 
-            $scope.show_shelves = function(){
+            $scope.show_shelves = function(event){
                 if(_unauthenticated_user()){
                     $mdSidenav('signup').toggle();
                 }
@@ -393,6 +393,7 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
                     });
                     $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
                 }
+                event.stopPropagation();
             }
 
         }],

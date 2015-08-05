@@ -20,3 +20,8 @@
     <div class="less_important">{{book.author_name}}</div>
 </div>
 <br/>
+<br/>
+<div class="bookmark">
+    <bookmark bookmark-id="book.id || book.book_id" bookmark-type="'Book'" ng-if="book"
+            shelves="book.shelves"></bookmark>
+</div>

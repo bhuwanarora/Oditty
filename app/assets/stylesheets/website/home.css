@@ -128,7 +128,7 @@ md-content{
 .super_container,
 .super_div_container{
     outline: none !important;
-	margin-top: 52px !important;
+	margin-top: 48px !important;
 }
 
 .burger{
@@ -890,4 +890,19 @@ h3 a:hover{
     word-wrap: break-word;
 	overflow-y: scroll;
 	background-color: white !important;
+}
+
+
+.bookmark{
+	border-top: 1px solid #E8E8E8;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 1;
+}
+
+.bookmark:hover .pointer{
+	background-color: white !important;
+	cursor: default;
 }
