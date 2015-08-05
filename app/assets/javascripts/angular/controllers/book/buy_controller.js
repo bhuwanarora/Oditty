@@ -36,7 +36,7 @@ homeApp.controller('buyController', ["$scope", "$rootScope", "bookService", "sha
 		if(angular.isUndefined($scope.prices)){
 			$scope.prices = [];
 		}
-		angular(data.prices, function(price){
+		angular.forEach(data.prices, function(price){
 			if(price != null){
 				this.push(price);
 			}
