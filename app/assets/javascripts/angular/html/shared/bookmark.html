@@ -6,7 +6,7 @@
 </div> -->
 <div class=" md-whiteframe-z1 blue_circle pointer"  
     layout="row" layout-align="center center"
-   layout-padding ng-click="show_shelves()" ng-if="custom">
+   layout-padding ng-click="show_shelves($event)" ng-if="custom">
    <!-- <span class="icon-share"></span> -->
    <i class="material-icons" ng-hide="shelves_loading">bookmark</i>
    
@@ -17,12 +17,12 @@
 <div class="pointer"
     layout-padding
     ng-if="!custom"
-    ng-click="show_shelves()">
+    ng-click="show_shelves($event)">
     <span>Add to Shelf </span>
-    <i class="material-icons" ng-hide="shelves_loading">bookmark</i>
+    <i class="material-icons" ng-hide="shelves_loading" ng-if="count">bookmark</i>
    <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
         ng-show="shelves_loading">
     </md-progress-circular>
     <!-- <span class="icon-books"></span> -->
-    <span ng-hide="shelves_loading">{{count || 0}}</span>
+    <span ng-hide="shelves_loading" ng-if="count">{{count || 0}}</span>
 </div>
