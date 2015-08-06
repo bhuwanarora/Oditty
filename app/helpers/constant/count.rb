@@ -33,5 +33,5 @@ module Constant::Count
 	UsersShownInFeed			= 4
 	TotalCountIncrementRecommendation = 10
 
-	GoogleKeysCount				= 7
+	GoogleKeysCount				= 8
 end
