@@ -41,10 +41,14 @@ class News < Neo
 	end
 
 	def self.merge_region news_metadata
-		if news_metadata["region"].strip == "Canada English"
-			news_metadata["region"] = "Canada"
+		clause = ""
+		if news_metadata["region"].present?
+			if news_metadata["region"].strip == "Canada English"
+				news_metadata["region"] = "Canada"
+			end
+			clause = " MERGE (region:Region{name:\"#{news_metadata["region"]}\"}) MERGE (region)<-[:FromRegion{region:ID(region)}]-(news) SET region.news_count = COALESCE(region.news_count) + 1 WITH region, news " 
 		end
-		" MERGE (region:Region{name:\"#{news_metadata["region"]}\"}) MERGE (region)<-[:FromRegion{region:ID(region)}]-(news) SET region.news_count = COALESCE(region.news_count) + 1 WITH region, news " 
+		clause
 	end
 
 	def self.create news_metadata
