@@ -4,7 +4,7 @@ namespace :get_media do
     task :news => :environment do
         puts "init"
         include NewsHelper
-        NewsHelper.handle
+        NewsHelper.insert_news
     end
 
     desc "Get Blog"

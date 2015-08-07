@@ -67,6 +67,10 @@ class Bookmark < Neo
 		" OPTIONAL MATCH (" + label + ":User)-[labelled:Labelled]->(label:Label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+")"
 	end
 
+	def self.optional_match_path_for media
+		" OPTIONAL MATCH (user)-[labelled:Labelled]->(label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode{user_id:ID(" + label + ")})-[bookmark_action:BookmarkAction]->("+media+")"
+	end
+
 	def self.optional_match_label media = "book"
 		" OPTIONAL MATCH (label)-[bookmarked_on:BookmarkedOn]->(bookmark_node:BookmarkNode)-[bookmark_action:BookmarkAction]->(" + media + ") "
 	end

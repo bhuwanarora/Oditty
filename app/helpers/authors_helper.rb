@@ -51,7 +51,6 @@ module AuthorsHelper
 
 	def self.handle_duplicate_removal_log_file filename = (Rails.root.to_s + "/log/dup_author_regex.log")
 		File.open(filename).each do |line|
-			debugger
 			AuthorsHelper.handle_duplicate_removal_log_line line
 		end
 	end
