@@ -1,11 +1,11 @@
 module NewsHelper
 
 	def self.handle
-		news_sources ||= self.fetch_news_sources
+		news_sources ||= NewsHelper.fetch_news_sources
 		puts news_sources
 		for news_source in news_sources
 			
-			news_links = self.fetch_news news_source["url"]
+			news_links = NewsHelper.fetch_news news_source["url"]
 			puts news_links
 			for news_link in news_links
 				news_metadata = {}
@@ -133,6 +133,13 @@ module NewsHelper
 		params[:news4][:community2][:image_url] = info[3]["communities"][1]["image_url"]  rescue ""
 		params[:template] = Constant::EmailTemplate::Newsletter
 		SubscriptionMailer.news_subscription(params).deliver
+	end
+
+	def self.insert_news
+		NewsSources.init_news_queue
+		producer_thread  = Thread.new{ NewsSources.producer_thread }
+		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
+		consumer_thread.join
 	end
 
 

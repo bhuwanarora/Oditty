@@ -2,6 +2,50 @@ module TimeHelper
 	
 	Delimiters = [")", "(", " ",",", "."]
 
+	def self.same date_one, date_two
+		begin
+			output = (date_one[Constant::Time::Year]  == date_two[Constant::Time::Year]) &&
+			(date_one[Constant::Time::Month] == date_two[Constant::Time::Month]) &&
+			(date_one[Constant::Time::Date]  == date_two[Constant::Time::Date])
+		rescue Exception => e
+			output = false
+		end
+		output
+	end
+
+	def self.is_recent date_new, date_old
+		output = true
+		y_str = Constant::Time::Year
+		m_str = Constant::Time::Month
+		d_str = Constant::Time::Date
+
+		if (date_new[y_str] < date_old[y_str])
+			output = false
+		elsif (date_new[y_str] == date_old[y_str] && date_new[m_str] < date_old[m_str])
+			output = false
+		elsif (date_new[y_str] == date_old[y_str] && date_new[m_str] == date_old[m_str] && date_new[d_str] < date_old[d_str])
+			output = false
+		end
+		output
+	end
+
+	def self.is_old date_old, date_new
+		TimeHelper.is_recent date_new, date_old
+	end
+
+	def self.is_in_between date_old, date_in_btw, date_new
+		TimeHelper.is_recent(date_in_btw,date_old) && TimeHelper.is_old(date_in_btw, date_new)
+	end
+
+	def self.today
+		date = Time.now.to_s.split(" ")[0].split("-")
+		output = {
+			Constant::Time::Year  => date[0].to_i,
+			Constant::Time::Month => date[1].to_i,
+			Constant::Time::Date  => date[2].to_i
+		}
+		output
+	end
 
 	def self.get_birthday born_string, entity_label
 		case entity_label
