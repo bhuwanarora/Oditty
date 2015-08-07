@@ -388,6 +388,20 @@ module GraphHelper
 		output
 	end
 
+	def self.count_node_with_prefix_index params
+		search_index 			= params[:search_index]
+		label 					= params[:label]
+		search_index_property 	= UniqueSearchIndexHelper::UniqueIndices[label][0]
+
+		clause = ""\
+				" MATCH (node:" + label + ") "\
+				" WHERE node." + search_index_property + "=~ \'" + search_index + ".*\'"\
+				" RETURN COUNT(node) AS count "
+		query_exec = clause.execute
+		output = query_exec.empty?0:query_exec[0]["count"]
+		output
+	end
+
 	def self.merge_duplicate_authors_in_range_auto_index(starting_regex)
 		puts "Removing duplicate authors with search_index starting with: " + starting_regex
 		clause = "START original=node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "')  WITH original "\
@@ -444,7 +458,10 @@ module GraphHelper
 		matched
 	end
 	
-	def self.next_regex_recursive prefix_search_index, array_position
+	def self.next_regex_recursive prefix_search_index, array_position = nil
+		if array_position.nil?
+			array_position = prefix_search_index.length - 1
+		end
 		output = prefix_search_index
 		if array_position >= 0
 			if prefix_search_index[array_position] != 'z'
@@ -483,6 +500,39 @@ module GraphHelper
 		elsif prefix_search_index[-1] == 'a' && prefix_search_index.length > 1 && reduction_allowed == true
 			temp_index = output_index[0,output_index.length - 1]
 			output_index = GraphHelper.manage_author_index_prefix(temp_index)
+		end
+		output_index
+	end
+
+	def self.manage_node_pair_index_prefix params
+		prefix_search_index = params[:prefix_search_index]
+		reduction_allowed = params[:reduction_allowed].present?params[:reduction_allowed]: true
+		label_one = params[:node_label][0]
+		label_two = params[:node_label][1]
+		count_max_threshold = 45000
+
+		params_one = {
+			:search_index 			=> prefix_search_index,
+			:label 					=> label_one
+		}
+		params_two = {
+			:search_index 			=> prefix_search_index,
+			:label 					=> label_two
+		}
+		count_one = GraphHelper.count_node_with_prefix_index params_one
+		count_two = GraphHelper.count_node_with_prefix_index params_two
+		count = count_one*count_two
+		output_index = prefix_search_index
+		if count > count_max_threshold
+			params_new = params.clone
+			params[:prefix_search_index] + "a"
+			params_new[:reduction_allowed] = false
+			output_index = GraphHelper.manage_node_pair_index_prefix params_new
+		elsif prefix_search_index[-1] == 'a' && prefix_search_index.length > 1 && reduction_allowed == true
+			temp_index = output_index[0,output_index.length - 1]
+			params_new = params.clone
+			params_new[:prefix_search_index] = temp_index
+			output_index = GraphHelper.manage_node_pair_index_prefix params_new
 		end
 		output_index
 	end
