@@ -114,6 +114,27 @@ class NewsSources < Neo
 		worker_threads.each{|thread| thread.join}
 	end
 
+	def self.producer_thread_old_news_no_google
+		news_sources = [
+				NewsSources::ChicagoTribuneNews,
+				NewsSources::HuffingtonPostNews,
+				NewsSources::IndependentUkNews,
+				NewsSources::LiteratureAlltopNews,
+				NewsSources::NdtvNews,
+				NewsSources::TelegraphUkNews,
+				NewsSources::WorldLiteratureTodayNews,
+			]
+		worker_threads = []
+		test_start_date = {t::Year => 2013, t::Month => 1, t::Date => 31}
+		test_end_date   = {t::Year => 2015, t::Month => 10, t::Date => 1}
+		news_sources.each do |source|
+			worker_threads << Thread.new {
+				source.fetch_news_info([test_start_date, test_end_date]).each{|news_metadata| @@news_queue << {:source => source, :news_metadata => news_metadata}}
+			}
+		end
+		worker_threads.each{|thread| thread.join}
+	end
+
 	def self.consumer_thread
 		news_added_count = 0
 		while news_added_count < 100 || @@news_queue.size > 0

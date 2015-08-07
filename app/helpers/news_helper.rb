@@ -142,5 +142,12 @@ module NewsHelper
 		consumer_thread.join
 	end
 
+	def self.insert_old_lit_news
+		NewsSources.init_news_queue
+		producer_thread  = Thread.new{ NewsSources.producer_thread_old_news_no_google }
+		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
+		consumer_thread.join
+	end
+
 
 end
