@@ -55,10 +55,14 @@ class NewsSources < Neo
 
 	def self.filter_news_on_date_range news_data, params
 		output = []
-		news_data.each do |news|
-			if TimeHelper.is_in_between(params[:date][0],params[:class].get_date(news),params[:date][1])
-				output << news
+		begin
+			news_data.each do |news|
+				if TimeHelper.is_in_between(params[:date][0],params[:class].get_date(news),params[:date][1])
+					output << news
+				end
 			end
+		rescue Exception => e
+			puts e.to_s
 		end
 		output
 	end
@@ -109,6 +113,27 @@ class NewsSources < Neo
 		news_sources.each do |source|
 			worker_threads << Thread.new {
 				source.fetch_news_info.each{|news_metadata| @@news_queue << {:source => source, :news_metadata => news_metadata}}
+			}
+		end
+		worker_threads.each{|thread| thread.join}
+	end
+
+	def self.producer_thread_old_news_no_google
+		news_sources = [
+				NewsSources::ChicagoTribuneNews,
+				NewsSources::HuffingtonPostNews,
+				NewsSources::IndependentUkNews,
+				NewsSources::LiteratureAlltopNews,
+				NewsSources::NdtvNews,
+				NewsSources::TelegraphUkNews,
+				NewsSources::WorldLiteratureTodayNews,
+			]
+		worker_threads = []
+		test_start_date = {Constant::Time::Year => 2013, Constant::Time::Month => 1, Constant::Time::Date => 31}
+		test_end_date   = {Constant::Time::Year => 2015, Constant::Time::Month => 10, Constant::Time::Date => 1}
+		news_sources.each do |source|
+			worker_threads << Thread.new {
+				source.fetch_news_info([test_start_date, test_end_date]).each{|news_metadata| @@news_queue << {:source => source, :news_metadata => news_metadata}}
 			}
 		end
 		worker_threads.each{|thread| thread.join}

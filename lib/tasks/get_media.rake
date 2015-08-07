@@ -14,4 +14,11 @@ namespace :get_media do
         BlogsHelper.handle
     end
 
+    desc "Get Literature news"
+    task :old_lit_news => :environment do
+        puts "init"
+        include NewsHelper
+        NewsHelper.insert_old_lit_news
+    end
+
 end

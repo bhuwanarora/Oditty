@@ -37,7 +37,7 @@ class NewsSources::HuffingtonPostNews < NewsSources
 		partial_news_link = (news_info.css('ul li a').attr('href').to_s.strip	rescue nil)
 		complete_news_link = HuffingtonPostNews.get_complete_news_link(partial_news_link, HuffingtonPostNews.get_source) rescue nil
 		metadata = {
-			"image_url" 	=> (news_info..css('.image_wrapper a img').attr('longdesc').to_s.strip	rescue nil),
+			"image_url" 	=> (news_info.css('.image_wrapper a img').attr('longdesc').to_s.strip	rescue nil),
 			"title"			=> (news_info.css('h3 a').text.to_s.strip 		rescue nil),
 			"description"	=> "",
 			"news_link"		=> complete_news_link,
