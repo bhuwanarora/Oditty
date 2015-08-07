@@ -2,8 +2,8 @@ class NewsSources < Neo
 
 	def self.fetch_news_data params
 		news_data = NewsSources.fetch_raw_data params
-		debugger
-		filtered_news_data = NewsSources.filter_news_on_date news_data, params
+		filtered_news_data = []
+		news_data.each{|data| filtered_news_data+= (NewsSources.filter_news_on_date data, params)}
 		filtered_news_data = params[:class].filter_news filtered_news_data
 	end
 
@@ -19,11 +19,12 @@ class NewsSources < Neo
 	def self.fetch_raw_data params
 		clas = params[:class]
 		date = params[:date]
-		css_string = clas.get_news_info_css
+		css_string_array = clas.get_news_info_css
 		source_url = clas.get_source
 		doc =  NewsSources.scrape_content source_url
+		output = []
 		if doc.present?
-			output = doc.css(css_string)
+			css_string_array.each{|css_string| output << doc.css(css_string) }
 		end
 		output
 	end
@@ -87,4 +88,44 @@ class NewsSources < Neo
 		puts " No specific filter for abstract class NewsSources".red
 	end
 
+	## Below portion is for creating news in database. ##
+
+	def self.init_news_queue
+		@@news_queue ||= Queue.new
+	end
+
+	def self.producer_thread
+		news_sources = [
+				NewsSources::ChicagoTribuneNews,
+				NewsSources::HuffingtonPostNews,
+				NewsSources::IndependentUkNews,
+				NewsSources::LiteratureAlltopNews,
+				NewsSources::NdtvNews,
+				NewsSources::TelegraphUkNews,
+				NewsSources::WorldLiteratureTodayNews,
+				NewsSources::GoogleNews
+			]
+		worker_threads = []
+		news_sources.each do |source|
+			worker_threads << Thread.new {
+				source.fetch_news_info.each{|news_metadata| @@news_queue << {:source => source, :news_metadata => news_metadata}}
+			}
+		end
+		worker_threads.each{|thread| thread.join}
+	end
+
+	def self.consumer_thread
+		news_added_count = 0
+		while news_added_count < 100 || @@news_queue.size > 0
+			elememt = @@news_queue.pop
+			news_metadata = elememt[:news_metadata]
+			if elememt[:source] == NewsSources::GoogleNews
+				news_metadata["literature_news"] = false
+			else
+				news_metadata["literature_news"] = true
+			end
+			CommunitiesHelper.create news_metadata
+			news_added_count += 1
+		end
+	end
 end

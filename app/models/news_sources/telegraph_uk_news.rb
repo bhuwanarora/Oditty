@@ -4,7 +4,7 @@ class NewsSources::TelegraphUkNews < NewsSources
 	end
 
 	def self.get_news_info_css
-		css_string = '.headlineImageCentre'
+		css_string = ['.headlineImageCentre']
 	end
 
 	def self.fetch_news_info date = nil

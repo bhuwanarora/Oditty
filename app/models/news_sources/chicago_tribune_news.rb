@@ -4,7 +4,7 @@ class NewsSources::ChicagoTribuneNews < NewsSources
 	end
 
 	def self.get_news_info_css
-		css_string = '.trb_outfit_primaryItem'
+		css_string = ['.trb_outfit_primaryItem']
 	end
 
 	def self.fetch_news_info date = nil

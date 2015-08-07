@@ -736,7 +736,7 @@ module GraphHelper
 		t = Constant::Time
 		test_start_date = {t::Year => 2014, t::Month => 1, t::Date => 31}
 		test_end_date   = {t::Year => 2015, t::Month => 10, t::Date => 1}
-		output = NewsSources::ChicagoTribuneNews.fetch_news_info [test_start_date, test_end_date]
+		output = NewsSources::LiteratureAlltopNews.fetch_news_info [test_start_date, test_end_date]
 		debugger
 	end
 

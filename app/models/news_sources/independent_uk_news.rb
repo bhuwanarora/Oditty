@@ -5,7 +5,7 @@ class NewsSources::IndependentUkNews < NewsSources
 	end
 
 	def self.get_news_info_css
-		css_string = '.inpage-widget-6246015 .news'
+		css_string = ['.inpage-widget-6246015 .news']
 	end
 
 	def self.fetch_news_info date = nil
