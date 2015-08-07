@@ -327,7 +327,13 @@ namespace :graph do
   task :remove_duplicate_authors => :environment do
     include GraphHelper
     GraphHelper.merge_duplicate_authors
-  end  
+  end
+
+  desc " Removes deleted authors from search. Requires log file"
+  task :remove_duplicate_authors_from_search => :environment do
+    include AuthorsHelper
+    AuthorsHelper.handle_duplicate_removal_log_file
+  end
   
   desc "curate book author name "
   task :curate_books_author_name => :environment do
@@ -364,6 +370,12 @@ namespace :graph do
     include CommunitiesHelper
     created_before = Time.local(2015, 5, 20).to_i
     CommunitiesHelper.reset_book_links created_before
+  end
+
+  desc "makes communities with no books invisible from website "
+  task :handle_bookless_communities => :environment do
+    include CommunitiesHelper
+    CommunitiesHelper.handle_bookless_communities
   end
 
   desc "bookmark_count for user"
@@ -412,6 +424,12 @@ namespace :graph do
   task :reset_user_notification => :environment do
     include GraphHelper
     GraphHelper.reset_user_notification
+  end
+
+  desc "handle wrongly linked news"
+  task :reset_news_to_community_for_wrongly_linked_news => :environment do
+    include NewsHelper
+      NewsHelper.handle_wrong_communities_linkage
   end
 
   desc " tests some function which one wants to test. "

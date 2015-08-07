@@ -77,6 +77,16 @@ class Book < Neo
 		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label "
 	end
 
+	def self.get_book_by_isbn isbn
+		" MATCH (book:Book) WHERE book.isbn =~\'.*" + isbn.to_s.strip + ".*\' "\
+		" WITH book "
+	end
+
+	def self.get_books_by_isbn isbn_array
+		" MATCH (book:Book) WHERE " + isbn_array.map{|isbn| ( "book.isbn =~\'.*" + isbn.to_s.strip + ".*\'")}.join(" OR ") + ""\
+		" WITH book "
+	end
+
 	def get_display_info
 		match + match_author + Book.return_group(Book.basic_info, " book.description AS description", "ID(author) AS author_id")
 	end
@@ -158,6 +168,7 @@ class Book < Neo
 	end
 
 	def get_news skip_count = 0
+		#TODO: Change sorting of community.
 		match + Book.match_communities + Community.order_desc + Book.limit(1) + Community.match_news  + " ,book " + News.order_desc  + Book.skip(skip_count) + Book.limit(10) +  " WITH book, " + Community.collect_map("news" => News.grouped_basic_info) + Book.match_communities + " ,news " + Community.order_desc + Book.return_init + " news, " + Community.collect_map("communities" => Community.grouped_basic_info)
 	end
 

@@ -5,13 +5,13 @@
         <!-- Open Graph data -->
         <meta charset="utf-8" />
         <meta property="og:site_name" content= "ReadersDoor" />
-        <meta property="og:url" content= "<%= @info['original_url'] %>" />
-        <meta property="og:title" content= "<%= @info['title'] || @info['name'] %>" />
-        <meta property="og:type" content= "<%= @info['meta_type'] %>" />
+        <meta property="og:url" content= "<%= @info['original_url'] %>" ng-if="<%= @info['original_url'] %>"/>
+        <meta property="og:title" content= "<%= @info['title'] || @info['name'] %>" ng-if="<%= @info['title'] || @info['name'] %>"/>
+        <meta property="og:type" content= "<%= @info['meta_type'] %>" ng-if="<%= @info['meta_type'] %>"/>
 
-        <meta property="og:book:author" content= "<%= @info['author_name'] %>" ng-if="<% @info['meta_type'] == 'book'%>"/>
-        <meta property="og:book:isbn" content= "<%= @info['isbn'] %>" ng-if="<% @info['meta_type'] == 'book'%>"/>
-        <meta property="og:book:release_date" content= "<%= @info['published_year'] %>" ng-if="<% @info['meta_type'] == 'book'%>"/>
+        <meta property="og:book:author" content= "<%= @info['author_name'] %>" ng-if="<% @info['meta_type'] && (@info['meta_type'] == 'book')%>"/>
+        <meta property="og:book:isbn" content= "<%= @info['isbn'] %>" ng-if="<% @info['meta_type'] && (@info['meta_type'] == 'book')%>"/>
+        <meta property="og:book:release_date" content= "<%= @info['published_year'] %>" ng-if="<% @info['meta_type'] && (@info['meta_type'] == 'book')%>"/>
         
 
         <meta property="og:description" content= "<%= @info['description'] || @info['overview']%>" />

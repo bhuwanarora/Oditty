@@ -49,6 +49,7 @@ class Article::NewsArticle < Article
 	end
 
 	def get_chronological_news_info
+		#TODO: Change sorting of community. Make it based on the value stored in the relation between News & Community.
 		match + News.match_chronological_news + @news.match_community + Community.order_desc + Community.return_init + News.basic_info + Community.most_important_category_info 
 	end
 end

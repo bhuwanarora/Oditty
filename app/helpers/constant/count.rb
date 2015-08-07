@@ -32,4 +32,6 @@ module Constant::Count
 	CommunitiesSuggested		= 5
 	UsersShownInFeed			= 4
 	TotalCountIncrementRecommendation = 10
+
+	GoogleKeysCount				= 8
 end
