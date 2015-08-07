@@ -733,17 +733,10 @@ module GraphHelper
 	end
 
 	def self.test_function
-		clause = ""\
-				" MATCH (author:Author) "\
-				" WHERE HAS(author.born) "\
-				" RETURN author.born AS born LIMIT 100"
-		output = clause.execute.map{|elem| elem["born"]}
-		output.each do |born_string|
-			#born_string = "Baptised 26 April 1564 (birth date unknown), Stratford-upon-Avon, Warwickshire, England"
-			date = TimeHelper.get_birthday born_string, Constant::EntityLabel::Author
-			puts born_string.red
-			puts date.to_s.green
-		end
+		t = Constant::Time
+		test_start_date = {t::Year => 2014, t::Month => 1, t::Date => 31}
+		test_end_date   = {t::Year => 2015, t::Month => 10, t::Date => 1}
+		output = NewsSources::LiteratureAlltopNews.fetch_news_info [test_start_date, test_end_date]
 	end
 
 end
