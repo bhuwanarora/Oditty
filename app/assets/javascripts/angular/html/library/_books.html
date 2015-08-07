@@ -25,7 +25,8 @@
             <div ng-if="!info.selected_genre && !info.selected_author && !info.selected_year && !info.selected_duration">
                 Popular Books</div>
             <div ng-if="info.books.length">{{info.books.length}} results</div>
-            <div ng-if="info.books.length == 0">Scroll to see more.</div>
+            <div ng-if="info.books.length != 0">Scroll to see more.</div>
+            <div ng-if="info.books.length == 0">Couldn't find books. Reset filters.</div>
         </h3>
     </div>
 
