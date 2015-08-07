@@ -823,7 +823,7 @@ md-tooltip .md-content{
 	text-transform: capitalize;
 	background-color: white;
 	margin-top: 6px;
-	width: 60px;
+	/*width: 60px;*/
 	font-size: 16px;
 	font-family: sans-serif;
 }
