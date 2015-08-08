@@ -98,7 +98,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count "
 	end
 
 	def self.grouped_basic_info
