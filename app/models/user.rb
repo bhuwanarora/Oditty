@@ -365,7 +365,7 @@ class User < Neo
 	def popular_rooms skip_count=0
 		match + Community.match + ", user "\
 		" WITH user, community "\
-		" " + UsersCommunity.optional_match + ", COALESCE(community.view_count,0) AS view_count " +Community.order_by("view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status")
+		" " + UsersCommunity.optional_match + ", COALESCE(community.view_count,0) AS view_count " +Community.order_by("view_count DESC, ID(community) DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status")
 	end
 
 end
