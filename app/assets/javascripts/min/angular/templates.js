@@ -514,7 +514,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/_header.html',
-    "<div class=\"profile_header\" layout=\"row\"><section flex=\"10\" flex-md=\"5\" hide-sm></section><section layout=\"column\" layout-wrap flex=\"80\" flex-md=\"90\" flex-sm=\"100\" class=\"yellow md-whiteframe-z1\"><div layout=\"column\" layout-align=\"center center\"><img ng-src=\"{{profile_user.image_url}}\" class=\"profile_pic\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"><div layout=\"row\" layout-align=\"center center\"><h2><a ng-href=\"/profile?id={{::profile_user.id}}\" class=\"white_color\"><div layout=\"column\" layout-wrap layout-align=\"start start\"><div layout=\"row\" layout-padding><div ng-bind=\"::profile_user.first_name\"></div><div>&nbsp;</div><div ng-bind=\"::profile_user.last_name\"></div></div></div></a></h2><a href=\"/customise\" class=\"white_color\"><span class=\"material-icons\">edit</span></a></div><md-subheader ng-hide=\"hide_follow_links\" class=\"light_grey full_width no_overflow\" layout=\"row\" layout-align=\"space-between\"><a href=\"/network?q=0\" ng-hide=\"hide_follow_links\"><md-button class=\"nav_links md-button-clear\" ng-class=\"{'red_color': follow_state == 0}\"><div layout=\"column\" layout-align=\"center center\"><div>Followers</div><h2>{{profile_user.followed_by_count || 0}}</h2></div></md-button></a> <a href=\"/network?q=1\" ng-hide=\"hide_follow_links\"><md-button class=\"nav_links md-button-clear\" ng-class=\"{'red_color': follow_state == 1}\"><div layout=\"column\" layout-align=\"center center\"><div>Following</div><h2>{{profile_user.follows_count || 0}}</h2></div></md-button></a> <a href=\"/history\" ng-hide=\"hide_follow_links\"><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>History</div><h2>{{profile_user.bookmark_count || 0}}</h2></div></md-button></a></md-subheader><div layout=\"row\" layout-align=\"space-between\" ng-if=\"hide_follow_links\" class=\"light_grey full_width\"><div layout=\"row\"><div class=\"nav_links\" layout=\"column\" layout-align=\"center center\"><div>Followers</div><h2>{{profile_user.followed_by_count || 0}}</h2></div><div class=\"nav_links\" layout=\"column\" layout-align=\"center center\"><div>Following</div><h2>{{profile_user.follows_count || 0}}</h2></div><div class=\"nav_links\" layout=\"column\" layout-align=\"center center\"><div>History</div><h2>{{profile_user.bookmark_count || 0}}</h2></div></div><div layout=\"column\" layout-padding><md-button aria-label=\"follow_user\" class=\"md-warn md-button-clear\" ng-click=\"follow_user()\" ng-hide=\"hide_follow\" ng-class=\"{'md-raised': !profile_user.status}\" ng-if=\"!info.my_profile\"><div ng-if=\"!profile_user.status\" layout=\"row\" layout-align=\"start center\"><div>Follow</div><i class=\"material-icons\">person_add</i></div><div ng-if=\"profile_user.status\">Following</div></md-button></div></div></div></section><section flex=\"10\" flex-md=\"5\" hide-sm></section></div><style>.profile_header{box-shadow:none}.profile_header h2,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone h2{padding:0;margin:0 0!important}.profile_header h5,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone h5{margin:5px 0}.profile_pic{border-radius:50%;width:200px;height:200px;border:5px solid #E5E5E5;z-index:1}.profile_header .nav_links,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone .nav_link{padding:4px 8px!important}.profile_header .top_section,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone .top_section{min-height:50px}.profile_header a,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone a{color:#333}</style>"
+    "<div class=\"profile_header\" layout=\"row\"><section flex=\"10\" flex-md=\"5\" hide-sm></section><section layout=\"column\" layout-wrap flex=\"80\" flex-md=\"90\" flex-sm=\"100\" class=\"yellow md-whiteframe-z1\"><div layout=\"column\" layout-align=\"center center\"><img ng-src=\"{{profile_user.image_url}}\" class=\"profile_pic\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"><div layout=\"row\" layout-align=\"center center\"><h2><a ng-href=\"/profile?id={{::profile_user.id}}\" class=\"white_color\"><div layout=\"column\" layout-wrap layout-align=\"start start\"><div layout=\"row\" layout-padding><div ng-bind=\"::profile_user.first_name\"></div><div>&nbsp;</div><div ng-bind=\"::profile_user.last_name\"></div></div></div></a></h2><a href=\"/customise\" class=\"white_color\"><span class=\"material-icons\">edit</span></a></div><div ng-hide=\"hide_follow_links\" class=\"light_grey full_width no_overflow\" layout=\"row\" layout-align=\"center center\"><a href=\"#/profile/feed\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>Feed</div><h2></h2></div></md-button></a> <a href=\"#/profile/rooms\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>Rooms</div><h2>{{profile_user.room_count || 0}}</h2></div></md-button></a> <a href=\"#/profile/books\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>Books</div><h2>{{profile_user.books_count || 0}}</h2></div></md-button></a> <a href=\"#/profile/news\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>News</div><h2>{{profile_user.news_count || 0}}</h2></div></md-button></a> <a href=\"#/profile/followers\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>Followers</div><h2>{{profile_user.followed_by_count || 0}}</h2></div></md-button></a> <a href=\"#/profile/followings\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>Following</div><h2>{{profile_user.follows_count || 0}}</h2></div></md-button></a> <a href=\"#/profile/history\" layout-padding><md-button class=\"nav_links md-button-clear\"><div layout=\"column\" layout-align=\"center center\"><div>History</div><h2>{{profile_user.history_count || 0}}</h2></div></md-button></a></div></div></section><section flex=\"10\" flex-md=\"5\" hide-sm></section></div><style>.profile_header{box-shadow:none}.profile_header h2,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone h2{padding:0;margin:0 0!important}.profile_header h5,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone h5{margin:5px 0}.profile_pic{border-radius:50%;width:200px;height:200px;border:5px solid #E5E5E5;z-index:1}.profile_header .nav_links,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone .nav_link{padding:4px 8px!important}.profile_header .top_section,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone .top_section{min-height:50px}.profile_header a,.md-subheader:not(.md-sticky-no-effect).md-sticky-clone a{color:#333}</style>"
   );
 
 
@@ -538,13 +538,33 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/profile/books.html',
+    "<div class=\"feed_margin\"><book-shelves layout=\"column\" layout-align=\"center\" layout-padding></book-shelves></div>"
+  );
+
+
   $templateCache.put('/assets/angular/html/profile/communities.html',
     "<h3 layout-padding ng-if=\"communities.length\">{{communities.length}} Rooms Joined</h3><div layout=\"row\" layout-wrap><div ng-repeat=\"community in communities\" layout-padding><a ng-href=\"/room?q={{::community.id}}\" class=\"capitalize\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png\" class=\"square\"><md-tooltip>{{::community.name}}</md-tooltip></a></div></div>"
   );
 
 
   $templateCache.put('/assets/angular/html/profile/feed.html',
-    "<div ng-repeat=\"feed in personal_feed\"><div ng-include src=\"'/assets/angular/html/profile/partials/feed_type.html'\"></div><md-divider></md-divider></div><style>.book_image_cover,.book_backup_cover,.slider_wrapper{width:80px;height:110px;color:transparent}.share_text{position:absolute;z-index:1;color:#fff;left:50%;top:50%;margin-left:-150px;margin-top:-20px;font-size:1.2em;font-family:sans-serif;text-transform:uppercase}.share_image{max-width:500px}.share_button{width:500px;height:100px}</style>"
+    "<div layout-padding></div><div layout-padding></div><div ng-include src=\"'/assets/angular/html/share/status_options.html'\" ng-if=\"!hide_follow_links\" flex=\"100\" flex-sm=\"100\" ng-controller=\"shareController\" layout-align=\"center center\" class=\"animate-slow\" layout=\"row\" layout-margin></div><div ng-repeat=\"feed in personal_feed\"><div ng-include src=\"'/assets/angular/html/profile/partials/feed_type.html'\"></div><md-divider></md-divider></div><style>.book_image_cover,.book_backup_cover,.slider_wrapper{width:80px;height:110px;color:transparent}.share_text{position:absolute;z-index:1;color:#fff;left:50%;top:50%;margin-left:-150px;margin-top:-20px;font-size:1.2em;font-family:sans-serif;text-transform:uppercase}.share_image{max-width:500px}.share_button{width:500px;height:100px}</style>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/profile/followers.html',
+    "<div ng-if=\"users_list\" layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/profile/followings.html',
+    "<div ng-if=\"users_list\" layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/profile/history.html',
+    "<div class=\"feed_margin\"><articles layout=\"column\"></articles></div>"
   );
 
 
@@ -553,8 +573,8 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('/assets/angular/html/profile/left_panel.html',
-    "<social-feed info=\"info\"></social-feed><br><br><div ng-if=\"!hide_follow_links\"><div layout-padding><user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\"></user-communities></div></div><br><suggest-friends></suggest-friends>"
+  $templateCache.put('/assets/angular/html/profile/news.html',
+    "<div class=\"feed_margin\"><articles layout=\"column\"></articles></div>"
   );
 
 
@@ -565,6 +585,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/assets/angular/html/profile/right_panel.html',
     "<div ng-if=\"info.selectedIndex == 0\" ng-include src=\"'/assets/angular/html/personalised_suggestions/right_panel.html'\"></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/profile/rooms.html',
+    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap class=\"feed_margin\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
   );
 
 
@@ -784,7 +809,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/default.html',
-    "<div ng-include src=\"'/assets/angular/html/book/_timeline.html'\" ng-if=\"is_book\"></div><div ng-include src=\"'/assets/angular/html/author/books.html'\" ng-if=\"!is_book && !is_room\"></div><div ng-include src=\"'/assets/angular/html/community/books.html'\" ng-if=\"!is_book && is_room\"></div>"
+    "<div ng-include src=\"'/assets/angular/html/book/_timeline.html'\" ng-if=\"is_book && !is_profile\"></div><div ng-include src=\"'/assets/angular/html/author/books.html'\" ng-if=\"!is_book && !is_room && !is_profile\"></div><div ng-include src=\"'/assets/angular/html/community/books.html'\" ng-if=\"!is_book && is_room && !is_profile\"></div><div ng-include src=\"'/assets/angular/html/profile/feed.html'\" ng-if=\"!is_book && !is_room && is_profile\"></div>"
   );
 
 
@@ -919,7 +944,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/spine.html',
-    "<md-button aria-label=\"show_book_dialog\" class=\"clear spine_button md-whiteframe-z1\" ng-style=\"{{book.random_style}}\" ng-click=\"show_book_dialog(book, $event)\" ng-if=\"book.title\" ng-repeat=\"book in books\"><div class=\"spine\">{{::book.title}}</div></md-button><style>.spine{padding:10px;color:#fff;background-image:url(assets/spine.png);background-size:40px 40px;background-repeat:no-repeat;background-position-x:100%;background-position-y:5px;height:50px}.spine_button{width:100%;height:50px}</style>"
+    "<md-button aria-label=\"show_book_dialog\" class=\"clear spine_button md-whiteframe-z1\" ng-style=\"{{book.random_style}}\" ng-click=\"show_book_dialog(book, $event)\" ng-if=\"book.title\" ng-repeat=\"book in books\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\" class=\"relative\"></div></md-button><style>.spine{padding:10px;color:#fff;background-image:url(assets/spine.png);background-size:40px 40px;background-repeat:no-repeat;background-position-x:100%;background-position-y:5px;height:50px}.spine_button{width:100%;height:50px}</style>"
   );
 
 

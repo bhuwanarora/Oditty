@@ -33,7 +33,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile || @book || @news || @room %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news || @room || @customise %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
         msd-wheel="close_popups('wheel')">
@@ -238,6 +238,7 @@
                 <script src="assets/angular/directives/profile_directives.js"></script>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/customise/genres_controller.js"></script>
+                <script src="assets/angular/controllers/network_controller.js"></script>
                 <script src="assets/angular/controllers/profile_controller.js"></script>
             <% end %>
             <% if @search %>

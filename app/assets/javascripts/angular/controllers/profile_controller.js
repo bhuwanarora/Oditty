@@ -239,6 +239,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	_handle_me();
         }
        _get_feed();
-
+       $scope.is_profile = true;
     }());
 }]);
