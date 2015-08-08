@@ -26,6 +26,107 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_rooms = function(){
+        var data = [
+            {
+                "name" : "Social Psychology",
+                "id": 4998086,
+                "view_count": 100
+            },
+            {
+                "name" : "Comic Book Superhero",
+                "id": 5017968,
+                "view_count": 100
+            },
+            {
+                "name" : "Political Philosophy",
+                "id": 4972796,
+                "view_count": 100
+            },
+            {
+                "name" : "Sports",
+                "id": 5024590,
+                "view_count": 100
+            },
+            {
+                "name" : "Brain",
+                "id": 4988942,
+                "view_count": 100
+            },
+            {
+                "name" : "Religion",
+                "id": 5023062,
+                "view_count": 100
+            },
+            {
+                "name" : "Technology",
+                "id": 5021552,
+                "view_count": 100
+            },
+            {
+                "name" : "Health",
+                "id": 5020478,
+                "view_count": 100
+            },
+            {
+                "name" : "Blanching(Cooking)",
+                "id": 5107299,
+                "view_count": 100
+            },
+            {
+                "name" : "Medicine",
+                "id": 5020467,
+                "view_count": 100
+            },
+            {
+                "name" : "Pornography Ring",
+                "id": 5002021,
+                "view_count": 100
+            },
+            {
+                "name" : "Ghost",
+                "id": 5014454,
+                "view_count": 100
+            },
+            {
+                "name" : "Adorable Selfie",
+                "id": 4996889,
+                "view_count": 100
+            },
+            {
+                "name" : "Travel",
+                "id": 4980414,
+                "view_count": 100
+            },
+            {
+                "name" : "Walt Disney Co",
+                "id": 5100214,
+                "view_count": 100
+            },
+            {
+                "name" : "Biology",
+                "id": 5023104,
+                "view_count": 100
+            },
+            {
+                "name" : "Quantum Gravity",
+                "id": 5013921,
+                "view_count": 100
+            },
+            {
+                "name" : "Time",
+                "id": 4980633,
+                "view_count": 100
+            },
+            {
+                "name" : "Space",
+                "id": 4975850,
+                "view_count": 100
+            }
+        ];
+        return data;
+    }
+
     this.get_popular_books = function(){
         var data = [{
             "book_id":395152,

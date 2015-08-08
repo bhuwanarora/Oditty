@@ -1,0 +1,18 @@
+<div class="white round_corners">
+	<div class="room_image_wrapper">
+		<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png" />
+	</div>
+	<div layout-padding>
+		<a ng-bind-html="room.name" class="big_title" ng-href="/room?id={{room.id}}"></a>
+		<div class="less_important">{{room.view_count}} Views</div>
+		<a ng-href="/room?id={{room.id}}">
+			<md-button ng-if="room.status"  class="md-button-clear">
+				View
+			</md-button>
+		</a>
+		<br/>
+		<md-button ng-click="join_room(room)" ng-if="!room.status" class="md-button-clear md-raised">
+			Join
+		</md-button>
+	</div>
+</div>

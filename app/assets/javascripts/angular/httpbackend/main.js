@@ -20,6 +20,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/get_rooms\?.*/).respond(function(method, url, data){
+        var data = ServerDataModel.get_rooms();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET('/api/v0/suggest_communities').respond(function(method, url, data) {
         var data = ServerDataModel.get_user_communities();
         return [200, data, {}];
