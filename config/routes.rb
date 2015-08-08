@@ -87,6 +87,7 @@ ReadersDoor::Application.routes.draw do
   get 'author'                    => "website#author",                :as => "author"
   get 'room'                      => "website#room",                  :as => "room"
   get 'news'                      => "website#news",                  :as => "news"
+  get 'news_group'                => "website#news_group",            :as => "news_group"
   get 'quiz'                      => "website#quiz",                  :as => "quiz"
 
   get 'tree'                      => "categories#show_tree",    :as => "show_tree"
