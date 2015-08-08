@@ -239,9 +239,9 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             timer = timer + 1500;
         });
 
-        $rootScope.user.logged = true;
-        setCookie("logged", true, 31);
-        setCookie("logged", 4986324, 31);
+        // $rootScope.user.logged = true;
+        // setCookie("logged", true, 31);
+        // setCookie("logged", 4986324, 31);
     }());
 
 }]);

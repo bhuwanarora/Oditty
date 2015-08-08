@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
   end
 
   def check_permission
-    session["init"] = true
-    session[:user_id] = 4986324
+    # session["init"] = true
+    # session[:user_id] = 4986324
   end
 
   protected
