@@ -98,8 +98,13 @@ class WebsiteController < ApplicationController
 	end
 
 	### WEBSITE NEW 
-	def rooms
+	def news
 		news_feed_rooms
+	end
+
+	def rooms
+		@rooms = true
+		render :layout => "material"
 	end
 
 	def communities
