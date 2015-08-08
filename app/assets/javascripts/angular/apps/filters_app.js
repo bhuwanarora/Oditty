@@ -207,7 +207,7 @@ angular.module('filtersApp', [])
         else{
           if(input.isbn){
             var isbn = input.isbn.split(",");
-            output = "http://rd-images.readersdoor.netdna-cdn.com/"+isbn[0]+"/M.jpg";
+            output = "http://rd-images.readersdoor.netdna-cdn.com/"+isbn[0].trim()+"/M.jpg";
           }
           else{
             output = "/assets/defpicbook.png"; 
@@ -386,7 +386,7 @@ angular.module('filtersApp', [])
       if(isbn_string){
         var isbn = isbn_string.split(",");
         angular.forEach(isbn, function(value){
-          output = "http://rd-images.readersdoor.netdna-cdn.com/"+value+"/M.jpg";
+          output = "http://rd-images.readersdoor.netdna-cdn.com/"+value.trim()+"/M.jpg";
         });
         return output;
       }

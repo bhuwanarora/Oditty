@@ -224,7 +224,7 @@ var constants = {
 			"Description": [
 				"<b>Connecting information</b> in news and media with books...",
 				"Creating <b>virtual shelves</b> of books...",
-				"Setting <b>fitlers</b> on books...",
+				"Setting <b>filters</b> on books...",
 				"Capturing book reading journeys...",
 				"Working on your <b>personalised book recommendations</b>...",
 				"Building <b>Listopia</b> of books...",
