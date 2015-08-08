@@ -787,7 +787,7 @@ module GraphHelper
 		source_node 		= params[:source_node]
 		destination_node 	= params[:destination_node]
 		params[:with_elements] += [source_node, destination_node]
-		with_elements_string	= " WITH " + params[:with_elements].map{|elem| (elem)}.join(", ")
+		with_elements_string	= " WITH DISTINCT " + params[:with_elements].map{|elem| (elem)}.join(", ")
 		params[:edge_types].each do |edge_type,node_labels|
 			node_labels.each do |node_label|
 				node = node_label.downcase + "_" + String.get_random
@@ -807,10 +807,10 @@ module GraphHelper
 		source_node 		= params[:source_node]
 		destination_node 	= params[:destination_node]
 		params[:with_elements] += [source_node, destination_node]
-		with_elements_string	= " WITH " + params[:with_elements].map{|elem| (elem)}.join(", ")
+		with_elements_string	= " WITH DISTINCT " + params[:with_elements].map{|elem| (elem)}.join(", ")
 		params[:edge_types].each do |edge_type,node_labels|
 			node_labels.each do |node_label|
-				node = node_label.downcase
+				node = node_label.downcase + "_" + String.get_random
 				clause += ""\
 					" OPTIONAL MATCH (" + source_node + ")-[:" + edge_type + "]->(" + node + ":" + node_label + ") "\
 					" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\

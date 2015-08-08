@@ -44,8 +44,10 @@ module GenreHelper
 	end
 
 	def self.copy_category_properties
-		clause = " SET genre." + @@category_search_index + "= genre." + @@genre_search_index + " "\
-				" WITH genre "
+		clause = " SET genre." + @@category_search_index + "= genre." + @@genre_search_index + ", "\
+				" genre.uuid = (CASE WHEN HAS(category.uuid) THEN category.uuid ELSE NULL END), "\
+				" genre.is_root = (CASE WHEN HAS(category.is_root) THEN category.is_root ELSE NULL END)"\
+				" WITH genre, category "
 	end
 
 	
@@ -71,8 +73,9 @@ module GenreHelper
 	end
 
 	def self.delete_category_node node_id
-		" MATCH (category)-[r]-() "\
+		" MATCH (category) "\
 		" WHERE ID(category) = " + node_id.to_s + " "\
+		" OPTIONAL MATCH (category)-[r]-()"\
 		" DELETE r, category "\
 		""
 	end
@@ -80,13 +83,16 @@ module GenreHelper
 	def self.merge_common_category_genre_in_range search_prefix
 		clause  = GenreHelper.match_in_range_with_category search_prefix
 		clause += GenreHelper.exact_match_with_category
-		clause += GenreHelper.copy_category_properties + ", category "
+		clause += GenreHelper.copy_category_properties
 		clause += GenreHelper.copy_category_edges
-		clause += " RETURN ID(genre) AS id_g, ID(category) AS id_c "
+		clause += " SET genre:Category "\
+					" RETURN ID(genre) AS id_g, genre.name AS name_g, ID(category) AS id_c, category.name AS name_c "
 		output = clause.execute
-		debugger
 		if output.present?
+			@@logger.info("Search_prefix: #{search_prefix} Genre_id: #{output[0]['id_g']}, Genre_name: #{output[0]['name_g']}, Category_id: #{output[0]['id_c']}, Category_name: #{output[0]['name_c']}")
 			GenreHelper.delete_category_node(output[0]["id_c"]).execute
+		else
+			@@logger.info("Changing Search_prefix...")
 		end
 	end
 
@@ -106,7 +112,6 @@ module GenreHelper
 		while (cur_index != "")
 			params[:prefix_search_index] = cur_index
 			cur_index = GraphHelper.manage_node_pair_index_prefix params
-			debugger
 			matched   = GenreHelper.merge_common_category_genre_in_range(cur_index)
 			if matched == 0
 				cur_index = GraphHelper.next_regex_recursive(cur_index, cur_index.length - 1)
