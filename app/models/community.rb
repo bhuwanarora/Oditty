@@ -31,6 +31,10 @@ class Community < Neo
 		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count, community.facebook_url AS facebook_url, community.twitter_url AS twitter_url, community.wiki_url AS wiki_url "
 	end
 
+	def self.short_info
+		" community.name AS name, community.view_count AS view_count, ID(community) AS id "
+	end
+
 	def match_videos
 		" MATCH (community)-[:HasVideo]->(video:Video) WITH community, video "
 	end
@@ -167,6 +171,12 @@ class Community < Neo
 
 	def self.get_max_min_id
 		" MATCH (a:Community) RETURN max(ID(a)) as max_id,min(ID(a)) as min_id "
+	end
+
+	def self.get_most_viewed_rooms skip_count = 0
+		Community.match + " WHERE HAS(community.view_count) "\
+		" WITH community "\
+		" ORDER BY community.view_count DESC SKIP " + skip_count.to_s + Community.return_group(Community.short_info) + Community.limit(Constant::Count::RoomPageRoomCount)
 	end
 
 end
