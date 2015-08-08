@@ -174,9 +174,9 @@ class Community < Neo
 	end
 
 	def self.get_most_viewed_rooms skip_count = 0
-		Community.match + " WHERE HAS(community.view_count) "\
-		" WITH community "\
-		" ORDER BY community.view_count DESC SKIP " + skip_count.to_s + Community.return_group(Community.short_info) + Community.limit(Constant::Count::RoomPageRoomCount)
+		Community.match + ""\
+		" WITH community, COALESCE(community.view_count,0) AS view_count " +
+		Community.order_by("view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info) + Community.limit(Constant::Count::RoomPageRoomCount)
 	end
 
 end

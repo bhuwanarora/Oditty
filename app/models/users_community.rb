@@ -70,10 +70,4 @@ class UsersCommunity < Neo
 		User.new(user_id).match + " MATCH (community:Community) WITH user, community " + UsersCommunity.where_not + Community.return_init + Community.basic_info + Community.order_by("community.follow_count, community.view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::CommunitiesSuggested) 
 	end
 
-	def self.get_most_viewed_rooms user_id, skip_count=0
-		User.new(user_id).match + Community.match + ", user "\
-		" WHERE HAS (community.view_count) "\
-		" WITH user, community "\
-		" " + UsersCommunity.optional_match + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status") + Community.order_by("community.view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount)
-	end
 end
