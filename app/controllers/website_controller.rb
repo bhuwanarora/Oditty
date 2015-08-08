@@ -98,7 +98,7 @@ class WebsiteController < ApplicationController
 	end
 
 	### WEBSITE NEW 
-	def news
+	def news_group
 		news_feed_rooms
 	end
 

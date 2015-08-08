@@ -1,82 +1,64 @@
-<div layout="row" layout-wrap class="feed_margin">
-    <div flex="5" hide-sm flex-md="10"></div>
-    <div flex="90" flex-sm="100" flex-md="80" layout="column" layout-align="center center"
-        layout-wrap ng-include src="'/assets/angular/html/home/main.html'">
-    </div>
-    <div flex="5" hide-sm flex-md="10"></div>
+<div layout="row" class="feed_margin">
+    <div flex="5" hide-md hide-sm></div>
+    <div ng-include src="'/assets/angular/html/news/show_grid.html'" 
+         flex="90" flex-md="100" flex-sm="100" layout="row" layout-sm="column"></div>
+    <div flex="5" hide-md hide-sm></div>
 </div>
+
+<visit-news news-id="info.active_news_id" ng-if="info.active_news_id"></visit-news>
+
 <style>
-    #news_group{
-        /*min-height: 60vh;*/
-        /*background-size: cover;*/
-        /*margin-top: -55px;*/
-        /*background-image: url("/assets/news.svg");*/
-        /*background-position-y: 43%;*/
-    }
-
-    a:hover{
-        text-decoration: underline!important;
-    }
-
-    .communities{
-        z-index: 1;
-    }
-
-    .feed{
-        /*width: 45%;*/
-        /*min-width: 280px;*/
-    }
-
-    .community_icon{
-        width: 70px;
-        height: 70px;
-    }
-
-    .community h3{
-        margin: 7px 0px !important;
-    }
-
-    .community .image_container{
-        background-color: white;
-        min-height: 120px;
-    }
-
-    .community .image_container img{
-        height: auto;
+    #news .news_footer{
         width: 100%;
-        border: 1px solid #f5f5f5;
+        margin-top: 30px;
     }
 
-    .community_description{
-        font-size: 0.9em;
+    #news .news_footer .md-paginator.md-next, 
+    #news .news_footer .md-paginator.md-prev{
+        background-color: transparent !important;
     }
 
-    .community .image_wrapper{
-        overflow: hidden;
+    #news .news_footer .md-header-items,
+    #news .news_footer, 
+    #news .news_footer .md-header-items-container{
     }
 
-    .community_circular{
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
+    #news .news_footer md-tabs-canvas{
+        height: 60px;
     }
-
-    .custom_title{
-        font-family: sans-serif;
-        font-size: 0.9em;
-    }
-
-    .communities .community_circle{
-        height: auto;
-        max-width: 150px;
-        border-bottom: 1px solid #f5f5f5;
-        text-align: center;
-    }
-
-    .menu_thumb{
-        width: 54px;
-        height: 72px;
-    }
-
     
+
+    #news .news_footer md-tabs.md-default-theme .md-tab{
+        background-color: white;
+        padding: 0px;
+        line-height: 14px;
+        margin-right: 5px;
+    }
+
+    #news .news_footer md-tabs.md-default-theme md-ink-bar{
+        color: transparent !important;
+        background: transparent !important;
+    }
+
+    #news .news_thumb{
+        width: 100px;
+        height: 60px;
+    }
+
+    #news .news_item{
+        text-transform: none !important;
+        max-width: 300px;
+        white-space: initial;
+        text-align: left;
+    }
+
+    #news .news_footer .md-header,
+    #news .news_footer md-tab md-tab-label{
+        height: 60px;
+    }
+
+    #news .max_full_width{
+        max-width: 100%;
+        max-height: 60vh;
+    }
 </style>
