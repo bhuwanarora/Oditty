@@ -105,8 +105,8 @@ class Neo
 			")"
 	end
 
-	def self.get_max_min label
-		output = "MATCH (a:" + label + ") RETURN max(ID(a)) as max_id, min(ID(a)) as min_id".execute[0]
+	def self.get_max_min_id label
+		output = ("MATCH (a:" + label + ") RETURN max(ID(a)) as max_id, min(ID(a)) as min_id").execute[0]
 		[output["max_id"], output["min_id"]]
 	end
 

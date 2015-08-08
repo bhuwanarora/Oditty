@@ -36,6 +36,7 @@ module UniqueSearchIndexHelper
 		","		=> "",
 		"_"		=> "",
 		"/"		=> "",
+		"&"		=> "",
 		" "		=> ""
 
 	}
@@ -55,7 +56,6 @@ module UniqueSearchIndexHelper
 				node_label.downcase,
 				UniqueIndices[node_label],
 				UniqueIndexBasis[node_label] )
-		end
 		rescue Exception => e
 			puts e.to_s.red			
 		end
@@ -63,7 +63,7 @@ module UniqueSearchIndexHelper
 	end
  
 	def self.set_search_indices node_label, step_size = 500
-		(end_id, start_id) = Neo.get_max_min_id params[:label]
+		(end_id, start_id) = Neo.get_max_min_id node_label
 		params = {
 			:label => node_label,
 			:start_id => start_id,
@@ -75,7 +75,7 @@ module UniqueSearchIndexHelper
 		while cur_id <= end_id
 			clause = Neo.get_nodes_with_id_range params
 			clause += UniqueSearchIndexHelper.set_unique_indices params[:label]
-			clause += " RETURN MAX(ID(" + params[:nodename] + ")) AS id"
+			clause += " RETURN MAX(ID(" + node_label.downcase + ")) AS id"
 			output = clause.execute
 			if output.empty?
 				break
@@ -84,6 +84,7 @@ module UniqueSearchIndexHelper
 				cur_id += 1
 			end
 			$redis[redis_key] = cur_id
+			params[:start_id] = cur_id
 		end
 	end
 

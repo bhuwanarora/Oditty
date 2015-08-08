@@ -398,7 +398,7 @@ module GraphHelper
 				" WHERE node." + search_index_property + "=~ \'" + search_index + ".*\'"\
 				" RETURN COUNT(node) AS count "
 		query_exec = clause.execute
-		output = query_exec.empty?0:query_exec[0]["count"]
+		output = (query_exec.empty?)? 0 : query_exec[0]["count"]
 		output
 	end
 
@@ -506,7 +506,7 @@ module GraphHelper
 
 	def self.manage_node_pair_index_prefix params
 		prefix_search_index = params[:prefix_search_index]
-		reduction_allowed = params[:reduction_allowed].present?params[:reduction_allowed]: true
+		reduction_allowed = (params[:reduction_allowed].present?)? params[:reduction_allowed]: true
 		label_one = params[:node_label][0]
 		label_two = params[:node_label][1]
 		count_max_threshold = 45000
@@ -523,7 +523,7 @@ module GraphHelper
 		count_two = GraphHelper.count_node_with_prefix_index params_two
 		count = count_one*count_two
 		output_index = prefix_search_index
-		if count > count_max_threshold
+		if count > count_max_threshold && prefix_search_index.length > 1
 			params_new = params.clone
 			params[:prefix_search_index] + "a"
 			params_new[:reduction_allowed] = false
@@ -781,6 +781,47 @@ module GraphHelper
 				" CREATE UNIQUE (user)-[:VisitedNotification{user_id:ID(user)}]->(user) "
 		clause.execute
 	end
+
+	def self.generic_copy_incoming_edges params
+		clause 				= " "
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		params[:with_elements] += [source_node, destination_node]
+		with_elements_string	= " WITH " + params[:with_elements].map{|elem| (elem)}.join(", ")
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause += ""\
+					" OPTIONAL MATCH (" + source_node + ")<-[:" + edge_type + "]-(" + node + ":" + node_label + ") "\
+					" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\
+						"MERGE (" + destination_node + ")<-[:" + edge_type + "]-(" + node + ") "\
+					") "\
+					"" + with_elements_string + " "
+			end
+		end
+		clause
+	end
+
+	def self.generic_copy_outgoing_edges params
+		clause 				= " "
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		params[:with_elements] += [source_node, destination_node]
+		with_elements_string	= " WITH " + params[:with_elements].map{|elem| (elem)}.join(", ")
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase
+				clause += ""\
+					" OPTIONAL MATCH (" + source_node + ")-[:" + edge_type + "]->(" + node + ":" + node_label + ") "\
+					" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\
+						"MERGE (" + destination_node + ")-[:" + edge_type + "]->(" + node + ") "\
+					") "\
+					"" + with_elements_string + " "
+			end
+		end
+		clause
+	end
+
 
 	def self.test_function
 		t = Constant::Time
