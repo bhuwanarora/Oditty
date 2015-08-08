@@ -34,4 +34,5 @@ module Constant::Count
 	TotalCountIncrementRecommendation = 10
 
 	GoogleKeysCount				= 8
+	RoomPageRoomCount			= 12
 end
