@@ -9,13 +9,13 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		if @params["email"]
 			puts "email exists".green
 			user = User::Info.get_by_email(@params["email"]).execute[0]
-			user_exists = user.present?
-			user_id = user_exists ? user["id"] : User.merge_by_email(@params["email"]).execute[0]["id"] 
+			user_exists = user["id"].present?
+			user = user_exists ? user["id"] : User.merge_by_email(@params["email"]).execute[0]
 		else
 			puts "email does not exits".green
 			user = User::Info.get_by_fb_id(@params["id"]).execute[0]
-			user_exists = user.present?
-			user_id = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]["id"] 
+			user_exists = user["id"].present?
+			user = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]
 		end
 		FacebookDataEntryWorker.perform_async(user_exists, @params, user_id)
 		if @params["thumb"].present? && user_id.present?
@@ -23,7 +23,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			VersionerWorker.perform_async(user_id, @params["thumb"], type)
 		end
 		puts user_id.to_s
-		user_id
+		{ :user_id => user["id"], :login_count => user["login_count"] }
 	end
 
 	def update_user_without_email user_id
