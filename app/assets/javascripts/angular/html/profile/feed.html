@@ -1,5 +1,11 @@
-
-
+<div layout-padding></div>
+<div layout-padding></div>
+<div ng-include src="'/assets/angular/html/share/status_options.html'"
+    ng-if="!hide_follow_links" flex="100" flex-sm="100"
+    ng-controller="shareController" layout-align="center center"
+    class="animate-slow" layout="row"
+    layout-margin>
+</div>
 <div ng-repeat="feed in personal_feed">
     <div ng-include src="'/assets/angular/html/profile/partials/feed_type.html'"></div>
     <md-divider></md-divider>
