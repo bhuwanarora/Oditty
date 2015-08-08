@@ -69,12 +69,12 @@ homeApp.directive('userCommunities', ["$rootScope", "userService", function($roo
         controller: ["$scope", function($scope){
             var _init = function(){
                 userService.get_communities($scope.userId).then(function(data){
-                    $scope.communities = data;
+                    $scope.rooms = data;
                 });
             }
 
             _init();
         }],
-        templateUrl: '/assets/angular/html/profile/communities.html'
+        templateUrl: '/assets/angular/html/rooms/show.html'
     };
 }]);

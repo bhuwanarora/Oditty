@@ -133,7 +133,7 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
-	def history
+	def news_shelves
 		unless session[:user_id]
 			cookies[:logged] = nil
 			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
@@ -142,6 +142,10 @@ class WebsiteController < ApplicationController
 			@shelves = true
 			render :layout => "material"
 		end
+	end
+
+	def books_shelves
+
 	end
 
 	def book
