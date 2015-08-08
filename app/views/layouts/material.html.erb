@@ -47,6 +47,9 @@
                     class="super_container">
             <% elsif @news %>
                 <md-content layout="column" ng-controller="newsController" id="news" class="white super_container">
+            <% elsif @rooms %>
+                <md-content layout="column" ng-controller="roomsController" class="super_container" 
+                    check-scroll-bottom="get_rooms()">
             <% elsif @news_group && !@blogs %>
                 <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" 
                     class="white super_container">
@@ -173,6 +176,11 @@
             <script src="assets/angular/services/feed_service.js"></script>
             <% if (@news || @news_group)%>
             <% end %>
+            <% if @rooms %>
+                <script src="assets/angular/services/rooms_service.js"></script>
+                <script src="assets/angular/services/news_service.js"></script>
+                <script src="assets/angular/controllers/rooms_controller.js"></script>
+            <% end %>
             <% if @news_group %>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/directives/home_directives.js"></script>
@@ -245,6 +253,9 @@
             <div ng-if="info && !info.hide_signin">
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
+            <% if @rooms_group %>
+                <script src="assets/min/angular/controllers/rooms_group.min.js"></script>
+            <% end %>
             <% if @news_group %>
                 <script src="assets/min/angular/controllers/news_group_group.min.js"></script>
             <% end %>
