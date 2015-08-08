@@ -45,6 +45,16 @@ module Api
 			def self.get_videos(id)
 				Community.new(id).get_videos.execute
 			end
+
+			def self.get_rooms user_id, skip_count
+				clause = ""
+				if user_id.present?
+					clause = UsersCommunity.get_most_viewed_rooms user_id, skip_count
+				else
+					clause = Community.get_most_viewed_rooms skip_count
+				end
+				clause.execute
+			end
 		end
 	end
 end
