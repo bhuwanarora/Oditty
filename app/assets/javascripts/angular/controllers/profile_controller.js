@@ -11,7 +11,15 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
 	$scope.get_feed = function(){
         $scope.info.selectedIndex = 1;
-		if(!$scope.info.loading){
+        var followers = $location.path() == "/profile/followers";
+		var following = $location.path() == "/profile/followings";
+		var books = $location.path() == "/profile/books";
+		var news = $location.path() == "/profile/news";
+		var history = $location.path() == "/profile/history";
+		var rooms = $location.path() == "/profile/rooms";
+		var is_feed = !followers && !following && !books && !news && !history && !rooms && !history;
+
+		if(!$scope.info.loading && is_feed){
 			var personal_feed = [];
 			var id = $scope.active_user_id;
 			$scope.info.loading = true;
