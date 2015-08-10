@@ -1,10 +1,10 @@
 <h1 layout-padding>
-    <a layout-padding layout="row" layout-align="center center" class="feed_margin grey_color" href="/rooms">
+    <a layout-padding layout="row" layout-align="center center" class="feed_margin grey_color" href="/news_group">
         Trending
     </a>
 </h1>
 <md-grid-list
-    md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
+    md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
     md-row-height-gt-md="1:1" md-row-height="4:3"
     md-gutter="50px" md-gutter-gt-sm="10px">
     <md-grid-tile ng-repeat="trend in suggest_communities | limitTo : 6"

@@ -43,6 +43,27 @@ homeApp.config(["$routeProvider", function($routeProvider){
     .when('/room/wiki', {
         templateUrl : 'assets/angular/html/community/wiki.html',
     })
+    .when('/profile/feed', {
+        templateUrl : 'assets/angular/html/profile/feed.html',
+    })
+    .when('/profile/followers', {
+        templateUrl : 'assets/angular/html/profile/followers.html',
+    })
+    .when('/profile/followings', {
+        templateUrl : 'assets/angular/html/profile/followings.html',
+    })
+    .when('/profile/books', {
+        templateUrl : 'assets/angular/html/profile/books.html',
+    })
+    .when('/profile/rooms', {
+        templateUrl : 'assets/angular/html/profile/rooms.html',
+    })
+    .when('/profile/news', {
+        templateUrl : 'assets/angular/html/profile/news.html',
+    })
+    .when('/profile/history', {
+        templateUrl : 'assets/angular/html/profile/history.html',
+    })
     .otherwise({
          templateUrl : 'assets/angular/html/shared/default.html'
     });

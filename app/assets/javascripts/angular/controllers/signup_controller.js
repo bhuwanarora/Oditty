@@ -90,6 +90,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             $rootScope.user = data.user;
             $cookieStore.put('user', data.user);
             $scope._init_user();
+            _redirect_user();
             $scope.info.hide_signin = true;
         }
 
@@ -156,11 +157,15 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         deleteCookie("redirect_url");
         setCookie("redirect_url", $location.$$absUrl);
         Facebook.api('/me', function(response){
-            websiteService.handle_facebook_user(response).then(function(){
+            if(angular.isUndefined($rootScope.user)){
+                $rootScope.user = {};
+            }
+            websiteService.handle_facebook_user(response).then(function(data){
+                $rootScope.user = angular.extend($rootScope.user, data);
                 $scope._init_user();
                 _redirect_user();
             });
-            $rootScope.user = response;
+            $rootScope.user = angular.extend($rootScope.user, response);
             Facebook.api('me/picture?redirect=false&type=large', function(response){
                 websiteService.save_user_info(response);
             });
@@ -169,8 +174,13 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
-        if(!redirect_url){
-            redirect_url = "/home";
+        if($rootScope.user.login_count == 1){
+            redirect_url = "/customise";
+        }
+        else{
+            if(!redirect_url || (redirect_url.indexOf("signup") > 0)){
+                redirect_url = "/home";
+            }
         }
         window.location.href = redirect_url;
     }
@@ -238,6 +248,10 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             }
             timer = timer + 1500;
         });
+
+        // $rootScope.user.logged = true;
+        // setCookie("logged", true, 31);
+        // setCookie("logged", 4986324, 31);
     }());
 
 }]);
