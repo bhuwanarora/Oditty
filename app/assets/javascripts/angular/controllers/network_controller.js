@@ -46,10 +46,12 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 		if(angular.isUndefined($scope.users_list)){
 			$scope.users_list = [];
 		}
-		if($scope.follow_state == 0){
+		var followers = $location.path() == "/profile/followers";
+		var following = $location.path() == "/profile/followings";
+		if(followers){
            $scope.get_followers();
 		}
-		else if($scope.follow_state == 1){
+		else if(following){
            $scope.get_users_followed();
         }
 	}
@@ -88,8 +90,8 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 	    var regex = /[?&]([^=#]+)=([^&#]*)/g;
 		var url_parser = regex.exec($location.absUrl());
 		if(angular.isDefined(url_parser) && url_parser != null){
-			var follow_state = url_parser[2];
-			$scope.follow_state = follow_state;
+			// var follow_state = url_parser[2];
+			// $scope.follow_state = follow_state;
 			$scope.load_users();
 		}
 
