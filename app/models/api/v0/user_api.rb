@@ -437,7 +437,7 @@ module Api
 					else
 						duplicate_email
 					end
-					$redis.del user_id
+					$redis.del ("GUD" + user_id.to_s)
 				end
 			end
 
