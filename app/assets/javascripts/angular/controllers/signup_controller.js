@@ -156,7 +156,8 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         deleteCookie("redirect_url");
         setCookie("redirect_url", $location.$$absUrl);
         Facebook.api('/me', function(response){
-            websiteService.handle_facebook_user(response).then(function(){
+            websiteService.handle_facebook_user(response).then(function(data){
+                $rootScope.user = $rootScope.user.extend(data);
                 $scope._init_user();
                 _redirect_user();
             });
@@ -169,8 +170,13 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
 
     var _redirect_user = function(){
         var redirect_url = getCookie("redirect_url");
-        if(!redirect_url){
-            redirect_url = "/home";
+        if($rootScope.user.login_count == 1){
+            redirect_url = "/customise";
+        }
+        else{
+            if(!redirect_url){
+                redirect_url = "/home";
+            }
         }
         window.location.href = redirect_url;
     }
