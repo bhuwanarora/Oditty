@@ -263,8 +263,13 @@ class User < Neo
 		" user.password AS password , user.verified AS verified, user.active AS active "
 	end
 
+	def self.set_last_login_for_verified_user
+		" FOREACH (ignore_me IN (CASE WHEN user.verified=true THEN [1] ELSE [] END)| "\
+			"" + User::Info.set_last_login + ") "
+	end
+
 	def self.get_sign_in_credential_by_email email
-		User.match_by_email(email) + User::Info.return_group(User.basic_info, User.authentication_info)  
+		User.match_by_email(email) + User.set_last_login_for_verified_user + " WITH user " + User::Info.return_group(User.basic_info, User.authentication_info)  
 	end
 
 	def self.match_by_email_verification_token email, verification_token
