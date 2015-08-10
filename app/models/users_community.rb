@@ -69,4 +69,5 @@ class UsersCommunity < Neo
 	def self.top_communities user_id, skip_count=0
 		User.new(user_id).match + " MATCH (community:Community) WITH user, community " + UsersCommunity.where_not + Community.return_init + Community.basic_info + Community.order_by("community.follow_count, community.view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::CommunitiesSuggested) 
 	end
+
 end

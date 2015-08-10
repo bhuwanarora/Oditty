@@ -98,7 +98,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count "
 	end
 
 	def self.grouped_basic_info
@@ -263,8 +263,13 @@ class User < Neo
 		" user.password AS password , user.verified AS verified, user.active AS active "
 	end
 
+	def self.set_last_login_for_verified_user
+		" FOREACH (ignore_me IN (CASE WHEN user.verified=true THEN [1] ELSE [] END)| "\
+			"" + User::Info.set_last_login + ") "
+	end
+
 	def self.get_sign_in_credential_by_email email
-		User.match_by_email(email) + User::Info.return_group(User.basic_info, User.authentication_info)  
+		User.match_by_email(email) + User.set_last_login_for_verified_user + " WITH user " + User::Info.return_group(User.basic_info, User.authentication_info)  
 	end
 
 	def self.match_by_email_verification_token email, verification_token
@@ -335,7 +340,7 @@ class User < Neo
 		else
 			shelf = ":ArticleShelf" 
 		end
-		match + Label.match_shelves(shelf) + ", user " + " MATCH (media) WHERE ID(media) = " + id.to_s + User.with_group("label", "media", "user") + Bookmark.optional_match_path_for("media") + User.return_group(Label.basic_info, "ID(bookmark_node) AS status")
+		match + UsersLabel.match_public(shelf) + " MATCH (media) WHERE ID(media) = " + id.to_s + User.with_group("label", "media", "user") + Bookmark.optional_match_path_for("media") + User.return_group(Label.basic_info, "ID(bookmark_node) AS status")
 	end
 
 	def self.get_max_min_id
@@ -360,6 +365,12 @@ class User < Neo
 
 	def get_facebook_likes
 		match + match_facebook_likes + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
+	end
+
+	def popular_rooms skip_count=0
+		match + Community.match + ", user "\
+		" WITH user, community "\
+		" " + UsersCommunity.optional_match + ", COALESCE(community.view_count,0) AS view_count " +Community.order_by("view_count DESC, ID(community) DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status")
 	end
 
 end
