@@ -10,12 +10,12 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			puts "email exists".green
 			user = User::Info.get_by_email(@params["email"]).execute[0]
 			user_exists = user["id"].present?
-			user = user_exists ? user["id"] : User.merge_by_email(@params["email"]).execute[0]
+			user = User.merge_by_email(@params["email"]).execute[0] unless user_exists
 		else
 			puts "email does not exits".green
 			user = User::Info.get_by_fb_id(@params["id"]).execute[0]
 			user_exists = user["id"].present?
-			user = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]
+			user = User.merge_by_fb_id(@params["id"]).execute[0] unless user_exists
 		end
 		user_id = user["id"]
 		FacebookDataEntryWorker.perform_async(user_exists, @params, user_id)
