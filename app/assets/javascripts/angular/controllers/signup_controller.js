@@ -90,6 +90,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             $rootScope.user = data.user;
             $cookieStore.put('user', data.user);
             $scope._init_user();
+            _redirect_user();
             $scope.info.hide_signin = true;
         }
 
