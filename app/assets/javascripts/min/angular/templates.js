@@ -554,12 +554,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/followers.html',
-    "<div ng-if=\"users_list\" layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+    "<div layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
   );
 
 
   $templateCache.put('/assets/angular/html/profile/followings.html',
-    "<div ng-if=\"users_list\" layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+    "<div layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
   );
 
 
