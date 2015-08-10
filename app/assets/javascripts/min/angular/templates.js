@@ -639,7 +639,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/room/partials/book_shelf.html',
-    "<div layout=\"row\" ng-class=\"{'white md-whiteframe-z1': !show_shelf, 'dark_grey': show_shelf}\" ng-click=\"toggle()\" layout-align=\"space-between\"><div layout-padding layout-wrap flex ng-class=\"{'bold': show_shelf}\">{{shelf.shelf}}</div><div layout-padding><i class=\"material-icons less_important\" ng-show=\"!show_shelf\">add</i> <i class=\"material-icons less_important\" ng-show=\"show_shelf\">close</i></div></div><div ng-show=\"show_shelf\" layout-padding layout-margin class=\"dark_grey\"><div layout=\"row\" layout-align=\"space-between\" layout-padding><div></div><md-button class=\"md-button-clear md-raised md-warn\" ng-click=\"add_books_to_shelf(shelf, $event)\"><span>Add Book</span></md-button></div><div ng-init=\"books = shelf.books\" layout-padding layout=\"row\" layout-wrap ng-include src=\"'/assets/angular/html/shared/partials/spine.html'\"></div></div><md-divider></md-divider>"
+    "<div layout=\"row\" ng-class=\"{'white md-whiteframe-z1': !show_shelf, 'dark_grey': show_shelf}\" ng-click=\"toggle()\" layout-align=\"space-between\"><div layout-padding layout-wrap flex ng-class=\"{'bold': show_shelf}\">{{shelf.shelf}}</div><div layout-padding><i class=\"material-icons less_important\" ng-show=\"!show_shelf\">add</i> <i class=\"material-icons less_important\" ng-show=\"show_shelf\">close</i></div></div><div ng-show=\"show_shelf\" layout-padding layout-margin class=\"dark_grey\"><div ng-init=\"books = shelf.books\" layout-padding layout=\"row\" layout-wrap ng-include src=\"'/assets/angular/html/shared/partials/spine.html'\"></div></div><md-divider></md-divider>"
   );
 
 
@@ -944,7 +944,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/spine.html',
-    "<md-button aria-label=\"show_book_dialog\" class=\"clear white md-whiteframe-z1\" ng-click=\"show_book_dialog(book, $event)\" ng-if=\"book.title\" ng-repeat=\"book in books\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\" class=\"relative\"></div></md-button><style>.spine{padding:10px;color:#fff;background-image:url(assets/spine.png);background-size:40px 40px;background-repeat:no-repeat;background-position-x:100%;background-position-y:5px;height:50px}.spine_button{width:100%;height:50px}</style>"
+    "<section ng-repeat=\"book in books\" layout-margin><md-button aria-label=\"show_book_dialog\" class=\"rd_book_container clear white md-whiteframe-z1\" ng-click=\"show_book_dialog(book, $event)\" ng-if=\"book.title\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\" class=\"relative\"></div></md-button></section>"
   );
 
 
