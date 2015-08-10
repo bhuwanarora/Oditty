@@ -61,11 +61,10 @@ module Api
 
 			def basic_community_info
 				id = params[:id]
-				key = "BCI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_basic_community_info({:community_id => id})
 				unless info
 					info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
-					$redis.set(key, info.to_json)
+					RedisHelper.set_basic_community_info({:community_id => id, :info => info})
 				else
 					info = JSON.parse(info)
 				end
@@ -74,11 +73,10 @@ module Api
 
 			def feed_community_info
 				id = params[:id]
-				key = "FCI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_feed_community_info({:community_id => id})
 				unless info
 					info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
-					$redis.set(key, info.to_json)
+					RedisHelper.set_feed_community_info({:community_id => id, :info => info})
 				else
 					info = JSON.parse info
 				end
@@ -87,11 +85,10 @@ module Api
 
 			def chronological_news
 				id = params[:id]
-				key = "CN" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_chronological_news_info({:news_id => id})
 				unless info
 					info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
-					$redis.set(key, info.to_json)
+					RedisHelper.set_chronological_news_info({:news_id => id, :info => info})
 				else
 					info = JSON.parse info
 				end

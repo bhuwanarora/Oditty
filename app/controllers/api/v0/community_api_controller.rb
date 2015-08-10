@@ -21,8 +21,7 @@ module Api
 				user_id = session[:user_id]
 				if user_id
 					info = Api::V0::CommunityApi.add_book(id, book_id, user_id)
-					key = "BCI" + id.to_s
-					$redis.del key
+					RedisHelper.delete_basic_community_info({:id => id})
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
