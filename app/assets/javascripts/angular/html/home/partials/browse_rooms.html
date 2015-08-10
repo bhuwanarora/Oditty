@@ -9,16 +9,16 @@
     </div>
 
     <md-grid-list
-        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="10"
-        md-row-height-gt-md="1:1" md-row-height="4:3"
-        md-gutter="50px" md-gutter-gt-sm="10px">
+        md-cols-sm="4" md-cols-md="7" md-cols-gt-md="10"
+        md-row-height="4:3" md-row-height-gt-md="1:1" md-row-height-md="1:1" md-row-height-sm="12:13"
+        md-gutter="50px" md-gutter-gt-sm="10px" md-gutter-md="10px" md-gutter-sm="20px">
         <md-grid-tile ng-repeat="trend in rooms"
                     md-rowspan="1"
                     md-colspan="1"
                     md-colspan-sm="1"
                     class="pointer">
-            <a ng-href="/room?id={{trend.id}}">
-                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
+            <a ng-href="/room?id={{trend.id}}" class="relative">
+                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="trends" />
                 <md-grid-tile-footer layout="row" layout-padding>
                     <div class="less_important white_color">{{trend.name}}</div>
                 </md-grid-tile-footer>
@@ -34,7 +34,7 @@
     </div>
     <div class="feed_ticker">
         <div ng-repeat="trend in rooms" layout="row" layout-padding>
-            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="square" />
+            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="square" />
             <div layout-align="center center" layout="row"><a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a></div>
         </div>
     </div>
