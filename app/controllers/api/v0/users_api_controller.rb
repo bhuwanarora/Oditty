@@ -188,7 +188,7 @@ module Api
 			def authenticate
 				authentication_info = Api::V0::UserApi.authenticate(params)
 				if authentication_info[:authenticate]
-					session[:user_id] = authentication_info[:info][:user_id]
+					session[:user_id] = authentication_info[:user]["id"]
 					render :json => authentication_info, :status => 200
 				else
 					render :json => authentication_info, :status => 403
