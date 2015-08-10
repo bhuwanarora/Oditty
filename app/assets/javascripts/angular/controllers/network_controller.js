@@ -87,13 +87,13 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 	}
 
     var _init = (function(){
-	    var regex = /[?&]([^=#]+)=([^&#]*)/g;
-		var url_parser = regex.exec($location.absUrl());
-		if(angular.isDefined(url_parser) && url_parser != null){
-			// var follow_state = url_parser[2];
-			// $scope.follow_state = follow_state;
-			$scope.load_users();
-		}
+	 //    var regex = /[?&]([^=#]+)=([^&#]*)/g;
+		// var url_parser = regex.exec($location.absUrl());
+		// if(angular.isDefined(url_parser) && url_parser != null){
+		// 	// var follow_state = url_parser[2];
+		// 	// $scope.follow_state = follow_state;
+		// }
+		$scope.load_users();
 
 		$scope.info.my_profile = true;
     	if(angular.isUndefined($rootScope.user)){
