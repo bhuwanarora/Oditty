@@ -157,7 +157,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         setCookie("redirect_url", $location.$$absUrl);
         Facebook.api('/me', function(response){
             websiteService.handle_facebook_user(response).then(function(data){
-                $rootScope.user = $rootScope.user.extend(data);
+                $rootScope.user = angular.extend($rootScope.user, data);
                 $scope._init_user();
                 _redirect_user();
             });
