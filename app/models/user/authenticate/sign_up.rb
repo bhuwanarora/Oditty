@@ -21,14 +21,15 @@ class User::Authenticate::SignUp < User::Authenticate
 				message = Constant::StatusMessage::AnotherActivationRequest
 			end
 		else
-			info = User.handle_new(@params[:email], @params[:password], @verification_token).execute[0]
-			params = {:type => "User", :response => info["id"]}
+			user = User.handle_new(@params[:email], @params[:password], @verification_token).execute[0]
+			params = {:type => "User", :response => user["id"]}
 			IndexerWorker.perform_async(params)
 			SubscriptionMailer.verify_email(invitation).deliver
 			message = Constant::StatusMessage::ActivateAccount
 		end
-		output   = {:profile_status => 0, :user_id => info["id"], :login_count => info['login_count']}
+		# output   = {:profile_status => 0, :user_id => info["id"], :login_count => info['login_count']}
 		puts message
-		{:info => output, :authenticate => authenticate, :message => message}
+		info = {:user => user, :authenticate => authenticate, :message => message}
+		info
 	end
 end
