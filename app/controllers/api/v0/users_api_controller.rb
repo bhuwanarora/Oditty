@@ -235,10 +235,10 @@ module Api
 			end
 
 			def fb
-				user_id = Api::V0::UserApi.handle_facebook_user(params[:users_api])
-				session[:user_id] = user_id
-				if user_id.present?
-					render :json => {:message => "Success"}, :status => 200
+				info = Api::V0::UserApi.handle_facebook_user(params[:users_api])
+				session[:user_id] = info[:user_id]
+				if info[:user_id].present?
+					render :json => info, :status => 200
 				else
 					render :json => {:message => "Login Failure"}, :status => 500
 				end
