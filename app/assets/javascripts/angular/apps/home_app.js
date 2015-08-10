@@ -49,7 +49,7 @@ homeApp.config(["$routeProvider", function($routeProvider){
     .when('/profile/followers', {
         templateUrl : 'assets/angular/html/profile/followers.html',
     })
-    .when('/profile/following', {
+    .when('/profile/followings', {
         templateUrl : 'assets/angular/html/profile/followings.html',
     })
     .when('/profile/books', {
