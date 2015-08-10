@@ -589,7 +589,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/rooms.html',
-    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap class=\"feed_margin\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
+    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap info=\"info\" class=\"feed_margin\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
   );
 
 

@@ -65,15 +65,17 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
 homeApp.directive('userCommunities', ["$rootScope", "userService", function($rootScope, userService){
     return {
         restrict: 'E',
-        scope : {userId: '='},
+        scope : {userId: '=', info: '='},
         controller: ["$scope", function($scope){
             var _init = function(){
                 $scope.rooms = [];
+                $scope.info.loading = true;
                 userService.get_communities($scope.userId).then(function(data){
                     angular.forEach(data, function(room){
                         var json = angular.extend(room, {"status": 1});
                         this.push(json);
                     }, $scope.rooms);
+                    $scope.info.loading = false;
                 });
             }
 
