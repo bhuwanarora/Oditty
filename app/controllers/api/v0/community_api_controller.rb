@@ -9,8 +9,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::CommunityApi.get_books(id).execute[0]
 					RedisHelper.set_community_books({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -37,8 +35,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::CommunityApi.suggest_communities(user_id).execute
 					RedisHelper.set_suggest_communities({:id =>user_id, :info => info})
-				else
-					info = info rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -80,8 +76,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::CommunityApi.get_videos(id)
 					RedisHelper.set_community_videos({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end

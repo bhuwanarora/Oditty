@@ -30,6 +30,7 @@ module RedisHelper
 	def self.get_user_details params
 		key = RedisHelper.get_key_user_details params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -47,6 +48,7 @@ module RedisHelper
 	def self.get_friend_of_friend_details params
 		key = RedisHelper.get_key_friend_of_friend_details params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -64,6 +66,7 @@ module RedisHelper
 	def self.get_basic_community_info params
 		key = RedisHelper.get_key_basic_community_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -81,6 +84,7 @@ module RedisHelper
 	def self.get_basic_author_info params
 		key = RedisHelper.get_key_basic_author_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -98,6 +102,7 @@ module RedisHelper
 	def self.get_book_primary_info params
 		key = RedisHelper.get_key_book_primary_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -115,6 +120,7 @@ module RedisHelper
 	def self.get_feed_community_info params
 		key = RedisHelper.get_key_feed_community_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -132,6 +138,7 @@ module RedisHelper
 	def self.get_basic_feed_book_info params
 		key = RedisHelper.get_key_basic_feed_book_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -149,6 +156,7 @@ module RedisHelper
 	def self.get_chronological_news_info params
 		key = RedisHelper.get_key_cronological_news params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -166,6 +174,7 @@ module RedisHelper
 	def self.get_genre_details params
 		key = RedisHelper.get_key_genre_details params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -183,6 +192,7 @@ module RedisHelper
 	def self.get_interview_details params
 		key = RedisHelper.get_key_interview_details params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -200,6 +210,7 @@ module RedisHelper
 	def self.get_book_interesting_info params
 		key = RedisHelper.get_key_book_interesting_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -217,6 +228,7 @@ module RedisHelper
 	def self.get_important_community_info params
 		key = RedisHelper.get_key_important_community_info params[:news_id], params[:community_id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -246,7 +258,7 @@ module RedisHelper
 					output = nil
 					break
 				else
-					output << JSON.parse(info)[0].except("most_important_tag")
+					output << info[0].except("most_important_tag")
 				end
 			end
 		end
@@ -267,6 +279,7 @@ module RedisHelper
 	def self.get_community_videos params
 		key = RedisHelper.get_key_community_videos params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -284,6 +297,7 @@ module RedisHelper
 	def self.get_community_books params
 		key = RedisHelper.get_key_community_books params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -301,6 +315,7 @@ module RedisHelper
 	def self.get_publisher_info params
 		key = RedisHelper.get_key_publisher_info params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -318,6 +333,7 @@ module RedisHelper
 	def self.get_publisher_books params
 		key = RedisHelper.get_key_publisher_books params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
@@ -335,13 +351,14 @@ module RedisHelper
 	def self.get_virtuality_book_news params
 		key = RedisHelper.get_key_real_virtuality_book_news params[:id]
 		info = $redis.get(key)
+		info = JSON.parse(info) rescue []
 		info
 	end
 
 	def self.increment_community_info_view_count params
 		redis_info = RedisHelper.get_basic_community_info params
 		if redis_info.present?
-			community_info = JSON.parse(redis_info)
+			community_info = redis_info
 			count = (params[:view_count].present?)? params[:view_count] : (community_info[0]["view_count"] + 1)
 			community_info[0]["view_count"] = count
 			community_info[0]["most_important_tag"][0]["view_count"] = count

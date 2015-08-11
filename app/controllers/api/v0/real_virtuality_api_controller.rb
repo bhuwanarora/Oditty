@@ -9,8 +9,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::RealVirtualityApi.get_news(id).execute[0] rescue []
 					RedisHelper.set_virtuality_book_news({:id => id,:info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
