@@ -524,7 +524,8 @@ md-select-label{
 }
 
 .no_overflow{
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 md-grid-list md-grid-tile md-grid-tile-header, 
