@@ -54,6 +54,7 @@ module Api
 				community_id = params[:id]
 				user_id = session[:user_id]
 				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id)
+				RedisHelper.increment_community_info_view_count({:id => community_id})
 				render :json => info, :status => 200 
 			end
 
