@@ -150,20 +150,20 @@ module Api
 						info = UserApi.get_relative_details(params[:id], session[:user_id])
 					else
 						info = RedisHelper.get_user_details({:id => session[:user_id]})
-						unless info
+						unless !info.nil?
 							info = UserApi.get_details(session[:user_id])
 							RedisHelper.set_user_details({:id => session[:user_id], :info => info})
 						else
-							info = JSON.parse info
+							info = JSON.parse(info) rescue []
 						end
 					end
 				else
 					info = RedisHelper.get_user_details({:id => params[:id]})
-					unless info
+					unless !info.nil?
 						info = UserApi.get_details(params[:id])
 						RedisHelper.set_user_details({:id => params[:id], :info => info})
 					else
-						info = JSON.parse info
+						info = JSON.parse(info) rescue []
 					end
 				end
 				render :json => info, :status => 200
@@ -529,11 +529,11 @@ module Api
 				user_id = session[:user_id]
 				if user_id
 					info = RedisHelper.get_friend_of_friend_details({:id => session[:user_id]})
-					unless info
+					unless !info.nil?
 						info = Api::V0::UserApi.get_friends_of_friend(user_id)
 						RedisHelper.set_friend_of_friend_details({:id => session[:user_id], :info => info})
 					else
-						info = JSON.parse(info)
+						info = JSON.parse(info) rescue []
 					end
 				else
 					info = []

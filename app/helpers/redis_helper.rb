@@ -305,18 +305,18 @@ module RedisHelper
 	end
 
 	def self.delete_virtuality_book_news params
-		key = RedisHelper.get_key_virtuality_book_news params[:id]
+		key = RedisHelper.get_key_real_virtuality_book_news params[:id]
 		$redis.del key
 	end
 
 	def self.set_virtuality_book_news params
-		key = RedisHelper.get_key_virtuality_book_news params[:id]
+		key = RedisHelper.get_key_real_virtuality_book_news params[:id]
 		$redis.set(key,params[:info].to_json)
-		$redis.expire(key, RedisHelper::MonthExpiry)
+		$redis.expire(key, RedisHelper::DayExpiry)
 	end
 
 	def self.get_virtuality_book_news params
-		key = RedisHelper.get_key_virtuality_book_news params[:id]
+		key = RedisHelper.get_key_real_virtuality_book_news params[:id]
 		info = $redis.get(key)
 		info
 	end
