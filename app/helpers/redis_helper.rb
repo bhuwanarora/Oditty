@@ -227,7 +227,7 @@ module RedisHelper
 	def self.set_suggest_communities params
 		key = RedisHelper.get_key_suggest_communities params[:id]
 		$redis.set(key,params[:info].to_json)
-		$redis.expire(key, RedisHelper::MonthExpiry)
+		$redis.expire(key, RedisHelper::DayExpiry)
 	end
 
 	def self.get_suggest_communities params
@@ -322,10 +322,13 @@ module RedisHelper
 	end
 
 	def self.increment_community_info_view_count params
-		community_info = JSON.parse(RedisHelper.get_basic_community_info params)
-		community_info[0]["view_count"] = community_info[0]["view_count"] + 1
-		params[:info] = community_info
-		RedisHelper.set_basic_community_info params
+		redis_info = RedisHelper.get_basic_community_info params
+		if redis_info.present?
+			community_info = JSON.parse(redis_info)
+			community_info[0]["view_count"] = community_info[0]["view_count"] + 1
+			params[:info] = community_info
+			RedisHelper.set_basic_community_info params
+		end
 	end
 
 	private
