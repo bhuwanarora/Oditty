@@ -4,11 +4,10 @@ module Api
 
 			def get_info
 				id = params[:id]
-				key = "GI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_publisher_info({:id => id})
 				unless info
 					info = Api::V0::PublisherApi.get_info(id)
-					$redis.set(key, info.to_json)
+					RedisHelper.set_publisher_info({:id => id, :info => info})
 				else
 					info = JSON.parse info
 				end
@@ -17,11 +16,10 @@ module Api
 
 			def get_books
 				id = params[:id]
-				key = "GB" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_publisher_books({:id => id})
 				unless info
 					info = Api::V0::PublisherApi.get_books(id)
-					$redis.set(key, info.to_json)
+					RedisHelper.set_publisher_books({:id => id, :info => info})
 				else
 					info = JSON.parse info
 				end
