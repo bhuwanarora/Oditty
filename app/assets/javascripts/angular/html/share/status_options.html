@@ -43,7 +43,7 @@
             <md-list ng-include src="'/assets/angular/html/share/partials/_reading_option.html'"></md-list>
         </div>
     </div>
-    <div class="white" layout-padding ng-if="info.status_state" layout="row" layout-align="space-between">
+    <div class="white share_footer" layout-padding ng-if="info.status_state" layout="row" layout-align="space-between">
         <div></div>
         <div layout="row">
             <div layout-margin>
@@ -87,6 +87,13 @@
         max-width: 98vw;
         height: 80vh;
         position: relative;
+    }
+
+    .currently_reading_active .share_footer{
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
     }
 
     .status_option{

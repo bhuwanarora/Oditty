@@ -910,3 +910,10 @@ h3 a:hover{
 .md-scroll-mask{
 	display: none;
 }
+
+.page_count_input{
+	width: 40px;
+  	margin: 0px;
+  	height: 32px;
+  	padding: 0px;
+}
