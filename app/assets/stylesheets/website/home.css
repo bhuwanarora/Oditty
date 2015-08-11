@@ -906,3 +906,7 @@ h3 a:hover{
 	background-color: white !important;
 	cursor: default;
 }
+
+.md-scroll-mask{
+	display: none;
+}
