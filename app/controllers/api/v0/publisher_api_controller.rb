@@ -8,8 +8,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::PublisherApi.get_info(id)
 					RedisHelper.set_publisher_info({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -20,8 +18,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::PublisherApi.get_books(id)
 					RedisHelper.set_publisher_books({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
