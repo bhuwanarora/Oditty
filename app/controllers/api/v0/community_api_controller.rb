@@ -5,12 +5,12 @@ module Api
 			def get_books
 				id = params["id"]
 				key = "GB" + id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper.get_community_books({:id => id})
+				unless !info.nil?
 					info = Api::V0::CommunityApi.get_books(id).execute[0]
-					$redis.set(key, info.to_json)
+					RedisHelper.set_community_books({:id => id, :info => info})
 				else
-					info = JSON.parse info
+					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -21,8 +21,7 @@ module Api
 				user_id = session[:user_id]
 				if user_id
 					info = Api::V0::CommunityApi.add_book(id, book_id, user_id)
-					key = "BCI" + id.to_s
-					$redis.del key
+					RedisHelper.delete_basic_community_info({:id => id})
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
@@ -34,15 +33,13 @@ module Api
 
 			def suggest_communities
 				user_id = session[:user_id]
-				info = $redis.get 'trends'
-				unless info
+				info = RedisHelper.get_suggest_communities({:id => user_id})
+				unless !info.nil?
 					info = Api::V0::CommunityApi.suggest_communities(user_id).execute
-					$redis.set('trends', info.to_json)
-					$redis.expire('trends', 86400)
+					RedisHelper.set_suggest_communities({:id =>user_id, :info => info})
 				else
-					info = JSON.parse info
+					info = JSON.parse(info) rescue []
 				end
-
 				render :json => info, :status => 200
 			end
 
@@ -75,13 +72,12 @@ module Api
 
 			def get_videos
 				id = params[:id]
-				key = "GV"+id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper.get_community_videos({:id => id})
+				unless !info.nil?
 					info = Api::V0::CommunityApi.get_videos(id)
-					$redis.set(key, info.to_json)
+					RedisHelper.set_community_videos({:id => id, :info => info})
 				else
-					info = JSON.parse info
+					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end

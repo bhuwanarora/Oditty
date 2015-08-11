@@ -437,7 +437,7 @@ module Api
 					else
 						duplicate_email
 					end
-					$redis.del ("GUD" + user_id.to_s)
+					RedisHelper.delete_user_details({:id => user_id})
 				end
 			end
 
