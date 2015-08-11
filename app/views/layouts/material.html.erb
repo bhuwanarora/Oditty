@@ -39,7 +39,7 @@
         msd-wheel="close_popups('wheel')">
         <div layout="column" layout-fill>
             <% if @home || @signup%>
-                <md-content class="white" flex ng-controller="newHomeController">
+                <md-content class="white no_overflow" flex ng-controller="newHomeController">
             <% elsif @personalised_suggestions %>
                 <md-content ng-controller="personalisedController" class="super_container">
             <% elsif @network %>
