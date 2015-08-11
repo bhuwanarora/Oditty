@@ -1,4 +1,4 @@
-<div ng-if="!reduced">
+<div ng-if="!reduced" id="browseRooms">
     <div layout="row" layout-align="center center">
             <h1 layout-padding>
             <a layout-padding layout="row" layout-align="center center" class="grey_color" href="/rooms">
@@ -20,7 +20,7 @@
             <a ng-href="/room?id={{trend.id}}" class="relative">
                 <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="trends" />
                 <md-grid-tile-footer layout="row" layout-padding>
-                    <div class="less_important white_color">{{trend.name}}</div>
+                    <div class="less_important white_color trend_name">{{trend.name}}</div>
                 </md-grid-tile-footer>
             </a>
         </md-grid-tile>
@@ -39,3 +39,37 @@
         </div>
     </div>
 </div>
+<style>
+    #browseRooms md-grid-tile-footer{
+        font-size: 15px;
+        padding: 4px;
+        background-color: rgba(0, 0, 0, 0.41);
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        border-radius: 5px;
+        font-weight: 600;
+    }
+
+    #browseRooms md-grid-tile-footer figcaption{
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        right: 2px;
+        bottom: 2px;
+        text-align: center;
+    }
+
+    #browseRooms md-grid-tile-footer figcaption .trend_name{
+        position: absolute;
+        top: 50%;
+        margin-top: -15px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+</style>
