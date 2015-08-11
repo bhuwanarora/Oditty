@@ -81,6 +81,22 @@ module Api
 				end
 				render :json => info, :status => 200
 			end
+
+			def get_rooms
+				user_id = session[:user_id]
+				skip_count = params[:skip] || 0
+				info = nil
+				status = 200
+				begin
+					info = Api::V0::CommunityApi.get_rooms user_id, skip_count
+				rescue Exception => e
+					puts e.to_s.red
+					info = e.to_s
+					status = 500
+				end
+				render :json => info, :status => status
+
+			end
 		end
 	end
 end

@@ -13,9 +13,6 @@ class User::Authenticate::SignIn < User::Authenticate
 			user_authenticated = user["password"] == @params[:password] && user["verified"]
 			if user_authenticated
 				authenticate = true
-				clause = User.new(user["id"]).match + User::Info.set_last_login
-				clause.execute
-				info = {:profile_status => 0, :user_id => user["id"]}
 				message = Constant::StatusMessage::LoginSuccess
 			elsif  user["password"] != @params[:password]
 				message = Constant::StatusMessage::AuthenticationFailed
@@ -29,6 +26,7 @@ class User::Authenticate::SignIn < User::Authenticate
 			message = Constant::StatusMessage::EmailNotRegistered
 		end
 		puts message.red
-		{:info => info, :authenticate => authenticate, :message => message, :user => user}
+		info = {:authenticate => authenticate, :message => message, :user => user}
+		info
 	end
 end

@@ -5,7 +5,7 @@ module Api
 			def social_books
 				user_id = session[:user_id]
 				if user_id
-					info = UserApi.get_social_books user_id
+					info = Api::V0::UserApi.get_social_books user_id
 				else
 					info = []
 				end
@@ -13,7 +13,7 @@ module Api
 			end
 
 			def get_info_card_data
-				info = UserApi.get_info_card_data
+				info = Api::V0::UserApi.get_info_card_data
 				render :json => info, :status => 200
 			end
 
@@ -54,14 +54,14 @@ module Api
 
 			def get_small_reads
 				user_id = session[:user_id]
-				books = UserApi.get_small_reads
+				books = Api::V0::UserApi.get_small_reads
 				render :json => books, :status => 200
 			end
 
 			def get_feed
 				user_id = session[:user_id]
 				skip_count = session[:skip_count] || 0
-				info = UserApi.get_feed(user_id, skip_count).execute
+				info = Api::V0::UserApi.get_feed(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 
@@ -147,7 +147,7 @@ module Api
 			def get_user_details
 				if session[:user_id]
 					if params[:id]
-						info = UserApi.get_relative_details(params[:id], session[:user_id])
+						info = Api::V0::UserApi.get_relative_details(params[:id], session[:user_id])
 					else
 						info = RedisHelper.get_user_details({:id => session[:user_id]})
 						unless !info.nil?
@@ -173,10 +173,10 @@ module Api
 			def user_profile_info
 				if params[:id].present?
 					user_id = params[:id]
-					info = UserApi.get_profile_info_of_another(session[:user_id], user_id)
+					info = Api::V0::UserApi.get_profile_info_of_another(session[:user_id], user_id)
 				else
 					user_id = session[:user_id]
-					info = UserApi.get_profile_info(user_id)
+					info = Api::V0::UserApi.get_profile_info(user_id)
 				end
 				render :json => info, :status => 200
 			end
@@ -184,7 +184,7 @@ module Api
 			def authenticate
 				authentication_info = Api::V0::UserApi.authenticate(params)
 				if authentication_info[:authenticate]
-					session[:user_id] = authentication_info[:info][:user_id]
+					session[:user_id] = authentication_info[:user]["id"]
 					render :json => authentication_info, :status => 200
 				else
 					render :json => authentication_info, :status => 403
@@ -210,7 +210,7 @@ module Api
 			end
 
 			def google
-				user_id = UserApi.handle_google_user params
+				user_id = Api::V0::UserApi.handle_google_user params
 				puts user_id.to_s.red
 				session[:user_id] = user_id
 				render :json => {:message => "Success"}, :status => 200
@@ -218,7 +218,7 @@ module Api
 
 			def notifications
 				if session[:user_id]
-					info = UserApi.get_notifications session[:user_id]
+					info = Api::V0::UserApi.get_notifications session[:user_id]
 				else
 					info = {:message => Constant::StatusMessage::SessionNotSet}
 				end
@@ -226,15 +226,15 @@ module Api
 			end
 
 			def save_info
-				user_id = UserApi.save_info(session[:user_id], params)
+				user_id = Api::V0::UserApi.save_info(session[:user_id], params)
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def fb
-				user_id = Api::V0::UserApi.handle_facebook_user(params[:users_api])
-				session[:user_id] = user_id
-				if user_id.present?
-					render :json => {:message => "Success"}, :status => 200
+				info = Api::V0::UserApi.handle_facebook_user(params[:users_api])
+				session[:user_id] = info["id"]
+				if info["id"].present?
+					render :json => info, :status => 200
 				else
 					render :json => {:message => "Login Failure"}, :status => 500
 				end
