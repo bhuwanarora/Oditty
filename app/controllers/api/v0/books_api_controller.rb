@@ -57,11 +57,10 @@ module Api
 
 			def get_basic_feed_info
 				id = params[:id]
-				key = "GBFI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_basic_feed_book_info({:id => id})
 				unless info
 					info = Api::V0::BookApi.get_basic_feed_info(id)
-					$redis.set(key, info.to_json)
+					RedisHelper.set_basic_feed_book_info({:id => id, :info => info})
 				else
 					info = JSON.parse info
 				end
@@ -70,11 +69,10 @@ module Api
 
 			def get_primary_info
 				id = params[:id]
-				key = "GPI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_book_primary_info({:id => id})
 				unless info
 					info = Api::V0::BookApi.get_primary_info(id)
-					$redis.set(key, info.to_json) if info
+					RedisHelper.set_book_primary_info({:id => id, :info => info}) if info
 				else
 					info = JSON.parse info
 				end
@@ -113,11 +111,10 @@ module Api
 
 			def get_interesting_info
 				book_id = params[:id]
-				key = "GIF" + book_id.to_s
-				info = $redis.get key
+				info = RedisHelper.get_book_interesting_info({:id => book_id})
 				unless info
 					info = Api::V0::BookApi.get_interesting_info book_id
-					$redis.set(key, info.to_json)
+					RedisHelper.set_book_interesting_info({:id => book_id, :info => info})
 				else
 					info = JSON.parse info
 				end
