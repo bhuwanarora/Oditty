@@ -321,6 +321,13 @@ module RedisHelper
 		info
 	end
 
+	def self.increment_community_info_view_count params
+		community_info = JSON.parse(RedisHelper.get_basic_community_info params)
+		community_info[0]["view_count"] = community_info[0]["view_count"] + 1
+		params[:info] = community_info
+		RedisHelper.set_basic_community_info params
+	end
+
 	private
 
 	# Note: Please write key functions in sorted (ascending) order. !!!
