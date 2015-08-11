@@ -30,7 +30,9 @@ module RedisHelper
 	def self.get_user_details params
 		key = RedisHelper.get_key_user_details params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -48,7 +50,9 @@ module RedisHelper
 	def self.get_friend_of_friend_details params
 		key = RedisHelper.get_key_friend_of_friend_details params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -66,7 +70,9 @@ module RedisHelper
 	def self.get_basic_community_info params
 		key = RedisHelper.get_key_basic_community_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -84,7 +90,9 @@ module RedisHelper
 	def self.get_basic_author_info params
 		key = RedisHelper.get_key_basic_author_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -102,7 +110,9 @@ module RedisHelper
 	def self.get_book_primary_info params
 		key = RedisHelper.get_key_book_primary_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -120,7 +130,9 @@ module RedisHelper
 	def self.get_feed_community_info params
 		key = RedisHelper.get_key_feed_community_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -138,7 +150,9 @@ module RedisHelper
 	def self.get_basic_feed_book_info params
 		key = RedisHelper.get_key_basic_feed_book_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -156,7 +170,9 @@ module RedisHelper
 	def self.get_chronological_news_info params
 		key = RedisHelper.get_key_cronological_news params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -174,7 +190,9 @@ module RedisHelper
 	def self.get_genre_details params
 		key = RedisHelper.get_key_genre_details params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -192,7 +210,9 @@ module RedisHelper
 	def self.get_interview_details params
 		key = RedisHelper.get_key_interview_details params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -210,7 +230,9 @@ module RedisHelper
 	def self.get_book_interesting_info params
 		key = RedisHelper.get_key_book_interesting_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -228,7 +250,9 @@ module RedisHelper
 	def self.get_important_community_info params
 		key = RedisHelper.get_key_important_community_info params[:news_id], params[:community_id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -279,7 +303,9 @@ module RedisHelper
 	def self.get_community_videos params
 		key = RedisHelper.get_key_community_videos params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -297,7 +323,9 @@ module RedisHelper
 	def self.get_community_books params
 		key = RedisHelper.get_key_community_books params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -315,7 +343,9 @@ module RedisHelper
 	def self.get_publisher_info params
 		key = RedisHelper.get_key_publisher_info params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -333,7 +363,9 @@ module RedisHelper
 	def self.get_publisher_books params
 		key = RedisHelper.get_key_publisher_books params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
@@ -351,7 +383,9 @@ module RedisHelper
 	def self.get_virtuality_book_news params
 		key = RedisHelper.get_key_real_virtuality_book_news params[:id]
 		info = $redis.get(key)
-		info = JSON.parse(info) rescue []
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
 		info
 	end
 
