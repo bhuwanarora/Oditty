@@ -1,6 +1,10 @@
+<div layout-padding></div>
+<div layout-padding></div>
 <div class="profile_header" layout="row">
     <section flex="10" flex-md="5" hide-sm></section>
     <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" class="yellow md-whiteframe-z1">
+        <div layout-padding></div>
+        <div layout-padding></div>
         <div layout="column" layout-align="center center">
             <img ng-src="{{profile_user.image_url}}" class="profile_pic" onerror="this.src='/assets/user_profile.jpg'"/>
             <div layout="row"  layout-align="center center">
@@ -31,66 +35,67 @@
             <br/>
             <div class="light_grey full_width no_overflow"
                 layout="row" layout-align="center center" >
-                <a href="#/profile/feed" layout-padding>
-                    <md-button class="nav_links md-button-clear">
+                <a href="#/profile/feed" layout-padding class="no_underline">
+                    <div class="nav_links" ng-class="get_active_class('profile/feed')">
                         <div layout="column" layout-align="center center">
                             <div>Feed</div>
                             <!-- <h2></h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
-                <a href="#/profile/rooms" layout-padding>
-                    <md-button class="nav_links md-button-clear">
+                <a href="#/profile/rooms" layout-padding class="no_underline">
+                    <div class="nav_links" ng-class="get_active_class('profile/rooms')">
                         <div layout="column" layout-align="center center">
                             <div>Rooms</div>
                             <!-- <h2>{{profile_user.room_count || 0}}</h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
-                <a href="#/profile/books" layout-padding>
-                    <md-button class="nav_links md-button-clear">
+                <a href="#/profile/books" layout-padding class="no_underline">
+                    <div class="nav_links" ng-class="get_active_class('profile/books')">
                         <div layout="column" layout-align="center center">
                             <div>Books</div>
                             <!-- <h2>{{profile_user.books_count || 0}}</h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
-                <a href="#/profile/news" layout-padding>
-                    <md-button class="nav_links md-button-clear">
+                <a href="#/profile/news" layout-padding class="no_underline">
+                    <div class="nav_links" ng-class="get_active_class('profile/news')">
                         <div layout="column" layout-align="center center">
                             <div>News</div>
                             <!-- <h2>{{profile_user.news_count || 0}}</h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
-                <a href="#/profile/followers" layout-padding>
-                     <md-button class="nav_links md-button-clear">
+                <a href="#/profile/followers" layout-padding class="no_underline">
+                     <div class="nav_links" ng-class="get_active_class('profile/followers')">
                         <div layout="column" layout-align="center center">
                             <div>Followers</div>
                             <!-- <h2>{{profile_user.followed_by_count || 0}}</h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
                 
-                 <a href="#/profile/followings" layout-padding>
-                    <md-button class="nav_links md-button-clear">
+                 <a href="#/profile/followings" layout-padding class="no_underline">
+                    <div class="nav_links" ng-class="get_active_class('profile/followings')">
                         <div layout="column" layout-align="center center">
                             <div>Following</div>
                             <!-- <h2>{{profile_user.follows_count || 0}}</h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
-                 <a href="#/profile/history" layout-padding>
-                    <md-button class="nav_links md-button-clear">
+                 <a href="#/profile/history" layout-padding class="no_underline">
+                    <div class="nav_links" ng-class="get_active_class('profile/history')">
                         <div layout="column" layout-align="center center">
                             <div>History</div>
                             <!-- <h2>{{profile_user.history_count || 0}}</h2> -->
                         </div>
-                    </md-button>
+                    </div>
                 </a>
                 
             </div>
         </div>
+
     </section>
     <section flex="10" flex-md="5" hide-sm></section>
 </div>
