@@ -569,7 +569,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/history.html',
-    "<div class=\"feed_margin\"><articles layout=\"column\"></articles></div>"
+    "<div class=\"feed_margin\"><articles layout=\"column\" user-id=\"active_user_id\"></articles></div>"
   );
 
 
