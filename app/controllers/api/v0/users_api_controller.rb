@@ -461,7 +461,7 @@ module Api
 			end
 
 			def get_followers
-				user_id = session[:user_id]
+				user_id = (params[:id].present?)? params[:id] : session[:user_id]
 				skip_count = params[:skip] || 0
 				if user_id
 					info = Api::V0::UserApi.get_followers(user_id, skip_count).execute
@@ -472,7 +472,7 @@ module Api
 			end
 
 			def get_users_followed
-				user_id = session[:user_id]
+				user_id = (params[:id].present?)? params[:id] : session[:user_id]
 				skip_count = params[:skip] || 0
 				if user_id
 					info = Api::V0::UserApi.get_users_followed(user_id, skip_count).execute
