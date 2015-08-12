@@ -98,9 +98,6 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 
 		var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
-        if(angular.isDefined(url_parser) && url_parser != null){
-        	$scope.active_user_id = url_parser[2];
-        }
 
 		$scope.load_users();
 
@@ -117,6 +114,10 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			$scope.active_user_id = $scope.profile_user.id;
     	}
 
+        if(angular.isDefined(url_parser) && url_parser != null){
+        	$scope.active_user_id = url_parser[2];
+        }
+        
 		$scope.hide_follow = true;
 
 		$scope.toast_position = {
