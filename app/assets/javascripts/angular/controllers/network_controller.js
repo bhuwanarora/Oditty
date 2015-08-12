@@ -19,7 +19,8 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 		if(!$scope.info.loading){
 			$scope.info.loading = true;
 			var skip = $scope.users_list.length;
-			networkService.get_followers(skip).then(function(data){
+			var id = $scope.active_user_id;
+			networkService.get_followers(skip, id).then(function(data){
 				$scope.users_list = $scope.users_list.concat(data);
 				$scope.info.loading = false;
 			});
@@ -30,7 +31,8 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 		if(!$scope.info.loading){
 			$scope.info.loading = true;
 			var skip = $scope.users_list.length;
-			networkService.get_users_followed(skip).then(function(data){
+			var id = $scope.active_user_id;
+			networkService.get_users_followed(skip, id).then(function(data){
 				$scope.users_list = $scope.users_list.concat(data);
 				$scope.info.loading = false;
 			});	
@@ -87,12 +89,16 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 	}
 
     var _init = (function(){
-	 //    var regex = /[?&]([^=#]+)=([^&#]*)/g;
+	 	// var regex = /[?&]([^=#]+)=([^&#]*)/g;
 		// var url_parser = regex.exec($location.absUrl());
 		// if(angular.isDefined(url_parser) && url_parser != null){
 		// 	// var follow_state = url_parser[2];
 		// 	// $scope.follow_state = follow_state;
 		// }
+
+		var regex = /[?&]([^=#]+)=([^&#]*)/g;
+        var url_parser = regex.exec($location.absUrl());
+
 		$scope.load_users();
 
 		$scope.info.my_profile = true;
@@ -108,6 +114,10 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			$scope.active_user_id = $scope.profile_user.id;
     	}
 
+        if(angular.isDefined(url_parser) && url_parser != null){
+        	$scope.active_user_id = url_parser[2];
+        }
+        
 		$scope.hide_follow = true;
 
 		$scope.toast_position = {
