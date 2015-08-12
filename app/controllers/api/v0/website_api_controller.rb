@@ -18,8 +18,6 @@ module Api
 				unless info
 					info = Api::V0::WebsiteApi.get_genre_details(id)
 					RedisHelper.set_genre_details({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -48,8 +46,6 @@ module Api
 					info = Api::V0::WebsiteApi.get_important_community_info(id, community_id).execute
 					params[:info] = info
 					RedisHelper.set_important_community_info(params)
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -60,8 +56,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
 					RedisHelper.set_basic_community_info({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -72,8 +66,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
 					RedisHelper.set_feed_community_info({:id => id, :info => info})
-				else
-					info = JSON.parse(info) rescue []
 				end
 				render :json => info, :status => 200
 			end
@@ -84,8 +76,6 @@ module Api
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
 					RedisHelper.set_chronological_news_info({:id => id, :info => info})
-				else
-					info = JSON.parse info rescue []
 				end
 				render :json => info, :status => 200
 			end

@@ -61,8 +61,6 @@ module Api
 				unless info
 					info = Api::V0::BookApi.get_basic_feed_info(id)
 					RedisHelper.set_basic_feed_book_info({:id => id, :info => info})
-				else
-					info = JSON.parse info
 				end
 				render :json => info, :status => 200
 			end
@@ -73,8 +71,6 @@ module Api
 				unless info
 					info = Api::V0::BookApi.get_primary_info(id)
 					RedisHelper.set_book_primary_info({:id => id, :info => info}) if info
-				else
-					info = JSON.parse info
 				end
 				render :json => info, :status => 200
 			end
@@ -115,8 +111,6 @@ module Api
 				unless info
 					info = Api::V0::BookApi.get_interesting_info book_id
 					RedisHelper.set_book_interesting_info({:id => book_id, :info => info})
-				else
-					info = JSON.parse info
 				end
 				render :json => info, :status => 200
 			end
