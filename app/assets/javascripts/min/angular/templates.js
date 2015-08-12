@@ -1009,7 +1009,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/shelves_sidenav.html',
-    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-accent\"><h1 class=\"md-toolbar-tools\">Add to Your Shelf</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div><div layout-padding>You can checkout your History of Books and News Clippings <a href=\"/history\">here</a>.</div></md-sidenav>"
+    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"right_bookmark\"><md-toolbar class=\"md-accent\"><h1 class=\"md-toolbar-tools\">Add to Your Shelf</h1></md-toolbar><div ng-include src=\"'/assets/angular/html/shared/shelves.html'\" ng-init=\"bookmark_object = data\" class=\"shelves\"></div><div layout-padding>You can checkout your History of Books and News Clippings <a href=\"/profile#/profile/history\">here</a>.</div></md-sidenav>"
   );
 
 

@@ -163,10 +163,11 @@ homeApp.directive('articleShelf', ["$rootScope", "roomService", "ColorConstants"
 homeApp.directive('articles', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
     return {
         restrict: 'E',
+        scope: {userId: '='},
         controller: ["$scope", function($scope){
 
             var _get_visited_articles = function(){
-                roomService.get_visited_articles().then(function(data){
+                roomService.get_visited_articles($scope.userId).then(function(data){
                     if(angular.isUndefined($scope.visited_articles)){
                         $scope.visited_articles = [];
                     }
@@ -206,10 +207,11 @@ homeApp.directive('articles', ["$rootScope", "roomService", "ColorConstants", fu
 homeApp.directive('articleShelves', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
     return {
         restrict: 'E',
+        scope: {userId: '='},
         controller: ["$scope", function($scope){
 
             var _get_articles_grouped_by_shelves = function(){
-                roomService.get_articles_grouped_by_shelves().then(function(data){
+                roomService.get_articles_grouped_by_shelves($scope.userId).then(function(data){
                     $scope.articles_grouped_by_shelves = data;
                     $scope.shelf_loading = false;
                 });
@@ -229,10 +231,11 @@ homeApp.directive('articleShelves', ["$rootScope", "roomService", "ColorConstant
 homeApp.directive('bookShelves', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
     return {
         restrict: 'E',
+        scope: {userId: '='},
         controller: ["$scope", function($scope){
 
             var _get_books_grouped_by_shelves = function(){
-                roomService.get_books_grouped_by_shelves().then(function(data){
+                roomService.get_books_grouped_by_shelves($scope.userId).then(function(data){
                     if(angular.isUndefined($scope.book_shelves)){
                         $scope.book_shelves = [];
                     }
