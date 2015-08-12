@@ -9,6 +9,15 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		$scope.show_genres = !$scope.show_genres;
 	}
 
+	$scope.get_active_class = function(path){
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "profile/feed");
+        if(($location.path().substr(1, path.length+1) == path) || is_init){
+            return "bold red_color";
+        } else {
+            return "grey_color";
+        }
+    }
+
 	$scope.get_feed = function(){
         $scope.info.selectedIndex = 1;
         var followers = $location.path() == "/profile/followers";
