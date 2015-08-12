@@ -1,24 +1,12 @@
-<div class="md-whiteframe-z3" ng-include src="'/assets/angular/html/new_home/filters.html'" id="homefilters">
-</div>
-<section layout="row" layout-wrap class="feed_margin">
-    <div flex="10" flex-md="5" hide-sm></div>
-    <div flex="80" flex-md="90" flex-sm="100" layout="column" layout-padding>
-        <browse-rooms></browse-rooms>
-        <suggest-communities></suggest-communities>
-        <div layout="row" layout-align="center center" layout-margin layout-padding class="feed_margin">
-            <a layout-padding href="/quiz" class="red less_important white_color round_corners">Today's Quiz</a>
-        </div>
-    </div>
-    <div flex="10" flex-md="5" hide-sm></div>
-</section>
-<div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
-<div class="small_title" layout="column" layout-align="center center">
-    <div class="less_important" layout-padding>Discover yourself through books, friends and the world.</div>
-    <div class="less_important" layout-padding>© Singularity Technologies Pvt. Ltd.</div>
-</div>
+<div ng-include src="'/assets/angular/html/new_home/filters.html'" id="homefilters"></div>
+<div ng-include src="'/assets/angular/html/new_home/content.html'"></div>
 
 
 <style>
+    #homefilters{
+        /*border-bottom: 1px solid #E4E4E4;*/
+    }
+
     #homefilters md-autocomplete input{
         cursor: pointer;
     }
@@ -79,11 +67,11 @@
         top: 50px;
     }
 
-    .init_filters_header,
+    /*.init_filters_header,
     .video_wrapper{
         height: 73vh;
     }    
-
+*/
     @media (min-width:1000px)and (max-width:2200px){
         md-autocomplete{
             min-width: 300px;
