@@ -24,7 +24,7 @@ homeApp.service('networkService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         if(params != ""){
             params = "?"+params;
         }
-        return _deferred_request("/api/v0/followers", $q, $http);
+        return _deferred_request("/api/v0/followers"+params, $q, $http);
     }
 
     this.get_users_followed = function(skip, id){
@@ -41,7 +41,7 @@ homeApp.service('networkService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         if(params != ""){
             params = "?"+params;
         }
-        return _deferred_request("/api/v0/users_followed", $q, $http);
+        return _deferred_request("/api/v0/users_followed"+params, $q, $http);
     }
 
     this.search_friends = function(q){

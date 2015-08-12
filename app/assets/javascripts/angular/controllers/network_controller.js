@@ -117,7 +117,7 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
         if(angular.isDefined(url_parser) && url_parser != null){
         	$scope.active_user_id = url_parser[2];
         }
-        
+
 		$scope.hide_follow = true;
 
 		$scope.toast_position = {
