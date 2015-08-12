@@ -804,11 +804,15 @@ md-tooltip .md-content{
 }
 
 .rd_title{
-	color: white;
+	color: #6E6F73;
   	font-weight: 600;
   	font-size: 40px;
-  	text-shadow: 1px 1px 6px rgba(0,0,0,0.2);
+  	/*text-shadow: 1px 1px 6px rgba(0,0,0,0.2);*/
   	font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
+}
+
+.grey_header{
+	color: #6E6F73 !important;
 }
 
 .md-list-item-text{
@@ -916,4 +920,9 @@ h3 a:hover{
   	margin: 0px;
   	height: 32px;
   	padding: 0px;
+}
+
+.filters_autocomplete{
+	background-color: white;
+	border: 1px solid #CACACA;
 }
