@@ -10,22 +10,38 @@ homeApp.service('networkService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return user_id;
     }
 
-    this.get_followers = function(skip){
+    this.get_followers = function(skip, id){
+        var params = "";
         if(angular.isDefined(skip)){
-            return _deferred_request('/api/v0/followers?skip='+skip, $q, $http);
+            params = "skip="+skip;
         }
-        else{
-            return _deferred_request('/api/v0/followers', $q, $http);
+        if(angular.isDefined(id)){
+            if(params != ""){
+                params = params + "&";
+            }                
+            params = params + "id="+id;
         }
+        if(params != ""){
+            params = "?"+params;
+        }
+        return _deferred_request("/api/v0/followers", $q, $http);
     }
 
-    this.get_users_followed = function(skip){
+    this.get_users_followed = function(skip, id){
+        var params = "";
         if(angular.isDefined(skip)){
-            return _deferred_request('/api/v0/users_followed?skip='+skip, $q, $http);    
+            params = "skip="+skip;
         }
-        else{
-            return _deferred_request('/api/v0/users_followed', $q, $http);
+        if(angular.isDefined(id)){
+            if(params != ""){
+                params = params + "&";
+            }                
+            params = params + "id="+id;
         }
+        if(params != ""){
+            params = "?"+params;
+        }
+        return _deferred_request("/api/v0/users_followed", $q, $http);
     }
 
     this.search_friends = function(q){

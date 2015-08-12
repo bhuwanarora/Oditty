@@ -544,7 +544,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/books.html',
-    "<div class=\"feed_margin\"><book-shelves layout=\"column\" layout-align=\"center\" layout-padding></book-shelves></div>"
+    "<div class=\"feed_margin\"><book-shelves layout=\"column\" layout-align=\"center\" layout-padding user-id=\"active_user_id\"></book-shelves></div>"
   );
 
 
@@ -579,7 +579,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/news.html',
-    "<div class=\"feed_margin\"><article-shelves layout=\"column\" layout-align=\"center\"></article-shelves></div>"
+    "<div class=\"feed_margin\"><article-shelves layout=\"column\" layout-align=\"center\" user-id=\"active_user_id\"></article-shelves></div>"
   );
 
 
