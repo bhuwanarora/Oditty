@@ -146,11 +146,11 @@ class User < Neo
 	end
 
 	def self.link_root_categories
-		"  CREATE UNIQUE (user)-[rel:Likes]-(root_category) SET rel.weight = 0 WITH user , root_category "
+		"  CREATE UNIQUE (user)-[rel:Likes]->(root_category) SET rel.weight = 0 WITH user , root_category "
 	end
 
 	def self.handle_new(email, password=nil, verification_token=nil)
-		User.create(email, password, verification_token) + UserNotification.create_for_new_user +  User::Feed.create_first + Label.match_basic  + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match  + ", user " + User.link_root_categories + User.return_init + User.basic_info
+		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User.return_init + User.basic_info
 	end
 
 	def get_notifications
