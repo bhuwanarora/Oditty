@@ -149,25 +149,17 @@ module Api
 					if params[:id]
 						info = Api::V0::UserApi.get_relative_details(params[:id], session[:user_id])
 					else
-						key = "GUD" + session[:user_id].to_s
-						info = $redis.get(key)
-						unless info
-							info = Api::V0::UserApi.get_details(session[:user_id])
-							$redis.set(key, info.to_json)
-							$redis.expire(key, 2678400)
-						else
-							info = JSON.parse info
+						info = RedisHelper.get_user_details({:id => session[:user_id]})
+						unless !info.nil?
+							info = UserApi.get_details(session[:user_id])
+							RedisHelper.set_user_details({:id => session[:user_id], :info => info})
 						end
 					end
 				else
-					key = "GUD" + params[:id].to_s
-					info = $redis.get(key)
-					unless info
-						info = Api::V0::UserApi.get_details(params[:id])
-						$redis.set(key, info.to_json)
-						$redis.expire(key, 2678400)
-					else
-						info = JSON.parse info
+					info = RedisHelper.get_user_details({:id => params[:id]})
+					unless !info.nil?
+						info = UserApi.get_details(params[:id])
+						RedisHelper.set_user_details({:id => params[:id], :info => info})
 					end
 				end
 				render :json => info, :status => 200
@@ -305,8 +297,7 @@ module Api
 						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::FollowsNode)
 				end
-				key = "BCI" + community_id.to_s
-				$redis.del key
+				RedisHelper.delete_basic_community_info({:id => community_id})
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -329,8 +320,8 @@ module Api
 						}, Constant::NodeLabel::FollowsNode)
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
-				key = "GFOF" + user_id.to_s
-				$redis.del key
+				RedisHelper.delete_friend_of_friend_details({:id => user_id })
+				RedisHelper.delete_user_details({:id => user_id })
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -470,7 +461,7 @@ module Api
 			end
 
 			def get_followers
-				user_id = session[:user_id]
+				user_id = (params[:id].present?)? params[:id] : session[:user_id]
 				skip_count = params[:skip] || 0
 				if user_id
 					info = Api::V0::UserApi.get_followers(user_id, skip_count).execute
@@ -481,7 +472,7 @@ module Api
 			end
 
 			def get_users_followed
-				user_id = session[:user_id]
+				user_id = (params[:id].present?)? params[:id] : session[:user_id]
 				skip_count = params[:skip] || 0
 				if user_id
 					info = Api::V0::UserApi.get_users_followed(user_id, skip_count).execute
@@ -533,13 +524,10 @@ module Api
 			def get_friends_of_friend
 				user_id = session[:user_id]
 				if user_id
-					key = "GFOF"+user_id.to_s
-					info = $redis.get key
-					unless info
+					info = RedisHelper.get_friend_of_friend_details({:id => session[:user_id]})
+					unless !info.nil?
 						info = Api::V0::UserApi.get_friends_of_friend(user_id)
-						$redis.set(key, info.to_json)
-					else
-						info = JSON.parse(info)
+						RedisHelper.set_friend_of_friend_details({:id => session[:user_id], :info => info})
 					end
 				else
 					info = []

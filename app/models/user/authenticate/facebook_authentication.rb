@@ -31,8 +31,8 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + fb_set_clause 
 	end
 
-	def create_user_without_email user_id 
-		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + User::Feed.create_first + Label.match_primary + ", user " + User.link_basic_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + fb_set_clause 
+	def create_user_without_email user_id
+		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + fb_set_clause
 	end
 
 	def update_user_with_email user_id 
@@ -59,9 +59,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		end
 		set_clause = set_clause + property_clause
 		set_clause
-
 	end
-
 
 	def self.get_string_from_array(key, array)
 		key = key.to_s
