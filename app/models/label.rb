@@ -56,10 +56,6 @@ class Label < Neo
 		" OPTIONAL MATCH (label:Label:ArticleShelf{public:true}) "
 	end
 
-	def self.match_primary
-		" MATCH (label:Label{primary_label:true}) WITH label "
-	end
-
 	def self.match_basic
 		" MATCH (label:Label{basic: true}) WITH label "
 	end
