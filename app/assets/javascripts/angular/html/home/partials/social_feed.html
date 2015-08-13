@@ -5,7 +5,6 @@
 	<div class="feed_ticker">
 		<div ng-repeat="feed in social_feed" layout="column" layout-padding >
 			<div class="less_important">{{feed.created_at | timestamp | date:'dd MMM'}}</div>
-			
 			<div ng-if="feed.label == 'FollowsNode'" layout="row">
 				<div ng-if="::feed.data.community" layout="row" layout-wrap>
 					<div>
