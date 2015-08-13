@@ -7,7 +7,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/author/books.html',
-    "<div layout=\"row\" layout-wrap><section ng-repeat=\"book in author.books\" layout-margin><md-button aria-label=\"show_book_dialog\" ng-click=\"show_book_dialog(book, $event)\" class=\"md-whiteframe-z1 clear rd_book_container\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></section></div>"
+    "<div layout=\"row\" layout-wrap><section ng-repeat=\"book in author.books | limitTo: 10\" layout-margin><md-button aria-label=\"show_book_dialog\" ng-click=\"show_book_dialog(book, $event)\" class=\"md-whiteframe-z1 clear rd_book_container\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></md-button></section></div>"
   );
 
 
