@@ -1,5 +1,5 @@
 <div class="emotions" ng-if="!sign_in" layout="row" layout-wrap>
-	<recommend ng-repeat="user in users_list" user="user" layout-margin
+	<recommend ng-repeat="user in users_list | limitTo: 10" user="user" class="full_width"
 		book="active_book"></recommend>
 </div>
 <div ng-if="sign_in" layout-align="start start" layout="column">
