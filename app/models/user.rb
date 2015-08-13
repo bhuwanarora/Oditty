@@ -18,7 +18,7 @@ class User < Neo
 	end
 
 	def self.link_basic_labels
-		" CREATE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
+		" CREATE UNIQUE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
 
 	def self.grouped_primary_display_info
