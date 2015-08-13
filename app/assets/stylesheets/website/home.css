@@ -931,3 +931,11 @@ h3 a:hover{
 .no_underline{
 	text-decoration: none !important;
 }
+
+.news_container{
+	width: 200px;
+}
+
+.news_container img{
+	width: 100%;
+}

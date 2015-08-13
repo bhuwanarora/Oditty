@@ -149,7 +149,8 @@ homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", fun
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
         var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("communities") < 0) && ($location.$$absUrl.indexOf("home") < 0) && ($location.$$absUrl.indexOf("room") < 0) && ($location.$$absUrl.indexOf("news") < 0) && ($location.$$absUrl.indexOf("news_group") < 0) && ($location.$$absUrl.indexOf("filters") < 0) && ($location.$$absUrl.indexOf("publisher") < 0) && ($location.$$absUrl.indexOf("search") < 0) && ($location.$$absUrl.indexOf("profile") < 0) && ($location.$$absUrl.indexOf("quiz") < 0) && ($location.$$absUrl.split("/")[3] != "");
-        if(closed_urls){
+        var personal_profile = $location.$$absUrl.split("/")[3] == "profile";
+        if(closed_urls || personal_profile){
             // $cookieStore.put('redirect_url', $location.$$absUrl);
             setCookie("redirect_url", $location.$$absUrl);
     		window.location.href = "/signup";
