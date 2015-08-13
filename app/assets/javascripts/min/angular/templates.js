@@ -624,7 +624,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/room/article.html',
-    "<div layout=\"column\" ng-class=\"{'bold': show_shelf}\"><img ng-src=\"{{::article.image_url}}\"><div layout-align=\"center center\" layout-padding flex=\"80\" layout-wrap layout=\"row\" class=\"custom_title\"><a ng-href=\"/news?q={{article.article_id || article.id}}\">{{::article.title}}</a></div><div class=\"less_important\" layout-align=\"end end\" layout=\"row\" layout-padding><div>Last seen {{article.created_at | timestamp | date:'h:mm a, dd MMM'}}</div></div></div>"
+    "<div layout=\"column\" class=\"news_container\" ng-class=\"{'bold': show_shelf}\"><img ng-src=\"{{::article.image_url}}\"><div layout-align=\"center center\" layout-padding flex=\"80\" layout-wrap layout=\"row\" class=\"custom_title\"><a ng-href=\"/news?q={{article.article_id || article.id}}\">{{::article.title}}</a></div><div class=\"less_important\" layout-align=\"end end\" layout=\"row\" layout-padding><div>Last seen {{article.created_at | timestamp | date:'h:mm a, dd MMM'}}</div></div></div>"
   );
 
 
