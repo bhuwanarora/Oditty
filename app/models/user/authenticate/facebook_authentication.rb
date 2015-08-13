@@ -59,9 +59,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		end
 		set_clause = set_clause + property_clause
 		set_clause
-
 	end
-
 
 	def self.get_string_from_array(key, array)
 		key = key.to_s
