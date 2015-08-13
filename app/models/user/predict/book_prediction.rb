@@ -21,6 +21,8 @@ class User::Predict::BookPrediction < User::Predict
 			data = handle_average_number_books_read
 		when Constant::Range::AboutToDieBookCount
 			data = handle_average_number_books_read
+		else
+			data = handle_average_number_books_read
 		end
 		data
 	end
