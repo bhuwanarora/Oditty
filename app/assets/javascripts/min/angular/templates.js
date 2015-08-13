@@ -143,7 +143,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/right_panel.html',
-    "<social-feed info=\"info\"></social-feed><br><br><browse-rooms reduced=\"true\"></browse-rooms>"
+    "<browse-rooms reduced=\"true\"></browse-rooms>"
   );
 
 
@@ -218,7 +218,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/main.html',
-    "<div layout=\"row\"><div flex=\"5\" flex-md=\"5\" hide-sm></div><div flex=\"90\" flex-md=\"90\" flex-sm=\"100\" layout=\"row\" layout-align=\"space-between\" layout-sm=\"column\"><div flex=\"55\" flex-md=\"70\" flex-sm=\"100\"><div ng-repeat=\"news_feed in feed track by $index\" layout-margin><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div><div flex=\"5\" flex-md=\"5\" hide-sm></div><div flex=\"40\" flex-md=\"25\" hide-sm><div class=\"white\"><social-feed info=\"info\"></social-feed><br><br><trending></trending></div></div></div><div flex=\"5\" flex-md=\"5\" hide-sm></div></div>"
+    "<div layout=\"row\"><div flex=\"5\" flex-md=\"5\" hide-sm></div><div flex=\"90\" flex-md=\"90\" flex-sm=\"100\" layout=\"row\" layout-align=\"space-between\" layout-sm=\"column\"><div flex=\"55\" flex-md=\"70\" flex-sm=\"100\"><div ng-repeat=\"news_feed in feed track by $index\" layout-margin><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div><div flex=\"5\" flex-md=\"5\" hide-sm></div><div flex=\"40\" flex-md=\"25\" hide-sm><div class=\"white\"><trending></trending></div></div></div><div flex=\"5\" flex-md=\"5\" hide-sm></div></div>"
   );
 
 
@@ -309,7 +309,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
     "            && !info.reading_time_filter && !info.subject_filter\" ng-style=\"grid_style\"><div ng-repeat=\"(key, value) in info.books | groupBy: 'alphabet'\" layout-padding><div ng-include src=\"'/assets/angular/html/library/shared/_grid.html'\"></div></div></div><div ng-if=\"!info.group_by_alphabet && !info.author_filter && !info.published_era_filter \n" +
     "            && info.reading_time_filter && !info.subject_filter\" ng-style=\"grid_style\"><div ng-repeat=\"(key, value) in info.books | groupBy: 'reading_time'\" layout-padding><div ng-include src=\"'/assets/angular/html/library/shared/_grid.html'\"></div></div></div><div ng-if=\"!info.group_by_alphabet && !info.author_filter && info.published_era_filter \n" +
     "            && !info.reading_time_filter && !info.subject_filter\" ng-style=\"grid_style\"><div ng-repeat=\"(key, value) in info.books | groupBy: 'published_era'\" layout-padding><div ng-include src=\"'/assets/angular/html/library/shared/_grid.html'\"></div></div></div><div ng-if=\"!info.group_by_alphabet && !info.author_filter && !info.published_era_filter \n" +
-    "            && !info.reading_time_filter && info.subject_filter\" layout=\"row\" layout-align=\"space-between\" ng-style=\"grid_style\"><div ng-repeat=\"category in info.categories\" layout-padding><h3>{{category.name}}</h3><div layout=\"row\" layout-wrap layout-align=\"start\"><div ng-repeat=\"book in info.books | category_group: category\" layout-margin><div ng-include src=\"'/assets/angular/html/library/shared/expanded_book.html'\"></div></div></div></div></div></md-whiteframe><div flex=\"20\" flex-md=\"30\" hide-sm><social-feed info=\"info\"></social-feed><br><br><browse-rooms reduced=\"true\"></browse-rooms></div><style>.books_cover{background-color:#f5f5f5;position:absolute;z-index:2;width:60%;font-size:13px;height:43px;cursor:pointer}.books_cover:hover{font-weight:700}.book_backup_cover{width:100%;height:100%;position:absolute;left:0;top:0;color:#fff;white-space:normal}</style>"
+    "            && !info.reading_time_filter && info.subject_filter\" layout=\"row\" layout-align=\"space-between\" ng-style=\"grid_style\"><div ng-repeat=\"category in info.categories\" layout-padding><h3>{{category.name}}</h3><div layout=\"row\" layout-wrap layout-align=\"start\"><div ng-repeat=\"book in info.books | category_group: category\" layout-margin><div ng-include src=\"'/assets/angular/html/library/shared/expanded_book.html'\"></div></div></div></div></div></md-whiteframe><div flex=\"20\" flex-md=\"30\" hide-sm><browse-rooms reduced=\"true\"></browse-rooms></div><style>.books_cover{background-color:#f5f5f5;position:absolute;z-index:2;width:60%;font-size:13px;height:43px;cursor:pointer}.books_cover:hover{font-weight:700}.book_backup_cover{width:100%;height:100%;position:absolute;left:0;top:0;color:#fff;white-space:normal}</style>"
   );
 
 
