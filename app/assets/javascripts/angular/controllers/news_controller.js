@@ -44,8 +44,8 @@ homeApp.controller('newsController', ["$scope", "$mdSidenav", 'newsService', '$l
     $scope.refresh_data = function(active_item){
         delete $scope.active_tag;
         $scope.info.loading = true;
+        $scope.active_tag = active_item;
         newsService.get_community_details(active_item.id).then(function(data){
-            $scope.active_tag = active_item;
             $scope.active_tag = data[0].most_important_tag[0];
             angular.forEach($scope.active_tag.books, function(value){
                 var random_int = Math.floor(Math.random()*ColorConstants.value.length);
