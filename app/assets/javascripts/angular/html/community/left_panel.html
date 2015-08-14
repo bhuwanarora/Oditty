@@ -41,7 +41,18 @@
                     <span class="icon-twitter"></span>
                 </div>
             </a>
+            <a title="website" ng-if="active_tag.website_url" 
+                class="md-whiteframe-z1 google-plus" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="{{::active_tag.website_url}}">
+                <div>
+                    <i class="material-icons">link</i>
+                </div>
+            </a>
         </div>
+
+        <div ng-if="::active_tag.description" ng-bind-html="::active_tag.description" class="description_card" 
+            layout-padding></div>
 
         <h3 ng-if="(active_tag.users && active_tag.users.length > 0) || (active_tag.users.length == 1 && active_tag.users[0].first_name != null)" layout-padding>
             <div>
