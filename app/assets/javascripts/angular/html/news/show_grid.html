@@ -26,7 +26,7 @@
 					ng-click="refresh_data(community)" 
 					ng-disabled="info.loading" layout="column" flex-sm="100">
 					<div layout="row">
-						<img ng-src="{{::community.image_url}}" class="circular">
+					<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="circular" />
 						<div layout="column" layout-padding>
 							<div ng-class="{'bold': active_tag.name == community.name}" class="wrap capitalize">
 								{{::community.name}}

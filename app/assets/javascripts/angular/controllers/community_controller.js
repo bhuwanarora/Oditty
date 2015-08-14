@@ -1,16 +1,18 @@
 homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', 'bookService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce, bookService){
     
     $scope.get_detailed_community_info = function(){
-        newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
-            $scope.active_tag = angular.extend($scope.active_tag, data);
-            var follow_node = $scope.active_tag.follows_node;
-            if($scope.active_tag.wiki_url && $scope.active_tag.wiki_url != null){
-                $scope.active_tag.wiki_url = $sce.trustAsResourceUrl($scope.active_tag.wiki_url+"?action=render");
-            }
-            if(angular.isDefined(follow_node) && (follow_node != null)){
-                $scope.active_tag.status = true;
-            }
-        });
+        if(angular.isDefined($scope.active_tag)){
+            newsService.get_detailed_community_info($scope.active_tag.id).then(function(data){
+                $scope.active_tag = angular.extend($scope.active_tag, data);
+                var follow_node = $scope.active_tag.follows_node;
+                if($scope.active_tag.wiki_url && $scope.active_tag.wiki_url != null){
+                    $scope.active_tag.wiki_url = $sce.trustAsResourceUrl($scope.active_tag.wiki_url+"?action=render");
+                }
+                if(angular.isDefined(follow_node) && (follow_node != null)){
+                    $scope.active_tag.status = true;
+                }
+            });
+        }
     }
 
     $scope.search_books = function(q){
