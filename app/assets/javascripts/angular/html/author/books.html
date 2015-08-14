@@ -1,8 +1,10 @@
 <div layout="row" layout-wrap>
     <section ng-repeat="book in author.books | limitTo: 10" layout-margin>
-        <md-button aria-label="show_book_dialog" ng-click="show_book_dialog(book, $event)" 
-            class="md-whiteframe-z1 clear rd_book_container" >
-            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-        </md-button>
+    	<a ng-href="/book?id={{book.id || book.book_id}}">
+	        <md-button aria-label="show_book_dialog"
+	            class="md-whiteframe-z1 clear rd_book_container" >
+	            <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+	        </md-button>
+    	</a>
     </section>
 </div>
