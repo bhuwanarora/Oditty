@@ -594,7 +594,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/rooms.html',
-    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap class=\"feed_margin\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
+    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap class=\"feed_margin\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{width:100%;position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
   );
 
 
@@ -654,7 +654,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/rooms/room.html',
-    "<div class=\"white round_corners room_container\"><div class=\"room_image_wrapper\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png\"></div><div layout-padding><a ng-bind-html=\"room.name\" class=\"big_title\" ng-href=\"/room?id={{room.id}}\"></a><div class=\"less_important\">{{room.view_count}} Views</div><a ng-href=\"/room?id={{room.id}}\"><md-button ng-if=\"room.status\" class=\"md-button-clear\">View</md-button></a><br><md-button ng-click=\"join_room(room)\" ng-if=\"!room.status\" class=\"md-button-clear md-raised\">Join</md-button></div></div>"
+    "<div class=\"white round_corners room_container\"><div class=\"room_image_wrapper\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png\"></div><br><div><a ng-bind-html=\"room.name\" class=\"big_title\" ng-href=\"/room?id={{room.id}}\"></a><div class=\"less_important\">{{room.view_count}} Views</div><a ng-href=\"/room?id={{room.id}}\"><md-button ng-if=\"room.status\" class=\"md-button-clear\">View</md-button></a><br><md-button ng-click=\"join_room(room)\" ng-if=\"!room.status\" class=\"md-button-clear md-raised\">Join</md-button></div></div>"
   );
 
 
