@@ -121,6 +121,7 @@ module GenreHelper
 	# end
 
 	def self.merge_common_category_genre_in_range search_prefix
+		return_output = 0
 		clause  = GenreHelper.match_in_range_with_category search_prefix
 		clause += GenreHelper.exact_match_with_category
 		clause += GenreHelper.copy_category_properties
@@ -129,11 +130,13 @@ module GenreHelper
 					" RETURN ID(genre) AS id_g, genre.name AS name_g, ID(category) AS id_c, category.name AS name_c "
 		output = clause.execute
 		if output.present?
+			return_output = 1
 			@@logger.info("Search_prefix: #{search_prefix} Genre_id: #{output[0]['id_g']}, Genre_name: #{output[0]['name_g']}, Category_id: #{output[0]['id_c']}, Category_name: #{output[0]['name_c']}")
 			GenreHelper.delete_category_node(output[0]["id_c"]).execute
 		else
 			@@logger.info("Changing Search_prefix...")
 		end
+		return_output
 	end
 
 	def self.merge_common_category_genre
