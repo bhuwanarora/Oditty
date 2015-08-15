@@ -12,6 +12,7 @@ class User::FacebookUser < User
 	end
 
 	def self.set_name name
-		" SET user.name = COALESCE(user.name, \"" + name + "\" ) "
+		" SET user.name = COALESCE(user.name, \"" + name + "\" ), "\
+		" user.first_name = COALESCE(user.first_name, \'" + name + "\') "
 	end
 end 
