@@ -5,7 +5,7 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 	}
 
 	$scope.toggle_follow = function(user){
-		if(angular.isDefined(user.status) && status != null){
+		if(angular.isDefined(user.status) && user.status != null){
 			user.status = null;
 			userService.follow(user.id, false);
 		}
