@@ -24,11 +24,11 @@ class Community < Neo
 	end
 
 	def get_news skip_count=0
-		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count, community.facebook_url AS facebook_url, community.twitter_url AS twitter_url, community.wiki_url AS wiki_url "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count, community.facebook_url AS facebook_url, community.twitter_url AS twitter_url, community.wiki_url AS wiki_url, community.description AS description "
 	end
 
 	def self.short_info
