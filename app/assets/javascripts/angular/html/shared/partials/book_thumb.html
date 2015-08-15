@@ -1,7 +1,3 @@
-<div class="bookmark">
-    <bookmark bookmark-id="book.id || book.book_id" bookmark-type="'Book'" ng-if="book"
-            shelves="book.shelves"></bookmark>
-</div>
 <div ng-style="{background:'{{book.color | random_color}}'}" class="rd_book_backup_cover" 
         layout="column">
     <img src="/assets/defpicbook.png"  class="default_book_cover"/>
@@ -20,7 +16,7 @@
     <img ng-src="{{book | choose_medium_thumb}}" class="rd_book_image_cover" onerror="this.src=''">
 </div>
 <div layout-padding class="wrap">
-    <div>{{book.title}}</div>
+    <div class="grey_color">{{book.title}}</div>
     <div class="less_important">{{book.author_name}}</div>
 </div>
 <br/>

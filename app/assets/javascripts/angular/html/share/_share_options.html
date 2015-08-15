@@ -62,10 +62,8 @@
             </md-content>
             <md-content ng-if="searched_books && searched_books.length > 0" 
                         layout="row" layout-wrap layout-padding class="white">
-                <div layout-padding ng-repeat="book in searched_books">
-                    <md-button aria-label="add_book" ng-click="add_book(book)" class="clear book_image_cover">
-                        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
-                    </md-button>
+                <div layout-padding ng-repeat="book in searched_books" class="rd_book_container">
+                    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
                 </div>
             </md-content>
         </div>
