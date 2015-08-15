@@ -133,7 +133,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/community/header.html',
-    "<div class=\"light_grey md-whiteframe-z1\" layout=\"row\" layout-align=\"center center\" layout-padding><a ng-href=\"#room/books\" ng-class=\"get_active_class('room/books')\" layout-padding>Books</a> <a ng-href=\"#room/news\" ng-class=\"get_active_class('room/news')\" layout-padding>News</a> <a ng-href=\"#room/videos\" ng-class=\"get_active_class('room/videos')\" layout-padding>Videos</a> <a ng-href=\"#room/wiki\" ng-class=\"get_active_class('room/wiki')\" layout-padding>Wiki</a></div>"
+    "<div class=\"light_grey md-whiteframe-z1\" layout=\"row\" layout-align=\"center center\" layout-padding><a ng-href=\"#room/books\" ng-class=\"get_active_class('room/books')\" layout-padding><div><i class=\"material-icons\">library_books</i></div><div hide-sm>Books</div></a> <a ng-href=\"#room/news\" ng-class=\"get_active_class('room/news')\" layout-padding><div><i class=\"material-icons\">local_library</i></div><div hide-sm>News</div></a> <a ng-href=\"#room/videos\" ng-class=\"get_active_class('room/videos')\" layout-padding><div><i class=\"material-icons\">video_library</i></div><div hide-sm>Videos</div></a> <a ng-href=\"#room/wiki\" ng-class=\"get_active_class('room/wiki')\" layout-padding><div><i class=\"material-icons\">toys</i></div><div hide-sm>Wiki</div></a></div>"
   );
 
 
