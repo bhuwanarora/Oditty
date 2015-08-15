@@ -17,7 +17,7 @@
                         </div>
                     </div>
                 </a></h2>
-                <a href="/customise" class="white_color" ng-show="hide_follow">
+                <a href="/customise" class="white_color" ng-hide="hide_follow">
                     <span class="material-icons">edit</span>
                 </a>
             </div>
@@ -38,7 +38,10 @@
                 <a href="#/profile/feed" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/feed')">
                         <div layout="column" layout-align="center center">
-                            <div>Feed</div>
+                            <div show-sm>
+                                <i class="material-icons">home</i>
+                            </div>
+                            <div hide-sm>Feed</div>
                             <!-- <h2></h2> -->
                         </div>
                     </div>
@@ -46,7 +49,10 @@
                 <a href="#/profile/rooms" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/rooms')">
                         <div layout="column" layout-align="center center">
-                            <div>Rooms</div>
+                            <div show-sm>
+                                <i class="material-icons">room</i>
+                            </div>
+                            <div hide-sm>Rooms</div>
                             <!-- <h2>{{profile_user.room_count || 0}}</h2> -->
                         </div>
                     </div>
@@ -54,7 +60,10 @@
                 <a href="#/profile/books" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/books')">
                         <div layout="column" layout-align="center center">
-                            <div>Books</div>
+                            <div show-sm>
+                                <i class="material-icons">library_books</i>
+                            </div>
+                            <div hide-sm>Books</div>
                             <!-- <h2>{{profile_user.books_count || 0}}</h2> -->
                         </div>
                     </div>
@@ -62,7 +71,10 @@
                 <a href="#/profile/news" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/news')">
                         <div layout="column" layout-align="center center">
-                            <div>News</div>
+                            <div show-sm>
+                                <i class="material-icons">local_library</i>
+                            </div>
+                            <div hide-sm>News</div>
                             <!-- <h2>{{profile_user.news_count || 0}}</h2> -->
                         </div>
                     </div>
@@ -70,7 +82,10 @@
                 <a href="#/profile/followers" layout-padding class="no_underline">
                      <div class="nav_links" ng-class="get_active_class('profile/followers')">
                         <div layout="column" layout-align="center center">
-                            <div>Followers</div>
+                            <div show-sm>
+                                <i class="material-icons">people_outline</i>
+                            </div>
+                            <div hide-sm>Followers</div>
                             <!-- <h2>{{profile_user.followed_by_count || 0}}</h2> -->
                         </div>
                     </div>
@@ -79,7 +94,10 @@
                  <a href="#/profile/followings" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/followings')">
                         <div layout="column" layout-align="center center">
-                            <div>Following</div>
+                            <div show-sm>
+                                <i class="material-icons">people</i>
+                            </div>
+                            <div hide-sm>Following</div>
                             <!-- <h2>{{profile_user.follows_count || 0}}</h2> -->
                         </div>
                     </div>
@@ -87,7 +105,10 @@
                  <a href="#/profile/history" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/history')">
                         <div layout="column" layout-align="center center">
-                            <div>History</div>
+                            <div show-sm>
+                                <i class="material-icons">history</i>
+                            </div>
+                            <div hide-sm>History</div>
                             <!-- <h2>{{profile_user.history_count || 0}}</h2> -->
                         </div>
                     </div>

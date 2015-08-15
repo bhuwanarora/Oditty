@@ -121,7 +121,7 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
     $scope.add_book = function(book){
         if($rootScope.active_shelf){
             var bookmark_object = {"id": (book.id || book.book_id), "type": 'Book'};
-            sharedService.toggle_bookmark($rootScope.active_shelf, false, bookmark_object);
+            sharedService.toggle_bookmark($rootScope.active_shelf, false, bookmark_object, $scope);
             delete $rootScope.active_shelf;
             $scope.info.show_share = false;
         }

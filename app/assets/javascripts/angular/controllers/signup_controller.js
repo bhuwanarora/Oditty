@@ -160,9 +160,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             if(angular.isUndefined($rootScope.user)){
                 $rootScope.user = {};
             }
-            Facebook.api('me/picture?redirect=false&type=large', function(response){
-                websiteService.save_user_info(response);
-            });
+            
             websiteService.handle_facebook_user(response).then(function(data){
                 $rootScope.user = angular.extend($rootScope.user, data);
                 $scope._init_user();

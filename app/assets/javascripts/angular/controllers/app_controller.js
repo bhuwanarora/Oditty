@@ -121,6 +121,12 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
             });
         }
 
+        var _fetch_picture = function(){
+            Facebook.api('me/picture?redirect=false&type=large', function(response){
+                websiteService.save_user_info(response);
+            });
+        }
+
         var _fetch_likes = function(){
             Facebook.api('me/likes', function(response){
                 websiteService.handle_facebook_likes(response);
@@ -200,7 +206,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
             else{
                 _fetch_likes();
             }
-
+            _fetch_picture();
         });
     }
 

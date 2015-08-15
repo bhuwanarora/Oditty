@@ -45,10 +45,10 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "name" : "Blanching(Cooking)",
                         "id": 5107299
                     },
-                    // {
-                    //     "name" : "Military Sociology",
-                    //     "id": 5020956
-                    // },
+                    {
+                        "name" : "Kumaon Literary Festival",
+                        "id": 5408842
+                    },
                     {
                         "name" : "Medicine",
                         "id": 5020467
@@ -57,14 +57,14 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "name" : "Pornography Ring",
                         "id": 5002021
                     },
-                    // {
-                    //     "name" : "Movies",
-                    //     "id": 4978987
-                    // },
-                    // {
-                    //     "name" : "Economics",
-                    //     "id": 5020765
-                    // },
+                    {
+                        "name" : "Harry Potter Universe",
+                        "id": 5250069
+                    },
+                    {
+                        "name" : "Sports Cars",
+                        "id": 4978290
+                    },
                     {
                         "name" : "Ghost",
                         "id": 5014454
@@ -96,11 +96,12 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                     {
                         "name" : "Space",
                         "id": 4975850
-                    }
-                    // {
-                    //     "name" : "Ancient Species",
-                    //     "id": 4982520
-                    // }
+                    },
+                    {
+                        "name" : "Terrorism",
+                        "id": 5035970
+                    },
+
                 ];
                 return rooms;
             }
