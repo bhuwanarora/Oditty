@@ -119,4 +119,12 @@ class Neo
 		" WHERE ID(" + nodename + ") >= " + start_id.to_s + " "\
 		" WITH " + nodename + " ORDER BY ID(" + nodename + ") LIMIT " + (step_size).to_s + " "
 	end
+
+	def self.match_multiple_nodes_by_id name_id_hash
+		clause  = " MATCH " + name_id_hash.map{|name, id| ("(" + name + ")")}.join(", ")
+		clause += " WHERE "
+		clause += name_id_hash.map{|name, id| ("ID(" + name + ")=" + id.to_s)}.join(" AND ")
+		clause += " WITH " + name_id_hash.map{|name, id| (name)}.join(", ")
+		clause
+	end
 end

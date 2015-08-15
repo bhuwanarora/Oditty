@@ -50,8 +50,29 @@ module GenreHelper
 				" WITH genre, category "
 	end
 
-	
-	def self.copy_category_edges
+	# def self.copy_category_edges init_clause
+	# 	params = {
+	# 		:source_node 		=> "category",
+	# 		:destination_node	=> "genre",
+	# 		:init_clause 		=> init_clause
+	# 	}
+
+	# 	params[:edge_types] = {
+	# 							'FromCategory' 	=> ['Book'],
+	# 							'HasRoot' 		=> ['Category'],
+	# 							'Likes' 		=> ['User'],
+	# 							'HasChild' 		=> ['Category']
+	# 	}
+
+	# 	clause = GraphHelper.generic_copy_incoming_edges params
+	# 	params[:edge_types] = {
+	# 							'HasRoot' 		=> ['Category'],
+	# 							'HasChild' 		=> ['Category']
+	# 	}
+	# 	clause += GraphHelper.generic_copy_outgoing_edges params
+	# end
+
+	def self.optional_copy_category_edges
 		params = {
 			:source_node 		=> "category",
 			:destination_node	=> "genre",
@@ -63,13 +84,13 @@ module GenreHelper
 								'Likes' 		=> ['User'],
 								'HasChild' 		=> ['Category']
 		}
-		clause = GraphHelper.generic_copy_incoming_edges params
+		clause = GraphHelper.generic_optional_copy_incoming_edges params
 		params[:edge_types] = {
 								'HasRoot' 		=> ['Category'],
 								'HasChild' 		=> ['Category']	
 		}
 		params[:with_elements] = []
-		clause += GraphHelper.generic_copy_outgoing_edges params
+		clause += GraphHelper.generic_optional_copy_outgoing_edges params
 	end
 
 	def self.delete_category_node node_id
@@ -80,11 +101,30 @@ module GenreHelper
 		""
 	end
 
+	# def self.merge_common_category_genre_in_range_multiple_cyphers search_prefix
+	# 	clause  = GenreHelper.match_in_range_with_category search_prefix
+	# 	clause += GenreHelper.exact_match_with_category
+	# 	clause += GenreHelper.copy_category_properties
+	# 	clause += " RETURN ID(category) AS category_id, ID(genre) AS genre_id "
+	# 	output = clause.execute
+	# 	if output.present?
+	# 		clause = Neo.match_multiple_nodes_by_id({"category" => output[0]["category_id"], "genre" => output[0]["genre_id"]})
+	# 		GenreHelper.copy_category_edges clause
+	# 		clause += " SET genre:Category "\
+	# 				" RETURN ID(genre) AS id_g, genre.name AS name_g, ID(category) AS id_c, category.name AS name_c "
+	# 		output = clause.execute
+	# 		@@logger.info("Search_prefix: #{search_prefix} Genre_id: #{output[0]['id_g']}, Genre_name: #{output[0]['name_g']}, Category_id: #{output[0]['id_c']}, Category_name: #{output[0]['name_c']}")
+	# 		GenreHelper.delete_category_node(output[0]["id_c"]).execute
+	# 	else
+	# 		@@logger.info("Changing Search_prefix...")
+	# 	end
+	# end
+
 	def self.merge_common_category_genre_in_range search_prefix
 		clause  = GenreHelper.match_in_range_with_category search_prefix
 		clause += GenreHelper.exact_match_with_category
 		clause += GenreHelper.copy_category_properties
-		clause += GenreHelper.copy_category_edges
+		clause += GenreHelper.optional_copy_category_edges
 		clause += " SET genre:Category "\
 					" RETURN ID(genre) AS id_g, genre.name AS name_g, ID(category) AS id_c, category.name AS name_c "
 		output = clause.execute
@@ -112,8 +152,10 @@ module GenreHelper
 		while (cur_index != "")
 			params[:prefix_search_index] = cur_index
 			cur_index = GraphHelper.manage_node_pair_index_prefix params
+			puts "Selected index: #{cur_index}"
 			matched   = GenreHelper.merge_common_category_genre_in_range(cur_index)
 			if matched == 0
+				puts "No match with #{cur_index}. Incrementing the index"
 				cur_index = GraphHelper.next_regex_recursive(cur_index, cur_index.length - 1)
 				$redis[category_genre_prefix_regex] = cur_index
 			end

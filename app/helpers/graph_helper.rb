@@ -506,7 +506,7 @@ module GraphHelper
 
 	def self.manage_node_pair_index_prefix params
 		prefix_search_index = params[:prefix_search_index]
-		reduction_allowed = (params[:reduction_allowed].present?)? params[:reduction_allowed]: true
+		reduction_allowed = (params[:reduction_allowed].nil?)? true: params[:reduction_allowed]
 		label_one = params[:node_label][0]
 		label_two = params[:node_label][1]
 		count_max_threshold = 45000
@@ -523,9 +523,9 @@ module GraphHelper
 		count_two = GraphHelper.count_node_with_prefix_index params_two
 		count = count_one*count_two
 		output_index = prefix_search_index
-		if count > count_max_threshold && prefix_search_index.length > 1
+		if count > count_max_threshold
 			params_new = params.clone
-			params[:prefix_search_index] + "a"
+			params_new[:prefix_search_index] = params[:prefix_search_index] + "a"
 			params_new[:reduction_allowed] = false
 			output_index = GraphHelper.manage_node_pair_index_prefix params_new
 		elsif prefix_search_index[-1] == 'a' && prefix_search_index.length > 1 && reduction_allowed == true
@@ -782,7 +782,7 @@ module GraphHelper
 		clause.execute
 	end
 
-	def self.generic_copy_incoming_edges params
+	def self.generic_optional_copy_incoming_edges params
 		clause 				= " "
 		source_node 		= params[:source_node]
 		destination_node 	= params[:destination_node]
@@ -801,8 +801,43 @@ module GraphHelper
 		end
 		clause
 	end
+	def self.generic_copy_incoming_edges params
+		init_clause 		= params[:init_clause]
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		output 				= []
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause = init_clause + ""\
+					" MATCH (" + source_node + ")<-[:" + edge_type + "]-(" + node + ":" + node_label + ") "\
+						"MERGE (" + destination_node + ")<-[:" + edge_type + "]-(" + node + ") "\
+						" RETURN ID(" + destination_node + ")"
+				output << clause.execute
+			end
+		end
+		output
+	end
 
 	def self.generic_copy_outgoing_edges params
+		init_clause 		= params[:init_clause]
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		output 				= []
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause = init_clause + ""\
+					" MATCH (" + source_node + ")-[:" + edge_type + "]->(" + node + ":" + node_label + ") "\
+						"MERGE (" + destination_node + ")-[:" + edge_type + "]->(" + node + ") "\
+						" RETURN ID(" + destination_node + ")"
+				output << clause.execute
+			end
+		end
+		output
+	end
+
+	def self.generic_optional_copy_outgoing_edges params
 		clause 				= " "
 		source_node 		= params[:source_node]
 		destination_node 	= params[:destination_node]
