@@ -3,7 +3,7 @@
 		<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png" />
 	</div>
 	<br/>
-	<div>
+	<div layout-padding>
 		<a ng-bind-html="room.name" class="big_title" ng-href="/room?id={{room.id}}"></a>
 		<div class="less_important">{{room.view_count}} Views</div>
 		<a ng-href="/room?id={{room.id}}">
