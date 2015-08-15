@@ -82,7 +82,14 @@ module Api
 
 			def add_new_label
 				user_id = session[:user_id]
-				info = Api::V0::WebsiteApi.add_new_label(user_id, params[:label], params[:type]).execute[0]
+				if params[:type]
+					if params[:type].downcase == "book"
+						type = "BookShelf"
+					else
+						type = "ArticleShelf"
+					end
+					info = Api::V0::WebsiteApi.add_new_label(user_id, params[:label], type).execute[0]
+				end
 				render :json => info, :status => 200
 			end
 
