@@ -102,7 +102,12 @@ class Blog < Neo
 	end
 
 	def self.create_next_post
-		" OPTIONAL MATCH (root_blog)-[relation:NextPost]->(old:Blog) FOREACH(ignoreMe IN CASE WHEN relation IS NOT NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)-[:NextPost]->(old) DELETE relation) FOREACH(ignoreMe IN CASE WHEN relation IS NULL AND old <> blog THEN [1] ELSE [] END | MERGE (root_blog)-[:NextPost]->(blog)) WITH blog  "
+		" MATCH (root_blog)-[relation:NextPost]->(old:Blog) "\
+		" DELETE relation "\
+		" MERGE (root_blog)-[:NextPost]->(blog) "\
+		" WITH root_blog, blog, old "\
+		" MERGE (blog)-[:NextPost]->(old) "\
+		" WITH blog "
 	end
 
 	def self.get_posts last_posted_time
@@ -114,5 +119,11 @@ class Blog < Neo
 
 	def self.basic_info
 		" ID(blog) AS blog_id, blog.title AS title, blog.image_url AS image_url , blog.posted_at AS posted_at, blog.like_count AS like_count, blog.blog_url AS blog_url, blog.excerpt AS excerpt, blog.reblog_count AS reblog_count, labels(blog) AS label "
+	end
+
+	def self.get_by_url url
+		" MATCH (blog:Blog) "\
+		" WHERE blog.url = \'" + url + "\'"\
+		" RETURN ID(blog) AS id "
 	end
 end
