@@ -28,6 +28,10 @@ class String
             .gsub("\"",%q(\\\')) rescue ""
     end
 
+    def escape_quotes
+        self.gsub('"','\\\\"').gsub("'","\\\\'")
+    end
+
 	def is_json?
         is_json = false
 	    begin
