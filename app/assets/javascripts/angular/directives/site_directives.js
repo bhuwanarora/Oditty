@@ -45,10 +45,10 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "name" : "Blanching(Cooking)",
                         "id": 5107299
                     },
-                    // {
-                    //     "name" : "Military Sociology",
-                    //     "id": 5020956
-                    // },
+                    {
+                        "name" : "Kumaon Literary Festival",
+                        "id": 5408842
+                    },
                     {
                         "name" : "Medicine",
                         "id": 5020467
