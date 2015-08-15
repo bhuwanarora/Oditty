@@ -21,15 +21,30 @@
                 layout-align="center center" layout-padding></div>
             <div layout-padding class="light_grey" layout-align="center center" layout="row" id="authorNav">
                 <a ng-href="#books" layout-padding 
-                    ng-class="get_active_class('books')">Books</a>
+                    ng-class="get_active_class('books')">
+                    <div><i class="material-icons">library_books</i></div>
+                    <div hide-sm>Books</div>
+                </a>
                 <a ng-href="#feed" layout-padding 
-                    ng-class="get_active_class('feed')">Feed</a>
+                    ng-class="get_active_class('feed')">
+                    <div><i class="material-icons">home</i></div>
+                    <div hide-sm>Feed</div>
+                </a>
                 <a ng-href="#interview" layout-padding 
-                    ng-class="get_active_class('interview')">Interview</a>
+                    ng-class="get_active_class('interview')">
+                    <div><i class="material-icons">speaker_notes</i></div>
+                    <div hide-sm>Interview</div>
+                </a>
                 <a ng-href="#wiki" layout-padding 
-                    ng-class="get_active_class('wiki')">Wiki</a>
+                    ng-class="get_active_class('wiki')">
+                    <div><i class="material-icons">toys</i></div>
+                    <div hide-sm>Wiki</div>
+                </a>
                 <a ng-href="#followers" layout-padding 
-                    ng-class="get_active_class('followers')">Followers</a>
+                    ng-class="get_active_class('followers')">
+                    <div><i class="material-icons">people_outline</i></div>
+                    <div hide-sm>Followers</div>
+                </a>
             </div>
             <div ng-if="author.has_birthday">
                 <img src="/assets/balloons.png" class="balloons">
