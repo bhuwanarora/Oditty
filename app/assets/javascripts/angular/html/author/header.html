@@ -22,28 +22,38 @@
             <div layout-padding class="light_grey" layout-align="center center" layout="row" id="authorNav">
                 <a ng-href="#books" layout-padding 
                     ng-class="get_active_class('books')">
-                    <div><i class="material-icons">library_books</i></div>
-                    <div hide-sm>Books</div>
+                    <div layout="column" layout-align="center center">
+                        <div><i class="material-icons">library_books</i></div>
+                        <div hide-sm>Books</div>
+                    </div>
                 </a>
                 <a ng-href="#feed" layout-padding 
                     ng-class="get_active_class('feed')">
-                    <div><i class="material-icons">home</i></div>
-                    <div hide-sm>Feed</div>
+                    <div layout="column" layout-align="center center">
+                        <div><i class="material-icons">home</i></div>
+                        <div hide-sm>Feed</div>
+                    </div>
                 </a>
                 <a ng-href="#interview" layout-padding 
                     ng-class="get_active_class('interview')">
-                    <div><i class="material-icons">speaker_notes</i></div>
-                    <div hide-sm>Interview</div>
+                    <div layout="column" layout-align="center center">
+                        <div><i class="material-icons">speaker_notes</i></div>
+                        <div hide-sm>Interview</div>
+                    </div>
                 </a>
                 <a ng-href="#wiki" layout-padding 
                     ng-class="get_active_class('wiki')">
-                    <div><i class="material-icons">toys</i></div>
-                    <div hide-sm>Wiki</div>
+                    <div layout="column" layout-align="center center">
+                        <div><i class="material-icons">toys</i></div>
+                        <div hide-sm>Wiki</div>
+                    </div>
                 </a>
                 <a ng-href="#followers" layout-padding 
                     ng-class="get_active_class('followers')">
-                    <div><i class="material-icons">people_outline</i></div>
-                    <div hide-sm>Followers</div>
+                    <div layout="column" layout-align="center center">
+                        <div><i class="material-icons">people_outline</i></div>
+                        <div hide-sm>Followers</div>
+                    </div>
                 </a>
             </div>
             <div ng-if="author.has_birthday">
