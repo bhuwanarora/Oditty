@@ -1,9 +1,9 @@
 class SubscriptionMailer < MandrillMailer::TemplateMailer
-    default from: 'developers@readersdoor.com'
+    default from: 'wizards@oditty.me'
 
     def invite(invitation='Coming Soon')
         mandrill_mail template: invitation[:template],
-                  subject: 'Welcome To Reader\'s Door',
+                  subject: 'Welcome To Oditty.me',
                   to: { email: invitation[:email], name: invitation[:name] },
                   vars: {
                     'USERNAME' => invitation[:name]
@@ -32,7 +32,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
     def follow params
         mandrill_mail template: params[:follow_template],
-                  subject: params[:friend][:name] + " started following you at ReadersDoor.",
+                  subject: params[:friend][:name] + " started following you at Oditty.",
                   to: { email: params[:user][:email]},
                   vars: {
                     'USERNAME' => params[:user][:name],
@@ -100,7 +100,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
     def subscribe(invitation)
         mandrill_mail template: invitation[:template],
-                  subject: 'Welcome To Reader\'s Door',
+                  subject: 'Welcome To Oditty.me',
                   to: { email: invitation[:email], name: invitation[:name] },
                   vars: {
                     'USERNAME' => invitation[:name]
@@ -111,7 +111,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
     def verify_email(invitation)
         mandrill_mail template: invitation[:template],
-                  subject: 'Verify Email: Reader\'s Door',
+                  subject: 'Verify Email: Oditty.me',
                   to: { email: invitation[:email] },
                   vars: {
                     'LINK' => invitation[:link]
@@ -141,7 +141,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
     def recover_password invitation
         mandrill_mail template: invitation[:template],
-                  subject: 'Recover Password: Reader\'s Door',
+                  subject: 'Recover Password: Oditty.me',
                   to: { email: invitation[:email] },
                   vars: {
                     'LINK' => invitation[:link]

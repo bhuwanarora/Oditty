@@ -13,7 +13,7 @@ class User::Info < User
 	end
 	
 	def self.set_last_login 
-		 " SET user.last_login = \"" + Time.now.strftime("%Y-%m-%d") + "\" "
+		 " SET user.last_login = \"" + Time.now.strftime("%Y-%m-%d") + "\" SET user.login_count = COALESCE(user.login_count,0) + 1 "
 	end
 
 	def self.set_verification_time time = Time.now.to_i.to_s

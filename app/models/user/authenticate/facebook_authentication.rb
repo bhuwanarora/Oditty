@@ -9,29 +9,30 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		if @params["email"]
 			puts "email exists".green
 			user = User::Info.get_by_email(@params["email"]).execute[0]
-			user_exists = user.present?
-			user_id = user_exists ? user["id"] : User.merge_by_email(@params["email"]).execute[0]["id"] 
+			user_exists = (user.present? && user["id"].present?)? true : false
+			user = User.merge_by_email(@params["email"]).execute[0] unless user_exists
 		else
 			puts "email does not exits".green
 			user = User::Info.get_by_fb_id(@params["id"]).execute[0]
-			user_exists = user.present?
-			user_id = user_exists ? user["id"] : User.merge_by_fb_id(@params["id"]).execute[0]["id"] 
+			user_exists = (user.present? && user["id"].present?)? true : false
+			user = User.merge_by_fb_id(@params["id"]).execute[0] unless user_exists
 		end
+		user_id = user["id"]
 		FacebookDataEntryWorker.perform_async(user_exists, @params, user_id)
 		if @params["thumb"].present? && user_id.present?
 			type = "user"
 			VersionerWorker.perform_async(user_id, @params["thumb"], type)
 		end
 		puts user_id.to_s
-		user_id
+		user
 	end
 
 	def update_user_without_email user_id
 		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + fb_set_clause 
 	end
 
-	def create_user_without_email user_id 
-		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + User::Feed.create_first + Label.match_primary + ", user " + User.link_basic_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + fb_set_clause 
+	def create_user_without_email user_id
+		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + fb_set_clause
 	end
 
 	def update_user_with_email user_id 
@@ -58,9 +59,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		end
 		set_clause = set_clause + property_clause
 		set_clause
-
 	end
-
 
 	def self.get_string_from_array(key, array)
 		key = key.to_s
