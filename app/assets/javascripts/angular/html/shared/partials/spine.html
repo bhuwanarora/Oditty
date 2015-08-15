@@ -1,7 +1,3 @@
 <section ng-repeat="book in books" layout-margin>
-	<md-button aria-label="show_book_dialog" class="rd_book_container clear white md-whiteframe-z1"
-		ng-click="show_book_dialog(book, $event)"
-		ng-if="book.title" >
-		<div  ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" class="relative" ></div>
-	</md-button>
+	<div  ng-include src="'/assets/angular/html/shared/partials/book_group.html'" class="rd_book_container" ></div>
 </section>
