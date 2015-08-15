@@ -387,7 +387,7 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
                 }
                 else{
                     $scope.shelves_loading = true;
-                    feedService.get_bookmarks($scope.bookmarkId).then(function(data){
+                    feedService.get_bookmarks($scope.bookmarkId, $scope.bookmarkType).then(function(data){
                         $rootScope.shelves = data;
                         $scope.shelves_loading = false;
                         $mdSidenav('right_bookmark').toggle();
