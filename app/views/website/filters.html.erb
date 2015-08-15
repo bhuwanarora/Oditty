@@ -1,4 +1,4 @@
-<div class="md-whiteframe-z1 light_grey" id="filters">
+<div class="md-whiteframe-z1" id="filters">
     <div ng-include src="'/assets/angular/html/library/_header.html'" layout="row" layout-align="space-between" class="full_width"
         layout-sm="column" layout-md="column"></div>
 </div>
@@ -47,10 +47,19 @@
         color: #333 !important;
     }
 
+    #filters{
+        /*position: fixed;
+        top: 48px;
+        left: 0px;
+        right: 0px;
+        z-index: 2;*/
+        background-color: white;
+    }
+
     md-autocomplete{
         min-width: inherit !important;
+        border: 1px solid #CACACA;
         /*box-shadow: none;*/
-        /*border: 1px solid #E8E8E8;*/
         /*margin: 6px;*/
     }
 
