@@ -47,7 +47,7 @@
 				<a ng-href="/room?id={{active_tag.id}}">
 					<h2 class="bold">{{active_tag.name}}</h2>
 				</a>
-				<md-button aria-label="toggle_follow"class="md-button-clear md-warn" 
+				<!-- <md-button aria-label="toggle_follow"class="md-button-clear md-warn" 
 					ng-disabled="info.loading"
 					ng-class="{'md-raised': !active_tag.status}" 
 					layout-margin
@@ -55,7 +55,7 @@
 		            <span ng-if="!active_tag.status">Join Room </span>
 		            <span ng-if="active_tag.status"> Joined</span>
 		            <span ng-if="!active_tag.status" class="icon-user-add"></span>
-		        </md-button>
+		        </md-button> -->
 			</div>
 			<h3 ng-if="active_tag.users && active_tag.users.length > 0" layout-padding>
 		        Readers in this room

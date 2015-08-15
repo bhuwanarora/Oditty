@@ -117,40 +117,48 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         });
     }
 
-    this.toggle_bookmark = function(label, data, bookmark_object){
-        var toast_position = {
-            bottom: false,
-            top: true,
-            left: false,
-            right: true
-        };
-
-        var _getToastPosition = function(){
-            return Object.keys(toast_position)
-                          .filter(function(pos) { return toast_position[pos]; })
-                          .join(' ');
+    this.toggle_bookmark = function(label, data, bookmark_object, scope){
+        if(angular.isUndefined($scope.info)){
+            $scope.info = {"loading": false};
         }
+        if(!$scope.info.loading){
+            $scope.info.loading = true;
+            var toast_position = {
+                bottom: false,
+                top: true,
+                left: false,
+                right: true
+            };
 
-        if(angular.isUndefined(data) || !data){
-            var status = true;
+            var _getToastPosition = function(){
+                return Object.keys(toast_position)
+                              .filter(function(pos) { return toast_position[pos]; })
+                              .join(' ');
+            }
+
+            if(angular.isUndefined(data) || !data){
+                var status = true;
+            }
+            else{
+                var status = false;
+            }
+
+
+            var id = bookmark_object.id;
+            var type = bookmark_object.type;
+            var shelf = (label.label_key || label.key);
+            var params = {"id": id, "type": type, "shelf": shelf, "status": status};
+            
+            shelfService.bookmark(params).then(function(){
+                $scope.info.loading = false;    
+                $mdToast.show({
+                    controller: 'toastController',
+                    templateUrl: 'assets/angular/html/shared/toast/bookmark_action.html',
+                    hideDelay: 3000,
+                    position: _getToastPosition()
+                });
+            });
         }
-        else{
-            var status = false;
-        }
-
-
-        var id = bookmark_object.id;
-        var type = bookmark_object.type;
-        var shelf = (label.label_key || label.key);
-        var params = {"id": id, "type": type, "shelf": shelf, "status": status};
-        
-        shelfService.bookmark(params);
-        $mdToast.show({
-            controller: 'toastController',
-            templateUrl: 'assets/angular/html/shared/toast/bookmark_action.html',
-            hideDelay: 6000,
-            position: _getToastPosition()
-        });
     }
 
     this.load_popular_books = function($scope, books){
