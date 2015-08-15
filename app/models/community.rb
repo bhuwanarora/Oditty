@@ -120,7 +120,7 @@ class Community < Neo
 	end
 
 	def self.merge community, url_list = {}
-		labels = NLPHelper.get_name_tags community
+		labels = NlpHelper.get_name_tags community
 		clause = " MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) "\
 		" ON CREATE SET "\
 		" community.name = \"" + community + "\", "\
