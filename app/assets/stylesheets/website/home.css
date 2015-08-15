@@ -9,6 +9,10 @@
 	padding: 0px;
 }
 
+.rd_book_container{
+	position: relative;
+}
+
 .rd_book_container:hover{
 	text-decoration: none !important;
 }
