@@ -11,6 +11,7 @@
 
 .rd_book_container{
 	position: relative;
+	background-color: white;
 }
 
 .rd_book_container:hover{
