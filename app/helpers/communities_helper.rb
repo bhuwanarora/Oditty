@@ -24,7 +24,9 @@ module CommunitiesHelper
 			if(news_metadata["available"]==false)
 				return
 			end
-			communities_books = []		
+			communities_books 	 = []
+			communities_videos   = {}
+			communities_web_urls = {}
 			relevance = []	 # This is the relevance which we will use
 			response = NewsHelper.fetch_tags news_metadata["news_link"]
 			puts response.red
