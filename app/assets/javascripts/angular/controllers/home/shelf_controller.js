@@ -10,6 +10,19 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
     };
 
     $scope.add_new_label = function(type){
+        var toast_position = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+
+        var _getToastPosition = function(){
+            return Object.keys(toast_position)
+                          .filter(function(pos) { return toast_position[pos]; })
+                          .join(' ');
+        }
+        
         var label_exists = false;
         if(angular.isUndefined($scope.new_label) || ($scope.new_label == "")){
             alert("Enter a valid shelf.");
@@ -26,6 +39,12 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
                         $scope.labels = [];
                     }
                     $scope.labels.push(data);
+                    $mdToast.show({
+                        controller: 'toastController',
+                        templateUrl: 'assets/angular/html/shared/toast/bookmark_action.html',
+                        hideDelay: 3000,
+                        position: _getToastPosition()
+                    });
                 });
             }
             else{

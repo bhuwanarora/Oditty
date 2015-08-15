@@ -18,8 +18,8 @@ homeApp.service('feedService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/personal_notifications', $q, $http);
     }
 
-    this.get_bookmarks = function(id){
-        return _deferred_request('/api/v0/get_bookmarks?id='+id, $q, $http);   
+    this.get_bookmarks = function(id, type){
+        return _deferred_request('/api/v0/get_bookmarks?id='+id+'&type='+type, $q, $http);   
     }
 
 }]);
