@@ -62,11 +62,9 @@
 		    </h3>
 			<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
 			<div layout="row" layout-padding layout-wrap>
-				<div layout-margin ng-repeat="book in active_tag.books" ng-if="book.title">
-					<md-button aria-label="show_book_dialog" class="clear rd_book_container md-whiteframe-z1" ng-click="show_book_dialog(book, $event)" >
-						<div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" >
-						</div>
-					</md-button>
+				<div layout-margin ng-repeat="book in active_tag.books" ng-if="book.title" class="rd_book_container">
+					<div ng-include src="'/assets/angular/html/shared/partials/book_group.html'" >
+					</div>
 				</div>
 			</div>
 		</div>

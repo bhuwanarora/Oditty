@@ -1,0 +1,7 @@
+<div class="md-whiteframe-z1 clear rd_book_container" >
+    <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'"></div>
+</div>
+<div class="bookmark">
+    <bookmark bookmark-id="book.id || book.book_id" bookmark-type="'Book'" ng-if="book"
+            shelves="book.shelves"></bookmark>
+</div>
