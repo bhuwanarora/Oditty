@@ -2,6 +2,7 @@ module RedisHelper::Community
 	def self.delete_basic_community_info params
 		# delete_basic_info
 		key = RedisHelper.get_key_basic_community_info params[:id]
+		# get_key_basic_info
 		$redis.del key
 	end
 
