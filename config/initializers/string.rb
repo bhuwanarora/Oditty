@@ -81,4 +81,8 @@ class String
     def database_ready
         self.gsub('"','\"').gsub("'","\'")
     end
+
+    def self.get_random stringlength = 6
+        (0...stringlength).map { (65 + rand(26)).chr }.join
+    end
 end

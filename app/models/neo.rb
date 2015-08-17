@@ -104,4 +104,27 @@ class Neo
 			DELETE elem "\
 			")"
 	end
+
+	def self.get_max_min_id label
+		output = ("MATCH (a:" + label + ") RETURN max(ID(a)) as max_id, min(ID(a)) as min_id").execute[0]
+		[output["max_id"], output["min_id"]]
+	end
+
+	def self.get_nodes_with_id_range params
+		start_id 	= params[:start_id]
+		step_size 	= params[:step_size]
+		label 		= params[:label]
+		nodename 	= label.downcase
+		" MATCH(" + nodename + ":" + label + ") "\
+		" WHERE ID(" + nodename + ") >= " + start_id.to_s + " "\
+		" WITH " + nodename + " ORDER BY ID(" + nodename + ") LIMIT " + (step_size).to_s + " "
+	end
+
+	def self.match_multiple_nodes_by_id name_id_hash
+		clause  = " MATCH " + name_id_hash.map{|name, id| ("(" + name + ")")}.join(", ")
+		clause += " WHERE "
+		clause += name_id_hash.map{|name, id| ("ID(" + name + ")=" + id.to_s)}.join(" AND ")
+		clause += " WITH " + name_id_hash.map{|name, id| (name)}.join(", ")
+		clause
+	end
 end
