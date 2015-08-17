@@ -24,11 +24,11 @@ class Community < Neo
 	end
 
 	def get_news skip_count=0
-		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.timestamp) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
 
 	def self.basic_info
-		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count, community.facebook_url AS facebook_url, community.twitter_url AS twitter_url, community.wiki_url AS wiki_url "
+		" community.view_count AS view_count, community.name AS name, ID(community) AS id, community.image_url AS image_url, labels(community) AS label, community.follow_count AS follow_count, community.facebook_url AS facebook_url, community.twitter_url AS twitter_url, community.wiki_url AS wiki_url, community.description AS description, community.website_url AS website_url "
 	end
 
 	def self.short_info
@@ -119,7 +119,8 @@ class Community < Neo
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
 
-	def self.merge community, wiki_url = ""
+	def self.merge community, url_list = {}
+		labels = NlpHelper.get_name_tags community
 		clause = " MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) "\
 		" ON CREATE SET "\
 		" community.name = \"" + community + "\", "\
@@ -128,10 +129,12 @@ class Community < Neo
 		" community.updated_at=" + Time.now.to_i.to_s + ", "\
 		" community.follow_count = 0, "\
 		" community.image_url = \"" + Community::CommunityImage.new(community).get_image + "\" "
-		if !wiki_url.nil? && !wiki_url.empty?
-			clause += ", community.wiki_url = \"" + wiki_url + "\" "\
-				" ON MATCH SET "\
-				" community.wiki_url = \"" + wiki_url + "\" "
+		if !url_list.nil? && !url_list.empty?
+			clause += " SET "
+			clause += url_list.map{|key,value| (" community." + key + "= \"" + value + "\"")}.join(", ")
+		end
+		if labels.present?
+			clause += " SET community " + labels.map{|label| (":" + label)}.join("")
 		end
 		clause += " WITH community "
 	end

@@ -142,15 +142,19 @@ class NewsSources < Neo
 	def self.consumer_thread
 		news_added_count = 0
 		while news_added_count < 100 || @@news_queue.size > 0
-			elememt = @@news_queue.pop
-			news_metadata = elememt[:news_metadata]
-			if elememt[:source] == NewsSources::GoogleNews
-				news_metadata["literature_news"] = false
+			if(@@news_queue.size > 0)
+				elememt = @@news_queue.pop
+				news_metadata = elememt[:news_metadata]
+				if elememt[:source] == NewsSources::GoogleNews
+					news_metadata["literature_news"] = false
+				else
+					news_metadata["literature_news"] = true
+				end
+				CommunitiesHelper.create news_metadata
+				news_added_count += 1
 			else
-				news_metadata["literature_news"] = true
+				sleep(5)
 			end
-			CommunitiesHelper.create news_metadata
-			news_added_count += 1
 		end
 	end
 end
