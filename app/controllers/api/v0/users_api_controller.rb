@@ -17,6 +17,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def invite
+				user_id = session[:user_id]
+				info = Api::V0::UserApi.invite(params, user_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def get_social_feed
 				if session[:user_id]
 					url = Rails.application.config.feed_service+"/api/v0/get_social_feed?skip="+params[:skip].to_s+"&count="+params[:count].to_s+"&user_id="+session[:user_id].to_s
