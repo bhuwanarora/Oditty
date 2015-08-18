@@ -954,7 +954,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/invite_email.html',
-    "<div layout=\"row\" layout-align=\"space-between\" ng-model=\"invite\"><md-input-container flex=\"70\" md-no-float><input placeholder=\"Enter email here...\" class=\"grey_color\" ng-model=\"email\" type=\"email\"></md-input-container><div layout-padding><md-button class=\"md-raised md-warn md-button-clear\" ng-click=\"send_invitation_mail()\" ng-disabled=\"!email\">Invite</md-button></div></div>"
+    "<div layout=\"row\" layout-align=\"space-between\" ng-model=\"invite\"><md-input-container flex=\"70\" md-no-float><input placeholder=\"Enter email here...\" class=\"grey_color\" ng-model=\"email\" type=\"email\"></md-input-container><div layout-padding><md-button class=\"md-raised md-warn md-button-clear\" ng-click=\"send_invitation_mail()\" ng-disabled=\"!email || sending_mail\"><div ng-show=\"!sending_mail\">Invite</div><div ng-show=\"sending_mail\">Sending...</div></md-button></div></div>"
   );
 
 
