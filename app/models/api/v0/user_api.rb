@@ -404,11 +404,12 @@ module Api
 			end
 
 			def self.invite params, user_id
-				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email]))[0]
+				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email])).execute[0]
+				debugger
 				if neo_output["invitee_id"].present?
 					output = 0
 				else
-					User::InvitedUser.invite(user_id, params[:email]).execute
+					neo_output = User::InvitedUser.invite(user_id, params[:email]).execute[0]
 			        email_params = {
 			            :user => {
 			                :name => neo_output['inviter_name'],
