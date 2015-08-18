@@ -10,7 +10,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 			puts "email exists".green
 			user = (User::Info.get_by_email(@params["email"]) + ", " + User::InvitedUser.invited_info).execute[0]
 			user_exists = (user.present? && user["id"].present?)
-			@params[:invited_by_someone] = user_exists && (user[User::InvitedUser::InvitationProperty] == true)
+			@params["invited_by_someone"] = user_exists && (user[User::InvitedUser::InvitationProperty] == true)
 			user = User.merge_by_email(@params["email"]).execute[0] unless user_exists
 		else
 			puts "email does not exits".green
