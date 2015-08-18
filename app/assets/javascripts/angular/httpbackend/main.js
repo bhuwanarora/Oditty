@@ -20,6 +20,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/get_bookmarks\?.*/).respond(function(method, url, data){
+        var data = ServerDataModel.get_bookmarks();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET(/api\/v0\/get_rooms\?.*/).respond(function(method, url, data){
         var data = ServerDataModel.get_rooms();
         return [200, data, {}];

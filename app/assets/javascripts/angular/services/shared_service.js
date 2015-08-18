@@ -118,11 +118,11 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.toggle_bookmark = function(label, data, bookmark_object, scope){
-        if(angular.isUndefined($scope.info)){
-            $scope.info = {"loading": false};
+        if(angular.isUndefined(scope.info)){
+            scope.info = {"loading": false};
         }
-        if(!$scope.info.loading){
-            $scope.info.loading = true;
+        if(!scope.info.loading){
+            scope.info.loading = true;
             var toast_position = {
                 bottom: false,
                 top: true,
@@ -150,7 +150,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             var params = {"id": id, "type": type, "shelf": shelf, "status": status};
             
             shelfService.bookmark(params).then(function(){
-                $scope.info.loading = false;    
+                scope.info.loading = false;    
                 $mdToast.show({
                     controller: 'toastController',
                     templateUrl: 'assets/angular/html/shared/toast/bookmark_action.html',
