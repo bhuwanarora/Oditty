@@ -42,7 +42,7 @@ class User::UserNotification < User
 	end
 
 	def self.create_for_new_user
-		" CREATE UNIQUE (user)-[:NextNotification{user_id:ID(user)}]->(user) CREATE UNIQUE (user)-[:VisitedNotification]->(user) WITH user "
+		" MERGE (user)-[:NextNotification{user_id:ID(user)}]->(user) MERGE (user)-[:VisitedNotification]->(user) WITH user "
 	end
 
 	def self.create_visited_notification
