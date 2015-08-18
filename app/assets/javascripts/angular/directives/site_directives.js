@@ -168,11 +168,12 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
 homeApp.directive('emailInvite', ["userService", "$timeout", function(userService, $timeout){
     return {
         restrict: 'E',
+        scope: {},
         controller: ["$scope", function($scope){
             $scope.send_invitation_mail = function(){
                 var email = $scope.invite.email;
                 userService.invite(email).then(function(data){
-                    $scope.invitation_sent = true;
+                    // $scope.invitation_sent = true;
                 });
             }
 

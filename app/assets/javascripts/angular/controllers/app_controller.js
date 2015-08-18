@@ -14,6 +14,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $mdDialog.show({
             templateUrl: 'assets/angular/html/shared/invite.html',
             clickOutsideToClose: true,
+            hasBackdrop: false,
             targetEvent: event
         });
         event.stopPropagation();
