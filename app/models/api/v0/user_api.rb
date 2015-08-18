@@ -405,23 +405,22 @@ module Api
 
 			def self.invite params, user_id
 				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email])).execute[0]
-				debugger
 				if neo_output["invitee_id"].present?
 					output = 0
 				else
 					neo_output = User::InvitedUser.invite(user_id, params[:email]).execute[0]
-			        email_params = {
-			            :user => {
-			                :name => neo_output['inviter_name'],
-			                :id => user_id
-			            },
-			            :friend => {
-			                :email => params[:email]
-			            },
-			            :template => 'invite'
-			        }
 			        output = 1
 			    end
+		        email_params = {
+		            :user => {
+		                :name => neo_output['inviter_name'],
+		                :id => user_id
+		            },
+		            :friend => {
+		                :email => params[:email]
+		            },
+		            :template => 'invite'
+		        }
 		        SubscriptionMailer.invite(email_params).deliver
 
 		        #TODO: 
