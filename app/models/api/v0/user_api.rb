@@ -421,8 +421,8 @@ module Api
 			            :template => 'invite'
 			        }
 			        output = 1
-			        SubscriptionMailer.invite(email_params).deliver
 			    end
+		        SubscriptionMailer.invite(email_params).deliver
 
 		        #TODO: 
 		        # Create an INACTIVE user, status=false with the email params[:email]..Set created_at
