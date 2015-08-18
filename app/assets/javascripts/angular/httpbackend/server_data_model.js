@@ -21,9 +21,51 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
                     "bookmark_count":202,
                     "notification_count":24,
                     "facebook_books_retrieval_time":1435324689,
-                    "facebook_likes_retrieval_time":null
+                    "facebook_likes_retrieval_time":null,
+                    "invite_count":1
         }
         return data;
+    }
+
+    this.get_bookmarks = function(){
+        var bookmarks = [
+            {
+                label_name: "Read",
+                label_id: 2617554,
+                public_status: true,
+                label_key: "Read",
+                status: null
+            },
+            {
+                label_name: "Not worth reading",
+                label_id: 2617689,
+                public_status: true,
+                label_key: "NotWorthReading",
+                status: null
+            },
+            {
+                label_name: "Have left a mark on me",
+                label_id: 2617688,
+                public_status: true,
+                label_key: "HaveLeftAMarkOnMe",
+                status: null
+            },
+            {
+                label_name: "Intending to read",
+                label_id: 2617555,
+                public_status: true,
+                label_key: "IntendingToRead",
+                status: null
+            },
+            {
+                label_name: "Currently reading",
+                label_id: 2617643,
+                public_status: true,
+                label_key: "CurrentlyReading",
+                status: null
+            }
+        ]
+        return bookmarks;
     }
 
     this.get_rooms = function(){
