@@ -20,14 +20,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     }
 
-    $scope.send_invitation_mail = function(email){
-        $scope.invitation_sent = true; 
-        userService.send_invitation_mail(email).then(function(data){
-           $scope.invitation_sent = true; 
-        });
-    }
-
-
     $scope.show_signin_options = function(event){
         $mdSidenav('signup').toggle();
         event.stopPropagation();
