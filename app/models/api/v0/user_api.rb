@@ -404,18 +404,24 @@ module Api
 			end
 
 			def self.invite params, user_id
-				name = User.new(user_id).get_basic_info[0]["first_name"]
-		        email_params = {
-		            :user => {
-		                :name => name, 
-		                :id => user_id
-		            }, 
-		            :friend => {
-		                :email => params[:email]
-		            }, 
-		            :template => 'invite'
-		        }
-		        SubscriptionMailer.invite(email_params).deliver
+				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email]))[0]
+				if neo_output["invitee_id"].present?
+					output = 0
+				else
+					User::InvitedUser.invite(user_id, params[:email]).execute
+			        email_params = {
+			            :user => {
+			                :name => neo_output['inviter_name'],
+			                :id => user_id
+			            },
+			            :friend => {
+			                :email => params[:email]
+			            },
+			            :template => 'invite'
+			        }
+			        output = 1
+			        SubscriptionMailer.invite(email_params).deliver
+			    end
 
 		        #TODO: 
 		        # Create an INACTIVE user, status=false with the email params[:email]..Set created_at
@@ -427,6 +433,7 @@ module Api
 		        # Send him an invitation mail
 		        # Create a mutual follow link between both the users
 		        # DONT search index this New User right now
+		        output
 			end
 
 			def self.save_info(user_id, params)
