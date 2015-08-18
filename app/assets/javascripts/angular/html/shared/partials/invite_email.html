@@ -4,7 +4,10 @@
 	</md-input-container>
 	<div layout-padding>
 	    <md-button class="md-raised md-warn md-button-clear" 
-	    	ng-click="send_invitation_mail()" 
-	    	ng-disabled="!email">Invite</md-button>
+	    	ng-click="send_invitation_mail()"
+	    	ng-disabled="!email || sending_mail">
+	    	<div ng-show="!sending_mail">Invite</div>
+	    	<div ng-show="sending_mail">Sending...</div>
+	    </md-button>
 	</div>
 </div>
