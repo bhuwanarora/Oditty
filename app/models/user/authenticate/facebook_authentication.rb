@@ -8,8 +8,9 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 		puts @params.to_s.red
 		if @params["email"]
 			puts "email exists".green
-			user = User::Info.get_by_email(@params["email"]).execute[0]
-			user_exists = (user.present? && user["id"].present?)? true : false
+			user = (User::Info.get_by_email(@params["email"]) + ", " + User::InvitedUser.invited_info).execute[0]
+			user_exists = (user.present? && user["id"].present?)
+			@params[:invited_by_someone] = user_exists && (user[User::InvitedUser::InvitationProperty] == true)
 			user = User.merge_by_email(@params["email"]).execute[0] unless user_exists
 		else
 			puts "email does not exits".green
@@ -32,7 +33,7 @@ class User::Authenticate::FacebookAuthentication < User::Authenticate
 	end
 
 	def create_user_without_email user_id
-		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + fb_set_clause
+		User.new(user_id).match + User::Info.set_last_login + " WITH user " + User::FacebookUser.new(@params).add_info + User.create_links_for_new + User::FacebookUser.create_facebook_user + ( @params["thumb"].present? ? User::Info.set_thumb(@params["thumb"]) : " " ) + User::FacebookUser.set_name(@params["name"]) + fb_set_clause
 	end
 
 	def update_user_with_email user_id 
