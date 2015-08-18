@@ -4,7 +4,7 @@ class FacebookDataEntryWorker
 	def perform(user_exists, params, user_id)
 		if params["email"].present?
 			puts " email : #{params["email"]}"
-			if user_exists && !params[:invited_by_someone]
+			if user_exists && !params["invited_by_someone"]
 				puts " user_exists"
 				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_with_email user_id 
 			elsif params[:invited_by_someone]
