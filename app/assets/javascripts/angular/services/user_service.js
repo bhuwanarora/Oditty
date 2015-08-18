@@ -20,6 +20,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return _deferred_request('/api/v0/get_social_feed?skip='+skip+'&count='+count, $q, $http);
     }
 
+    this.invite = function(email){
+        return _deferred_request('/api/v0/invite?email='+email, $q, $http);
+    }
+
     this.get_global_feed = function(skip, count){
         if(angular.isUndefined(skip)){
             skip = 0;

@@ -1,5 +1,24 @@
 <div hide-sm hide-md ng-if="info.mobile_search" 
     ng-include src="'/assets/angular/html/shared/partials/discovery_options.html'"></div>
+
+<div layout="row" layout-align="center center">
+    <div layout="column" layout-padding>
+        <a href="/profile" ng-if="info.mobile_search" hide-sm><div ng-bind-html="user.first_name"></div></a>
+        <div layout-align="space-between" layout="row">
+            <div></div>
+            <a href="/signup" class="less_important">Logout</a>
+        </div>
+    </div>
+    <a href="/profile" ng-if="info.mobile_search">
+        <div class="profile_link" layout="row" layout-align="center center">
+            <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">
+            <i class="material-icons md-48" ng-if="!user.image_url">account_circle</i>
+            <md-tooltip >
+                Profile
+            </md-tooltip>
+        </div>
+    </a>
+</div>
 <div class="pointer"  layout-padding
     ng-click="toggle_notifications($event)">
     <i class="material-icons"  ng-if="(!user.notification_count || user.notification_count == 0) && !info.notifications_seen">notifications_none</i>
@@ -9,20 +28,5 @@
     <md-tooltip >
         Notifications
     </md-tooltip>
-</div>
-<div>
-    <a href="/profile" ng-if="info.mobile_search" hide-sm>
-        <div class="profile_link pointer" layout="row" layout-align="center center">
-            <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">
-            <i class="material-icons md-48" ng-if="!user.image_url">account_circle</i>
-            <md-tooltip >
-                Profile
-            </md-tooltip>
-            <div ng-bind-html="user.first_name" layout-padding hide-md></div>
-        </div>
-    </a>
-</div>
-<div layout-padding>
-    <a href="/signup">Logout</a>
 </div>
 <!-- <div ng-if="info.mobile_search" ng-include src="'/assets/angular/html/shared/site_options.html'"></div> -->

@@ -70,7 +70,7 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 5014454
                     },
                     {
-                        "name" : "Adorable Selfie",
+                        "name" : "Self Portrait",
                         "id": 4996889
                     },
                     {
@@ -162,6 +162,21 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
             _init();
         }],
         templateUrl: '/assets/angular/html/home/partials/social_feed.html'
+    };
+}]);
+
+homeApp.directive('emailInvite', ["userService", "$timeout", function(userService, $timeout){
+    return {
+        restrict: 'E',
+        scope: {},
+        controller: ["$scope", function($scope){
+            $scope.send_invitation_mail = function(){
+                userService.invite($scope.email).then(function(data){
+                    // $scope.invitation_sent = true;
+                });
+            }
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/invite_email.html'
     };
 }]);
 

@@ -10,6 +10,15 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
     //     }
     // }
 
+    $scope.invite_friends = function(event){
+        $mdDialog.show({
+            templateUrl: 'assets/angular/html/shared/invite.html',
+            clickOutsideToClose: true,
+            hasBackdrop: false,
+            targetEvent: event
+        });
+        event.stopPropagation();
+    }
 
     $scope.show_signin_options = function(event){
         $mdSidenav('signup').toggle();
