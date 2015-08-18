@@ -38,7 +38,7 @@ class User::InvitedUser < User
 		" ON CREATE SET user." + InvitationProperty + "= true, user:" + Constant::EntityLabel::HiddenUser + " "\
 		" WITH user AS friend "\
 		" " + User.new(inviter_id).match + ", friend " + User::InvitedUser.user_invites_friend + " "\
-		" RETURN user.name AS inviter_name"
+		" RETURN user.first_name AS inviter_name"
 	end
 
 	def self.increment_followed_by_count
@@ -75,7 +75,7 @@ class User::InvitedUser < User
 
 	def self.check_before_invite inviter_id, invitee_email
 		User.new(inviter_id).match + " WITH user AS inviter "\
-		"OPTIONAL " + User.match_by_email(invitee_email) + " "\
-		"RETURN ID(user) AS invitee_id, user.name AS inviter_name "
+		"OPTIONAL " + User.match_by_email(invitee_email) + ", inviter "\
+		"RETURN ID(user) AS invitee_id, inviter.first_name AS inviter_name "
 	end
 end
