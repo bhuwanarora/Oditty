@@ -1,0 +1,10 @@
+<div layout="row" layout-align="space-between" ng-model="invite">
+	<md-input-container flex="70" md-no-float>
+	    <input placeholder="Enter email here..." class="grey_color" ng-model="email" type="email">
+	</md-input-container>
+	<div layout-padding>
+	    <md-button class="md-raised md-warn md-button-clear" 
+	    	ng-click="send_invitation_mail()" 
+	    	ng-disabled="!email">Invite</md-button>
+	</div>
+</div>

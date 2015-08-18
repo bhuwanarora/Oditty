@@ -470,6 +470,10 @@
                     </div>
                 </div>
             </div>
+            <md-button class="md-fab md-mini" aria-label="Invite" ng-click="invite_friends($event)">
+                <md-icon md-font-set="material-icons">person_add</md-icon>
+            </md-button>
+
             
             <md-progress-linear class="md-primary loader"
                                 ng-if="info.loading && !info.show_share"
