@@ -374,7 +374,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/network/show.html',
-    "<md-item ng-repeat=\"user in users_list\" class=\"white user_card md-whiteframe-z1\" layout-margin><md-item-content layout=\"row\" layout-align=\"center center\" flex class=\"clear\"><img ng-src=\"{{user.image_url}}\" class=\"square\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><a ng-href=\"/profile?p={{::user.id}}\"><div class=\"network_name\">{{::user.first_name}}</div></a></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><md-button aria-label=\"toggle_follow\" class=\"md-warn md-button-clear\" ng-class=\"{'md-raised': !user.status}\" ng-click=\"toggle_follow(user);\"><span ng-if=\"!user.status\">Follow</span> <span ng-if=\"user.status\">Following</span></md-button></md-item-content><md-item-content layout=\"column\" flex class=\"clear\"><div class=\"less_important\" layout=\"row\" layout-align=\"center center\">Recently Visited Books</div><div ng-repeat=\"book in user.books\" class=\"network_book\" ng-if=\"book.id\" layout-padding><a ng-href=\"/book?q={{::book.id}}\" class=\"less_important bold\"><span ng-bind-html=\"book.title\"></span> <span>by</span> <span ng-bind-html=\"book.author_name\"></span></a></div></md-item-content></md-item><style>.favourite_books{width:150px;height:180px;padding:5px}.network_name{margin:5px 0!important;font-size:1.2em;font-family:sans-serif}.user_photo{width:100px!important;height:100px!important}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow{height:110px}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow,.rd_book_image_cover{width:80px}.user_card{width:240px;padding:0;max-height:400px}.user_cover_image{margin-top:-70px}.user_card a:hover{text-decoration:underline}.network_book h5{display:none}#network md-tabs.md-default-theme md-tabs-wrapper{width:100%}#network md-tab-content{bottom:initial}</style>"
+    "<md-item ng-repeat=\"user in users_list\" class=\"white user_card md-whiteframe-z1\" layout-margin><md-item-content layout=\"row\" layout-align=\"center center\" flex class=\"clear\"><img ng-src=\"{{user.image_url}}\" class=\"square\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><a ng-href=\"/profile?p={{::user.id}}\"><div class=\"network_name\">{{::user.first_name}}</div></a></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><md-button aria-label=\"toggle_follow\" class=\"md-warn md-button-clear\" ng-class=\"{'md-raised': !user.status}\" ng-click=\"toggle_follow(user);\"><span ng-if=\"!user.status\">Follow</span> <span ng-if=\"user.status\">Following</span></md-button></md-item-content><md-item-content layout=\"column\" flex class=\"clear\"><div class=\"less_important\" layout=\"row\" layout-align=\"center center\">Recently Visited Books</div><div ng-repeat=\"book in user.books\" class=\"network_book\" ng-if=\"book.id\" layout-padding><a ng-href=\"/book?q={{::book.id}}\" class=\"less_important bold\"><span ng-bind-html=\"book.title\"></span> <span>by</span> <span ng-bind-html=\"book.author_name\"></span></a></div></md-item-content></md-item><md-button class=\"md-button-clear md-warn\" ng-click=\"load_users()\">Show more</md-button><style>.favourite_books{width:150px;height:180px;padding:5px}.network_name{margin:5px 0!important;font-size:1.2em;font-family:sans-serif}.user_photo{width:100px!important;height:100px!important}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow{height:110px}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow,.rd_book_image_cover{width:80px}.user_card{width:240px;padding:0;max-height:400px}.user_cover_image{margin-top:-70px}.user_card a:hover{text-decoration:underline}.network_book h5{display:none}#network md-tabs.md-default-theme md-tabs-wrapper{width:100%}#network md-tab-content{bottom:initial}</style>"
   );
 
 
@@ -559,12 +559,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/followers.html',
-    "<div layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+    "<div layout=\"row\" layout-align=\"center center\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
   );
 
 
   $templateCache.put('/assets/angular/html/profile/followings.html',
-    "<div layout=\"row\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+    "<div layout=\"row\" layout-align=\"center center\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
   );
 
 
@@ -850,6 +850,11 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
   $templateCache.put('/assets/angular/html/shared/home_header.html',
     "<section layout=\"row\" layout-wrap><div ng-include src=\"'/assets/angular/html/shared/logo.html'\" flex=\"20\" flex-sm=\"25\" layout=\"row\" layout-align=\"start center\"></div><div flex=\"40\" flex-md=\"45\" ng-controller=\"searchController\" flex-sm=\"10\" layout=\"row\" class=\"search_container\" layout-align=\"start center\" layout-align-sm=\"start center\"></div><div layout=\"row\" layout-align=\"center center\" flex=\"10\" flex-md=\"5\" flex-sm=\"30\" ng-if=\"info.mobile_search\"></div><div flex=\"30\" flex-sm=\"35\" layout=\"row\" layout-align=\"end center\" ng-if=\"info.hide_signin\" ng-include src=\"'/assets/angular/html/shared/right_nav_options.html'\"></div><div layout=\"row\" layout-align=\"center center\" ng-hide=\"info.mobile_search\" layout-fill layout-padding hide-md hide-lg ng-if=\"info.hide_signin\" ng-include src=\"'/assets/angular/html/shared/mobile_search.html'\"></div><div flex=\"30\" flex-sm=\"35\" layout=\"row\" layout-padding layout-align=\"end center\" ng-if=\"!info.hide_signin\" ng-include src=\"'/assets/angular/html/shared/sign_in.html'\"></div></section><div ng-if=\"!info.hide_signin\"><md-sidenav class=\"md-sidenav-right md-whiteframe-z2 side_panel\" md-component-id=\"signup\"><div ng-include=\"'assets/angular/html/home/partials/login_options.html'\"></div></md-sidenav></div><style>.search md-input-container label,.search .md-input{color:#333!important}.search input{color:#333!important}</style>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/invite.html',
+    ""
   );
 
 
