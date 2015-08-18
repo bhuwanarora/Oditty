@@ -106,7 +106,7 @@ class User < Neo
 	end
 
 	def get_all_books skip_count, limit_count=Constant::Count::BookCountShownOnSignup 
-		match + Bookmark::Node::BookLabel.match_path + User.return_init + "DISTINCT " + Book.basic_info + ", label.key as shelf " + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
+		match + Bookmark::Node::BookLabel.match_path_label + User.return_init + "DISTINCT " + Book.basic_info + ", label.key as shelf " + Book.order_desc + User.skip(skip_count) + User.limit(limit_count)
 	end
 
 	def self.create_label key
