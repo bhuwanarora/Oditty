@@ -1,0 +1,48 @@
+<md-dialog aria-label="Invite" class="invite_container" 
+    layout="row" layout-align="center center">
+    <div flex="10" hide-sm></div>
+    <div flex="80" flex-sm="100" layout="column">
+        <div layout-padding>
+            <div layout-padding></div>
+            <div class="big_title">Invite your friends</div>
+            <div class="less_important">You have invited {{user.invite_count || 0}} friends.</div>
+            <div layout-padding></div>
+        </div>
+        <md-divider></md-divider>
+        <div  layout="column" layout-padding layout-align="center center" class="full_width">
+            <div layout="column" layout-margin  class="full_width" layout="center center">
+                <div>
+                    <label class="less_important">Invite 1 of 5</label>
+                </div>
+                <email-invite></email-invite>
+            </div>
+            <div layout="column" layout-margin  class="full_width" layout="center center">
+                <div>
+                    <label class="less_important">Invite 2 of 5</label>
+                </div>
+                <email-invite></email-invite>
+            </div>
+            <div layout="column" layout-margin  class="full_width" layout="center center">
+                <div>
+                    <label class="less_important">Invite 3 of 5</label>
+                </div>
+                <email-invite></email-invite>
+            </div>
+            <div layout="column" layout-margin  class="full_width" layout="center center">
+                <div>
+                    <label class="less_important">Invite 4 of 5</label>
+                </div>
+                <email-invite></email-invite>
+            </div>
+            <div layout="column" layout-margin  class="full_width" layout="center center">
+                <div>
+                    <label class="less_important">Invite 5 of 5</label>
+                </div>
+                <email-invite></email-invite>
+            </div>
+            <div layout-padding></div>
+            <div layout-padding></div>
+        </div>
+    </div>
+    <div flex="10" hide-sm></div>
+</md-dialog>

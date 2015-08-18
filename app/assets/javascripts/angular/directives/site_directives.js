@@ -165,6 +165,29 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
     };
 }]);
 
+homeApp.directive('emailInvite', ["userService", "$timeout", function(userService, $timeout){
+    return {
+        restrict: 'E',
+        scope: {},
+        controller: ["$scope", function($scope){
+            $scope.send_invitation_mail = function(){
+                var email = $scope.invite.email;
+                userService.invite(email).then(function(data){
+                    // $scope.invitation_sent = true;
+                });
+            }
+
+            var _init = function(){
+                $scope.invite = {};
+            }
+
+            _init();
+            
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/invite_email.html'
+    };
+}]);
+
 homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
     return {
         restrict: 'E',
