@@ -20,9 +20,8 @@ module Api
 			def invite
 				user_id = session[:user_id]
 				invited = Api::V0::UserApi.invite(params, user_id)
-				status  = (invited == 1)? 200 : 304
 				message = (invited == 1)? "Success" : " User already present"
-				render :json => {:message => message}, :status => status
+				render :json => {:message => message}, :status => 200
 			end
 
 			def get_social_feed
