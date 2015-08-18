@@ -26,6 +26,47 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_bookmarks = function(){
+        var bookmarks = [
+            {
+                label_name: "Read",
+                label_id: 2617554,
+                public_status: true,
+                label_key: "Read",
+                status: null
+            },
+            {
+                label_name: "Not worth reading",
+                label_id: 2617689,
+                public_status: true,
+                label_key: "NotWorthReading",
+                status: null
+            },
+            {
+                label_name: "Have left a mark on me",
+                label_id: 2617688,
+                public_status: true,
+                label_key: "HaveLeftAMarkOnMe",
+                status: null
+            },
+            {
+                label_name: "Intending to read",
+                label_id: 2617555,
+                public_status: true,
+                label_key: "IntendingToRead",
+                status: null
+            },
+            {
+                label_name: "Currently reading",
+                label_id: 2617643,
+                public_status: true,
+                label_key: "CurrentlyReading",
+                status: null
+            }
+        ]
+        return bookmarks;
+    }
+
     this.get_rooms = function(){
         var data = [
             {
