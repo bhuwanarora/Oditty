@@ -69,8 +69,8 @@ class User::InvitedUser < User
 		match + User::InvitedUser.set_username_password_verification_token(email, password, verification_token) + User::InvitedUser.create_links_for_new + User.set_name(default_user_name) + User::InvitedUser.remove_invited_status + " WITH DISTINCT user " + User::InvitedUser.create_follows_link +  User.return_init + User.basic_info
 	end
 
-	def handle_new_from_facebook params
-		User::InvitedUser.new(params["id"]).match + User::Info.set_last_login + " WITH user " + User::InvitedUser.create_follows_link + User::FacebookUser.new(params).add_info + User.create_links_for_new + User::FacebookUser.create_facebook_user + ( params["thumb"].present? ? User::Info.set_thumb(params["thumb"]) : " " ) + User::FacebookUser.set_name(params["name"]) + User::InvitedUser.remove_invited_status + User::Authenticate::FacebookAuthentication.new(params).fb_set_clause
+	def handle_new_from_facebook params, user_id
+		User::InvitedUser.new(user_id).match + User::Info.set_last_login + " WITH user " + User::InvitedUser.create_follows_link + User::FacebookUser.new(params).add_info + User.create_links_for_new + User::FacebookUser.create_facebook_user + ( params["thumb"].present? ? User::Info.set_thumb(params["thumb"]) : " " ) + User::FacebookUser.set_name(params["name"]) + User::InvitedUser.remove_invited_status + User::Authenticate::FacebookAuthentication.new(params).fb_set_clause
 	end
 
 	def self.check_before_invite inviter_id, invitee_email
