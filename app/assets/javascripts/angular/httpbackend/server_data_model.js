@@ -21,7 +21,8 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
                     "bookmark_count":202,
                     "notification_count":24,
                     "facebook_books_retrieval_time":1435324689,
-                    "facebook_likes_retrieval_time":null
+                    "facebook_likes_retrieval_time":null,
+                    "invite_count":1
         }
         return data;
     }
