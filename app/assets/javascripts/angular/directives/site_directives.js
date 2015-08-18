@@ -70,7 +70,7 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 5014454
                     },
                     {
-                        "name" : "Adorable Selfie",
+                        "name" : "Self Portrait",
                         "id": 4996889
                     },
                     {
