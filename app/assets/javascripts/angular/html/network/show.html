@@ -27,9 +27,11 @@
         </div>
     </md-item-content>
 </md-item>
-<md-button class="md-button-clear md-warn" ng-click="load_users()">
-    Show more
-</md-button>
+<div layout-padding ng-if="users_list && users_list.length > 9">
+    <md-button class="md-button-clear md-warn" ng-click="load_users()">
+        Show more
+    </md-button>
+</div>
 <style>
     .favourite_books{
         width: 150px;
