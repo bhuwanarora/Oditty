@@ -944,3 +944,16 @@ h3 a:hover{
 .news_container img{
 	width: 100%;
 }
+
+.invite{
+	position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+.invite_container{
+	max-width:800px;
+	max-height:810px; 
+	min-width: 50vw; 
+	min-height: 50vh;
+}
