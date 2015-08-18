@@ -403,6 +403,39 @@ module Api
 				UsersGraphHelper.comment_on_book(user_id, params[:id], tweet)
 			end
 
+			def self.invite params, user_id
+				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email]))[0]
+				if neo_output["invitee_id"].present?
+					output = 0
+				else
+					User::InvitedUser.invite(user_id, params[:email]).execute
+			        email_params = {
+			            :user => {
+			                :name => neo_output['inviter_name'],
+			                :id => user_id
+			            },
+			            :friend => {
+			                :email => params[:email]
+			            },
+			            :template => 'invite'
+			        }
+			        output = 1
+			        SubscriptionMailer.invite(email_params).deliver
+			    end
+
+		        #TODO: 
+		        # Create an INACTIVE user, status=false with the email params[:email]..Set created_at
+		        # Set status=true in other users..
+		        # Call only active users in followers and followings...
+		        # On every signup completion set the status to true
+
+		        # Make sure 5 invitation emails he has sent are unique before this tasks is marked as done in the task list
+		        # Send him an invitation mail
+		        # Create a mutual follow link between both the users
+		        # DONT search index this New User right now
+		        output
+			end
+
 			def self.save_info(user_id, params)
 				if user_id.present?
 					if params[:email]

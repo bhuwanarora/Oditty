@@ -89,11 +89,11 @@ class User::Info < User
 		clause
 	end
 
-	def self.set_follows_count operation
+	def self.set_follows_count operation = "+"
 		" SET user.follows_count = COALESCE(user.follows_count,0)" + operation + "1 "
 	end
 
-	def self.set_followed_by_count operation
+	def self.set_followed_by_count operation = "+"
 		" SET user.followed_by_count = COALESCE(user.followed_by_count,0)" + operation + "1 "
 	end
 

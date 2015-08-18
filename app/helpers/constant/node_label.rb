@@ -7,5 +7,7 @@ module Constant::NodeLabel
 	BookmarkNode	= "BookmarkNode"
 	RatingNode		= "RatingNode"
 
-	BooklessCommunity = "BooklessCommunity"
+	BooklessCommunity 	= "BooklessCommunity"
+	Category			= "Category"
+	Genre				= "Genre"
 end

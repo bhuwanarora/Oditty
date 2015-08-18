@@ -13,7 +13,7 @@ module AuthorsHelper
 		author_batch_limit = 1000
 		while cur_id <= end_id
 			clause = AuthorsHelper.get_authors cur_id, author_batch_limit
-			clause += UniqueIndexHelper.set_unique_indices(Constant::EntityLabel::Author)
+			clause += UniqueSearchIndexHelper.set_unique_indices(Constant::EntityLabel::Author)
 			clause += " RETURN MAX(ID(author)) AS id"
 			output = clause.execute
 			if output.empty?

@@ -122,6 +122,7 @@ ReadersDoor::Application.routes.draw do
   get 'users'                           => "users#index",                       :as => "users"
   post "data"                           => "books#data",                        :as => "data"
   get "remove_trend"                    => "books#remove_trend",                :as => "remove_trend"
+  get "invite"                          => "users#invite",                      :as => "invite"
 
   get 'signup'                          => "website#signup",                    :as => "signup"
 

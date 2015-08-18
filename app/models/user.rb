@@ -98,7 +98,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count, user.invite_count AS invite_count "
 	end
 
 	def self.grouped_basic_info
@@ -155,10 +155,13 @@ class User < Neo
 		" WITH user "
 	end
 
-
 	def self.handle_new(email, password=nil, verification_token=nil)
 		default_user_name = email.split("@")[0]
-		User.create(email, password, verification_token) + User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User.set_name(default_user_name) +  User.return_init + User.basic_info
+		User.create(email, password, verification_token) + User.set_name(default_user_name) + User.create_links_for_new + User.return_init + User.basic_info
+	end
+
+	def self.create_links_for_new
+		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories
 	end
 
 	def get_notifications
@@ -276,8 +279,9 @@ class User < Neo
 			"" + User::Info.set_last_login + ") "
 	end
 
-	def self.get_sign_in_credential_by_email email
-		User.match_by_email(email) + User.set_last_login_for_verified_user + " WITH user " + User::Info.return_group(User.basic_info, User.authentication_info)  
+	def self.get_sign_in_credential_by_email email, include_hidden_user = false
+		exclude_hidden_user = include_hidden_user ? "" : (" WHERE NOT user:" + Constant::EntityLabel::HiddenUser + " WITH user ")
+		User.match_by_email(email) + exclude_hidden_user + User.set_last_login_for_verified_user + " WITH user " + User::Info.return_group(User.basic_info, User.authentication_info)
 	end
 
 	def self.match_by_email_verification_token email, verification_token
