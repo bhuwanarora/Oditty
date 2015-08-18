@@ -28,6 +28,10 @@ class String
             .gsub("\"",%q(\\\')) rescue ""
     end
 
+    def escape_quotes
+        self.gsub('"','\\\\"').gsub("'","\\\\'")
+    end
+
 	def is_json?
         is_json = false
 	    begin
@@ -76,5 +80,9 @@ class String
 
     def database_ready
         self.gsub('"','\"').gsub("'","\'")
+    end
+
+    def self.get_random stringlength = 6
+        (0...stringlength).map { (65 + rand(26)).chr }.join
     end
 end
