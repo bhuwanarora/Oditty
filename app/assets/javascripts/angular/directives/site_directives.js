@@ -171,18 +171,10 @@ homeApp.directive('emailInvite', ["userService", "$timeout", function(userServic
         scope: {},
         controller: ["$scope", function($scope){
             $scope.send_invitation_mail = function(){
-                var email = $scope.invite.email;
-                userService.invite(email).then(function(data){
+                userService.invite($scope.email).then(function(data){
                     // $scope.invitation_sent = true;
                 });
             }
-
-            var _init = function(){
-                $scope.invite = {};
-            }
-
-            _init();
-            
         }],
         templateUrl: '/assets/angular/html/shared/partials/invite_email.html'
     };
