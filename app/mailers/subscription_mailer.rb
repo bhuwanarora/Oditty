@@ -3,7 +3,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
 
     def invite params
         mandrill_mail template: params[:template],
-              subject: "Invitation from #{params[:user][:name]}",
+              subject: "#{params[:user][:name]} wants you to be a member of Oditty.me",
               to: { email: params[:friend][:email], name: params[:user][:name]},
               vars: {
                 'USERNAME'  =>  params[:user][:name],
