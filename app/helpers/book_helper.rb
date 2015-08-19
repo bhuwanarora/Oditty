@@ -51,4 +51,32 @@ module BookHelper
 		output
 	end
 
+	def self.calculate_book_reader_relationship_index review_count, rating_count
+		frac = review_count/rating_count
+		index = AlgorithmHelper.get_sigmoid(
+			{
+				:x => frac,
+				:alpha => Constant::RatingIndices::AlphaBookReaderRelationshipIndex,
+				:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex
+			})
+		index
+	end
+
+	def self.calculate_popularity_index rating_count, positive_bias = 2.5
+		max_index = Constant::RatingIndices::MaxBookPopularityIndex
+		binary_length = rating_count.to_s(2).gsub(/^0+/,"").length
+		index = (binary_length/positive_bias > max_index ) ? max_index : binary_length/positive_bias
+		index
+	end
+
+	def self.likability_index gr_rating
+		gr_rating*2
+	end
+
+	def self.goodness_index p_index, l_index, brr_index
+		(p_index + l_index + brr_index)/3
+	end
+
+	def self.set_metrics
+	end
 end

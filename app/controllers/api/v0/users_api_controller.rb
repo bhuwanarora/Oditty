@@ -172,7 +172,6 @@ module Api
 				render :json => info, :status => 200
 			end
 
-
 			def user_profile_info
 				if params[:id].present?
 					user_id = params[:id]
