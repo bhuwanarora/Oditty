@@ -21,7 +21,7 @@ class User::Suggest::BookSuggestion < User::Suggest
 	end
 
 	def on_friends_shelves
-		@user.match + UsersUser.match + Bookmark.match_path("book","friend") + Bookmark.match_not("book") + " WITH DISTINCT user, friend , book, label.key AS shelf " +  ::Book.order_desc + " WITH friend AS user, #{User::Suggest::BookSuggestion.collect_map("books" => (Book.grouped_basic_info + ", shelf: shelf "))} WITH #{User::Suggest::BookSuggestion.collect_map("info" => (User.grouped_basic_info + ", bookmark_count: user.bookmark_count "  ))}, books[0..4] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
+		@user.match + UsersUser.match + Bookmark.match_path_label("book","friend", "Book") + Bookmark.match_not("book") + " WITH DISTINCT user, friend , book, label.key AS shelf " +  ::Book.order_desc + " WITH friend AS user, #{User::Suggest::BookSuggestion.collect_map("books" => (Book.grouped_basic_info + ", shelf: shelf "))} WITH #{User::Suggest::BookSuggestion.collect_map("info" => (User.grouped_basic_info + ", bookmark_count: user.bookmark_count "  ))}, books[0..4] AS books " + User::Suggest::BookSuggestion.return_group("info", "books")  
 	end
 
 	def for_likeable_category(favourites = true, books_processed_count=0)
