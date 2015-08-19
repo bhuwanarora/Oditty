@@ -82,6 +82,10 @@ class Book < Neo
 		" WITH book "
 	end
 
+	def self.gr_info
+		" book.gr_reviews_count AS gr_reviews_count, book.gr_ratings_count AS gr_ratings_count, book.gr_rating AS gr_rating "
+	end
+
 	def self.get_books_by_isbn isbn_array
 		" MATCH (book:Book) WHERE " + isbn_array.map{|isbn| ( "book.isbn =~\'.*" + isbn.to_s.strip + ".*\'")}.join(" OR ") + ""\
 		" WITH book "

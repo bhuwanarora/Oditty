@@ -892,8 +892,8 @@ module GraphHelper
 		params[:step_size] = step_size
 		GraphHelper.iterative_entity_operations_log_setup params
 		while next_id <= max_id
-			debugger
 			clause  = Neo.get_nodes_with_id_range({:start_id => next_id, :step_size => step_size, :label => label_name})
+			params[:init_clause] = clause
 			clause += function_for_exec params
 			output  = clause.execute
 			if output.empty?

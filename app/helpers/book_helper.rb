@@ -1,5 +1,9 @@
-module BookHelper
+module BookHelper < GenericHelper
 	
+	def self.set_up_redis label, key = 'book_set_metrics'
+		super label, key
+	end
+
 	def self.set_author_list author_name_list,book_id
 		set_clause = "SET book.author_name_list = ["
 		author_name_list.each do |author_name|
@@ -52,7 +56,7 @@ module BookHelper
 	end
 
 	def self.calculate_book_reader_relationship_index review_count, rating_count
-		frac = review_count/rating_count
+		frac  = review_count/rating_count
 		index = AlgorithmHelper.get_sigmoid(
 			{
 				:x => frac,
@@ -69,14 +73,67 @@ module BookHelper
 		index
 	end
 
-	def self.likability_index gr_rating
+	def self.calculate_likability_index gr_rating
 		gr_rating*2
 	end
 
-	def self.goodness_index p_index, l_index, brr_index
+	def self.calculate_goodness_index p_index, l_index, brr_index
 		(p_index + l_index + brr_index)/3
 	end
 
+	def self.analyse_gr_indices_get_books_info
+		init_clause  = params[:init_clause]
+		init_clause += " RETURN DISTINCT ID(book) AS id, " + Book.gr_info
+		neo_output 	 = init_clause.execute
+		neo_output
+	end
+
+	def self.calculate_all_gr_indices neo_book
+		p_index 	= BookHelper.calculate_popularity_index neo_book["gr_ratings_count"]
+		l_index 	= BookHelper.calculate_likability_index neo_book["gr_rating"]
+		brr_index 	= BookHelper.calculate_book_reader_relationship_index neo_book["gr_reviews_count"], neo_book["gr_ratings_count"]
+		g_index 	= BookHelper.calculate_goodness_index p_index, l_index, brr_index
+		output 		= {
+			Constant::RatingIndices::BookPopularityIndex => p_index,
+			Constant::RatingIndices::BookLikabilityIndex => l_index,
+			Constant::RatingIndices::BookReaderRelationshipIndex => brr_index,
+			Constant::RatingIndices::BookGoodnessIndex => g_index,
+			"id" => neo_book["id"]
+		}
+		output
+	end
+
+	def self.analyse_gr_indices_calculate neo_output
+		calculated_output = []
+		neo_output.each do |book|
+			calculated_output << BookHelper.calculate_all_gr_indices book
+		end
+		calculated_output
+	end
+
+	def self.analyse_gr_indices_set_indices calculated_output
+		calculated_output.each do |book|
+			clause  = Neo.match_multiple_nodes_by_id({'book' => book['id']}) + " SET "
+			clause += book.map{|prop, val| ("book." + prop + " = " + val.to_s + " ")}.join(",")
+			clause.execute
+		end
+	end
+
+	def self.analyse_gr_indices params
+		neo_output 			= BookHelper.analyse_gr_indices_get_books_info
+		calculated_output 	= BookHelper.analyse_gr_indices_calculate neo_output
+		BookHelper.analyse_gr_indices_set_indices calculated_output
+		dummy_clause 		= " RETURN MAX(ID(book)) AS id "
+		dummy_clause
+	end
+
 	def self.set_metrics
+		params = {
+			:class 			=> BookHelper,
+			:label 			=> 'Book',
+			:function 		=> BookHelper.analyse_gr_indices,
+			:step_size 		=> 500
+		}
+		GraphHelper.iterative_entity_operations params
 	end
 end
