@@ -18,7 +18,7 @@ class Bookmark::Node::BookLabel < Bookmark::Node
 	end
 
 	def self.match_path_label
-		Bookmark.match_path_label "book", "User", "Book"
+		Bookmark.match_path_label "book", "user", "Book"
 	end
 
 	def self.optional_match_path
