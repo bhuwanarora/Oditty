@@ -19,7 +19,7 @@ module VideoHelper
 		params = {
 			:class 			=> VideoHelper,
 			:label 			=> 'Community',
-			:function 		=> VideoHelper.correct_link_has_video
+			:function 		=> VideoHelper.correct_link_has_video,
 			:step_size 		=> 1
 		}
 		GraphHelper.iterative_entity_operations params

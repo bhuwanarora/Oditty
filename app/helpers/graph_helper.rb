@@ -883,7 +883,7 @@ module GraphHelper
 		label_name 			= params[:label]
 		step_size  			= (params[:step_size].nil?)? 500 : params[:step_size].to_i
 		function_for_exec 	= params[:function]
-		log_output 			= params[:log_function].present?)? params[:log_function] : GraphHelper.default_logging_function
+		log_output 			= (params[:log_function].present?)? params[:log_function] : GraphHelper.default_logging_function
 
 		label_name = (label_name.nil?)? className.to_s : label_name
 		id_temp = className.set_up_redis label_name, (label_name + className + "_" + function_for_exec)
