@@ -9,7 +9,7 @@ class FacebookDataEntryWorker
 				clause = User::Authenticate::FacebookAuthentication.new(params).update_user_with_email user_id 
 			elsif params["invited_by_someone"]
 				puts " User was invited by someone "
-				clause = User::InvitedUser.handle_new_from_facebook params, user_id
+				clause = User::InvitedUser.new(user_id).handle_new_from_facebook(params)
 			else
 				puts " user does not exists"
 				clause = User::Authenticate::FacebookAuthentication.new(params).create_user_with_email user_id 
