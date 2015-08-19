@@ -444,6 +444,12 @@ namespace :graph do
     GenreHelper.set_search_indices
   end
 
+  desc "reset links from community to video"
+  task :set_community_video_links => :environment do
+    include VideoHelper
+    VideoHelper.repair_video_links_to_community
+  end
+
   desc " tests some function which one wants to test. "
   task :test_function => :environment do
     include GraphHelper
