@@ -403,25 +403,29 @@ module Api
 				UsersGraphHelper.comment_on_book(user_id, params[:id], tweet)
 			end
 
+			# Don't send email if user is active. otherwise send him email.
 			def self.invite params, user_id
+				output = 0
 				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email])).execute[0]
-				if neo_output["invitee_id"].present?
-					output = 0
-				else
-					neo_output = User::InvitedUser.invite(user_id, params[:email]).execute[0]
-			        output = 1
+				if !neo_output["invitee_id"].present? || neo_output[User::InvitedUser::InvitationProperty]
+					if neo_output["invitee_id"].present?
+						output = 0
+					else
+						neo_output = User::InvitedUser.invite(user_id, params[:email]).execute[0]
+				        output = 1
+				    end
+			        email_params = {
+			            :user => {
+			                :name => neo_output['inviter_name'],
+			                :id => user_id
+			            },
+			            :friend => {
+			                :email => params[:email]
+			            },
+			            :template => 'invite'
+			        }
+			        SubscriptionMailer.invite(email_params).deliver
 			    end
-		        email_params = {
-		            :user => {
-		                :name => neo_output['inviter_name'],
-		                :id => user_id
-		            },
-		            :friend => {
-		                :email => params[:email]
-		            },
-		            :template => 'invite'
-		        }
-		        SubscriptionMailer.invite(email_params).deliver
 
 		        #TODO: 
 		        # Create an INACTIVE user, status=false with the email params[:email]..Set created_at

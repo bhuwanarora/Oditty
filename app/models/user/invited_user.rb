@@ -76,6 +76,6 @@ class User::InvitedUser < User
 	def self.check_before_invite inviter_id, invitee_email
 		User.new(inviter_id).match + " WITH user AS inviter "\
 		"OPTIONAL " + User.match_by_email(invitee_email) + ", inviter "\
-		"RETURN ID(user) AS invitee_id, inviter.first_name AS inviter_name "
+		"RETURN ID(user) AS invitee_id, inviter.first_name AS inviter_name, " + User::InvitedUser.invited_info + " "
 	end
 end
