@@ -16,6 +16,18 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
+    $scope.show_indexes = function(book, event){
+        $mdDialog.show({
+            templateUrl: 'assets/angular/html/shared/rating.html',
+            clickOutsideToClose: true,
+            hasBackdrop: false,
+            targetEvent: event,
+            scope: $scope,
+            preserveScope: true
+        });
+        event.stopPropagation();
+    }
+
     $scope.remove_expanded_book = function(index){
         $scope.info.books.splice(index, 1);
         delete $scope.expanded_book;
@@ -43,7 +55,11 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                 "id": ($scope.info.books[index].id || $scope.info.books[index].book_id),
                 "isbn": $scope.info.books[index].isbn,
                 "root_category": $scope.info.books[index].root_category,
-                "bookmark_count": $scope.info.books[index].bookmark_count
+                "bookmark_count": $scope.info.books[index].bookmark_count,
+                "goodness_index": $scope.info.books[index].goodness_index,
+                "book_reader_relationship_index": $scope.info.books[index].book_reader_relationship_index,
+                "likeability_index": $scope.info.books[index].likeability_index,
+                "popularity_index": $scope.info.books[index].popularity_index
             }
             $scope.expanded_index = index;
             index = row_count*(Math.floor(index / row_count)) + row_count;

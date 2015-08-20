@@ -112,12 +112,15 @@
                     ng-if="info.cirular_loading">
             </md-progress-circular>
 
-            <md-button class="md-fab md-warn invite" aria-label="Invite" ng-click="invite_friends($event)">
+            <md-button class="md-fab md-warn invite" aria-label="Invite" 
+                ng-if="info && info.hide_signin"
+                ng-click="invite_friends($event)">
                 <md-icon md-font-set="material-icons">person_add</md-icon>
             </md-button>
 
             <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
-            <div ng-include src="'/assets/angular/html/shared/notifications.html'" class="right_panel_container"></div>
+            <div ng-include src="'/assets/angular/html/shared/notifications.html'" 
+                class="right_panel_container"></div>
             <% unless @profile %>
                 <div ng-include src="'/assets/angular/html/share/show.html'"></div>
             <% end %>
