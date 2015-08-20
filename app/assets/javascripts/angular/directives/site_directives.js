@@ -408,9 +408,9 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
                     feedService.get_bookmarks($scope.bookmarkId, $scope.bookmarkType).then(function(data){
                         $rootScope.shelves = data;
                         $scope.shelves_loading = false;
+                        $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
                         $mdSidenav('right_bookmark').toggle();
                     });
-                    $rootScope.bookmark_object = {"id": $scope.bookmarkId, "type": $scope.bookmarkType};
                 }
                 event.stopPropagation();
             }

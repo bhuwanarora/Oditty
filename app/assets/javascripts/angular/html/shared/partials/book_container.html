@@ -24,37 +24,28 @@
 			<div>
 				<div layout-padding class="wrap">
 					<div layout="row" layout-align="space-between">
-						<div layout="row" layout-align="center center">
-				    		<h2><a ng-href="/book?id={{book.book_id || book.id}}">{{book.title}}</a></h2>
+						<div layout="row" layout-align="space-between" flex>
+							<div>
+				    			<h2><a ng-href="/book?id={{book.book_id || book.id}}">{{book.title}}</a></h2>
+								<div class="less_important">{{book.author_name}}</div>
+							</div>
 							<div layout="row" class="less_important">
-							    <div class="primary white_color round_corners" layout-padding layout-margin 
-							    	ng-show="book.bookmark_count">
-							    	{{book.bookmark_count}}
-							    	<md-tooltip>
-							    		{{book.bookmark_count}} Bookmarks
-							    	</md-tooltip>
-							    </div>
-							    <div class="primary white_color round_corners" layout-padding layout-margin
-							    	ng-show="book.readers_count">
-							    	{{book.readers_count}} 
-							    	<md-tooltip>
-							    		{{book.readers_count}} Readers
-							    	</md-tooltip>
-							    </div>
-							    <div class="primary white_color round_corners" layout-padding layout-margin
-							    	ng-show="book.comment_count">
-							    	{{book.comment_count}} 
-							    	<md-tooltip>
-							    		{{book.comment_count}} Comments
-							    	</md-tooltip>
-							    </div>
+							    <md-button class="rating_block description_card md-primary md-button-clear" layout-padding layout-margin 
+							    	ng-click="show_indexes(book, $event)">
+							    	<div layout="column" layout-align="center center">
+							    		<div class="big_title">{{book.goodness_index}}</div>
+							    		<div class="bold less_important">
+							    			Goodness Rating
+							    		</div>
+							    	</div>
+							    </md-button>
 						    </div>
 						</div>
 						<div ng-click="remove_expanded_book($index)" class="clickable_icons">
 							<i class="material-icons">close</i>
 						</div>
 					</div>
-				    <div class="less_important">{{book.author_name}}</div>
+				    
 				</div>
 				<div ng-bind-html="book.description | reduced_summary" layout-padding></div>
 			</div>

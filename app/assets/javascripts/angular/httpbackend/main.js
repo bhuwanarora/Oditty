@@ -15,6 +15,13 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/book\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.get_book_details();
+        return [200, data, {}];
+    });
+
+    
+
     $httpBackend.whenGET(/api\/v0\/popular_books\?.*/).respond(function(method, url, data){
         var data = ServerDataModel.get_popular_books();
         return [200, data, {}];
