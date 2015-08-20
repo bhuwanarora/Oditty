@@ -10,6 +10,11 @@ class WebsiteController < ApplicationController
 		render :json => {:quotes => @quotes}, :status => 200
 	end
 
+	def data_analytics
+		@title = "Data Analytics at Oditty | In Data We Trust."
+		render :layout => "material_clean"
+	end
+
 	def webhooks
 		email_params = {:email => Constant::EmailTemplate::Admin, 
 				:template => Constant::EmailTemplate::Webhooks, 
@@ -58,10 +63,12 @@ class WebsiteController < ApplicationController
 	end
 
 	def about
+		@title = "About Oditty | Social network for Bibliophiles"
 		render :layout => "material_clean"
 	end
 
 	def work
+		@title = "Work at Oditty | Be the part of our Vision"
 		render :layout => "material_clean"
 	end
 
