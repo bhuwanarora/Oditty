@@ -57,6 +57,15 @@ module BookHelper
 		end
 		output
 	end
+	# 1 lack review count as 5
+	def self.get_book_reader_relationship_index_offset review_count
+		if review_count.to_i == 0
+			output = 0
+		else
+			output = (Constant::RatingIndices::MaxBookReaderRelationshipIndex/2)*(Math.log(review_count.to_i,2))/17.0
+		end
+		output
+	end
 
 	def self.calculate_book_reader_relationship_index review_count, rating_count
 		frac  = review_count.to_f/rating_count.to_f
@@ -64,9 +73,9 @@ module BookHelper
 			{
 				:x => frac,
 				:alpha => Constant::RatingIndices::AlphaBookReaderRelationshipIndex,
-				:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex.to_f*2/3
+				:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex.to_f/2
 			})
-		index + (BookHelper.calculate_popularity_index rating_count)/3
+		index + BookHelper.get_book_reader_relationship_index_offset(review_count)
 	end
 
 	def self.calculate_popularity_index rating_count, positive_bias = 2.5
