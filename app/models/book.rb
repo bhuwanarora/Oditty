@@ -74,7 +74,7 @@ class Book < Neo
 	end
 
 	def self.basic_info
-		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label " + Book.metics_info
+		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metics_info
 	end
 
 	def self.get_book_by_isbn isbn
