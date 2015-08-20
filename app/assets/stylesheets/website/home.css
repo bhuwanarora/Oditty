@@ -976,12 +976,11 @@ h3 a:hover{
     text-align: center !important;
 }
 
-
-#main {
+#main{
   	margin: auto; 
 }
 
-#outer-circle {
+#outer-circle{
   	-webkit-box-shadow: 0 0 50px 10px rgba(253, 204, 1, 0.6);
   	-moz-box-shadow: 0 0 50px 10px rgba(253, 204, 1, 0.6);
   	box-shadow: 0 0 50px 10px rgba(253, 204, 1, 0.6);
@@ -1003,14 +1002,13 @@ h3 a:hover{
   	-moz-animation:turning_cw 5s infinite;
   	animation:turning_cw 5s infinite;
   	position:relative;
-  	opacity: 0.7; 
+  	opacity: 0.7;
 }
   	
 #outer-circle:hover {
   	-webkit-box-shadow: 0 0 100px 15px rgba(253, 204, 1, 1);
   	-moz-box-shadow: 0 0 100px 15px rgba(253, 204, 1, 1);
-  	box-shadow: 0 0 100px 15px rgba(253, 204, 1, 1); 
-  	cursor: pointer;
+  	box-shadow: 0 0 100px 15px rgba(253, 204, 1, 1);
 }
   	
 
