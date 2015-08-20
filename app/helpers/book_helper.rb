@@ -1,7 +1,10 @@
-module BookHelper < GenericHelper
-	
+module BookHelper
 	def self.set_up_redis label, key = 'book_set_metrics'
-		super label, key
+		GenericHelper.set_up_redis label, key
+	end
+
+	def self.update_redis key, value
+		GenericHelper.update_redis key, value
 	end
 
 	def self.set_author_list author_name_list,book_id
@@ -56,34 +59,36 @@ module BookHelper < GenericHelper
 	end
 
 	def self.calculate_book_reader_relationship_index review_count, rating_count
-		frac  = review_count/rating_count
+		frac  = review_count.to_f/rating_count.to_f
 		index = AlgorithmHelper.get_sigmoid(
 			{
 				:x => frac,
 				:alpha => Constant::RatingIndices::AlphaBookReaderRelationshipIndex,
-				:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex
+				:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex.to_f*2/3
 			})
-		index
+		index + (BookHelper.calculate_popularity_index rating_count)/3
 	end
 
 	def self.calculate_popularity_index rating_count, positive_bias = 2.5
 		max_index = Constant::RatingIndices::MaxBookPopularityIndex
-		binary_length = rating_count.to_s(2).gsub(/^0+/,"").length
+		binary_length = rating_count.to_i.to_s(2).gsub(/^0+/,"").length
 		index = (binary_length/positive_bias > max_index ) ? max_index : binary_length/positive_bias
 		index
 	end
 
 	def self.calculate_likability_index gr_rating
-		gr_rating*2
+		gr_rating.to_f*2
 	end
 
 	def self.calculate_goodness_index p_index, l_index, brr_index
 		(p_index + l_index + brr_index)/3
 	end
 
-	def self.analyse_gr_indices_get_books_info
+	def self.analyse_gr_indices_get_books_info params
 		init_clause  = params[:init_clause]
-		init_clause += " RETURN DISTINCT ID(book) AS id, " + Book.gr_info
+		init_clause += ""\
+						" WHERE HAS(book.gr_rating) "\
+						" RETURN DISTINCT ID(book) AS id, " + Book.gr_info
 		neo_output 	 = init_clause.execute
 		neo_output
 	end
@@ -93,20 +98,35 @@ module BookHelper < GenericHelper
 		l_index 	= BookHelper.calculate_likability_index neo_book["gr_rating"]
 		brr_index 	= BookHelper.calculate_book_reader_relationship_index neo_book["gr_reviews_count"], neo_book["gr_ratings_count"]
 		g_index 	= BookHelper.calculate_goodness_index p_index, l_index, brr_index
-		output 		= {
-			Constant::RatingIndices::BookPopularityIndex => p_index,
-			Constant::RatingIndices::BookLikabilityIndex => l_index,
-			Constant::RatingIndices::BookReaderRelationshipIndex => brr_index,
-			Constant::RatingIndices::BookGoodnessIndex => g_index,
-			"id" => neo_book["id"]
-		}
+		if p_index.nan? || l_index.nan? || brr_index.nan?
+			output = []
+		else
+			output 		= [{
+				Constant::RatingIndices::BookPopularityIndex => AlgorithmHelper.round(p_index,1),
+				Constant::RatingIndices::BookLikabilityIndex => AlgorithmHelper.round(l_index,1),
+				Constant::RatingIndices::BookReaderRelationshipIndex => AlgorithmHelper.round(brr_index,1),
+				Constant::RatingIndices::BookGoodnessIndex => AlgorithmHelper.round(g_index,1),
+				"id" => neo_book["id"]
+			}]
+		end
 		output
+	end
+
+	def self.analyse_gr_indices_validate_input book
+		begin
+			valid = (book["gr_rating"].present? && book["gr_ratings_count"].present? && book["gr_reviews_count"].present?)
+		rescue Exception => e
+			valid = false
+		end
+		valid
 	end
 
 	def self.analyse_gr_indices_calculate neo_output
 		calculated_output = []
 		neo_output.each do |book|
-			calculated_output << BookHelper.calculate_all_gr_indices book
+			if BookHelper.analyse_gr_indices_validate_input book
+				calculated_output += BookHelper.calculate_all_gr_indices(book)
+			end
 		end
 		calculated_output
 	end
@@ -119,8 +139,8 @@ module BookHelper < GenericHelper
 		end
 	end
 
-	def self.analyse_gr_indices params
-		neo_output 			= BookHelper.analyse_gr_indices_get_books_info
+	Analyse_gr_indices = Proc.new do |params, *args|
+		neo_output 			= BookHelper.analyse_gr_indices_get_books_info params
 		calculated_output 	= BookHelper.analyse_gr_indices_calculate neo_output
 		BookHelper.analyse_gr_indices_set_indices calculated_output
 		dummy_clause 		= " RETURN MAX(ID(book)) AS id "
@@ -131,7 +151,8 @@ module BookHelper < GenericHelper
 		params = {
 			:class 			=> BookHelper,
 			:label 			=> 'Book',
-			:function 		=> BookHelper.analyse_gr_indices,
+			:function 		=> BookHelper::Analyse_gr_indices,
+			:function_name 	=> 'Analyse_gr_indices',
 			:step_size 		=> 500
 		}
 		GraphHelper.iterative_entity_operations params
