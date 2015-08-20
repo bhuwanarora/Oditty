@@ -134,7 +134,7 @@ namespace :graph do
   desc "set book metrics"
   task :set_book_metrics => :environment do
     include BookHelper
-    BookHelper.set_book_metrics
+    BookHelper.set_metrics
   end
 
   desc "set_year_labels"
