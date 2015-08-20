@@ -5,7 +5,6 @@ module Constant::RatingIndices
 	MaxBookGoodnessIndex 				= 10
 
 	AlphaBookReaderRelationshipIndex	= 25
-
 	BookPopularityIndex = 'popularity_index'
 	BookGoodnessIndex	= 'goodness_index'
 	BookLikabilityIndex = 'likeability_index'
