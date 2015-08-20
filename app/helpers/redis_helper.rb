@@ -5,7 +5,7 @@ module RedisHelper
 	MonthExpiry = DayExpiry*30
 	WorkUpdateSuggestCommunities = 'WorkUpdateSuggestCommunities'
 
-	def self.set_up_redis key, start_id
+	def self.set_up_redis key, start_id = -1
 		cur_id = 0
 		if(!$redis[key].nil?)
 			cur_id = $redis[key].to_i
@@ -14,6 +14,10 @@ module RedisHelper
 			$redis[key] = cur_id
 		end
 		cur_id
+	end
+
+	def self.update_redis key, value
+		$redis[key] = value
 	end
 
 	def self.delete_user_details params

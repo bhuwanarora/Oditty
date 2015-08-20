@@ -131,6 +131,12 @@ namespace :graph do
     Neo4jHelper.set_active_books
   end
 
+  desc "set book metrics"
+  task :set_book_metrics => :environment do
+    include BookHelper
+    BookHelper.set_book_metrics
+  end
+
   desc "set_year_labels"
   task :set_year_labels => :environment do
     include Neo4jHelper
@@ -442,6 +448,12 @@ namespace :graph do
   task :set_category_genre_indices => :environment do
     include GenreHelper
     GenreHelper.set_search_indices
+  end
+
+  desc "reset links from community to video"
+  task :set_community_video_links => :environment do
+    include VideoHelper
+    VideoHelper.repair_video_links_to_community
   end
 
   desc " tests some function which one wants to test. "
