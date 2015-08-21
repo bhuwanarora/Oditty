@@ -1,11 +1,17 @@
 <div layout-padding ng-if="active_tag.books && active_tag.books.length > 0 && (active_tag.books.length != 1 && active_tag.books[0].title != null )">
     <h3 layout-padding>Books related to {{active_tag.name}}</h3>
     <div layout="row" layout-wrap layout-padding ng-if="active_tag.books && active_tag.books.length > 0">
-        <section ng-repeat="book in active_tag.books" layout-margin ng-if="book.title != null">
+        <section ng-repeat="book in active_tag.books | limitTo: limit_count" layout-margin ng-if="book.title != null">
             <div class="rd_book_container" ng-include src="'/assets/angular/html/shared/partials/book_group.html'"></div>
         </section>    
     </div>
 </div>
+<div layout-padding>
+    <md-button class="md-button-clear md-warn" ng-click="show_more_books()" ng-hide="hide_show_more">
+        Show More
+    </md-button>
+</div>
+<div layout-padding></div>
 <div>
     <md-autocomplete
         class="search_book_autocomplete" 
