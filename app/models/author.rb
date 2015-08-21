@@ -4,12 +4,20 @@ class Author < Neo
 		@id = author_id
 	end
 
+	def self.match
+		" MATCH (author: Author) "
+	end
+
 	def match
-		" MATCH (author: Author) WHERE ID(author)="+@id.to_s+" WITH author "
+		Author.match + " WHERE ID(author)="+@id.to_s+" WITH author "
 	end
 
 	def self.set_follow_count operation = "+"
 		" SET author.follow_count = COALESCE(author.follow_count,0)" + operation + " 1 "
+	end
+
+	def self.get_interviewed skip
+		Author.match + Author.where_group("author.is_interviewed=true ") + Author.return_group(Author.basic_info) + Author.limit(10) + Author.skip(skip)
 	end
 
 	def self.match_group ids
