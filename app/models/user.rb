@@ -10,7 +10,7 @@ class User < Neo
 
 	def search_friends q
 		q.downcase!
-		match + UsersUser.follow_match + " WHERE LOWER(friend.first_name) =~ '"+q+".*' WITH friend AS user " + User.return_group(User.basic_info)
+		match + UsersUser.follow_match + " WHERE LOWER(friend.first_name) =~ '"+q+".*' WITH friend AS user " + User.return_group(User.basic_info) + User.limit(4)
 	end
 
 	def self.match
