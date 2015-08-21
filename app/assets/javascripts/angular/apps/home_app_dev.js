@@ -200,6 +200,27 @@ var _deferred_request = function(url, $q, $http, service_url){
     return deferred.promise;   
 }
 
+
+
+function detect_browser(){
+    var alert_message = "Currently this browser is not supported. Please use Chrome for a better experience.";
+    if(navigator.userAgent.indexOf("Chrome") != -1 ){
+        
+    }
+    else if(navigator.userAgent.indexOf("Opera") != -1 ){
+        alert(alert_message);
+    }
+    else if(navigator.userAgent.indexOf("Firefox") != -1 ){
+          
+    }
+    else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )){
+        alert(alert_message); 
+    }  
+    else{
+        alert(alert_message);
+    }
+}
+
 var _deferred_post_request = function(url, params, $q, $http){
     var deferred = $q.defer();
     var success_callback = function(result){
@@ -219,3 +240,5 @@ var _deferred_post_request = function(url, params, $q, $http){
     $http.post(url, params).then(success_callback, error_callback);
     return deferred.promise;
 }
+
+detect_browser();
