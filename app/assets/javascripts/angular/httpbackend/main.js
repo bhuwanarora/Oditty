@@ -15,6 +15,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/get_authors_interviewed\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.authors_interviewed();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET(/api\/v0\/book\?.*/).respond(function(method, url, data) {
         var data = ServerDataModel.get_book_details();
         return [200, data, {}];
