@@ -80,7 +80,7 @@ module Api
 
 			def get_authors_interviewed
 				skip = params[:skip_count]
-				info = Api::V0::AuthorApi.get_interviewed skip
+				info = Api::V0::AuthorApi.get_interviewed(skip)
 				render :json => info, :status => 200			
 			end
 		end
