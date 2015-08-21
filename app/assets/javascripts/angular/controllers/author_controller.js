@@ -10,6 +10,17 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
     }
 
+    $scope.show_more_books = function(){
+        var books_remaining = $scope.author.books.length - $scope.limit_count;
+        if(books_remaining > 8){
+            $scope.limit_count = $scope.limit_count + 8;
+        }
+        else{
+            $scope.hide_show_more = true;
+            $scope.limit_count = $scope.limit_count + books_remaining;
+        }
+    }
+
     $scope.keypress_scroll = function(event){
         if(event.keyCode == WebsiteUIConstants.KeyDown){
             $scope.active_index = $scope.next_block($scope.active_index);
@@ -160,6 +171,8 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         $scope.$on('destroy', function(){
             $timeout.cancel(books_timeout);
         });
+
+        $scope.limit_count = 8;
 
     }());
 

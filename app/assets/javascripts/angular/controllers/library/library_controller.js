@@ -16,17 +16,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
-    $scope.show_indexes = function(book, event){
-        $mdDialog.show({
-            templateUrl: 'assets/angular/html/shared/rating.html',
-            clickOutsideToClose: true,
-            hasBackdrop: false,
-            targetEvent: event,
-            scope: $scope,
-            preserveScope: true
-        });
-        event.stopPropagation();
-    }
+    
 
     $scope.remove_expanded_book = function(index){
         $scope.info.books.splice(index, 1);
