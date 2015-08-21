@@ -265,6 +265,10 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/personalised_controller.js"
                 ],
 
+                "app/assets/javascripts/min/angular/controllers/authors_group.min.js":[
+                    "app/assets/javascripts/min/angular/controllers/authors_controller.js"
+                ],
+
                 "app/assets/javascripts/min/angular/controllers/network_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/network_controller.js"
                 ],
