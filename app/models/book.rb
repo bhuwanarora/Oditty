@@ -74,7 +74,7 @@ class Book < Neo
 	end
 
 	def self.basic_info
-		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metics_info
+		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metrics_info
 	end
 
 	def self.get_book_by_isbn isbn
@@ -82,8 +82,12 @@ class Book < Neo
 		" WITH book "
 	end
 
-	def self.metics_info
-		Constant::RatingIndices::BookMetrics.map{|prop| (" book." + prop + " AS " + prop + " ")}.join(",")
+	def self.metrics_info
+		Constant::RatingIndices::BookMetrics.map{|property| (" book." + property + " AS " + property + " ")}.join(",")
+	end
+
+	def self.grouped_metrics_info
+		Constant::RatingIndices::BookMetrics.map{|property| (property + ": book." + property + " ")}.join(",")
 	end
 
 	def self.gr_info
@@ -100,7 +104,7 @@ class Book < Neo
 	end
 
 	def self.grouped_basic_info
-		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, popularity: TOINT(book.total_weight) "
+		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, " + Book.grouped_metrics_info
 	end
 
 	def self.match_genre

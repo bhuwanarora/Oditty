@@ -34,7 +34,7 @@ class User::Predict::BookPrediction < User::Predict
 			data = []
 		end
 		clause =  Book::LongRead.get_sorted_books @skip_count
-		data ||= clause.execute
+		data |= clause.execute
 		data
 	end
 
