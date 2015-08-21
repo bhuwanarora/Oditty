@@ -1,4 +1,4 @@
-homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService){
+homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", "$mdSidenav", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService, $mdSidenav){
     $scope.processAuth = function(authResult){
         // Do a check if authentication has been successful.
         if(authResult['access_token']){
@@ -21,6 +21,10 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             $scope.signedIn = false;
         }
     };
+
+    $scope.close_signup_options = function(){
+        $mdSidenav('signup').toggle();
+    }
 
     // // When callback is received, we need to process authentication.
     $scope.signInCallback = function(authResult) {
