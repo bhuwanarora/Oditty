@@ -103,7 +103,7 @@ a{
 }
 
 .border_bottom{
-  	border-bottom: 1px solid #E2E2E2;
+  	border-bottom: 1px solid #BBBBBB !important;
 }
 
 .no_shadow{

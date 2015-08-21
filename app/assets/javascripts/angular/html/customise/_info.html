@@ -12,12 +12,12 @@
         	<div layout="row" layout-sm="column">
         		<md-input-container flex>
                     <label>First Name</label>
-                    <input ng-model="user.first_name" 
+                    <input ng-model="user.first_name" class="border_bottom" 
                            focus-out="set_first_name()" required/>
                 </md-input-container>
                 <md-input-container flex>
                     <label>Last Name</label>
-                    <input ng-model="user.last_name" 
+                    <input ng-model="user.last_name"  class="border_bottom" 
                            focus-out="set_last_name()"/>
                 </md-input-container>
         	</div>
@@ -36,7 +36,7 @@
         	<div>
         		<md-input-container>
                     <label>About me</label>
-                    <input ng-model="user.about" focus-out="set_about()">
+                    <input ng-model="user.about" focus-out="set_about()" class="border_bottom" >
                 </md-input-container>
                 <div layout="row" layout-align="end end">{{user.about.length || 0}}/160</div>
         	</div>
