@@ -10,6 +10,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/book_shelves\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.get_book_shelves();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET(/api\/v0\/user_details\?.*/).respond(function(method, url, data) {
         var data = ServerDataModel.user_details();
         return [200, data, {}];

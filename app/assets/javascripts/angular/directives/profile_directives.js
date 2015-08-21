@@ -85,7 +85,7 @@ homeApp.directive('userCommunities', ["$rootScope", "userService", function($roo
     };
 }]);
 
-homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '$mdDialog', 'sharedService', function($rootScope, roomService, ColorConstants, $mdDialog, sharedService){
+homeApp.directive('bookShelf', ["$rootScope", "roomService", '$mdDialog', 'sharedService', function($rootScope, roomService, $mdDialog, sharedService){
     return {
         restrict: 'E',
         scope: {shelf: '=', info: '='},
@@ -95,16 +95,17 @@ homeApp.directive('bookShelf', ["$rootScope", "roomService", "ColorConstants", '
                 $scope.show_shelf = !$scope.show_shelf;
             }
 
-            $scope.show_book_dialog = function(book, event){
-                // $rootScope.active_book = book;
-                // $rootScope.active_book.show_info_only = true;
-                // $mdDialog.show({
-                //     templateUrl: '/assets/angular/html/news/book.html',
-                //     scope: $scope,
-                //     preserveScope: true,
-                //     clickOutsideToClose: true
-                // });
-                sharedService.show_book_dialog($rootScope, $scope, book, event);
+            $scope.show_indexes = function(book, event){
+                $scope.book = book;
+                $mdDialog.show({
+                    templateUrl: 'assets/angular/html/shared/rating.html',
+                    clickOutsideToClose: true,
+                    hasBackdrop: false,
+                    targetEvent: event,
+                    scope: $scope,
+                    preserveScope: true
+                });
+                event.stopPropagation();
             }
 
             $scope.add_books_to_shelf = function(shelf, event){
@@ -228,7 +229,7 @@ homeApp.directive('articleShelves', ["$rootScope", "roomService", "ColorConstant
     };
 }]);
 
-homeApp.directive('bookShelves', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
+homeApp.directive('bookShelves', ["$rootScope", "roomService", function($rootScope, roomService){
     return {
         restrict: 'E',
         scope: {userId: '='},
@@ -239,12 +240,7 @@ homeApp.directive('bookShelves', ["$rootScope", "roomService", "ColorConstants",
                     if(angular.isUndefined($scope.book_shelves)){
                         $scope.book_shelves = [];
                     }
-                    $scope.book_shelves = [];
-                    angular.forEach(data, function(book_shelf){
-                        var books = [];
-                        book_shelf.books = _set_data(book_shelf.books, books);
-                        this.push(book_shelf);
-                    }, $scope.book_shelves);
+                    $scope.book_shelves = data;
                     _group_books_by_shelf();
                     $scope.shelf_loading = false;
                 });
@@ -252,19 +248,6 @@ homeApp.directive('bookShelves', ["$rootScope", "roomService", "ColorConstants",
 
             var _get_random_init = function(min, max){
                 return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-            var _set_data = function(data, array){
-                angular.forEach(data, function(value){
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var width = _get_random_init(70, 100);
-                    var height = _get_random_init(40, 60);
-                    var margin_left = _get_random_init(1, 10);
-                    var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int], "margin-left": margin_left+"px"};
-                    var json = angular.extend(value, {"random_style": random_style, "color": ColorConstants.value[random_int]});
-                    this.push(json);
-                }, array);
-                return array;
             }
 
             var _group_books_by_shelf = function(){
