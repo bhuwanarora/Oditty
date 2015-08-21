@@ -303,7 +303,7 @@ module Api
 						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::FollowsNode)
 				end
-				RedisHelper.delete_basic_community_info({:id => community_id})
+				RedisHelper::Community.delete_basic_info({:id => community_id})
 				render :json => {:message => "Success"}, :status => 200
 			end
 

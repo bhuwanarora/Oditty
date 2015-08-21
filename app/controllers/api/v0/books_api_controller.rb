@@ -57,20 +57,20 @@ module Api
 
 			def get_basic_feed_info
 				id = params[:id]
-				info = RedisHelper.get_basic_feed_book_info({:id => id})
+				info = RedisHelper::Book.get_basic_feed_info({:id => id})
 				unless info
 					info = Api::V0::BookApi.get_basic_feed_info(id)
-					RedisHelper.set_basic_feed_book_info({:id => id, :info => info})
+					RedisHelper::Book.set_basic_feed_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def get_primary_info
 				id = params[:id]
-				info = RedisHelper.get_book_primary_info({:id => id})
+				info = RedisHelper::Book.get_primary_info({:id => id})
 				unless info
 					info = Api::V0::BookApi.get_primary_info(id)
-					RedisHelper.set_book_primary_info({:id => id, :info => info}) if info
+					RedisHelper::Book.set_primary_info({:id => id, :info => info}) if info
 				end
 				render :json => info, :status => 200
 			end
@@ -107,10 +107,10 @@ module Api
 
 			def get_interesting_info
 				book_id = params[:id]
-				info = RedisHelper.get_book_interesting_info({:id => book_id})
+				info = RedisHelper::Book.get_interesting_info({:id => book_id})
 				unless info
 					info = Api::V0::BookApi.get_interesting_info book_id
-					RedisHelper.set_book_interesting_info({:id => book_id, :info => info})
+					RedisHelper::Book.set_interesting_info({:id => book_id, :info => info})
 				end
 				render :json => info, :status => 200
 			end

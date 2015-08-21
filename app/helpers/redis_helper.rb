@@ -220,18 +220,18 @@ module RedisHelper
 		info
 	end
 
-	def self.delete_book_interesting_info params
+	def self.delete_interesting_info params
 		key = RedisHelper.get_key_book_interesting_info params[:id]
 		$redis.del key
 	end
 
-	def self.set_book_interesting_info params
+	def self.set_interesting_info params
 		key = RedisHelper.get_key_book_interesting_info params[:id]
 		$redis.set(key,params[:info].to_json)
 		$redis.expire(key, RedisHelper::MonthExpiry)
 	end
 
-	def self.get_book_interesting_info params
+	def self.get_interesting_info params
 		key = RedisHelper.get_key_book_interesting_info params[:id]
 		info = $redis.get(key)
 		if !info.nil?
@@ -281,7 +281,7 @@ module RedisHelper
 			community_ids = JSON.parse(community_ids)
 			output = []
 			community_ids.each do |id|
-				info = RedisHelper.get_basic_community_info({:id => id})
+				info = RedisHelper::Community.get_basic_info({:id => id})
 				if info.nil?
 					output = nil
 					break
@@ -394,14 +394,14 @@ module RedisHelper
 	end
 
 	def self.increment_community_info_view_count params
-		redis_info = RedisHelper.get_basic_community_info params
+		redis_info = RedisHelper::Community.get_basic_info params
 		if redis_info.present?
 			community_info = redis_info
 			count = (params[:view_count].present?)? params[:view_count] : (community_info[0]["view_count"] + 1)
 			community_info[0]["view_count"] = count
 			community_info[0]["most_important_tag"][0]["view_count"] = count
 			params[:info] = community_info
-			RedisHelper.set_basic_community_info params
+			RedisHelper::Community.set_basic_info params
 		end
 	end
 
