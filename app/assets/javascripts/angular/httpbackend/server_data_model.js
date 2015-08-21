@@ -1447,10 +1447,6 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
                                 "author_name":"Joseph Strutt",
                                 "id":1365463,
                                 "isbn":"1430456647, 9781430456643",
-                                "popularity_index":7.6,
-                                "book_reader_relationship_index":4.5,
-                                "goodness_index":5.6,
-                                "likeability_index":7.8,
                                 "title":"The Sports and Pastimes of the People of England"
                             }
                         ]
