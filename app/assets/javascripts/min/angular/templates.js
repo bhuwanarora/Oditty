@@ -374,7 +374,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/network/show.html',
-    "<md-item ng-repeat=\"user in users_list\" class=\"white user_card md-whiteframe-z1\" layout-margin><md-item-content layout=\"row\" layout-align=\"center center\" flex class=\"clear\"><img ng-src=\"{{user.image_url}}\" class=\"square\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><a ng-href=\"/profile?p={{::user.id}}\"><div class=\"network_name\">{{::user.first_name}}</div></a></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><md-button aria-label=\"toggle_follow\" class=\"md-warn md-button-clear\" ng-class=\"{'md-raised': !user.status}\" ng-click=\"toggle_follow(user);\"><span ng-if=\"!user.status\">Follow</span> <span ng-if=\"user.status\">Following</span></md-button></md-item-content><md-item-content layout=\"column\" flex class=\"clear\"><div class=\"less_important\" layout=\"row\" layout-align=\"center center\">Recently Visited Books</div><div ng-repeat=\"book in user.books\" class=\"network_book\" ng-if=\"book.id\" layout-padding><a ng-href=\"/book?q={{::book.id}}\" class=\"less_important bold\"><span ng-bind-html=\"book.title\"></span> <span>by</span> <span ng-bind-html=\"book.author_name\"></span></a></div></md-item-content></md-item><div layout-padding ng-if=\"users_list && users_list.length > 9\"><md-button class=\"md-button-clear md-warn\" ng-click=\"load_users()\">Show more</md-button></div><style>.favourite_books{width:150px;height:180px;padding:5px}.network_name{margin:5px 0!important;font-size:1.2em;font-family:sans-serif}.user_photo{width:100px!important;height:100px!important}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow{height:110px}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow,.rd_book_image_cover{width:80px}.user_card{width:240px;padding:0;max-height:400px}.user_cover_image{margin-top:-70px}.user_card a:hover{text-decoration:underline}.network_book h5{display:none}#network md-tabs.md-default-theme md-tabs-wrapper{width:100%}#network md-tab-content{bottom:initial}</style>"
+    "<md-item ng-repeat=\"user in users_list\" class=\"white user_card\" layout-margin><md-item-content layout=\"row\" layout-align=\"center center\" flex class=\"clear\"><img ng-src=\"{{user.image_url}}\" class=\"square\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><a ng-href=\"/profile?p={{::user.id}}\"><div class=\"network_name\">{{::user.first_name}}</div></a></md-item-content><md-item-content layout=\"row\" layout-align=\"center center\" class=\"clear\"><md-button aria-label=\"toggle_follow\" class=\"md-warn md-button-clear\" ng-class=\"{'md-raised': !user.status}\" ng-click=\"toggle_follow(user);\"><span ng-if=\"!user.status\">Follow</span> <span ng-if=\"user.status\">Following</span></md-button></md-item-content><md-item-content layout=\"column\" flex class=\"clear\"><div class=\"less_important\" layout=\"row\" layout-align=\"center center\">Recently Visited Books</div><div ng-repeat=\"book in user.books\" class=\"network_book\" ng-if=\"book.id\" layout-padding><a ng-href=\"/book?q={{::book.id}}\" class=\"less_important bold\"><span ng-bind-html=\"book.title\"></span> <span>by</span> <span ng-bind-html=\"book.author_name\"></span></a></div></md-item-content></md-item><div layout-padding ng-if=\"users_list && users_list.length > 9\"><md-button class=\"md-button-clear md-warn\" ng-click=\"load_users()\">Show more</md-button></div><style>.favourite_books{width:150px;height:180px;padding:5px}.network_name{margin:5px 0!important;font-size:1.2em;font-family:sans-serif}.user_photo{width:100px!important;height:100px!important}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow{height:110px}.rd_book_backup_cover,.rd_slider_wrapper,.rd_book_shadow,.rd_book_image_cover{width:80px}.user_card{width:240px;padding:0;max-height:400px}.user_cover_image{margin-top:-70px}.user_card a:hover{text-decoration:underline}.network_book h5{display:none}#network md-tabs.md-default-theme md-tabs-wrapper{width:100%}#network md-tab-content{bottom:initial}</style>"
   );
 
 
@@ -559,12 +559,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/followers.html',
-    "<div layout=\"row\" layout-align=\"center start\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+    "<div layout=\"row\" layout-align=\"center start\" class=\"feed_margin\" layout-wrap ng-controller=\"networkController\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
   );
 
 
   $templateCache.put('/assets/angular/html/profile/followings.html',
-    "<div layout=\"row\" layout-align=\"center start\" layout-wrap ng-controller=\"networkController\" check-scroll-bottom=\"load_users()\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
+    "<div layout=\"row\" layout-align=\"center start\" class=\"feed_margin\" layout-wrap ng-controller=\"networkController\" ng-include src=\"'/assets/angular/html/network/show.html'\"></div><suggest-friends></suggest-friends>"
   );
 
 
@@ -594,7 +594,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/profile/rooms.html',
-    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap class=\"feed_margin\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{width:100%;position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
+    "<user-communities ng-if=\"profile_user\" user-id=\"profile_user.id\" layout=\"row\" layout-wrap class=\"feed_margin\" layout-align=\"center center\"></user-communities><style>.room_image_wrapper{position:relative;width:200px;height:200px;overflow:hidden}.room_image_wrapper img{width:100%;position:absolute;min-height:200px;min-width:200px}.room_container{width:200px}</style>"
   );
 
 
@@ -894,7 +894,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/book.html',
-    "<div layout=\"column\" layout-align=\"center\" class=\"relative upper_slider_wrapper\" ng-if=\"book.status\"><md-slider flex md-discrete ng-model=\"book.user_rating\" step=\"1\" min=\"1\" max=\"10\" aria-label=\"rating\" ng-change=\"rate_book(book)\"></md-slider></div><div class=\"cover_gradient\" layout=\"column\" layout-align=\"center\" ng-if=\"book.status\"><div layout=\"row\" layout-align=\"center center\"><div class=\"circular_icon white padding\"><span class=\"icon-checkmark\"></span></div></div></div><md-button aria-label=\"select_book\" class=\"info_button animate-fast\" ng-click=\"select_book(book)\"></md-button><div ng-include src=\"'/assets/angular/html/shared/partials/book_group.html'\" class=\"rd_book_container\"></div>"
+    "<div class=\"cover_gradient\" layout=\"column\" layout-align=\"center\" ng-if=\"book.status\"><div layout=\"row\" layout-align=\"center center\"><div class=\"circular_icon white padding\"><span class=\"icon-checkmark\"></span></div></div></div><md-button aria-label=\"select_book\" class=\"info_button animate-fast\" ng-click=\"select_book(book)\"></md-button><div ng-include src=\"'/assets/angular/html/shared/partials/book_group.html'\" class=\"rd_book_container\"></div>"
   );
 
 
@@ -909,7 +909,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/book_group_unclickable.html',
-    "<div class=\"md-whiteframe-z1 clear rd_book_container\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></div><div class=\"bookmark\"><bookmark bookmark-id=\"book.id || book.book_id\" bookmark-type=\"'Book'\" ng-if=\"book\" shelves=\"book.shelves\"></bookmark></div>"
+    "<div ng-include src=\"'/assets/angular/html/shared/partials/rating_info_button.html'\" class=\"book_rating\"></div><div class=\"md-whiteframe-z1 clear rd_book_container\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></div><div class=\"bookmark\"><bookmark bookmark-id=\"book.id || book.book_id\" bookmark-type=\"'Book'\" ng-if=\"book\" shelves=\"book.shelves\"></bookmark></div>"
   );
 
 
