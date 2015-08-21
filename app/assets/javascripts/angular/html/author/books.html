@@ -1,6 +1,12 @@
-<div layout="row" layout-wrap>
-    <section ng-repeat="book in author.books | limitTo: 10" layout-margin>
+<div layout="row" layout-wrap layout-align="center start">
+    <section ng-repeat="book in author.books | limitTo: limit_count" layout-margin>
     	<div class="rd_book_container" 
     		ng-include src="'/assets/angular/html/shared/partials/book_group.html'"></div>
     </section>
+    <div layout-padding>
+    	<md-button class="md-button-clear md-warn" ng-click="show_more_books()" ng-hide="hide_show_more">
+    		Show More
+    	</md-button>
+    </div>
+    <div layout-padding></div>
 </div>

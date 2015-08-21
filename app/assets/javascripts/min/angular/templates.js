@@ -7,7 +7,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/author/books.html',
-    "<div layout=\"row\" layout-wrap><section ng-repeat=\"book in author.books | limitTo: 10\" layout-margin><div class=\"rd_book_container\" ng-include src=\"'/assets/angular/html/shared/partials/book_group.html'\"></div></section></div>"
+    "<div layout=\"row\" layout-wrap layout-align=\"center start\"><section ng-repeat=\"book in author.books | limitTo: limit_count\" layout-margin><div class=\"rd_book_container\" ng-include src=\"'/assets/angular/html/shared/partials/book_group.html'\"></div></section><div layout-padding><md-button class=\"md-button-clear md-warn\" ng-click=\"show_more_books()\" ng-hide=\"hide_show_more\">Show More</md-button></div><div layout-padding></div></div>"
   );
 
 
@@ -17,7 +17,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/author/feed.html',
-    "<md-list layout-wrap layout=\"column\"><div flex ng-repeat=\"book in author.books\"><div layout-padding><md-list-item class=\"md-3-line\"><img ng-src=\"{{author.id | author_thumb}}\" class=\"circular\" onerror=\"this.src=&quot;/assets/author_profile.jpg&quot;\"><div>&nbsp;&nbsp;</div><div layout=\"column\" layout-padding class=\"md-list-item-text side_padding\"><div class=\"less_important\">{{::book.published_year}}</div><h2>Published <a ng-href=\"/book?id={{book.id || book.book_id}}\" class=\"bold\">{{::book.title}}</a></h2></div></md-list-item></div><md-divider></md-divider></div></md-list>"
+    "<md-list layout-wrap layout=\"column\"><div flex ng-repeat=\"book in author.books | limitTo: limit_count\"><div layout-padding><md-list-item class=\"md-3-line\"><img ng-src=\"{{author.id | author_thumb}}\" class=\"circular\" onerror=\"this.src=&quot;/assets/author_profile.jpg&quot;\"><div>&nbsp;&nbsp;</div><div layout=\"column\" layout-padding class=\"md-list-item-text side_padding\"><div class=\"less_important\">{{::book.published_year}}</div><h2>Published <a ng-href=\"/book?id={{book.id || book.book_id}}\" class=\"bold\">{{::book.title}}</a></h2></div></md-list-item></div><md-divider></md-divider></div><div layout-padding><md-button class=\"md-button-clear md-warn\" ng-click=\"show_more_books()\" ng-hide=\"hide_show_more\">Show More</md-button></div><div layout-padding></div></md-list>"
   );
 
 
