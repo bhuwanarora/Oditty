@@ -29,16 +29,8 @@
 				    			<h2><a ng-href="/book?id={{book.book_id || book.id}}">{{book.title}}</a></h2>
 								<div class="less_important">{{book.author_name}}</div>
 							</div>
-							<div layout="row" class="less_important">
-							    <md-button class="rating_block description_card md-primary md-button-clear" layout-padding layout-margin 
-							    	ng-click="show_indexes(book, $event)">
-							    	<div layout="column" layout-align="center center">
-							    		<div class="big_title">{{book.goodness_index}}</div>
-							    		<div class="bold less_important">
-							    			Goodness Rating
-							    		</div>
-							    	</div>
-							    </md-button>
+							<div layout="row" class="less_important" ng-include 
+								src="'/assets/angular/html/shared/partials/rating_info_button.html'">
 						    </div>
 						</div>
 						<div ng-click="remove_expanded_book($index)" class="clickable_icons">
