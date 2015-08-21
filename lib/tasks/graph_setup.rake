@@ -131,6 +131,12 @@ namespace :graph do
     Neo4jHelper.set_active_books
   end
 
+  desc "set book metrics"
+  task :set_book_metrics => :environment do
+    include BookHelper
+    BookHelper.set_metrics
+  end
+
   desc "set_year_labels"
   task :set_year_labels => :environment do
     include Neo4jHelper

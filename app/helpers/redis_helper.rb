@@ -16,6 +16,10 @@ module RedisHelper
 		cur_id
 	end
 
+	def self.update_redis key, value
+		$redis[key] = value
+	end
+
 	def self.delete_user_details params
 		key = RedisHelper.get_key_user_details params[:id]
 		$redis.del key
