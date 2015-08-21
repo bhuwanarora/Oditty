@@ -873,7 +873,7 @@ module GraphHelper
 		@@logger.info(" ")
 	end
 
-	def self.default_logging_function output, logger
+	Default_logging_function = Proc.new do |output, logger|
 		logger.info("ID: #{output[0]['id']}")
 	end
 
@@ -883,25 +883,28 @@ module GraphHelper
 		label_name 			= params[:label]
 		step_size  			= (params[:step_size].nil?)? 500 : params[:step_size].to_i
 		function_for_exec 	= params[:function]
-		log_output 			= (params[:log_function].present?)? params[:log_function] : GraphHelper.default_logging_function
+		function_name 		= params[:function_name]
+		log_output 			= (params[:log_function].present?)? params[:log_function] : GraphHelper::Default_logging_function
 
 		label_name = (label_name.nil?)? className.to_s : label_name
-		id_temp = className.set_up_redis label_name, (label_name + className + "_" + function_for_exec)
+		redis_key = (label_name + className.to_s + "_" + function_name.to_s)
+		id_temp = className.set_up_redis label_name, redis_key
 		next_id = id_temp[:cur_id]
 		max_id  = id_temp[:max_id]
 		params[:step_size] = step_size
 		GraphHelper.iterative_entity_operations_log_setup params
 		while next_id <= max_id
-			debugger
 			clause  = Neo.get_nodes_with_id_range({:start_id => next_id, :step_size => step_size, :label => label_name})
-			clause += function_for_exec params
+			params[:init_clause] = clause
+			clause += function_for_exec.call params
 			output  = clause.execute
 			if output.empty?
 				next_id += 1
 			else
-				log_output output, @@logger
+				log_output.call output, @@logger
 				next_id = output[0]["id"] + 1
 			end
+			className.update_redis redis_key, next_id
 		end
 	end
 
