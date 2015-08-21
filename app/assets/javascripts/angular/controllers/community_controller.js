@@ -15,6 +15,17 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
     }
 
+    $scope.show_more_books = function(){
+        var books_remaining = $scope.active_tag.books.length - $scope.limit_count;
+        if(books_remaining > 8){
+            $scope.limit_count = $scope.limit_count + 8;
+        }
+        else{
+            $scope.hide_show_more = true;
+            $scope.limit_count = $scope.limit_count + books_remaining;
+        }
+    }
+
     $scope.search_books = function(q){
         $scope.info.loading = true;
         $scope.popular_books = [];
@@ -127,6 +138,8 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
             $scope.popular_books = [];
         }
         $scope.is_room = true;
+
+        $scope.limit_count = 6;
     }());
 
 }]);
