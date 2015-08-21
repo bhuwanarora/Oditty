@@ -533,3 +533,7 @@ md-grid-list md-grid-tile md-grid-tile-footer{
     min-height: 48px !important;
     height: initial !important;
 }
+
+.overflow_y{
+    overflow-y: scroll;
+}

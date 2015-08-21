@@ -25,7 +25,8 @@
 .rd_book_backup_cover,
 .rd_book_image_cover,
 .rd_slider_wrapper,
-.rd_book_shadow{
+.rd_book_shadow,
+.read_review{
   	height: 220px;
 }
 
@@ -608,7 +609,8 @@ and (max-width : 800px){
 	.rd_book_backup_cover,
 	.rd_book_image_cover,
 	.rd_slider_wrapper,
-	.rd_book_shadow{
+	.rd_book_shadow,
+	.read_review{
 	  	height: 170px;
 	}
 
@@ -646,7 +648,8 @@ and (max-width : 800px){
 	.rd_book_backup_cover,
 	.rd_book_image_cover,
 	.rd_slider_wrapper,
-	.rd_book_shadow{
+	.rd_book_shadow,
+	.read_review{
 	  	height: 160px;
 	}
 }
@@ -1173,4 +1176,18 @@ h3 a:hover{
 
 .book_rating .rating_block{
 	width: 100%;
+}
+
+.read_review{
+	position: absolute;
+    left: 0px;
+    right: 0px;
+    z-index: 3;
+    top: 0px;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.58);
+}
+
+.rd_book_container:hover .read_review{
+	visibility: visible;
 }
