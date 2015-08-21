@@ -17,7 +17,7 @@ class Author < Neo
 	end
 
 	def self.get_interviewed skip
-		Author.match + Author.where_group("author.is_interviewed=true ") + Author.return_group(Author.basic_info) + Author.limit(10) + Author.skip(skip)
+		Author.match + Author.where_group("author.is_interviewed=true ") + Author.return_group(Author.basic_info) + Author.skip(skip) + Author.limit(10)
 	end
 
 	def self.match_group ids
