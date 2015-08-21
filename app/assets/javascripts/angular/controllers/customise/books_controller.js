@@ -50,7 +50,8 @@ homeApp.controller('booksController', ["$scope", "$rootScope", "$timeout", 'book
                 else{
                     book.status = false;
                 }
-                bookService.handle_influential_books(book.book_id, book.status);
+                var id = book.book_id || book.id;
+                bookService.handle_influential_books(id, book.status);
             }
         });
         $mdToast.show({
