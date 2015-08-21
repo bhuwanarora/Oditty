@@ -11,4 +11,14 @@ module AlgorithmHelper
 	def self.round num, decimal_places = 2.0
 		(num*(10**decimal_places)).round / ((10**decimal_places)*1.0)
 	end
+
+	def self.to_float object
+		if object.is_a? Array
+			output = object.map{|elem| elem.to_f}
+		elsif object.is_a? Hash
+			output = {}
+			object.map{|key,value| output[key] = value.to_f}
+		end
+		output
+	end
 end

@@ -1,5 +1,4 @@
 module AnalyticsHelper
-
 	def self.neo_get_metrics book_era_label, gr_property_hash, step = 10
 		prop = gr_property_hash.keys[0]
 		value = gr_property_hash[prop]
@@ -13,10 +12,9 @@ module AnalyticsHelper
 	end
 
 	def self.get_book_metrics
-		times = ["PostModernLiterature", "Modernism", "Modernism", "VictorianLiterature", "Romanticism", "NeoClassicalPeriod", "EnglishRenaissance", "MiddleEnglishLiterature", "OldEnglishLiterature", "Contemporary"]
 		puts "get_reviews_count"
 		log_file_name = 'book_analytics_with_gr_reviews_count_as_basis'
-		for time in times
+		for time in Constant::NodeLabel::BookEraLabels
 			ELogger.log_info(time, log_file_name)
 			(0..10000).step(10).each do |index|
 				puts "#{time}-----#{index}"
@@ -25,5 +23,15 @@ module AnalyticsHelper
 				ELogger.log_info(message, log_file_name)
 			end
 		end
+	end
+
+	def self.parse_elogger_file filename
+		filename = (Rails.root.to_s + "/" + filename) if (filename[0] != '/')
+		data = FileParser::Analytics.book filename, 1
+		data.each do |era, era_data|
+			debugger
+			AlgorithmHelper::CurveFit.fit_polynomial({:x => era_data['review_count'], :y => era_data['rating_count']})
+		end
+		AlgorithmHelper::CurveFit.fit_polynomial data
 	end
 end

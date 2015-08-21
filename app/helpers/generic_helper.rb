@@ -8,4 +8,8 @@ module GenericHelper
 	def self.update_redis key, value
 		RedisHelper.update_redis key, value
 	end
+
+	def self.get_files_in_directory directory, file_regex = '*'
+		Dir[directory + "/" + file_regex]
+	end
 end

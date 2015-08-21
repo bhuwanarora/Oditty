@@ -79,6 +79,9 @@ gem "aws-sdk"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
+#gem 'gnuplot', '~> 2.6.2'		# for plots
+gem 'rb-gsl', '~> 1.16.0.6'
+# All gems in following group are needed FOR NLP tagging 
 gem 'treat'
 gem 'linguistics'
 gem 'engtagger'
@@ -116,16 +119,16 @@ group :production do
 	gem 'rails_12factor'
 end
 
-gem 'capistrano', '~>3.2.1'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
-gem 'capistrano-rbenv'
+#gem 'capistrano', '~>3.2.1'
+#gem 'capistrano-bundler'
+#gem 'capistrano-rails'
+#gem 'capistrano-rbenv'
 gem 'google-search', '~> 1.0.3'
 gem 'angular_rails_csrf'
-gem 'capistrano-ssh-doctor', '~> 1.0'
-gem 'capistrano-npm'
-gem 'capistrano-grunt', github: 'roots/capistrano-grunt'
-# gem 'capistrano-ssh-doctor', '~> 1.0'
+#gem 'capistrano-ssh-doctor', '~> 1.0'
+#gem 'capistrano-npm'
+#gem 'capistrano-grunt', github: 'roots/capistrano-grunt'
+#gem 'capistrano-ssh-doctor', '~> 1.0'
 group :development do
 	gem "byebug", "~> 2.5.0"
 	gem 'annotate'
