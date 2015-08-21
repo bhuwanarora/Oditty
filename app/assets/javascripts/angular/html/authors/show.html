@@ -1,0 +1,20 @@
+<div class="big_title" layout-padding>Authors Interviewed</div>
+<div ng-repeat="author in authors_interviewed" layout-padding>
+	<div layout="row" flex layout-padding>
+		<div layout="row" layout-align="space-between">
+			<div></div>
+			<img ng-src="http://rd-authors.readersdoor.netdna-cdn.com/{{author.id}}/M.png" class="square" 
+				onerror="this.src='/assets/author_profile.jpg'" layout-padding/>
+		</div>
+		<div flex layout-padding layout="column" flex-md="70" flex-sm="70">
+			<div><a ng-href="/author?id={{author.id}}" class="big_title" ng-bind-html="author.name"></a></div>
+			<div class="less_important" ng-bind-html="author.overview | reduced_summary"></div>
+		</div>
+	</div>
+	<div layout="row">
+	<a layout-padding class="less_important" ng-href="/author?id={{author.id}}#books">Books</a>
+	<a layout-padding class="less_important" ng-href="/author?id={{author.id}}#interview">Interview</a>
+	<a class="less_important" ng-href="{{author.wiki_url}}" ng-if="author.wiki_url" target="_blank" layout-padding>Wiki</a>
+	</div>
+	<md-divider></md-divider>
+</div>

@@ -111,6 +111,7 @@ class WebsiteController < ApplicationController
 
 	def rooms
 		@rooms = true
+		@title = "Rooms of Knowledge, Oditty | #OditRooms"
 		render :layout => "material"
 	end
 
@@ -131,6 +132,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def filters
+		@title = "Filter through Books, Oditty"
 		@filters = true
 		render :layout => "material"
 	end
@@ -175,6 +177,12 @@ class WebsiteController < ApplicationController
 			user_id = session[:user_id]
 			render :layout => "material"
 		end
+	end
+
+	def authors
+		@authors = true
+		@title = "Authors on Oditty | Authors Interviewed"
+		render :layout => "material"
 	end
 
 	def profile

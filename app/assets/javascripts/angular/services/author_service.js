@@ -34,4 +34,8 @@ homeApp.service('authorService', ["$http", "$q", "$rootScope", "WebsiteUIConstan
         return _deferred_request('/api/v0/author_basic_info?id='+id, $q, $http);
     }
 
+    this.get_authors_interviewed = function(skip){
+        return _deferred_request('/api/v0/get_authors_interviewed?skip='+skip, $q, $http);
+    }
+
 }]);
