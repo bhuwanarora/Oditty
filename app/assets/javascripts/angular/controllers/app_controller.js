@@ -31,10 +31,15 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.info.mobile_search = !$scope.info.mobile_search;
     }
 
-    $scope.show_rating = function(event){
+    $scope.show_indexes = function(book, event){
+        $scope.book = book;
         $mdDialog.show({
-            templateUrl: 'assets/angular/html/shared/share.html',
+            templateUrl: 'assets/angular/html/shared/rating.html',
+            clickOutsideToClose: true,
+            hasBackdrop: false,
             targetEvent: event,
+            scope: $scope,
+            preserveScope: true
         });
         event.stopPropagation();
     }

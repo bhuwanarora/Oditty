@@ -1299,39 +1299,169 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
     this.get_basic_community_info = function(){
         var data = [
             {
-                most_important_tag: [
+                "most_important_tag":[
                     {
-                        image_url: "https://6ssatnist.files.wordpress.com/2011/04/ind-vs-sl.jpg",
-                        name: "Cricket in India",
-                        view_count: 34,
-                        users: [
+                        "image_url": "http://www.lf.k12.de.us/wp-content/uploads/2015/03/Sports.png",
+                        "name":"Sports",
+                        "view_count":67,
+                        "users":[
                             {
-                                first_name: "Ashesh ",
-                                image_url: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xft1/v/t1.0-1/p200x200/11173310_1434123490237046_772909581382978016_n.jpg?oh=18daefeacb003bb2289e720f459d61e1&oe=561926AE&__gda__=1443778791_0645658d6c1d1c9bb22e65629ff3a041",
-                                selectedMonth: null,
-                                id: 4974698,
-                                last_name: "Mishra ",
-                                init_book_read_count: null,
-                                about: null,
-                                selectedYear: null,
-                                selectedDay: null,
-                                gender: null
+                                "first_name":null,
+                                "image_url":null,
+                                "selectedMonth":null,
+                                "id":4543516,
+                                "last_name":null,
+                                "init_book_read_count":null,
+                                "about":null,
+                                "selectedYear":null,
+                                "selectedDay":null,
+                                "gender":null
+                            },
+                            {
+                                "first_name":"Prachi",
+                                "image_url":"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xat1/v/t1.0-1/p200x200/11219323_650602008372756_6765256980039484173_n.jpg?oh=406c6a1a65a03e040d8dff53bce54dfe\u0026oe=567A03A7\u0026__gda__=1447240064_deb583e115d69f88598844f825f903b8",
+                                "selectedMonth":null,
+                                "id":5014392,
+                                "last_name":"Jain",
+                                "init_book_read_count":"100-250",
+                                "about":null,
+                                "selectedYear":null,
+                                "selectedDay":null,
+                                "gender":"Female"
+                            },
+                            {
+                                "first_name":"Bhuwan",
+                                "image_url":"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p200x200/11822486_855071294562509_8449814269949540302_n.jpg?oh=ecd7b10ca1c6cf5bc7d330c99835854e\u0026oe=56454A72\u0026__gda__=1446428879_6ab07f79060833d340b4d2b888a64148",
+                                "selectedMonth":"Dec",
+                                "id":4084079,
+                                "last_name":"Arora",
+                                "init_book_read_count":"50-100",
+                                "about":"Liberal",
+                                "selectedYear":1989,
+                                "selectedDay":1,
+                                "gender":"Male"
                             }
                         ],
-                        id: 5023879,
-                        books: [
+                        "id":5024590,
+                        "books":[
                             {
-                                popularity: 1576,
-                                published_year: null,
-                                page_count: "232",
-                                author_name: "Ed Hawkins",
-                                id: 1938599,
-                                isbn: null,
-                                title: "Bookie Gambler Fixer Spy"
+                                "popularity":32759,
+                                "published_year":"2010",
+                                "page_count":"224",
+                                "author_name":"Rick Reilly",
+                                "id":677136,
+                                "isbn":null,
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"Sports from Hell: My Search for the World's Dumbest Competition"
+                            },
+                            {
+                                "popularity":41,
+                                "published_year":"July 16th 2010",
+                                "page_count":"334",
+                                "author_name":"Leif H. Smith",
+                                "id":1977711,
+                                "isbn":null,
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"Sports Psychology For Dummies"
+                            },
+                            {
+                                "popularity":9,
+                                "published_year":"November 1988",
+                                "page_count":"280",
+                                "author_name":"Thomas Fensch",
+                                "id":1564940,
+                                "isbn":"0805815287, 9780805815283",
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"The Sports Writing Handbook"
+                            },
+                            {
+                                "popularity":0,
+                                "published_year":null,
+                                "page_count":"424",
+                                "author_name":"Peter Merton McGinnis",
+                                "id":2041695,
+                                "isbn":"0736051015, 9780736051019",
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"Biomechanics of Sport and Exercise"
+                            },
+                            {   
+                                "popularity":0,
+                                "published_year":null,
+                                "page_count":"523",
+                                "author_name":"Marie Dunford",
+                                "id":1224582,
+                                "isbn":"0495014834, 9780495014836",
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"Nutrition for Sport and Exercise"
+                            },
+                            {
+                                "popularity":1112,
+                                "published_year":"June 1st 2004",
+                                "page_count":"384",
+                                "author_name":"Michael Mandelbaum",
+                                "id":1570702,
+                                "isbn":"1586483307, 9781586483302",
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"The Meaning Of Sports"
+                            },
+                            {
+                                "popularity":0,
+                                "published_year":"   ",
+                                "page_count":"304",
+                                "author_name":"Elliott J. Gorn",
+                                "id":2344031,
+                                "isbn":"0252071840",
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"A Brief History of American Sports"
+                            },
+                            {
+                                "popularity":8,
+                                "published_year":null,
+                                "page_count":"0",
+                                "author_name":"Joseph Strutt",
+                                "id":1365463,
+                                "isbn":"1430456647, 9781430456643",
+                                "popularity_index":7.6,
+                                "book_reader_relationship_index":4.5,
+                                "goodness_index":5.6,
+                                "likeability_index":7.8,
+                                "title":"The Sports and Pastimes of the People of England"
                             }
                         ]
                     }
-                ]
+                ],
+                "view_count":67,
+                "name":"Sports",
+                "id":5024590,
+                "image_url":"http://www.lf.k12.de.us/wp-content/uploads/2015/03/Sports.png",
+                "label":["Community", "SuperCommunity"],
+                "follow_count":3,
+                "facebook_url":null,
+                "twitter_url":null,
+                "wiki_url":"https://en.wikipedia.org/wiki/Sport",
+                "description":null,
+                "website_url":null
             }
         ];
         return data;

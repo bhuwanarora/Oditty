@@ -1,5 +1,6 @@
 <div class="yellow full_width no_overflow" layout="column"
     layout-align="center center" layout-padding>
+    <div class="less_important white_color">Click outside to close</div>
     <div class="relative">
         <div id="container">
             <div id="main">
@@ -13,7 +14,7 @@
               </div>
             </div>
         </div>
-        <div class="big_title white_color rating_value" ng-bind-html="book.goodness_index || info.books[expanded_book].goodness_index"></div>
+        <div class="big_title white_color rating_value" ng-bind-html="book.goodness_index"></div>
     </div>
     <div class="less_important white_color bold" layout-padding>Goodness Rating</div>
 </div>
@@ -23,7 +24,7 @@
             <div>Book-Reader Relationship Index</div>
             <div class="less_important">Sums up the extent to which readers could connect to the Book.</div>
         </div>
-        <div ng-bind-html="book.book_reader_relationship_index || info.books[expanded_book].book_reader_relationship_index" flex="20"
+        <div ng-bind-html="book.book_reader_relationship_index" flex="20"
             layout="column" layout-align="start center" layout-padding></div>
     </div>
     <div layout="row" layout-padding layout-align="space-between center" flex>
@@ -31,7 +32,7 @@
             <div>Likeability Index</div>
             <div class="less_important">Quantifies how much a user in general will like the Book.</div>
         </div>
-        <div ng-bind-html="book.likeability_index || info.books[expanded_book].likeability_index" flex="20"
+        <div ng-bind-html="book.likeability_index" flex="20"
             layout="column" layout-align="start center" layout-padding></div>
     </div>
     <div layout="row" layout-padding layout-align="space-between center" flex>
@@ -39,7 +40,7 @@
             <div>Popularity Index</div>
             <div class="less_important">Measures the popularity of a Book globally.</div>
         </div>
-        <div ng-bind-html="book.popularity_index || info.books[expanded_book].popularity_index" flex="20"
+        <div ng-bind-html="book.popularity_index" flex="20"
             layout="column" layout-align="start center" layout-padding></div>
     </div>
 </div>
