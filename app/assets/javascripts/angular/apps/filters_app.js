@@ -380,18 +380,27 @@ angular.module('filtersApp', [])
       return output;
     };
   })
-  .filter('medium_thumb', function(){
-    return function(isbn_string){
-      var output = "";
-      if(isbn_string){
-        var isbn = isbn_string.split(",");
-        angular.forEach(isbn, function(value){
-          output = "http://rd-images.readersdoor.netdna-cdn.com/"+value.trim()+"/M.jpg";
-        });
-        return output;
-      }
-    }
-  })
+    .filter('medium_thumb', function(){
+        return function(isbn_string){
+            var output = "";
+            if(isbn_string){
+                var isbn = isbn_string.split(",");
+                if(isbn && isbn.length > 1){
+                    if(isbn[0].length > isbn[1].length){
+                        var isbn13 = isbn[0];
+                    }
+                    else{
+                        var isbn13 = isbn[1]; 
+                    }
+                }
+                else{
+                    var isbn13 = isbn[0];
+                }
+                output = "http://rd-images.readersdoor.netdna-cdn.com/"+isbn13.trim()+"/M.jpg";
+                return output;
+            }
+        }
+    })
   .filter('small_thumb', function(){
     return function(isbn_string){
         var output = ""
