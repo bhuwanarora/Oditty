@@ -4,7 +4,7 @@ class Video < Neo
 	end
 
 	def self.match_community
-		" MATCH (video:Video)-[has_video:HasVideo]->(community:Community) WITH video, community "
+		" MATCH (video:Video)<-[has_video:HasVideo]-(community:Community) WITH video, community "
 	end
 
 	def self.match
@@ -16,7 +16,7 @@ class Video < Neo
 	end
 
 	def self.merge_community google_rank = -1
-		clause = " MERGE (video)-[has_video:HasVideo]->(community) "
+		clause = " MERGE (video)<-[has_video:HasVideo]-(community) "
 		if google_rank.present? && google_rank > 0
 			clause += " ON CREATE SET has_video.rank = " + google_rank.to_s + " "
 		end
