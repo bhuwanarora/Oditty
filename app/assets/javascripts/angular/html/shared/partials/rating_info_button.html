@@ -1,0 +1,16 @@
+<md-button class="rating_block description_card md-primary md-button-clear white" layout-padding layout-margin 
+	ng-if="book.goodness_index"
+	ng-click="show_indexes(book, $event)">
+	<div layout="column" layout-align="center center">
+		<div class="big_title">{{book.goodness_index}}</div>
+		<div class="bold less_important">
+			Goodness Rating
+		</div>
+	</div>
+</md-button>
+<div ng-if="!book.goodness_index">
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+</div>

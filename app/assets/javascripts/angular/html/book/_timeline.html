@@ -28,6 +28,7 @@
                     </div>
                 </div>
             </div>
+            <suggest-friends class="white" ></suggest-friends>
         </div>
         <div flex="70" layout="column" flex-md="100" layout-padding flex-sm="100">
             <div ng-include src="'/assets/angular/html/share/status_options.html'"
@@ -66,7 +67,7 @@
     </div>
     <div flex="25" layout="column" hide-sm>
         <div ng-include src="'/assets/angular/html/shared/partials/rating_block.html'"
-            class="md-whiteframe-z1 white"></div>
+            class="md-whiteframe-z1 white" ng-if="book.goodness_index"></div>
         <div layout-padding class="md-whiteframe-z1 white">
             <div layout="row" layout-align="space-between"  layout-padding>
                 <h3 class="white">
@@ -88,7 +89,7 @@
             <div layout="column"  ng-include src="'/assets/angular/html/shared/recommend_to_friends.html'"
                 ng-controller="recommendController"></div>
         </div>
-        <suggest-friends class="white md-whiteframe-z1" ></suggest-friends>
+        
         <!-- <a class="twitter-timeline" ng-href="https://twitter.com/search?q=1984%20book"  -->
         <!-- data-widget-id="619523647649091584">Tweets about 1984 book</a> -->
     </div>
