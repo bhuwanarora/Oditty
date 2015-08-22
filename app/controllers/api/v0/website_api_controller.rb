@@ -72,10 +72,10 @@ module Api
 
 			def chronological_news
 				id = params[:id]
-				info = RedisHelper.get_chronological_news_info({:id => id})
+				info = RedisHelper::News.get_chronological_news_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
-					RedisHelper.set_chronological_news_info({:id => id, :info => info})
+					RedisHelper::News.set_chronological_news_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
