@@ -75,9 +75,8 @@ module RedisHelper::Community
 	def self.get_suggested params
 		output = nil
 		key = RedisHelper::Community.get_key_suggested params[:id]
-		community_ids = $redis.get(key)
+		community_ids = JSON.parse($redis.get(key)) rescue nil
 		if community_ids.present?
-			community_ids = JSON.parse(community_ids)
 			output = []
 			community_ids.each do |id|
 				info = RedisHelper::Community.get_basic_info({:id => id})
