@@ -25,15 +25,7 @@ module Api
 			def update_redis_cache
 				id = params[:id].to_s
 				type = params[:type].to_s.capitalize
-				case type
-				when Constant::EntityLabel::Author
-					RedisHelper::Author.delete_basic_info
-					RedisHelper::Author.delete_interview_details
-				when Constant::EntityLabel::Book
-					RedisHelper::Book.delete_basic_feed_info({:id => id})
-					RedisHelper::Book.delete_primary_info({:id => id})
-					RedisHelper::Book.delete_interesting_info({:id => id})
-				end
+				RedisHelper.update id, type
 				render :json => {:message => "Success"}, :status => 200	
 			end
 
