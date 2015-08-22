@@ -4,20 +4,20 @@ module Api
 
 			def get_info
 				id = params[:id]
-				info = RedisHelper.get_publisher_info({:id => id})
+				info = RedisHelper::Publisher.get_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::PublisherApi.get_info(id)
-					RedisHelper.set_publisher_info({:id => id, :info => info})
+					RedisHelper::Publisher.set_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def get_books
 				id = params[:id]
-				info = RedisHelper.get_publisher_books({:id => id})
+				info = RedisHelper::Publisher.get_books({:id => id})
 				unless !info.nil?
 					info = Api::V0::PublisherApi.get_books(id)
-					RedisHelper.set_publisher_books({:id => id, :info => info})
+					RedisHelper::Publisher.set_books({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end

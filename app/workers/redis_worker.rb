@@ -14,7 +14,7 @@ class RedisWorker
 		if community_id_array
 			community_id_array.each do |id|
 				info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
-				RedisHelper.set_basic_community_info({:id => id, :info => info})
+				RedisHelper::Community.set_basic_info({:id => id, :info => info})
 			end
 		end
 	end

@@ -28,10 +28,10 @@ module Api
 
 			def get_basic_info
 				id = params[:id]
-				info = RedisHelper.get_basic_author_info({:id => id})
+				info = RedisHelper::Author.get_basic_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::AuthorApi.get_basic_info id
-					RedisHelper.set_basic_author_info({:id => id, :info => info})
+					RedisHelper::Author.set_basic_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
