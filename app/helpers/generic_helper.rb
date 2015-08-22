@@ -6,6 +6,6 @@ module GenericHelper
 	end
 
 	def self.update_redis key, value
-		RedisHelper.update_redis key, value
+		RedisHelper.update_value key, value
 	end
 end

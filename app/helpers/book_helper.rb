@@ -7,6 +7,10 @@ module BookHelper
 		GenericHelper.update_redis key, value
 	end
 
+	def self.get_related_communities id
+		Book.new(id).match_communities.execute
+	end
+
 	def self.set_author_list author_name_list,book_id
 		set_clause = "SET book.author_name_list = ["
 		author_name_list.each do |author_name|
