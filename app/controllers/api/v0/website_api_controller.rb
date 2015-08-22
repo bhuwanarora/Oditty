@@ -14,10 +14,10 @@ module Api
 
 			def get_genre_details
 				id = params[:id]
-				info = RedisHelper.get_genre_details({:id => id})
+				info = RedisHelper::Genre.get_details({:id => id})
 				unless info
 					info = Api::V0::WebsiteApi.get_genre_details(id)
-					RedisHelper.set_genre_details({:id => id, :info => info})
+					RedisHelper::Genre.set_details({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
@@ -27,12 +27,12 @@ module Api
 				type = params[:type].to_s.capitalize
 				case type
 				when Constant::EntityLabel::Author
-					RedisHelper.delete_basic_author_info
-					RedisHelper.delete_interview_details
+					RedisHelper::Author.delete_basic_info
+					RedisHelper::Author.delete_interview_details
 				when Constant::EntityLabel::Book
-					RedisHelper.delete_basic_feed_book_info({:id => id})
-					RedisHelper.delete_book_primary_info({:id => id})
-					RedisHelper.delete_book_interesting_info({:id => id})
+					RedisHelper::Book.delete_basic_feed_info({:id => id})
+					RedisHelper::Book.delete_primary_info({:id => id})
+					RedisHelper::Book.delete_interesting_info({:id => id})
 				end
 				render :json => {:message => "Success"}, :status => 200	
 			end
@@ -41,41 +41,41 @@ module Api
 				id = params[:id]
 				community_id = params[:tag_id]
 				params = {:news_id => id, :community_id => community_id}
-				info = RedisHelper.get_important_community_info(params)
+				info = RedisHelper::Community.get_important_info(params)
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_important_community_info(id, community_id).execute
 					params[:info] = info
-					RedisHelper.set_important_community_info(params)
+					RedisHelper::Community.set_important_info(params)
 				end
 				render :json => info, :status => 200
 			end
 
 			def basic_community_info
 				id = params[:id]
-				info = RedisHelper.get_basic_community_info({:id => id})
+				info = RedisHelper::Community.get_basic_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
-					RedisHelper.set_basic_community_info({:id => id, :info => info})
+					RedisHelper::Community.set_basic_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def feed_community_info
 				id = params[:id]
-				info = RedisHelper.get_feed_community_info({:id => id})
+				info = RedisHelper::Community.get_feed_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
-					RedisHelper.set_feed_community_info({:id => id, :info => info})
+					RedisHelper::Community.set_feed_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def chronological_news
 				id = params[:id]
-				info = RedisHelper.get_chronological_news_info({:id => id})
+				info = RedisHelper::News.get_chronological_news_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
-					RedisHelper.set_chronological_news_info({:id => id, :info => info})
+					RedisHelper::News.set_chronological_news_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
