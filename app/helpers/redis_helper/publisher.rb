@@ -1,5 +1,4 @@
 module RedisHelper::Publisher
-
 	def self.delete_info params
 		key = RedisHelper::Publisher.get_key_info params[:id]
 		$redis.del key
