@@ -231,26 +231,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.info = {};
         $scope.info.show_share = false;
         var url = $location.absUrl();
-        var communities = (url.indexOf("rooms") > 0);
-        var personalised_suggestions = (url.indexOf("personalised_suggestions") > 0);
-        var infinity = (url.indexOf("filters") > 0) || ((url.indexOf("signup") > 0));
 
-        if(communities){
-            $scope.active_page = 1;
-        }
-        else if(personalised_suggestions){
-            $scope.active_page = 0;
-        }
-        else if(infinity){
-            $scope.active_page = 2;
-        }
-        else{
-            $scope.active_page = -1;
-        }
 
-        $scope.random_set = -1;
 
-        $scope.data = {"selectedIndex" : 0};
         _get_user_details();
 
         var _handle_labels = function(){

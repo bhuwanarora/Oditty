@@ -69,10 +69,6 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         // $scope.$location = $location;
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
-        if(angular.isUndefined){
-            $scope.data = {};    
-        }
-        $scope.data.selectedIndex = 0;
         
         if(url_parsed != null){
             var id = url_parsed[2];
@@ -88,6 +84,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         else{
             var book_id = id;
         }
+        
         var filter = "id="+book_id;
         $scope.book_loading = true;
         var book_data_timeout = $timeout(function(){
@@ -96,8 +93,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                 if(angular.isDefined(data) && data != null){
                     var endorse_status = data.endorse_status != null;
                     var status = data.status != null;
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var json = {"endorse_status" : endorse_status, "status" : status, "color": ColorConstants.value[random_int]};
+                    var json = {"endorse_status" : endorse_status, "status" : status};
                     if(angular.isDefined($rootScope.active_book)){
                         $scope.book = angular.extend($rootScope.active_book, data);
                     }

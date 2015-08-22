@@ -1,5 +1,5 @@
 <div ng-if="!reduced" id="browseRooms">
-    <div layout="row" layout-align=" ">
+    <div layout="row" layout-align="">
             <h1 layout-padding>
             <a layout-padding layout="row" layout-align="center center" class="grey_header" href="/rooms">
                 Rooms of Knowledge
@@ -25,6 +25,9 @@
             </a>
         </md-grid-tile>
     </md-grid-list>
+    <div layout-padding>
+        <a href="/rooms" class="less_important">Show more Rooms...</a>
+    </div>
 </div>
 <div ng-if="reduced" >
     <div layout="row">
