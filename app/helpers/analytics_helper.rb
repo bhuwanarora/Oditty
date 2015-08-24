@@ -25,13 +25,90 @@ module AnalyticsHelper
 		end
 	end
 
-	def self.parse_elogger_file filename
-		filename = (Rails.root.to_s + "/" + filename) if (filename[0] != '/')
-		data = FileParser::Analytics.book filename, 1
-		data.each do |era, era_data|
-			debugger
-			AlgorithmHelper::CurveFit.fit_polynomial({:x => era_data['review_count'], :y => era_data['rating_count']})
+	def self.handle_each_book_era era, era_data
+		curve_type = Constant::Curves::Polynomial
+		curve_instance = Constant::Curves::CurveBookRatingVsBookReview
+		partitions = AlgorithmHelper::CurvePartioning.partition_domain era_data['review_count'], curve_type
+		partitions.each do |partition|
+			x_data = era_data['review_count'][partition[:start]..partition[:end]]
+			y_data = era_data['rating_count'][partition[:start]..partition[:end]]
+			fitted_curve = AlgorithmHelper::CurveFit.fit_polynomial({:x => x_data, :y => y_data })
+			params = 
+			{
+				:x => x_data,
+				:y => y_data,
+				:coef => fitted_curve[:coef],
+				:type => curve_type,
+				:x_label => 'reviews_count',
+				:y_label => 'rating_count',
+				:title => era.to_s + ' reviews_count vs rating_count ' + partition[:start].to_s + "_" + partition[:end].to_s + " "
+			}
+			AlgorithmHelper::CurveFit.show_plot params
+			params = 
+			{
+				:coef 		=> fitted_curve[:coef],
+				:partition 	=> partition,
+				:instance	=> curve_instance,
+				:era 		=> era
+			}
+			AlgorithmHelper::CurveFit.store_curve curve_type, params
 		end
-		AlgorithmHelper::CurveFit.fit_polynomial data
+	end
+
+	def self.analyse_books log_file_name
+		log_file_name = (Rails.root.to_s + "/" + log_file_name) if (log_file_name[0] != '/')
+		data = FileParser::Analytics.book log_file_name, 1
+		data.each do |era, era_data|
+			puts ("Handling era: " + era).green
+			AnalyticsHelper.handle_each_book_era era, era_data
+		end
+	end
+
+	def self.get_book_reader_relationship_index_base reviews_count
+		if reviews_count > 0
+			max_index = 70/100.0*Constant::RatingIndices::MaxBookReaderRelationshipIndex
+			output = [Math.log(reviews_count,2)/15, 1.0].min*max_index
+		else
+			output = 0
+		end
+		output
+	end
+	
+	def self.handle_elite_books reviews_count, offset_value
+		if reviews_count > 10000
+			offset_value = [0.0, offset_value].max
+		end
+		offset_value
+	end
+
+	def self.get_book_reader_relationship_index_offset reviews_count, rating_count, era
+		if reviews_count < 1000
+			partition = {:start => 0, :end => 100}
+		else
+			partition = {:start => 101, :end => 1001}
+		end
+		params =
+		{
+			:instance 	=> Constant::Curves::CurveBookRatingVsBookReview,
+			:era 		=> era,
+			:partition 	=> partition
+		}
+		coef = AlgorithmHelper::CurveFit.get_curve_polynomial params
+		expected_rating_count = AlgorithmHelper::CurveFit.get_value_polynomial_curve coef, reviews_count
+		frac = (expected_rating_count - rating_count)/rating_count
+		if frac > 0
+			output = [frac*(1/0.4), 1.0].min
+		else
+			output = [frac*(1/2.0), -1.0].max
+		end
+		output = AnalyticsHelper.handle_elite_books reviews_count, output
+		# output is in between [-1,1]
+		output*(30/100.0)*Constant::RatingIndices::MaxBookReaderRelationshipIndex
+	end
+
+	def self.get_book_reader_relationship_index reviews_count, rating_count, era
+		base = AnalyticsHelper.get_book_reader_relationship_index_base reviews_count.to_f
+		offset = AnalyticsHelper.get_book_reader_relationship_index_offset reviews_count.to_f, rating_count.to_f, era
+		base + offset
 	end
 end

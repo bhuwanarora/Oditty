@@ -12,4 +12,9 @@ module GenericHelper
 	def self.get_files_in_directory directory, file_regex = '*'
 		Dir[directory + "/" + file_regex]
 	end
+
+	def self.recursively_create_directories directory
+		require 'fileutils'
+		FileUtils.mkdir_p directory
+	end
 end

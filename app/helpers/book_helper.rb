@@ -57,25 +57,39 @@ module BookHelper
 		end
 		output
 	end
+
+	def self.get_era_from_label book_labels
+		era = []
+		book_labels.each do |label|
+			era << label if (Constant::NodeLabel::BookEraLabels.include? label)
+		end
+		era
+	end
+
 	# 1 lack review count as 5
 	def self.get_book_reader_relationship_index_offset review_count
 		if review_count.to_i == 0
-			output = 0
+			output = 0.0
 		else
 			output = (Constant::RatingIndices::MaxBookReaderRelationshipIndex/2)*(Math.log(review_count.to_i,2))/17.0
 		end
 		output
 	end
 
-	def self.calculate_book_reader_relationship_index review_count, rating_count
-		frac  = review_count.to_f/rating_count.to_f
-		index = AlgorithmHelper.get_sigmoid(
-			{
-				:x => frac,
-				:alpha => Constant::RatingIndices::AlphaBookReaderRelationshipIndex,
-				:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex.to_f/2
-			})
-		index + BookHelper.get_book_reader_relationship_index_offset(review_count)
+	def self.calculate_book_reader_relationship_index review_count, rating_count, era = []
+		if era.empty?
+			frac  = review_count.to_f/rating_count.to_f
+			index = AlgorithmHelper.get_sigmoid(
+				{
+					:x => frac,
+					:alpha => Constant::RatingIndices::AlphaBookReaderRelationshipIndex,
+					:limit => Constant::RatingIndices::MaxBookReaderRelationshipIndex.to_f/2
+				})
+			output = index + BookHelper.get_book_reader_relationship_index_offset(review_count)
+		else
+			output = AlgorithmHelper.mean(era.map{|elem| (AnalyticsHelper.get_book_reader_relationship_index(review_count, rating_count, elem))})
+		end
+		output
 	end
 
 	def self.calculate_popularity_index rating_count, positive_bias = 2.5
@@ -97,7 +111,7 @@ module BookHelper
 		init_clause  = params[:init_clause]
 		init_clause += ""\
 						" WHERE HAS(book.gr_rating) "\
-						" RETURN DISTINCT ID(book) AS id, " + Book.gr_info
+						" RETURN DISTINCT ID(book) AS id, " + Book.gr_info + ", LABELS(book) AS labels"
 		neo_output 	 = init_clause.execute
 		neo_output
 	end
@@ -105,7 +119,11 @@ module BookHelper
 	def self.calculate_all_gr_indices neo_book
 		p_index 	= BookHelper.calculate_popularity_index neo_book["gr_ratings_count"]
 		l_index 	= BookHelper.calculate_likability_index neo_book["gr_rating"]
-		brr_index 	= BookHelper.calculate_book_reader_relationship_index neo_book["gr_reviews_count"], neo_book["gr_ratings_count"]
+		brr_index 	= BookHelper.calculate_book_reader_relationship_index(
+			neo_book["gr_reviews_count"], 
+			neo_book["gr_ratings_count"],
+			BookHelper.get_era_from_label(neo_book["labels"])
+			)
 		g_index 	= BookHelper.calculate_goodness_index p_index, l_index, brr_index
 		if p_index.nan? || l_index.nan? || brr_index.nan?
 			output = []

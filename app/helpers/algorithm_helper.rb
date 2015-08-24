@@ -21,4 +21,10 @@ module AlgorithmHelper
 		end
 		output
 	end
+
+	def self.mean array
+		len = (array.length).to_f
+		sum = array.sum
+		sum/len
+	end
 end

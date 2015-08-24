@@ -2,6 +2,7 @@ module Constant::Curves
 	Exponential = 'exponential'
 	Polynomial 	= 'polynomial'
 	Types 		=  [Exponential, Polynomial ]
-	BookRatingVsBookReview = 'rating_review'
+	
+	CurveBookRatingVsBookReview = 'rating_review'
 	Existing = [CurveBookRatingVsBookReview]
 end
