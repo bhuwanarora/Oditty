@@ -21,8 +21,13 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			var skip = $scope.users_list.length;
 			var id = $scope.active_user_id;
 			networkService.get_followers(skip, id).then(function(data){
-				$scope.users_list = $scope.users_list.concat(data);
-				$scope.info.loading = false;
+				if(data && data.length == 0){
+					$scope.hide_show_more = true;
+				}
+				else{
+					$scope.users_list = $scope.users_list.concat(data);
+					$scope.info.loading = false;
+				}
 			});
 		}
 	}
@@ -33,9 +38,14 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 			var skip = $scope.users_list.length;
 			var id = $scope.active_user_id;
 			networkService.get_users_followed(skip, id).then(function(data){
-				$scope.users_list = $scope.users_list.concat(data);
-				$scope.info.loading = false;
-			});	
+				if(data && data.length == 0){
+					$scope.hide_show_more = true;
+				}
+				else{
+					$scope.users_list = $scope.users_list.concat(data);
+					$scope.info.loading = false;
+				}
+			});
 		}
 	}
 
