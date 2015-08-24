@@ -38,7 +38,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile || @book || @news || @room || @customise || @authors %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news || @room || @customise || @authors || @news_group %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)" 
          ng-click="close_popups()" 
         msd-wheel="close_popups('wheel')">
