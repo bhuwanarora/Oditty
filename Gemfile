@@ -79,8 +79,12 @@ gem "aws-sdk"
 # gem 'amazon-ecs'
 # gem 'rubber'
 # gem 'rails_admin_example_theme', :git => 'git://github.com/bbenezech/rails_admin_example_theme.git'
-#gem 'gnuplot', '~> 2.6.2'		# for plots
-gem 'rb-gsl', '~> 1.16.0.6'
+gem 'gnuplot', '~> 2.6.2'		# for plots
+#for curve fitting
+gem 'narray'
+gem 'rb-gsl', '~> 1.16.0.6', :require => false
+gem 'gsl'
+
 # All gems in following group are needed FOR NLP tagging 
 gem 'treat'
 gem 'linguistics'
