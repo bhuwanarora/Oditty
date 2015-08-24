@@ -5,10 +5,10 @@ module Api
 			def book_news
 				id = params[:id]
 				key = "BN" + id.to_s
-				info = RedisHelper.get_virtuality_book_news({:id => id})
+				info = RedisHelper::Book.get_virtuality_news({:id => id})
 				unless !info.nil?
 					info = Api::V0::RealVirtualityApi.get_news(id).execute[0] rescue []
-					RedisHelper.set_virtuality_book_news({:id => id,:info => info})
+					RedisHelper::Book.set_virtuality_news({:id => id,:info => info})
 				end
 				render :json => info, :status => 200
 			end
