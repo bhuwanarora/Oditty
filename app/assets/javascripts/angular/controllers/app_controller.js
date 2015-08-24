@@ -259,6 +259,8 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
             $scope.info.hide_signin = true;
         }
 
+        $scope.data = {"selectedIndex" : 0};
+
     }());
 
 }]);
