@@ -103,6 +103,7 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
     
     var _init = (function(){
         $scope.info.loading = false;
+        
         userService.get_user_details().then(function(data){
             $rootScope.user = data;
         });
