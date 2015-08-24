@@ -517,7 +517,7 @@
          */
          if(loadSDK) {
           (function injectScript(){
-            var src           = '//connect.facebook.net/' + settings.locale + '/sdk.js',
+            var src           = 'assets/angular/vendors/sdk.js',
                 script        = document.createElement('script');
                 script.id     = 'facebook-jssdk';
                 script.async  = true;
