@@ -137,6 +137,12 @@ namespace :graph do
     BookHelper.set_metrics
   end
 
+  desc "create book metric logs"
+  task :create_book_metric_logs, [:logfilename] => :environment do |t,args|
+    include AnalyticsHelper
+    AnalyticsHelper.analyse_books args[:logfilename]
+  end
+
   desc "set_year_labels"
   task :set_year_labels => :environment do
     include Neo4jHelper
