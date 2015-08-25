@@ -17,11 +17,15 @@ class UsersUser < Neo
 	end
 
 	def self.follow_match
-		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) WITH user, friend, follows_user, follows_node, followed_by  "
+		 UsersUser.follow_relationship + " WITH user, friend, follows_user, follows_node, followed_by  "
+	end
+
+	def self.follow_relationship
+		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) "
 	end
 
 	def match 
-		UsersUser.follow_match + " WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
+		UsersUser.follow_relationship + " WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
 
 	def self.reverse_match 

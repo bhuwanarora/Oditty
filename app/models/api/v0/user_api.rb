@@ -368,19 +368,19 @@ module Api
 				params = {
 					:template => Constant::EmailTemplate::RecommendBooks, 
 				  	:user => {
-				  		:image_url => info["image_url"], 
+				  		:image_url => info["image_url"].to_s, 
 				  		:id => info["id"],
-				  		:name => info["first_name"] + " " + info["last_name"],
+				  		:name => info["first_name"].to_s + " " + info["last_name"].to_s,
 				  	},
 				  	:friend =>{
-				  		:name => info["friends_first_name"],
-				  		:email => info["friends_email"],
+				  		:name => info["friends_first_name"].to_s,
+				  		:email => info["friends_email"].to_s,
 				  		:id => info["friends_id"]
 				  	},
 				  	:book => {
 				  		:id => info["book_id"],
-				  		:title => info["title"],
-				  		:author_name => info["author_name"],
+				  		:title => info["title"].to_s,
+				  		:author_name => info["author_name"].to_s,
 				  		:isbn => isbn
 				  	}
 				}
