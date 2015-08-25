@@ -110,8 +110,14 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         var user_timeout = $timeout(function(){
             if(angular.isUndefined($rootScope.user)){
                 userService.get_user_details().then(function(data){
-                    $rootScope.user = data;
-                    _handle_facebook_data();
+                    if((data == {}) && (getCookie("logged") != "")){
+                        deleteCookie("logged");
+                        $scope.info.hide_signin = false;
+                    }
+                    else{
+                        $rootScope.user = data;
+                        _handle_facebook_data();
+                    }
                 });
             }
             else{
@@ -232,26 +238,24 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.info.show_share = false;
         var url = $location.absUrl();
 
-
-
         _get_user_details();
 
-        var _handle_labels = function(){
-            if(angular.isUndefined($cookieStore.get('labels')) || $cookieStore.get('labels') == null || $cookieStore.get('labels').length == 0){
-                var data_timeout = $timeout(function(){
-                    shelfService.get_all_shelves().then(function(data){
-                        $rootScope.labels = data;
-                        $cookieStore.put('labels', data);
-                    });
-                }, 100);
-                $scope.$on('destroy', function(){
-                    $timeout.cancel(data_timeout);
-                });
-            }
-            else{
-                $rootScope.labels = $cookieStore.get('labels');
-            }
-        }
+        // var _handle_labels = function(){
+        //     if(angular.isUndefined($cookieStore.get('labels')) || $cookieStore.get('labels') == null || $cookieStore.get('labels').length == 0){
+        //         var data_timeout = $timeout(function(){
+        //             shelfService.get_all_shelves().then(function(data){
+        //                 $rootScope.labels = data;
+        //                 $cookieStore.put('labels', data);
+        //             });
+        //         }, 100);
+        //         $scope.$on('destroy', function(){
+        //             $timeout.cancel(data_timeout);
+        //         });
+        //     }
+        //     else{
+        //         $rootScope.labels = $cookieStore.get('labels');
+        //     }
+        // }
 
         $scope.search_results = [];
 
