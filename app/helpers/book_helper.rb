@@ -93,7 +93,8 @@ module BookHelper
 		else
 			output = AlgorithmHelper.mean(era.map{|elem| (AnalyticsHelper.get_book_reader_relationship_index(review_count, rating_count, elem))})
 		end
-		output
+		output = 0.0 if output.nan?
+		[output, Constant::RatingIndices::MinBookReaderRelationshipIndex].max
 	end
 
 	def self.calculate_popularity_index rating_count, positive_bias = 2.5

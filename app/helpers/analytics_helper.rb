@@ -109,6 +109,6 @@ module AnalyticsHelper
 	def self.get_book_reader_relationship_index reviews_count, rating_count, era
 		base = AnalyticsHelper.get_book_reader_relationship_index_base reviews_count.to_f
 		offset = AnalyticsHelper.get_book_reader_relationship_index_offset reviews_count.to_f, rating_count.to_f, era
-		base + offset
+		(base + offset)
 	end
 end

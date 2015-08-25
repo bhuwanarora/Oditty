@@ -4,6 +4,8 @@ module Constant::RatingIndices
 	MaxBookLikabilityIndex 				= 10
 	MaxBookGoodnessIndex 				= 10
 
+	MinBookReaderRelationshipIndex 		= 0.3
+
 	AlphaBookReaderRelationshipIndex	= 25
 	BookPopularityIndex = 'popularity_index'
 	BookGoodnessIndex	= 'goodness_index'
