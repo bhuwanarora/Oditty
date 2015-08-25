@@ -258,7 +258,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/social_feed.html',
-    "<md-content class=\"less_important margin_top\" check-scroll-bottom=\"get_feed()\"><h3 class=\"white\" layout-padding ng-if=\"social_feed && (social_feed.length > 0)\">Moments from the Community</h3><div class=\"feed_ticker\"><div ng-repeat=\"feed in social_feed\" layout=\"column\" layout-padding><div class=\"less_important\">{{feed.created_at | timestamp | date:'dd MMM'}}</div><div ng-if=\"feed.label == 'FollowsNode'\" layout=\"row\"><div ng-if=\"::feed.data.community\" layout=\"row\" layout-wrap><div><a ng-href=\"/profile?id={{feed.data.user.id}}\">{{::feed.data.user.name}}</a>&nbsp;joined a room,&nbsp;<a ng-href=\"/room?id={{feed.data.community.id}}\">{{::feed.data.community.name}}</a>.</div></div><div ng-if=\"::feed.data.author\" layout=\"row\" layout-wrap><a ng-href=\"/profile?id={{feed.data.user.id}}\">{{::feed.data.user.name}}</a>&nbsp;started following,&nbsp;<a ng-href=\"/author?id={{feed.data.author.id}}\">{{::feed.data.author.name}}</a>.</div><div ng-if=\"::feed.data.friend\" layout=\"row\" layout-wrap><a ng-href=\"/profile?id={{feed.data.user.id}}\">{{::feed.data.user.name}}</a>&nbsp;started following,&nbsp;<a ng-href=\"/profile?id={{feed.data.friend.id}}\">{{::feed.data.friend.name}}</a>.</div></div></div></div></md-content>"
+    "<md-content class=\"less_important margin_top\" check-scroll-bottom=\"get_feed()\"><h3 class=\"white\" layout-padding ng-if=\"social_feed && (social_feed.length > 0)\">Moments from the Community</h3><div class=\"feed_ticker\"><div ng-repeat=\"feed in social_feed\" layout=\"column\" layout-padding></div></div></md-content>"
   );
 
 
