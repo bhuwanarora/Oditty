@@ -1,10 +1,10 @@
 <div ng-if="!reduced" id="browseRooms">
-    <div layout="row" layout-align="">
-            <h1 layout-padding>
-            <a layout-padding layout="row" layout-align="center center" class="grey_header" href="/rooms">
-                Rooms of Knowledge
-            </a>
+    <div layout="column" layout-align="start start" layout-padding>
+            <h1><a  layout="row" layout-align="center center" class="grey_header" href="/rooms">
+                    Rooms of Knowledge
+                </a>
             </h1>
+            <div>Automated Collection of Books, News and Videos on...</div>
         <!-- <div class="primary round_corners less_important white_color" layout-padding>New</div> -->
     </div>
 
@@ -26,7 +26,7 @@
         </md-grid-tile>
     </md-grid-list>
     <div layout-padding>
-        <a href="/rooms" class="less_important">Show more Rooms...</a>
+        <a href="/rooms" class="less_important">10000+ more Rooms...</a>
     </div>
 </div>
 <div ng-if="reduced" >
