@@ -169,22 +169,22 @@ var constants = {
 		"ReadTimes": [
 			{
 				"name": "For a flight journey",
-				"page_count_range": "<50",
+				"page_count_range": "Less than 50",
 				"id": 772852
 			},
 			{
 				"name": "For a weekend getaway",
-				"page_count_range": "50-100",
+				"page_count_range": "50 to 100",
 				"id": 772853
 			},
 			{
 				"name": "For a week's holiday",
-				"page_count_range": "100-250",
+				"page_count_range": "100 to 250",
 				"id": 772854
 			},
 			{
 				"name": "For a month's sabbatical",
-				"page_count_range": ">250",
+				"page_count_range": "More than 250",
 				"id": 772855
 			}
 		],
