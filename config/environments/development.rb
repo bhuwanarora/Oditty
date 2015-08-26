@@ -39,5 +39,5 @@ ReadersDoor::Application.configure do
   config.search_service_url = "http://119.81.63.26"
   config.google_public_key = ['AIzaSyBj9-R7iOj2lUuJovA9ITK_aPOtmdo3CPU','AIzaSyDbCyV9BqcDI8Hy0N_hE3mft7JMOB8n2Ro','AIzaSyBttf3q2dr-NfCP3BndIkZmq2P0WSaReSQ','AIzaSyDp2_Chh4EwJoivti1HPlgXj36HFuu1u18','AIzaSyAZEOl-HUtyjd2Lhsru3qRBXaXXC4mEF2w','AIzaSyD15mkYlsdQ7UoncOYfudpnCXRBm8iXw3I','AIzaSyBRYd4EpgLR5Q0Lte1S8lFU1dnbo_cqm0U','AIzaSyCbPFLI9t7p3N0u9mkiTpxQfK75Rm5ZcKs']
   config.neo4j_server_port = 3232
-  config.feed_service = "http://161.202.19.237"
+  config.feed_service = "https://feed.oditty.me/"
 end
