@@ -514,12 +514,16 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				info = Api::V0::UserApi.notify_borrow(book_id, user_id).execute
-				FeedHelper::UserFeedHelper.handle_redis({
+				begin
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:book_id => book_id,
 						:id 	=> info[0]["borrow_node_id"],
 						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::BorrowNode)
+				rescue Exception => e
+					puts e.to_s.red					
+				end
 				info.each{|elem| (RedisHelper.update(elem["id"], Constant::EntityLabel::User))}
 				render :json => info, :status => 200
 			end
