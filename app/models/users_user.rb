@@ -24,6 +24,10 @@ class UsersUser < Neo
 		" MATCH (user)-[follows_user:FollowsUser]->(follows_node:FollowsNode)-[followed_by:FollowedBy]->(friend) "
 	end
 
+	def self.recommend_relationship
+		" MATCH (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->(recommend_node:RecommendNode)-[:Recommended]->(book) "
+	end
+
 	def match 
 		UsersUser.follow_relationship + " WHERE ID(user) = " + @user_id.to_s + " AND ID(friend) = " + @friend_id.to_s + " WITH user, follows_user, friend, follows_node, followed_by "
 	end
@@ -50,6 +54,14 @@ class UsersUser < Neo
 		clause
 	end
 
+	def get_recommendation_info book_id
+		match_book + " WITH user, book, friend " + UsersUser.recommend_relationship + UsersUser.return_group(UsersUser.basic_info_recommend_node)
+	end
+
+	def self.basic_info_recommend_node
+		"recommend_node.book_id AS book_id, recommend_node.user_id AS user_id, recommend_node.friend_id AS friend_id, recommend_node.timestamp AS created_at, ID(recommend_node) AS id "
+	end
+
 	def create_recommendation book_id
 		" CREATE UNIQUE (user)-[:RecommendedTo]->(friend)-[:RecommendedAction]->( "\
 		"recommend_node:RecommendNode{book_id:" + book_id.to_s + ", user_id:" + @user_id.to_s + ", "\
@@ -66,7 +78,7 @@ class UsersUser < Neo
 		clause += Book.set_recommended_count(1, "+")
 		clause += " WITH friend as user, recommend_node "
 		clause += User::UserNotification.add("recommend_node")
-		clause += " RETURN ID(recommend_node)"
+		clause += " RETURN ID(recommend_node) AS recommend_node_id"
 	end
 
 	def self.match_all
