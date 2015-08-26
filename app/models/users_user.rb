@@ -77,7 +77,6 @@ class UsersUser < Neo
 		clause += User.set_total_count(Constant::Count::TotalCountIncrementRecommendation,"+")
 		clause += Book.set_recommended_count(1, "+")
 		clause += " WITH friend as user, recommend_node "
-		clause += User::UserNotification.add("recommend_node")
 		clause += " RETURN ID(recommend_node) AS recommend_node_id"
 	end
 
