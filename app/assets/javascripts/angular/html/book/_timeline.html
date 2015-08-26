@@ -31,39 +31,26 @@
             <suggest-friends class="white" ></suggest-friends>
         </div>
         <div flex="70" layout="column" flex-md="100" layout-padding flex-sm="100">
-            <div ng-include src="'/assets/angular/html/share/status_options.html'"
-                ng-if="!hide_follow_links" flex="50" flex-sm="100"
-                ng-controller="shareController" layout-align="center center"
-                class="animate-slow" layout="row">
+            <div ng-controller="buyController" layout="column" class="book_page white" layout-padding >
+                <h3 layout-padding>
+                    Get this book
+                </h3>
+                <div layout="column" layout-sm="column" class="full_height">
+                    <div flex layout="column" layout-padding
+                        ng-include src="'/assets/angular/html/book/partials/_buy_options.html'"></div>
+                    <div flex layout="column" layout-padding
+                        ng-include src="'/assets/angular/html/book/partials/_borrow_options.html'"></div>
+                </div>
+                <md-divider></md-divider>
+                <h3 layout-padding ng-if="reviews.editorial_review">Editorial Review</h3>
+                <div ng-bind-html="reviews.editorial_review || reviews.product_review" class="summary" layout-padding></div>
+                <div ng-bind-html="reviews.source" layout-padding class="less_important"></div>
+                <iframe ng-src="{{reviews.user_review_iframe}}" seamless="seamless" class="wiki" 
+                    ng-if="reviews && reviews.user_review_iframe"></iframe>
+                <!-- <iframe ng-src="{{::author.wiki_url}}" class="wiki" seamless="seamless"></iframe> -->
             </div>
-            <div ng-controller="timelineController" class="book_page">
-                 <md-card ng-repeat="feed in book_feed" ng-if="book_feed && book_feed.length > 0" class="no_shadow">
-                    <md-card-content ng-if="feed.user.first_name" layout="row">
-                        <img ng-src="{{feed.user.image_url || '/assets/user_profile.jpg'}}" class="circular" 
-                            onerror="this.src='/assets/user_profile.jpg'">
-                        <div layout="column" layout-padding>
-                            <div>
-                                <a ng-href="/profile?q={{feed.user.id}}">
-                                    <span>{{::feed.user.first_name}}</span>
-                                    <span>{{::feed.user.last_name}}</span>
-                                </a>
-                            </div>
-                            <div class="less_important">
-                                {{::feed.user.init_book_read_count}}
-                            </div>
-                        </div>
-                    </md-card-content>
-                    <md-card-content>
-                        <section layout="column" layout-align="start">
-                            <div ng-bind-html="feed.message"></div>
-                            <div class="less_important" ng-if="feed.created_at != null && feed.created_at">
-                                {{feed.created_at | timestamp | date:'h:mm a, dd MMM'}}
-                            </div>
-                        </section>
-                    </md-card-content>
-                    <md-divider></md-divider>
-                 </md-card>
-            </div>
+
+
         </div>
     </div>
     <div flex="25" layout="column" hide-sm>
