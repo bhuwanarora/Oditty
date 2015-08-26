@@ -245,6 +245,7 @@ class WebsiteController < ApplicationController
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
 			id = params[:id] || params[:q]
 			@info = Community.new(id).get_basic_info.execute[0]
+			@info["description"] = "Discover yourself through Books, Friends and the World."
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
