@@ -327,7 +327,7 @@ md-toolbar{
 }
 
 .loader{
-	position: fixed;
+	position: fixed !important;
 	z-index: 99999;
 	bottom: 5px;
 	left: 0px;
