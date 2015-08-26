@@ -26,8 +26,8 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 				}
 				else{
 					$scope.users_list = $scope.users_list.concat(data);
-					$scope.info.loading = false;
 				}
+				$scope.info.loading = false;
 			});
 		}
 	}
@@ -43,8 +43,8 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 				}
 				else{
 					$scope.users_list = $scope.users_list.concat(data);
-					$scope.info.loading = false;
 				}
+				$scope.info.loading = false;
 			});
 		}
 	}
