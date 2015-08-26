@@ -1,5 +1,5 @@
 <div class="follow_content" layout="row" ng-if="friend">
-    <img ng-src="{{friend.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
+    <img ng-src="{{friend.image_url || '/assets/user_profile.jpg'}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
     <div layout-padding>
         <a ng-href="/profile?id={{::friend.id}}">
             <h2 class="bold">{{::friend.first_name}} {{::friend.last_name}}</h2>

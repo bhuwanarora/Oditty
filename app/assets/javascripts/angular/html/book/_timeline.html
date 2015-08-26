@@ -39,7 +39,8 @@
             <div ng-controller="timelineController" class="book_page">
                  <md-card ng-repeat="feed in book_feed" ng-if="book_feed && book_feed.length > 0" class="no_shadow">
                     <md-card-content ng-if="feed.user.first_name" layout="row">
-                        <img ng-src="{{feed.user.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
+                        <img ng-src="{{feed.user.image_url || '/assets/user_profile.jpg'}}" class="circular" 
+                            onerror="this.src='/assets/user_profile.jpg'">
                         <div layout="column" layout-padding>
                             <div>
                                 <a ng-href="/profile?q={{feed.user.id}}">
