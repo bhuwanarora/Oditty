@@ -28,6 +28,8 @@ module RedisHelper
 			RedisHelper.update_book id
 		when Constant::EntityLabel::Community
 			RedisHelper.update_community id
+		when Constant::EntityLabel::User
+			RedisHelper.update_user id
 		end
 	end
 
@@ -56,6 +58,10 @@ module RedisHelper
 	end
 
 	def self.update_community id
+		RedisHelper.clear id
+	end
+
+	def self.update_user id
 		RedisHelper.clear id
 	end
 end

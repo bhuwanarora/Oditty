@@ -14,7 +14,13 @@ class User::UserNotification < User
 	end
 
 	def self.remove node_variable
-		" MATCH (s)-[f1:NextNotification]->("+node_variable+")-[f2:NextNotification]->(e) CREATE (s)-[:NextNotification{user_id:f1.user_id}]->(e) DELETE f1, f2  WITH "+node_variable
+		" MATCH (s)-[f1:NextNotification]->(" + node_variable + ")-[f2:NextNotification]->(e)"\
+		" OPTIONAL MATCH (user_concerned:User)-[visited_notification:VisitedNotification]->(" + node_variable + ")"\
+		" FOREACH (ignore IN (CASE WHEN visited_notification IS NULL THEN [] ELSE [1] END) | "\
+			" CREATE (user_concerned)-[:VisitedNotification{user_id: visited_notification.user_id}]->(e) "\
+		" ) "\
+		" CREATE (s)-[:NextNotification{user_id:f1.user_id}]->(e) "\
+		" DELETE f1, f2  WITH " + node_variable + " "
 	end
 
 	def self.match label="notification"
@@ -50,6 +56,6 @@ class User::UserNotification < User
 	end
 
 	def self.basic_info
-		" DISTINCT(notification) AS notification, LABELS(notification) AS label, notification.created_at AS created_at "
+		" notification, LABELS(notification) AS label, notification.created_at AS created_at "
 	end
 end

@@ -361,32 +361,33 @@ module Api
 			def self.recommend_book(user_id, friends_id, book_id)
 				@neo = Neography::Rest.new
 				clause = UsersUser.new(user_id,friends_id).recommend_book(book_id)				
-				clause.execute
+				output = clause.execute[0]
 				clause = "MATCH (book:Book), (user:User), (friend:User) WHERE ID(user)=" + user_id.to_s + " AND ID(book)=" + book_id.to_s + " AND ID(friend)=" + friends_id.to_s + User.return_group("book.title AS title, ID(book) as book_id, book.author_name AS author_name, book.isbn AS isbn", "user.image_url AS image_url, ID(user) as id, user.first_name AS first_name, user.last_name AS last_name", "friend.first_name as friends_first_name, friend.last_name AS friends_last_name, ID(friend) AS friends_id, friend.email AS friends_email")
 				info = clause.execute[0]
 				isbn = info["isbn"].split(",")[0] rescue ""
 				params = {
 					:template => Constant::EmailTemplate::RecommendBooks, 
 				  	:user => {
-				  		:image_url => info["image_url"], 
+				  		:image_url => info["image_url"].to_s, 
 				  		:id => info["id"],
-				  		:name => info["first_name"] + " " + info["last_name"],
+				  		:name => info["first_name"].to_s + " " + info["last_name"].to_s,
 				  	},
 				  	:friend =>{
-				  		:name => info["friends_first_name"],
-				  		:email => info["friends_email"],
+				  		:name => info["friends_first_name"].to_s,
+				  		:email => info["friends_email"].to_s,
 				  		:id => info["friends_id"]
 				  	},
 				  	:book => {
 				  		:id => info["book_id"],
-				  		:title => info["title"],
-				  		:author_name => info["author_name"],
+				  		:title => info["title"].to_s,
+				  		:author_name => info["author_name"].to_s,
 				  		:isbn => isbn
 				  	}
 				}
 				if params[:friend][:email]
 					SubscriptionMailer.recommend_book(params).deliver
 				end
+				output
 			end
 
 			def self.comment_on_book(user_id, params)
@@ -518,8 +519,8 @@ module Api
 			end
 
 			def self.get_notifications user_id
-				info = User.new(user_id).get_notifications.execute
-				notifications = NotificationStructure.new(info).execute
+				url = Rails.application.config.feed_service + "/" + "api/v0/get_notifications?user_id=" + user_id.to_s
+				notifications = Net::HTTP.get(URI.parse(url))
 				notifications
 			end
 
