@@ -126,7 +126,7 @@ module BookHelper
 			BookHelper.get_era_from_label(neo_book["labels"])
 			)
 		g_index 	= BookHelper.calculate_goodness_index p_index, l_index, brr_index
-		if p_index.nan? || l_index.nan? || brr_index.nan?
+		if p_index.nan? || l_index.nan? || brr_index.nan? || (p_index == 0.0 && l_index == 0.0)
 			output = []
 		else
 			output 		= [{
