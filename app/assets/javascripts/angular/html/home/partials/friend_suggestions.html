@@ -7,7 +7,7 @@
 			layout="row" layout-align="space-between" flex class="description_card">
 			<div>
 				<a ng-href="/profile?id={{friend.id}}" layout="row">
-					<img class="circular" ng-src="{{friend.image_url}}">
+					<img class="circular" ng-src="{{friend.image_url || '/assets/user_profile.jpg'}}">
 					<div class="less_important bold" layout-padding>{{friend.first_name}} {{friend.last_name}}</div>
 				</a>
 			</div>
