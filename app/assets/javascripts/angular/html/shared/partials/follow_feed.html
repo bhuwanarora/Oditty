@@ -2,7 +2,8 @@
     <md-card-content layout="column">
         <section layout="column" layout-align="start" flex="50">
             <md-list-item class="md-3-line">
-                <img ng-src="{{profile_user.image_url}}" class="circular" onerror="this.src='/assets/user_profile.jpg'">
+                <img ng-src="{{profile_user.image_url || '/assets/user_profile.jpg'}}" class="circular" 
+                    onerror="this.src='/assets/user_profile.jpg'">
                 <div layout="column" layout-align="start start" class="md-list-item-text">
                     <div layout-padding class="bold" ng-if="profile_user.first_name">{{::profile_user.first_name}}</div>
                     <div layout-padding>
