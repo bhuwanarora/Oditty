@@ -10,4 +10,6 @@ module Constant::NodeLabel
 	BooklessCommunity 	= "BooklessCommunity"
 	Category			= "Category"
 	Genre				= "Genre"
+
+	BookEraLabels = ["PostModernLiterature", "Modernism", "VictorianLiterature", "Romanticism", "NeoClassicalPeriod", "EnglishRenaissance", "MiddleEnglishLiterature", "OldEnglishLiterature", "Contemporary"]
 end

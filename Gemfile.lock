@@ -1,10 +1,3 @@
-GIT
-  remote: git://github.com/roots/capistrano-grunt.git
-  revision: bf87034ad9345d8653070bdcab62e8660593787c
-  specs:
-    capistrano-grunt (0.0.4)
-      capistrano (>= 3.0.0.pre)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -77,23 +70,6 @@ GEM
       columnize (~> 0.3.6)
       debugger-linecache (~> 1.2.0)
     callsite (0.0.11)
-    capistrano (3.2.1)
-      i18n
-      rake (>= 10.0.0)
-      sshkit (~> 1.3)
-    capistrano-bundler (1.1.4)
-      capistrano (~> 3.1)
-      sshkit (~> 1.2)
-    capistrano-npm (1.0.1)
-      capistrano (>= 3.0.0)
-    capistrano-rails (1.1.3)
-      capistrano (~> 3.1)
-      capistrano-bundler (~> 1.1)
-    capistrano-rbenv (2.0.3)
-      capistrano (~> 3.1)
-      sshkit (~> 1.3)
-    capistrano-ssh-doctor (1.0.0)
-      capistrano (>= 3.1)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     chronic (0.10.2)
@@ -183,8 +159,10 @@ GEM
     girl_friday (0.11.2)
       connection_pool (~> 1.0)
       rubinius-actor
+    gnuplot (2.6.2)
     google-search (1.0.3)
       json
+    gsl (1.16.0.6)
     haml (4.0.6)
       tilt
     haml-rails (0.9.0)
@@ -280,6 +258,7 @@ GEM
     multi_json (1.11.0)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    narray (0.6.1.1)
     neo4j-cypher (1.0.4)
     neography (1.7.2)
       excon (>= 0.33.0)
@@ -292,9 +271,6 @@ GEM
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-http-spy (0.2.1)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (2.9.2)
     netrc (0.10.3)
     newrelic_rpm (3.11.2.286)
     niceogiri (1.1.2)
@@ -403,6 +379,8 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
+    rb-gsl (1.16.0.6)
+      gsl
     rb-libsvm (1.3.1)
     rbtagger (0.4.7)
     rdoc (4.2.0)
@@ -471,6 +449,8 @@ GEM
       json
       redis (>= 3.0.6)
       redis-namespace (>= 1.3.1)
+    sidekiq-limit_fetch (2.4.2)
+      sidekiq (>= 2.6.5, < 4.0)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -490,10 +470,6 @@ GEM
       sprockets (~> 2.8)
     srx-english (0.1.2)
       term-ansicolor (~> 1.0.5)
-    sshkit (1.7.1)
-      colorize (>= 0.7.0)
-      net-scp (>= 1.1.2)
-      net-ssh (>= 2.8.0)
     stanford-core-nlp (0.5.1)
       bind-it (~> 0.2.5)
     tactful_tokenizer (0.0.5)
@@ -567,13 +543,6 @@ DEPENDENCIES
   binding_of_caller
   blather
   byebug (~> 2.5.0)
-  capistrano (~> 3.2.1)
-  capistrano-bundler
-  capistrano-grunt!
-  capistrano-npm
-  capistrano-rails
-  capistrano-rbenv
-  capistrano-ssh-doctor (~> 1.0)
   chronic
   coffee-rails (~> 4.0.0)
   colorize
@@ -591,7 +560,9 @@ DEPENDENCIES
   freebase-api
   fuzzy-string-match
   geoip
+  gnuplot (~> 2.6.2)
   google-search (~> 1.0.3)
+  gsl
   hirb
   hirb-unicode
   jbuilder (~> 1.2)
@@ -607,6 +578,7 @@ DEPENDENCIES
   mechanize
   mediawiki-gateway
   meta_request
+  narray
   neo4j-cypher
   neography
   net-http-spy
@@ -632,6 +604,7 @@ DEPENDENCIES
   rails_12factor
   rails_admin
   rails_admin_nestable
+  rb-gsl (~> 1.16.0.6)
   rb-libsvm
   rbtagger
   redis
@@ -644,6 +617,7 @@ DEPENDENCIES
   scalpel
   sdoc
   sidekiq
+  sidekiq-limit_fetch (~> 2.4.2)
   simple_form
   spellingbee
   srx-english
