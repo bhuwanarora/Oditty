@@ -53,15 +53,15 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
                 $scope.notifications = [];
                 angular.forEach(data, function(value){
                     var timestamp = $filter('timestamp')(value.created_at, "date:'h:mm a, dd MMM'");
-                    switch(value.label[0]){
+                    switch(value.label){
                         case "FollowsNode":
-                            value.message = "<div layout-padding><div><span>Your </span><a href='/profile?id="+value.notification.friend_id+"'>friend</a><span> started following you.</span></div><div class='less_important'>"+timestamp+"</div></div>";
+                            value.message = "<div layout-padding><div><a href='/profile?id="+value.data.user.id+"'>"+value.data.user.name+"</a><span> started following you.</span></div><div class='less_important'>"+timestamp+"</div></div>";
                             break;
                         case "RecommendNode":
-                            value.message = "<div layout-padding><div><span>Your <a href='/profile?id="+value.notification.friend_id+"'>friend</a> recommended you a <a href='/book?id="+value.notification.book_id+"'>book</a><span>.</div><div class='less_important'>"+timestamp+"</div></div>";
+                            value.message = "<div layout-padding><div><span><a href='/profile?id="+value.data.user.id+"'>"+value.data.user.name+"</a> recommended you <a href='/book?id="+value.data.book.id+"'>"+value.data.book.title+"</a><span><span>&nbsp;by&nbsp;<a href='/author?id="+value.data.author.id+"'>"+value.data.author.name+"</a></span>.</div><div class='less_important'>"+timestamp+"</div></div>";
                             break;
                         case "BorrowNode":
-                            value.message = "<div layout-padding><div><span>Your </span><a href='/profile?id="+value.notification.user_id+"'>friend</a><span> is looking to borrow </span><span><a href='/book?id="+value.notification.book_id+"'>book</a></span></div><div class='less_important'>"+timestamp+"</div></div>";
+                            value.message = "<div layout-padding><div><a href='/profile?id="+value.data.user.id+"'>"+value.data.user.name+"</a><span> is looking to borrow </span><span><a href='/book?id="+value.data.book.id+"'>"+value.data.book.title+"</a></span><span>&nbsp;by&nbsp;<a href='/author?id="+value.data.author.id+"'>"+value.data.author.name+"</a></span></div><div class='less_important'>"+timestamp+"</div></div>";
                     }
                     this.push(value);
                 }, $scope.notifications);
