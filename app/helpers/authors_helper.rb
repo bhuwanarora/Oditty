@@ -1,5 +1,4 @@
 module AuthorsHelper
-	
 	def self.get_authors start_id, step_size
 		" MATCH(author: Author) "\
 		" WHERE ID(author) >= " + start_id.to_s + " "\
