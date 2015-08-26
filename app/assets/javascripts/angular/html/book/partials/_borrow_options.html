@@ -22,7 +22,8 @@
     <md-item>
         <md-item-content layout="row" ng-repeat="user in borrow_users">
             <div class="md-tile-left">
-                <img class="circular" ng-src="{{user.image_url}}" onerror="this.src='/assets/user_profile.jpg'">
+                <img class="circular" ng-src="{{user.image_url || '/assets/user_profile.jpg'}}" 
+                    onerror="this.src='/assets/user_profile.jpg'">
             </div>
             <div class="md-tile-content" layout="row" layout-sm="column"
               layout-align="space-between center">

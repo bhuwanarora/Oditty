@@ -10,7 +10,8 @@
 			 ng-repeat="author in books_from_favourite_author" 
 			 ng-click="refresh_data(author)">
 			 <div layout="row">
-				<img ng-src="{{::author.image_url}}" layout="row" class="square" onerror="this.src='/assets/author_profile.jpg'"/>
+				<img ng-src="{{::author.image_url || '/assets/user_profile.jpg'}}" layout="row" 
+					class="square" onerror="this.src='/assets/author_profile.jpg'"/>
 				<div layout="column" layout-padding >
 					<div ng-bind-html="::author.name"
 						ng-class="{'bold': info.active_tag.name == author.name}"></div>

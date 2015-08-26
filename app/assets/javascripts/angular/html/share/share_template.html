@@ -3,7 +3,7 @@
  	layout="column" ng-click="stop_propagation($event)">
     <div layout="row" class="extensive_padding">
         <div ng-if="info.status_state" layout="row" hide-sm>
-            <img ng-src="{{user.image_url}}" class="big_circle" onerror="this.src='/assets/user_profile.jpg'" layout-padding/>
+            <img ng-src="{{user.image_url || '/assets/user_profile.jpg'}}" class="big_circle" onerror="this.src='/assets/user_profile.jpg'" layout-padding/>
         </div>
         <div layout="column" flex>
             <textarea class="text_container" placeholder="Share.." 
