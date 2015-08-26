@@ -69,7 +69,7 @@
     <div flex="25" layout="column" hide-sm>
         <div ng-include src="'/assets/angular/html/shared/partials/rating_block.html'"
             class="md-whiteframe-z1 white" ng-if="book.goodness_index"></div>
-        <div layout-padding class="md-whiteframe-z1 white">
+        <!-- <div layout-padding class="md-whiteframe-z1 white">
             <div layout="row" layout-align="space-between"  layout-padding>
                 <h3 class="white">
                     Rate this book {{::book.user_rating}}/10
@@ -81,7 +81,7 @@
                     step="1" min="1" max="10" aria-label="rating">
             </md-slider>
         </div>
-        <md-divider></md-divider>
+        <md-divider></md-divider> -->
         <div role="tabpanel"
             class="white md-whiteframe-z1" 
              id="tab5-content" ng-if="active_book"

@@ -4,20 +4,18 @@
 </md-progress-linear>
 <md-card layout="column" layout-align="start center" class="no_shadow">
 	<md-card-content>
-		<md-content class="white">
-			<section layout="column" layout-align="start">
-				<div layout-margin ng-repeat="article in ::visited_articles" layout="row">
-					<div layout-padding>
-						<img ng-src="{{::article.image_url}}" class="circular">
-					</div>
-					<div layout-padding>
-			            <a ng-href="/news?q={{article.article_id || article.id}}" ng-bind-html="::article.title"></a>
-			            <div ng-bind-html="article.created_at | timestamp | date:'h:mm a, dd MMM'" class="less_important"></div>
-					</div>
-			        <md-divider></md-divider>
-		        </div>
-			</section>
-		</md-content>
+		<section layout="column" layout-align="start">
+			<div layout-margin ng-repeat="article in ::visited_articles" layout="row" ng-if="::article.title">
+				<div layout-padding>
+					<img ng-src="{{::article.image_url}}" class="circular">
+				</div>
+				<div layout-padding>
+		            <a ng-href="/news?q={{article.article_id || article.id}}" ng-bind-html="::article.title"></a>
+		            <div ng-bind-html="article.created_at | timestamp | date:'h:mm a, dd MMM'" class="less_important"></div>
+				</div>
+		        <md-divider></md-divider>
+	        </div>
+		</section>
 	</md-card-content>
 </md-card>
 
