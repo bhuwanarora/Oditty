@@ -262,14 +262,18 @@ module Api
 			def recommend
 				info = UserApi.recommend_book(session[:user_id], params[:friends_id], params[:book_id])
 				RedisHelper.update params[:friends_id], Constant::EntityLabel::User
-				FeedHelper::UserFeedHelper.handle_redis(
-				{
-						:user_id 	=> session[:user_id],
-						:book_id 	=> params[:book_id],
-						:friend_id 	=> params[:friends_id],
-						:id 		=> info["recommend_node_id"],
-						:action 	=> FeedHelper::ActionCreate
-				}, Constant::NodeLabel::RecommendNode)
+				begin
+					FeedHelper::UserFeedHelper.handle_redis(
+					{
+							:user_id 	=> session[:user_id],
+							:book_id 	=> params[:book_id],
+							:friend_id 	=> params[:friends_id],
+							:id 		=> info["recommend_node_id"],
+							:action 	=> FeedHelper::ActionCreate
+					}, Constant::NodeLabel::RecommendNode)
+				rescue Exception => e
+					puts e.to_s.red
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -510,12 +514,16 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				info = Api::V0::UserApi.notify_borrow(book_id, user_id).execute
-				FeedHelper::UserFeedHelper.handle_redis({
+				begin
+					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:book_id => book_id,
 						:id 	=> info[0]["borrow_node_id"],
 						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::BorrowNode)
+				rescue Exception => e
+					puts e.to_s.red					
+				end
 				info.each{|elem| (RedisHelper.update(elem["id"], Constant::EntityLabel::User))}
 				render :json => info, :status => 200
 			end
