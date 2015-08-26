@@ -258,7 +258,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/partials/social_feed.html',
-    "<md-content class=\"less_important margin_top\" check-scroll-bottom=\"get_feed()\"></md-content>"
+    ""
   );
 
 

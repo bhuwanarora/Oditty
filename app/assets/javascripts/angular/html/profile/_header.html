@@ -6,7 +6,8 @@
         <div layout-padding></div>
         <div layout-padding></div>
         <div layout="column" layout-align="center center">
-            <img ng-src="{{profile_user.image_url}}" class="profile_pic" onerror="this.src='/assets/user_profile.jpg'"/>
+            <img ng-src="{{profile_user.image_url || '/assets/user_profile.jpg'}}" 
+                class="profile_pic" onerror="this.src='/assets/user_profile.jpg'"/>
             <div layout="row"  layout-align="center center">
                 <h2><a ng-href="/profile?id={{::profile_user.id}}" class="white_color">
                     <div layout="column" layout-wrap layout-align="start start">
