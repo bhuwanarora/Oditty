@@ -89,12 +89,12 @@ module CommunitiesHelper
 		else
 			books = {community => []}
 			books_list.each do |book|
-				if(book.has_key?("book.author_name"))
+				if(book["book.author_name"].present? && book["book.title"].present?)
 					author = book["book.author_name"] # it will be array, now it is not
 					if(author.nil?)
 						next
 					end
-					books[community] << [book["book.title"],[author[1..author.length]]]
+					books[community] << [book["book.title"],[author]]
 				end
 			end			
 		end
