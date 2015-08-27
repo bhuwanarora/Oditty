@@ -72,7 +72,7 @@ class Neo
 	end
 
 	def self.delete node_variable
-		" MATCH (" + node_variable + ")-[relation]-() DELETE relation, " + node_variable + " "
+		" OPTIONAL MATCH (" + node_variable + ")-[relation]-() DELETE relation, " + node_variable + " "
 	end
 
 	def self.create_timestamp time, node_variable
