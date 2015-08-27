@@ -261,7 +261,7 @@ module Api
 
 			def recommend
 				info = UserApi.recommend_book(session[:user_id], params[:friends_id], params[:book_id])
-				RedisHelper.update params[:friends_id], Constant::EntityLabel::User
+				RedisHelper::User.increment_notification_count params[:friends_id]
 				begin
 					FeedHelper::UserFeedHelper.handle_redis(
 					{
@@ -327,7 +327,7 @@ module Api
 				user_id = session[:user_id]
 				if follow_action.present? && follow_action == "true"
 					Api::V0::UserApi.follow_user(user_id, friend_id).execute
-					RedisHelper.update friend_id, Constant::EntityLabel::User
+					RedisHelper::User.increment_notification_count friend_id
 					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:friend_id => friend_id,
@@ -524,7 +524,7 @@ module Api
 				rescue Exception => e
 					puts e.to_s.red					
 				end
-				info.each{|elem| (RedisHelper.update(elem["id"], Constant::EntityLabel::User))}
+				info.each{|elem| (RedisHelper::User.increment_notification_count elem["id"])}
 				render :json => info, :status => 200
 			end
 
