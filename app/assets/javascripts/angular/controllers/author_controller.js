@@ -1,4 +1,4 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'ColorConstants', '$filter', '$sce', '$rootScope', "WebsiteUIConstants", '$timeout', 'sharedService', function($scope, $location, $mdSidenav, authorService, $mdDialog, ColorConstants, $filter, $sce, $rootScope, WebsiteUIConstants, $timeout, sharedService){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'ColorConstants', '$filter', '$sce', '$rootScope', "WebsiteUIConstants", '$timeout', 'sharedService', '$mdBottomSheet', function($scope, $location, $mdSidenav, authorService, $mdDialog, ColorConstants, $filter, $sce, $rootScope, WebsiteUIConstants, $timeout, sharedService, $mdBottomSheet){
 
     $scope.toggle_follow = function(){
         if(angular.isDefined($scope.author.status)){
@@ -9,6 +9,16 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
             $mdSidenav('signup').toggle();
         }
     }
+
+    $scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/author.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
+    }
+
 
     $scope.show_more_books = function(){
         var books_remaining = $scope.author.books.length - $scope.limit_count;

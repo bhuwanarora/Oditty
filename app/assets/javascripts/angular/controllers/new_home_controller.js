@@ -1,4 +1,4 @@
-homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstants', 'ReadTimes', 'genreService', 'PopularGenres', function($scope, $timeout, SearchUIConstants, ReadTimes, genreService, PopularGenres){
+homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstants', 'ReadTimes', 'genreService', 'PopularGenres', '$mdBottomSheet', 'userService', function($scope, $timeout, SearchUIConstants, ReadTimes, genreService, PopularGenres, $mdBottomSheet, userService){
 
     $scope.show_filter_results = function(){
         var filters = "";
@@ -22,6 +22,15 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
         else{
             window.location.href = "/filters";
         }
+    }
+
+    $scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/home.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
     }
 
     $scope.search_genres = function(input){
@@ -56,7 +65,6 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
         
         $scope.filters = {"other": {}};
         $scope.search_tag = {};
-
     }());
 
 }]);

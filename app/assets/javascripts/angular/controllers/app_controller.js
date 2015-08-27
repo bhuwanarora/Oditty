@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', '$mdBottomSheet', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService, $mdBottomSheet){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -232,6 +232,13 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         });
     }
 
+    $scope.fetch_todos = function(){
+        userService.get_todos("home").then(function(data){
+            $scope.todo = data;
+            setCookie("todo", JSON.stringify(data));
+        });
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
@@ -264,7 +271,16 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         }
 
         $scope.data = {"selectedIndex" : 0};
+        // deleteCookie("todo");
 
+        var todo = getCookie("todo");
+
+        if(!todo){
+            $scope.fetch_todos();
+        }
+        else{
+            $scope.todo = JSON.parse(todo);
+        }
     }());
 
 }]);

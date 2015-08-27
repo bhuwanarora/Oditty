@@ -1,3 +1,44 @@
+.todo{
+	width: 100vw;
+	height: 200px;
+	position: fixed;
+	background-color: white;
+	z-index: 999999;
+	bottom: 0px;
+}
+
+.todo_block_container{
+	min-height: 160px;
+}
+
+.todo_container{
+	max-height: 90vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+.todo_container md-list-item{
+	max-width: inherit !important;
+}
+
+.todo_icon{
+	font-size: 50px;
+	width: 70px;
+	height: 60px;
+}
+
+.todo_icon_small{
+	font-size: 20px;
+}
+
+.icon_block{
+	width: 120px;
+}
+
+.icon_block:hover{
+	text-decoration: none !important;
+	background-color: #f5f5f5;
+}
 
 .rd_book_backup_cover,
 .rd_book_image_cover,

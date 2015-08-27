@@ -1,4 +1,4 @@
-homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdSidenav', 'ColorConstants', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdSidenav, ColorConstants){
+homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout", "bookService", '$mdToast', '$location', '$mdSidenav', 'ColorConstants', '$mdBottomSheet', function($scope, $rootScope, $timeout, bookService, $mdToast, $location, $mdSidenav, ColorConstants, $mdBottomSheet){
 
     $scope.toggle_endorse = function(){
         if(_unauthenticated_user()){
@@ -21,6 +21,19 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         }
     }
 
+    $scope.hide_bottomsheet = function($event){
+        $mdBottomSheet.hide();
+    }
+
+    $scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/book.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
+    }
+
     var _unauthenticated_user = function(){
         return ((getCookie("logged") == "") || (getCookie("logged") == null));
     }
@@ -35,6 +48,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
                     .filter(function(pos) { return $scope.toast_position[pos]; })
                     .join(' ');
     };
+
 
     $scope.rate_book = function(book){
         if(_unauthenticated_user()){

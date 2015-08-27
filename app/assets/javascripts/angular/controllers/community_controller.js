@@ -1,4 +1,4 @@
-homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', 'bookService', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce, bookService){
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', 'bookService', '$mdBottomSheet', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce, bookService, $mdBottomSheet){
     
     $scope.get_detailed_community_info = function(){
         if(angular.isDefined($scope.active_tag)){
@@ -13,6 +13,19 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 }
             });
         }
+    }
+
+    $scope.hide_bottomsheet = function($event){
+        $mdBottomSheet.hide();
+    }
+
+    $scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/room.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
     }
 
     $scope.show_more_books = function(){

@@ -1,9 +1,22 @@
-homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', '$timeout', 'sharedService', '$mdSidenav', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, $timeout, sharedService, $mdSidenav){
+homeApp.controller('profileController', ["$scope", "userService", '$rootScope', "WebsiteUIConstants", 'ColorConstants', '$location', 'bookService', 'newsService', '$mdDialog', 'infinityService', '$timeout', 'sharedService', '$mdSidenav', '$mdBottomSheet', function($scope, userService, $rootScope, WebsiteUIConstants, ColorConstants, $location, bookService, newsService, $mdDialog, infinityService, $timeout, sharedService, $mdSidenav, $mdBottomSheet){
 	var _get_user_details = function(user, user_id){
 		userService.get_user_details(user_id).then(function(data){
 			user = data;
         });
 	}
+
+	$scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/profile.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
+    }
+
+    $scope.hide_bottomsheet = function($event){
+        $mdBottomSheet.hide();
+    }
 
 	$scope.toggle_genres = function(){
 		$scope.show_genres = !$scope.show_genres;

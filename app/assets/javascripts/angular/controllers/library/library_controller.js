@@ -16,6 +16,24 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         }
     }
 
+    $scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/filters.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
+    }
+
+    $scope.show_bottom_filters = function(event){
+        $mdBottomSheet.show({
+            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
+            targetEvent: event ,
+            scope : $scope ,
+            preserveScope: true,
+            controller: "filtersController" 
+        });
+    };
     
 
     $scope.remove_expanded_book = function(index){
@@ -172,16 +190,6 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         $mdSidenav('sort_by_sidenav').toggle();
         event.stopPropagation();
     }
-
-    $scope.show_bottom_filters = function(event){
-        $mdBottomSheet.show({
-            templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
-            targetEvent: event ,
-            scope : $scope ,
-            preserveScope: true,
-            controller: "filtersController" 
-        });
-    };
 
     function get_query_params(name){
         name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");

@@ -1,4 +1,4 @@
-homeApp.controller('roomsController', ["$scope", "$rootScope", "roomsService", "$mdSidenav", "newsService", function($scope, $rootScope, roomsService, $mdSidenav, newsService){
+homeApp.controller('roomsController', ["$scope", "$rootScope", "roomsService", "$mdSidenav", "newsService", "$mdBottomSheet", function($scope, $rootScope, roomsService, $mdSidenav, newsService, $mdBottomSheet){
     $scope.get_rooms = function(){
         if(!$scope.info.loading){
             $scope.info.loading = true;
@@ -22,6 +22,15 @@ homeApp.controller('roomsController', ["$scope", "$rootScope", "roomsService", "
             room.status = !room.status;
             newsService.follow(room.id, room.status);
         }
+    }
+
+    $scope.show_todo_list = function(event){
+        $mdBottomSheet.show({
+            templateUrl: 'assets/angular/html/todo/rooms.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: event
+        });
     }
 
     var _init = (function(){

@@ -537,3 +537,12 @@ md-grid-list md-grid-tile md-grid-tile-footer{
 .overflow_y{
     overflow-y: scroll;
 }
+
+.no_hover{
+    cursor: default;
+}
+
+.no_hover:hover{
+    text-decoration: none !important;
+    background-color: inherit !important;
+}

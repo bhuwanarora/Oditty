@@ -1,4 +1,4 @@
-homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
+homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "todo_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, todo_service_url){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -22,6 +22,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
 
     this.invite = function(email){
         return _deferred_request('/api/v0/invite?email='+email, $q, $http);
+    }
+
+    this.get_todos = function(type){
+        return _deferred_request('/api/v0/get_todos?type='+type, $q, $http, todo_service_url);
     }
 
     this.get_global_feed = function(skip, count){
