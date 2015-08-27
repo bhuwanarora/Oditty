@@ -55,7 +55,6 @@ module CommunitiesHelper
 					NewsHelper.map_topics(news_metadata["news_id"], response["Hierarchy"])
 					CommunitiesHelper.map_books(communities_books.zip(relevance), news_metadata, communities_web_urls)
 					CommunitiesHelper.map_videos communities_videos
-					debugger
 					News.new(news_metadata["news_id"]).add_notification.execute
 					if news_metadata.present? && news_metadata["image_url"].present? && news_metadata["news_id"].present?
 						type = "news"
