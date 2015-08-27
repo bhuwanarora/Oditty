@@ -76,8 +76,8 @@ class UsersUser < Neo
 		clause += Book::BookFeed.new(book_id).create("recommend_node") + ", friend "
 		clause += User.set_total_count(Constant::Count::TotalCountIncrementRecommendation,"+")
 		clause += Book.set_recommended_count(1, "+")
-		clause += " WITH friend as user, recommend_node "
-		clause += User::UserNotification.add("recommend_node")
+		clause += " WITH DISTINCT friend as user, recommend_node "
+		clause += User::UserNotification.increment_notification_count
 		clause += " RETURN ID(recommend_node) AS recommend_node_id"
 	end
 
@@ -97,7 +97,7 @@ class UsersUser < Neo
 
 	def follow
 		operation = "+"
-		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::UserNotification.add("follows_node") + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
+		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::UserNotification.increment_notification_count + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
 	end
 
 	def delete_follow_notification
@@ -110,7 +110,7 @@ class UsersUser < Neo
 
 	def unfollow
 		operation = "-"
-		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + delete_follow_feed + " WITH friend AS user, follows_node " + delete_follow_notification + ", user " + User::Info.set_followed_by_count(operation) + " WITH follows_node " + UsersUser.delete("follows_node")
+		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + delete_follow_feed + " WITH friend AS user, follows_node " + User::Info.set_followed_by_count(operation) + " WITH follows_node " + UsersUser.delete("follows_node")
 	end
 
 	def self.add_notification node_variable
