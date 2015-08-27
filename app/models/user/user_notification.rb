@@ -39,6 +39,10 @@ class User::UserNotification < User
 		" SET user.notification_count = COALESCE(user.notification_count, 0) + 1 "
 	end
 
+	def self.reset_notification_count
+		" SET user.notification_count = 0 "
+	end
+
 	def self.match_path
 		" MATCH path = (user)-[:NextNotification*{user_id:ID(user)}]->(notification) WITH path "
 	end

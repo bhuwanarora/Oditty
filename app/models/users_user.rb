@@ -77,6 +77,7 @@ class UsersUser < Neo
 		clause += User.set_total_count(Constant::Count::TotalCountIncrementRecommendation,"+")
 		clause += Book.set_recommended_count(1, "+")
 		clause += " WITH friend as user, recommend_node "
+		clause += User::UserNotification.increment_notification_count
 		clause += " RETURN ID(recommend_node) AS recommend_node_id"
 	end
 
@@ -96,7 +97,7 @@ class UsersUser < Neo
 
 	def follow
 		operation = "+"
-		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::UserNotification.add("follows_node") + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
+		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::UserNotification.increment_notification_count + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
 	end
 
 	def delete_follow_notification
