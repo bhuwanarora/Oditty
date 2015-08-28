@@ -152,6 +152,19 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
         $scope.is_room = true;
 
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.rooms.visit){
+                    deleteCookie("todo");
+                    userService.update_todo_key('rooms/visit');
+                }
+            }
+        }
+
+        _handle_todo_update();
+
         $scope.limit_count = 6;
     }());
 

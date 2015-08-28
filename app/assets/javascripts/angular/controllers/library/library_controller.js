@@ -1,4 +1,4 @@
-homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', '$mdDialog', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore, $mdDialog){
+homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'WebsiteUIConstants', 'SearchUIConstants', 'bookService', '$routeParams', '$location', 'ColorConstants', '$mdToast', 'infinityService', '$mdBottomSheet', '$mdSidenav', 'sharedService', '$cookieStore', '$mdDialog', 'userService', function($scope, $rootScope, $timeout, WebsiteUIConstants, SearchUIConstants, bookService, $routeParams, $location, ColorConstants, $mdToast, infinityService, $mdBottomSheet, $mdSidenav, sharedService, $cookieStore, $mdDialog, userService){
 
     $scope.get_popular_books = function(){
         var grouped = $scope.info.author_filter || $scope.info.group_by_alphabet || $scope.info.reading_time_filter || $scope.info.published_era_filter || $scope.info.subject_filter;
@@ -232,6 +232,18 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                 $timeout.cancel(popular_books_timeout);
             });
         }
+
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.home.filters){
+                    deleteCookie("todo");
+                    userService.update_todo_key('home/filters');
+                }
+            }
+        }
+        _handle_todo_update();
         $scope.constant = {"show_book": false};
     }());
 

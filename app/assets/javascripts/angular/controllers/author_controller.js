@@ -1,7 +1,19 @@
-homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'ColorConstants', '$filter', '$sce', '$rootScope', "WebsiteUIConstants", '$timeout', 'sharedService', '$mdBottomSheet', function($scope, $location, $mdSidenav, authorService, $mdDialog, ColorConstants, $filter, $sce, $rootScope, WebsiteUIConstants, $timeout, sharedService, $mdBottomSheet){
+homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'authorService', '$mdDialog', 'userService', '$filter', '$sce', '$rootScope', "WebsiteUIConstants", '$timeout', 'sharedService', '$mdBottomSheet', function($scope, $location, $mdSidenav, authorService, $mdDialog, userService, $filter, $sce, $rootScope, WebsiteUIConstants, $timeout, sharedService, $mdBottomSheet){
 
     $scope.toggle_follow = function(){
         if(angular.isDefined($scope.author.status)){
+            var _handle_todo_update = function(){
+                var todo = getCookie("todo");
+                if(todo){
+                    todo = JSON.parse(todo);
+                    if(!todo.author.follow){
+                        deleteCookie("todo");
+                        userService.update_todo_key('author/follow');
+                    }
+                }
+            }
+
+            _handle_todo_update();
             $scope.author.status = !$scope.author.status;
             authorService.follow($scope.author.id, $scope.author.status);
         }
@@ -134,21 +146,19 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
                 }
                 if(($scope.author.books.length == 1) && ($scope.author.books[0].title == null)){
                     $scope.author.books = [];
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var color = ColorConstants.value[random_int];
-                    $scope.custom_style = {'background-color': color};
-                    $scope.custom_color = color;
+                    // var random_int = Math.floor(Math.random()*ColorConstants.value.length);
+                    // var color = ColorConstants.value[random_int];
+                    // $scope.custom_style = {'background-color': color};
+                    // $scope.custom_color = color;
                 }
                 else{
                     angular.forEach($scope.author.books, function(value, index){
-                        var random_int = Math.floor(Math.random()*ColorConstants.value.length);
                         var url = $filter('large_thumb')(value);
-                        var color = ColorConstants.value[random_int];
                         if(url != ""){
-                            var json =  {"color": color, "custom_style": {"background-image": "url('"+url+"')"}};
+                            var json =  {"custom_style": {"background-image": "url('"+url+"')"}};
                         }
                         else{
-                            var json =  {"color": color, "custom_style": {"background-color": color}};
+                            var json =  {"custom_style": {}};
                         }
                         $scope.author.books[index] = angular.extend($scope.author.books[index], json);
                     });
@@ -183,6 +193,20 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         });
 
         $scope.limit_count = 8;
+
+
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.book.author){
+                    deleteCookie("todo");
+                    userService.update_todo_key('book/author');
+                }
+            }
+        }
+
+        _handle_todo_update();
 
     }());
 
