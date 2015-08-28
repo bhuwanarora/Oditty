@@ -64,7 +64,6 @@ module GenreList
         puts "#{book_count}"
         genre.update_column(:book_count, book_count)
       rescue => e
-        debugger
         puts e
       end
     end
