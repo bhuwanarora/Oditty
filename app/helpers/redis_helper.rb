@@ -21,6 +21,7 @@ module RedisHelper
 	end
 
 	def self.update id, entity_type
+		debugger
 		case entity_type
 		when Constant::EntityLabel::Author
 			RedisHelper.update_author id

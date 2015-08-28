@@ -519,7 +519,6 @@ module Api
 			end
 
 			def self.get_notifications user_id
-				(User.new(user_id).match + User::UserNotification.reset_notification_count).execute
 				url = Rails.application.config.feed_service + "/" + "api/v0/get_notifications?user_id=" + user_id.to_s
 				notifications = Net::HTTP.get(URI.parse(url))
 				notifications
