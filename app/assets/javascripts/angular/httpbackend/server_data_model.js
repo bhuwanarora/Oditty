@@ -30,7 +30,7 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
     this.get_todos = function(){
         var data = {
             "home": {
-                "profile": true,
+                "profile": false,
                 "filters": false,
                 "rooms": false,
                 "invite": false
@@ -55,8 +55,8 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
                 "book": true
             },
             "profile": {
-                "shelves": false,
-                "history": false
+                "shelves": true,
+                "history": true
             }
         };
         return data;

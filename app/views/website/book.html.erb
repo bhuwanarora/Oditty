@@ -30,7 +30,8 @@
 	
 </div>
 
-<div  ng-include src="'/assets/angular/html/todo/link.html'" ></div>
+<div  ng-include src="'/assets/angular/html/todo/link.html'" 
+	ng-if="!todo.book.recommend || !todo.book.author"></div>
 <section layout="row" layout-wrap class="feed_margin">
 	<div flex="5" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
 		ng-if="!book.show_info_only"></div>

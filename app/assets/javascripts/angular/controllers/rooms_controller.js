@@ -51,8 +51,8 @@ homeApp.controller('roomsController', ["$scope", "$rootScope", "roomsService", "
         var _handle_todo_update = function(){
             var todo = getCookie("todo");
             if(todo){
-                todo = JSON.parse(todo);
-                if(!todo.home.rooms){
+                $scope.todo = JSON.parse(todo);
+                if(!$scope.todo.home.rooms){
                     deleteCookie("todo");
                     userService.update_todo_key('home/rooms');
                 }

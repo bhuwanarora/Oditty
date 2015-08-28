@@ -295,6 +295,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         else{
             $scope.todo = JSON.parse(todo);
         }
+
     }());
 
 }]);

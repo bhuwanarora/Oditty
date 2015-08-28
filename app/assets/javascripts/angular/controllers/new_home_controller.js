@@ -65,6 +65,8 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
         
         $scope.filters = {"other": {}};
         $scope.search_tag = {};
+
+        
     }());
 
 }]);

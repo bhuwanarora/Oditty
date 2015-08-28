@@ -65,7 +65,8 @@
             </div>  
             <div flex="10" flex-md="5"></div>
         </section>
-        <div  ng-include src="'/assets/angular/html/todo/link.html'" ></div>
+        <div ng-if="!todo.home.profile || !todo.home.filters || !todo.home.rooms || !todo.home.invite" 
+            ng-include src="'/assets/angular/html/todo/link.html'"></div>
      </div>
      <div></div>
 
