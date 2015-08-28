@@ -9,7 +9,6 @@ module MoreBooksForGenre
     items = doc.css('.bigBox~ .bigBox+ .bigBox .moreLink .actionLink')
     if items.present?
       items.each do |item|
-        debugger
         puts item
       end
     else
