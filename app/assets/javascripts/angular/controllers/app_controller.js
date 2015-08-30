@@ -1,4 +1,4 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', '$mdBottomSheet', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService, $mdBottomSheet){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
@@ -33,6 +33,18 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
 
     $scope.show_indexes = function(book, event){
         $scope.book = book;
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.room.rating){
+                    deleteCookie("todo");
+                    userService.update_todo_key('room/rating');
+                }
+            }
+        }
+        _handle_todo_update();
+
         $mdDialog.show({
             templateUrl: 'assets/angular/html/shared/rating.html',
             clickOutsideToClose: true,
@@ -145,7 +157,9 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
 
         var _fetch_picture = function(){
             Facebook.api('me/picture?redirect=false&type=large', function(response){
-                websiteService.save_user_info(response);
+                if(angular.isDefined(response) && response.url != $rootScope.user.image_url){
+                    websiteService.save_user_info(response);
+                }
             });
         }
 
@@ -232,6 +246,13 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         });
     }
 
+    $scope.fetch_todos = function(){
+        userService.get_todos("home").then(function(data){
+            $scope.todo = data;
+            setCookie("todo", JSON.stringify(data));
+        });
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
@@ -264,6 +285,16 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         }
 
         $scope.data = {"selectedIndex" : 0};
+        // deleteCookie("todo");
+
+        var todo = getCookie("todo");
+
+        if(!todo){
+            $scope.fetch_todos();
+        }
+        else{
+            $scope.todo = JSON.parse(todo);
+        }
 
     }());
 

@@ -1,7 +1,10 @@
-<div class="md-whiteframe-z1" id="filters">
-    <div ng-include src="'/assets/angular/html/library/_header.html'" layout="row" layout-align="space-between" class="full_width"
-        layout-sm="column" layout-md="column"></div>
+<div id="filters">
+    <div ng-include src="'/assets/angular/html/library/_header.html'" layout="row" 
+        layout-align="space-between" class="full_width" layout-sm="column" layout-md="column"></div>
 </div>
+
+<div  ng-include src="'/assets/angular/html/todo/link.html'" 
+    ng-if="!todo.filters.shelf || !todo.filters.book"></div>
 
 <section layout="row" layout-wrap class="feed_margin">
     <div flex="5" hide-sm hide-md layout="row" layout-align="end start" 
