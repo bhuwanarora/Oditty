@@ -221,7 +221,7 @@ function detect_browser(){
     }
 }
 
-var _deferred_post_request = function(url, params, $q, $http){
+var _deferred_post_request = function(url, params, $q, $http, service_url){
     var deferred = $q.defer();
     var success_callback = function(result){
         return deferred.resolve(result.data); 
@@ -237,7 +237,12 @@ var _deferred_post_request = function(url, params, $q, $http){
             return deferred.reject(reason);
         }
     }
-    $http.post(url, params).then(success_callback, error_callback);
+    if(angular.isDefined(service_url)){
+        $http.post(service_url + url, params).then(success_callback, error_callback);
+    }
+    else{
+        $http.post(url, params).then(success_callback, error_callback);
+    }
     return deferred.promise;
 }
 

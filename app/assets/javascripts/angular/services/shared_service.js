@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "$mdDialog", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, $mdDialog){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService){
 
     this.get_popular_books = function($scope, books){
         console.log("get_popular_books");
@@ -75,7 +75,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         window.location.href = "/book?id="+id;
         // $rootScope.active_book = book;
         // $rootScope.active_book.show_info_only = true;
-        // $mdDialog.show({
+        // userService.show({
         //     templateUrl: '/assets/angular/html/news/book.html',
         //     scope: $scope,
         //     preserveScope: true,
@@ -118,6 +118,18 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.toggle_bookmark = function(label, data, bookmark_object, scope){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.filters.shelf){
+                    deleteCookie("todo");
+                    userService.update_todo_key('filters/shelf');
+                }
+            }
+        }
+        _handle_todo_update();
+        
         if(angular.isUndefined(scope.info)){
             scope.info = {"loading": false};
         }

@@ -149,7 +149,7 @@ input:focus{
 }
 
 .site_color{
-    color: #427fed !important;
+    color: #2196F3 !important;
 }
 
 .faded_site_color{
@@ -536,4 +536,13 @@ md-grid-list md-grid-tile md-grid-tile-footer{
 
 .overflow_y{
     overflow-y: scroll;
+}
+
+.no_hover{
+    cursor: default;
+}
+
+.no_hover:hover{
+    text-decoration: none !important;
+    background-color: inherit !important;
 }

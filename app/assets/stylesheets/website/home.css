@@ -1,3 +1,46 @@
+.todo{
+	width: 100vw;
+	height: 200px;
+	position: fixed;
+	background-color: white;
+	z-index: 999999;
+	bottom: 0px;
+}
+
+.todo_block_container{
+	min-height: 160px;
+}
+
+.todo_container{
+	max-height: 90vh;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	position: fixed;
+	bottom: 0px;
+}
+
+.todo_container md-list-item{
+	max-width: inherit !important;
+}
+
+.todo_icon{
+	font-size: 50px;
+	width: 70px;
+	height: 60px;
+}
+
+.todo_icon_small{
+	font-size: 20px;
+}
+
+.icon_block{
+	width: 120px;
+}
+
+.icon_block:hover{
+	text-decoration: none !important;
+	background-color: #f5f5f5;
+}
 
 .rd_book_backup_cover,
 .rd_book_image_cover,
@@ -814,7 +857,7 @@ md-tooltip .md-content{
 .rd_title{
 	color: #6E6F73;
   	font-weight: 600;
-  	font-size: 40px;
+  	font-size: 70px;
   	/*text-shadow: 1px 1px 6px rgba(0,0,0,0.2);*/
   	font-family: "jaf-bernino-sans","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Verdana,sans-serif;
 }
@@ -1191,3 +1234,12 @@ h3 a:hover{
 .rd_book_container:hover .read_review{
 	visibility: visible;
 }
+
+
+#homeContent .site_description{
+    font-family: "Lato", sans-serif;
+    line-height: 1.42857;
+    color: #999;
+    font-size: 20px
+}
+

@@ -1,0 +1,54 @@
+<md-bottom-sheet class="md-grid todo_container" layout="column" layout-align="center center">
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<h3 layout-padding class="center_text">
+		<div class="less_important">If you find a room of your interest, then there is no better place in the world to be.</div>
+		<div>Explore Rooms. #OditRooms</div>
+	</h3>
+	<div layout-padding></div>
+	<div layout-padding></div>
+  	<md-list layout="row" layout-align="center center">
+    	<md-list-item layout-padding layout-margin class="todo_block_container">
+  			<div layout="column" layout-align="center center"
+  				ng-if="!todo.rooms.join"
+  				class="center_text no_hover icon_block green_color" layout-padding>
+				<md-icon md-font-set="material-icons" class="todo_icon_small green_color">check_box_outline_blank</md-icon>
+				<div layout-padding>ONE</div>
+				<md-icon md-font-set="material-icons" class="todo_icon green_color">person_add</md-icon>
+				<div layout-padding class="less_important bold green_color">Join 5 Rooms</div>
+  			</div>
+  			<div layout="column" layout-align="center center"
+  				ng-if="todo.rooms.join"
+  				class="center_text no_hover icon_block" layout-padding>
+				<md-icon md-font-set="material-icons" class="todo_icon_small site_color">check_box</md-icon>
+				<div layout-padding>ONE</div>
+				<md-icon md-font-set="material-icons" class="todo_icon">person_add</md-icon>
+				<div layout-padding class="less_important bold">Join 5 Rooms</div>
+  			</div>
+		</md-list-item>
+		<md-list-item layout-padding layout-margin class="todo_block_container">
+  			<div layout="column" layout-align="center center"
+  				ng-if="!todo.rooms.visit"
+  				class="center_text no_hover icon_block purple_color" layout-padding>
+				<md-icon md-font-set="material-icons" class="todo_icon_small purple_color">check_box_outline_blank</md-icon>
+				<div layout-padding>TWO</div>
+				<md-icon md-font-set="material-icons" class="todo_icon purple_color">visibility</md-icon>
+				<div layout-padding class="less_important bold purple_color">Visit a Room</div>
+  			</div>
+  			<div layout="column" layout-align="center center"
+  				ng-if="todo.rooms.visit"
+  				class="center_text no_hover icon_block" layout-padding>
+				<md-icon md-font-set="material-icons" class="todo_icon_small site_color">check_box</md-icon>
+				<div layout-padding>TWO</div>
+				<md-icon md-font-set="material-icons" class="todo_icon">visibility</md-icon>
+				<div layout-padding class="less_important bold">Visit a Room</div>
+  			</div>
+		</md-list-item>
+  	</md-list>
+  	<div layout-padding></div>
+  	<div layout-padding></div>
+  	<div layout-padding></div>
+  	<div layout-padding></div>
+  	<div layout-padding></div>
+  	<div layout-padding></div>
+</md-bottom-sheet>

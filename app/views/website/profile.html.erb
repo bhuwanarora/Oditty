@@ -1,4 +1,6 @@
 <div ng-include src="'/assets/angular/html/profile/_header.html'"></div>
+<div  ng-include src="'/assets/angular/html/todo/link.html'" 
+    ng-if="!todo.profile.shelves || !todo.profile.history"></div>
 <section layout="row" layout-md="row" layout-sm="column">
     <div flex="10" hide-md hide-sm></div>
     <div flex="80" flex-md="100" flex-sm="100"
