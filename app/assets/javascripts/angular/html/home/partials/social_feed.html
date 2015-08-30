@@ -3,7 +3,7 @@
 		Others on Oditty...
 	</h3>
 	<div class="feed_ticker">
-		<div ng-repeat="feed in social_feed" layout="row" >
+		<div ng-repeat="feed in social_feed" layout="row">
 			<div layout-padding>
 				<img ng-src="{{feed.data.user.thumb || '/assets/author_profile.jpg'}}" class="circular"
 					onerror="this.src='/assets/author_profile.jpg'"/>
@@ -38,12 +38,10 @@
 				</div>
 				
 			</div>
-			<!-- <br/> -->
-			<md-divider></md-divider>
 		</div>	
 	</div>
 </md-content>
-<md-progress-linear class="md-primary"
+<!-- <md-progress-linear class="md-primary"
     ng-if="info.feed_loading"
     md-mode="indeterminate">
-</md-progress-linear>
+</md-progress-linear> -->
