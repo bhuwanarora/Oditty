@@ -135,6 +135,7 @@ a{
   	width: 100%;
   	position: fixed;
   	top: 0px;
+  	padding: 10px 0px;
 }
 
 .home_header{
@@ -177,7 +178,7 @@ md-content{
 .super_container,
 .super_div_container{
     outline: none !important;
-	margin-top: 48px !important;
+	margin-top: 70px !important;
 }
 
 .burger{
@@ -213,12 +214,18 @@ md-content{
 .search{
 	background-color: transparent !important;
 	width: 50vw;
-	height: 35px;
+	/*height: 35px;*/
 	padding: 0px !important;
-	border: none;
+	/*border: none;*/
 	box-shadow: none;
-	border-bottom: 1px solid black;
+	/*border-bottom: 1px solid black;*/
 	color: white !important;
+	background-color: white;
+    border: 1px solid #989898;
+}
+
+.search:hover, .filters_autocomplete:hover{
+	border: 1px solid #555555;
 }
 
 .search md-input-container .md-placeholder{
@@ -232,7 +239,7 @@ md-content{
 }
 
 .search input{
-	padding-left: 40px !important;
+	/*padding-left: 40px !important;*/
 	color: #333 !important;
 }
 
@@ -242,7 +249,7 @@ md-content{
 
 .search_icon{
 	position: absolute;
-  	left: 5px;
+  	right: 5px;
   	top: 0px;
   	margin-top: 15px;
 }
@@ -971,11 +978,6 @@ h3 a:hover{
   	margin: 0px;
   	height: 32px;
   	padding: 0px;
-}
-
-.filters_autocomplete{
-	background-color: white;
-	border: 1px solid #CACACA;
 }
 
 .no_underline:hover,
