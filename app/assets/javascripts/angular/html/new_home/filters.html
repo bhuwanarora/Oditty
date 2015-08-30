@@ -29,11 +29,12 @@
             <div layout="row" layout-align="center center"
                  class="z-index-1" flex="100" layout-sm="column">
                 <div class="relative" flex-md flex-sm>
-                    <md-autocomplete  class="filters_autocomplete genres_autocomplete"
+                    <md-autocomplete  class="filters_autocomplete genres_autocomplete relative"
                         md-selected-item="info.selected_genre"
                         md-search-text="search_tag.genre"
                         md-items="item in info.genres"
                         md-search-text-change="search_genres(search_tag.genre)"
+                        md-selected-item-change="show_filter_results()"
                         md-item-text="item.name || item.root_category_name"
                         md-min-length="0"
                         placeholder="I'm looking for a book on...">
@@ -42,6 +43,9 @@
                             <div class="less_important">{{item.books_count}} books</div>
                         </div>
                     </md-autocomplete>
+                    <a class="show_me_link grey_color" ng-click="show_filter_results()" hide-sm>
+                        <div><i class="material-icons">search</i></div>
+                    </a>
                 </div>
                <!--  <div class="relative" hide-sm hide-md>
                     <md-autocomplete class="filters_autocomplete time_autocomplete"
@@ -57,7 +61,7 @@
                     </md-autocomplete>
                 </div> -->
                 <div layout-padding>
-                    <md-button class="md-button-clear md-raised"
+                    <md-button class="md-button-clear md-raised" show-sm hide
                         ng-click="show_filter_results()">
                         Show me books
                     </md-button>
