@@ -96,7 +96,7 @@ class UsersUser < Neo
 
 	def follow
 		operation = "+"
-		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::UserNotification.add("follows_node") + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
+		@user.match + User::Info.set_follows_count(operation) + " WITH user " + @friend.match("friend") + ", user " + create +  User::Feed.new(@user_id).create("follows_node")  + ", friend WITH follows_node, friend AS user " + User::Info.set_followed_by_count(operation) + UsersUser.return_init + User.basic_info
 	end
 
 	def delete_follow_notification
@@ -109,7 +109,7 @@ class UsersUser < Neo
 
 	def unfollow
 		operation = "-"
-		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + delete_follow_feed + " WITH friend AS user, follows_node " + delete_follow_notification + ", user " + User::Info.set_followed_by_count(operation) + " WITH follows_node " + UsersUser.delete("follows_node")
+		match + User::Info.set_follows_count(operation) + " WITH user, follows_node, friend " + delete_follow_feed + " WITH friend AS user, follows_node " + User::Info.set_followed_by_count(operation) + " WITH follows_node " + UsersUser.delete("follows_node")
 	end
 
 	def self.add_notification node_variable
