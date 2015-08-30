@@ -111,7 +111,7 @@ homeApp.controller('networkController', ["$scope", "$rootScope", 'networkService
 
 		$scope.load_users();
 
-		$scope.info.my_profile = true;
+		// $scope.info.my_profile = true;
     	if(angular.isUndefined($rootScope.user)){
     		userService.get_user_details().then(function(data){
                 $rootScope.user = data;
