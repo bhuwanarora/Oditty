@@ -26,7 +26,8 @@
                 Popular Books</div>
             <div ng-if="info.books.length">{{info.books.length}} results</div>
             <div ng-if="info.books.length != 0">Scroll to see more.</div>
-            <div ng-if="info.books.length == 0">Couldn't find books. Reset filters.</div>
+            <div ng-if="info.books.length == 0 && !info.loading">Couldn't find books related to selected filters. Reset filters.</div>
+            <div ng-if="info.books.length == 0 && info.loading">Searching for Books...</div>
         </div>
     </div>
 
