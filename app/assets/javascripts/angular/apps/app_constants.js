@@ -45,28 +45,6 @@ var places = [
 
 
 var constants = {
-		"PopularAuthors":[
-			{
-				"name": "Walt Disney Company",
-				"labels": "Author",
-				"id": 396327
-			},
-			{
-				"name": "Francine Pascal",
-				"labels": "Author",
-				"id": 396616
-			},
-			{
-				"name": "Carolyn Keene",
-				"labels": "Author",
-				"id": 397411
-			},
-			{
-				"name": "Time-Life Books",
-				"labels": "Author",
-				"id": 387847
-			}
-		],
 		"Times":[
 			{
 				"name": "Contemporary",
@@ -116,54 +94,82 @@ var constants = {
 		],
 		"PopularGenres":[
 			{
-				"books_count": "1010",
-				"name": "wilderness",
-				"id": 385380
+				"books_count": "93815",
+				"name": "History",
+				"id": 384361
 			},
 			{
-				"books_count": "1011",
-				"name": "counter-culture",
-				"id": 386404
+				"books_count": "42112",
+				"name": "Horror",
+				"id": 384362
 			},
 			{
-				"books_count": "10339",
-				"name": "holiday",
-				"id": 384872
+				"books_count": "70679",
+				"name": "Humor",
+				"id": 384364
 			},
 			{
-				"books_count": "10417",
-				"name": "roman",
-				"id": 384401
+				"books_count": "26218",
+				"name": "Love",
+				"id": 384372
 			},
 			{
-				"books_count": "10463",
-				"name": "architecture",
-				"id": 384543
+				"books_count": "9231",
+				"name": "Leadership",
+				"id": 384369
 			},
 			{
-				"books_count": "10467",
-				"name": "economics",
-				"id": 384535
+				"books_count": "17534",
+				"name": "Mythology",
+				"id": 384380
 			},
 			{
-				"books_count": "1052",
-				"name": "mermaids",
-				"id": 385534
+				"books_count": "65102",
+				"name": "Poetry",
+				"id": 384389
 			},
 			{
-				"books_count": "10531",
-				"name": "teaching",
-				"id": 384416
+				"books_count": "52400",
+				"name": "Politics",
+				"id": 384390
 			},
 			{
-				"books_count": "10539",
-				"name": "japan",
-				"id": 384547
+				"books_count": "68932",
+				"name": "Short Stories",
+				"id": 384406
 			},
 			{
-				"books_count": "1063",
-				"name": "polyamory",
-				"id": 385374
+				"books_count": "44358",
+				"name": "Spirituality",
+				"id": 384414
+			},
+			{
+				"books_count": "28518",
+				"name": "Music",
+				"id": 384491
+			},
+			{
+				"books_count": "26837",
+				"name": "War",
+				"id": 384501
+			}
+		],
+		"PopularAuthors":[
+			{
+				"name": "J. K. Rowling",
+				"id": 2546420
+			},
+			{
+				"name": "Neil Gaiman",
+				"id": 390302
+			},
+			{
+				"name": "J. R. R. Tolkien",
+				"id": 2546420
+			},
+			{
+				"name": "Charles Dickens",
+				"id": 388643
 			}
 		],
 		"ReadTimes": [
