@@ -1,4 +1,4 @@
-homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", function ($http, $q, $rootScope, WebsiteUIConstants){
+homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants", "todo_service_url", function ($http, $q, $rootScope, WebsiteUIConstants, todo_service_url){
 	
     var _user_id = function(){
         if(angular.isDefined($rootScope.reader)){
@@ -8,6 +8,11 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
             var user_id = $rootScope.user.id;   
         }
         return user_id;
+    }
+
+    this.update_todo_key = function(type){
+        var params = {"type": type};
+        return _deferred_post_request('/api/v0/set_todos', type, $q, $http, todo_service_url);
     }
 
     this.get_social_feed = function(skip, count){
@@ -22,6 +27,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
 
     this.invite = function(email){
         return _deferred_request('/api/v0/invite?email='+email, $q, $http);
+    }
+
+    this.get_todos = function(type){
+        return _deferred_request('/api/v0/get_todos?type='+type, $q, $http, todo_service_url);
     }
 
     this.get_global_feed = function(skip, count){

@@ -197,6 +197,19 @@ homeApp.directive('articles', ["$rootScope", "roomService", "ColorConstants", fu
             var _init = function(){
                 $scope.shelf_loading = true;
                 _get_visited_articles();
+
+                var _handle_todo_update = function(){
+                    var todo = getCookie("todo");
+                    if(todo){
+                        todo = JSON.parse(todo);
+                        if(!todo.profile.history){
+                            deleteCookie("todo");
+                            userService.update_todo_key('profile/history');
+                        }
+                    }
+                }
+
+                _handle_todo_update();
             }
 
             _init();
@@ -229,7 +242,7 @@ homeApp.directive('articleShelves', ["$rootScope", "roomService", "ColorConstant
     };
 }]);
 
-homeApp.directive('bookShelves', ["$rootScope", "roomService", function($rootScope, roomService){
+homeApp.directive('bookShelves', ["$rootScope", "roomService", "userService", function($rootScope, roomService, userService){
     return {
         restrict: 'E',
         scope: {userId: '='},
@@ -278,6 +291,19 @@ homeApp.directive('bookShelves', ["$rootScope", "roomService", function($rootSco
 
             var _init = function(){
                 $scope.shelf_loading = true;
+
+                var _handle_todo_update = function(){
+                    var todo = getCookie("todo");
+                    if(todo){
+                        todo = JSON.parse(todo);
+                        if(!todo.profile.shelves){
+                            deleteCookie("todo");
+                            userService.update_todo_key('profile/shelves');
+                        }
+                    }
+                }
+
+                _handle_todo_update();
                 _get_books_grouped_by_shelves();
             }
 

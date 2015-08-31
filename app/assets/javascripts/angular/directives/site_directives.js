@@ -172,6 +172,19 @@ homeApp.directive('emailInvite', ["userService", "$timeout", function(userServic
         controller: ["$scope", function($scope){
             $scope.send_invitation_mail = function(){
                 $scope.sending_mail = true;
+                var _handle_todo_update = function(){
+                    var todo = getCookie("todo");
+                    if(todo){
+                        todo = JSON.parse(todo);
+                        if(!todo.home.invite){
+                            deleteCookie("todo");
+                            userService.update_todo_key('home/invite');
+                        }
+                    }
+                }
+
+                _handle_todo_update();
+
                 userService.invite($scope.email).then(function(data){
                     $scope.sending_mail = false;
                     $scope.email = "";
@@ -327,6 +340,20 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
         scope: {user: '=', book: '='},
         controller: ['$scope', function($scope){
             $scope.recommend_friend = function(){
+
+                var _handle_todo_update = function(){
+                    var todo = getCookie("todo");
+                    if(todo){
+                        todo = JSON.parse(todo);
+                        if(!todo.book.recommend){
+                            deleteCookie("todo");
+                            userService.update_todo_key('book/recommend');
+                        }
+                    }
+                }
+
+                _handle_todo_update();
+
                 var friends_id = $scope.user.id;
                 var book_id = $scope.book.id || $rootScope.active_book.id || $rootScope.active_book.book_id;
                 $scope.recommending = true;

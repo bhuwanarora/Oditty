@@ -65,8 +65,20 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
             _check_select_limit_for($scope.popular_books);
         }
 
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.home.profile){
+                    deleteCookie("todo");
+                    userService.update_todo_key('home/profile');
+                }
+            }
+        }
+
         if(angular.isDefined($scope.data.selectedIndex)){
             if($scope.data.selectedIndex == 2){
+                _handle_todo_update();    
                 window.location.href = "/profile";
             }
             else{
