@@ -25,7 +25,7 @@
              </h3>
          </div>
         <section layout="row" layout-sm="row" layout-align="center center" layout-wrap class="full_width z_index_0">
-            <div flex="10" flex-md="5"></div>
+            <div flex="10" flex-md="5" hide-sm></div>
             <div layout="row" layout-align="center center"
                  class="z-index-1" flex="100" layout-sm="column">
                 <div class="relative" flex-md flex-sm>
@@ -43,10 +43,11 @@
                             <div class="less_important">{{item.books_count}} books</div>
                         </div>
                     </md-autocomplete>
-                    <a class="show_me_link grey_color" ng-click="show_filter_results()" hide-sm>
+                    <a class="show_me_link grey_color" ng-click="show_filter_results()" >
                         <div><i class="material-icons">search</i></div>
                     </a>
                 </div>
+
                <!--  <div class="relative" hide-sm hide-md>
                     <md-autocomplete class="filters_autocomplete time_autocomplete"
                         md-selected-item="info.selected_duration"
@@ -60,16 +61,23 @@
                         </div>
                     </md-autocomplete>
                 </div> -->
-                <div layout-padding>
+                <!-- <div layout-padding>
                     <md-button class="md-button-clear md-raised" show-sm hide
                         ng-click="show_filter_results()">
                         Show me books
                     </md-button>
-                </div>
+                </div> -->
             </div>  
-            <div flex="10" flex-md="5"></div>
+            <div flex="10" flex-md="5" hide-sm></div>
         </section>
-        
+        <section layout="row" layout-wrap class="less_important">
+            <div layout-padding class="light_grey_color">Popular Genres</div>
+            
+            <a href="/fitlers?g=384348" class="bold" layout-padding>Fiction</a>
+            <a href="/fitlers?g=384382" class="bold" layout-padding>Non-Fiction</a>
+            <a href="/fitlers?g=384321" class="bold" layout-padding>Classics</a>
+            <a href="/fitlers?g=384521" class="bold" layout-padding>Biography</a>
+        </section>
      </div>
      <div></div>
 
