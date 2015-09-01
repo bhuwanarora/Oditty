@@ -514,7 +514,6 @@ module Api
 			def self.handle_google_user params
 				@neo = Neography::Rest.new
 				# clause = "MATCH ()"
-				debugger
 				# @neo.execute_query clause
 			end
 

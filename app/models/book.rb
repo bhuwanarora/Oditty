@@ -108,7 +108,7 @@ class Book < Neo
 	end
 
 	def self.match_genre
-		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
+		" MATCH (book)<-[belongs_to:Belongs_to]-(genre:Genre) "
 	end
 
 	def set_total_page_count
