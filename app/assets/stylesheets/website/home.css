@@ -254,6 +254,10 @@ md-content{
   	margin-top: 15px;
 }
 
+.filters_header .search_icon{
+	margin-top: 9px;
+}
+
 .search_container{
 	position: relative;
 	z-index: 1;
