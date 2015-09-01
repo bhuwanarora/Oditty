@@ -17,6 +17,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def invite
+				user_id = session[:user_id]
+				invited = Api::V0::UserApi.invite(params, user_id)
+				message = (invited == 1)? "Success" : " User already present"
+				render :json => {:message => message}, :status => 200
+			end
+
 			def get_social_feed
 				if session[:user_id]
 					url = Rails.application.config.feed_service+"/api/v0/get_social_feed?skip="+params[:skip].to_s+"&count="+params[:count].to_s+"&user_id="+session[:user_id].to_s
@@ -149,22 +156,21 @@ module Api
 					if params[:id]
 						info = Api::V0::UserApi.get_relative_details(params[:id], session[:user_id])
 					else
-						info = RedisHelper.get_user_details({:id => session[:user_id]})
+						info = RedisHelper::User.get_details({:id => session[:user_id]})
 						unless !info.nil?
 							info = UserApi.get_details(session[:user_id])
-							RedisHelper.set_user_details({:id => session[:user_id], :info => info})
+							RedisHelper::User.set_details({:id => session[:user_id], :info => info})
 						end
 					end
 				else
-					info = RedisHelper.get_user_details({:id => params[:id]})
+					info = RedisHelper::User.get_details({:id => params[:id]})
 					unless !info.nil?
 						info = UserApi.get_details(params[:id])
-						RedisHelper.set_user_details({:id => params[:id], :info => info})
+						RedisHelper::User.set_details({:id => params[:id], :info => info})
 					end
 				end
 				render :json => info, :status => 200
 			end
-
 
 			def user_profile_info
 				if params[:id].present?
@@ -215,6 +221,7 @@ module Api
 			def notifications
 				if session[:user_id]
 					info = Api::V0::UserApi.get_notifications session[:user_id]
+					RedisHelper.update session[:user_id], Constant::EntityLabel::User
 				else
 					info = {:message => Constant::StatusMessage::SessionNotSet}
 				end
@@ -253,7 +260,20 @@ module Api
 			end
 
 			def recommend
-				UserApi.recommend_book(session[:user_id], params[:friends_id], params[:book_id])
+				info = UserApi.recommend_book(session[:user_id], params[:friends_id], params[:book_id])
+				RedisHelper::User.increment_notification_count params[:friends_id]
+				begin
+					FeedHelper::UserFeedHelper.handle_redis(
+					{
+							:user_id 	=> session[:user_id],
+							:book_id 	=> params[:book_id],
+							:friend_id 	=> params[:friends_id],
+							:id 		=> info["recommend_node_id"],
+							:action 	=> FeedHelper::ActionCreate
+					}, Constant::NodeLabel::RecommendNode)
+				rescue Exception => e
+					puts e.to_s.red
+				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -297,7 +317,7 @@ module Api
 						:action => FeedHelper::ActionCreate
 						}, Constant::NodeLabel::FollowsNode)
 				end
-				RedisHelper.delete_basic_community_info({:id => community_id})
+				RedisHelper::Community.delete_basic_info({:id => community_id})
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -307,6 +327,7 @@ module Api
 				user_id = session[:user_id]
 				if follow_action.present? && follow_action == "true"
 					Api::V0::UserApi.follow_user(user_id, friend_id).execute
+					RedisHelper::User.increment_notification_count friend_id
 					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:friend_id => friend_id,
@@ -320,8 +341,8 @@ module Api
 						}, Constant::NodeLabel::FollowsNode)
 					Api::V0::UserApi.unfollow_user(user_id, friend_id).execute
 				end
-				RedisHelper.delete_friend_of_friend_details({:id => user_id })
-				RedisHelper.delete_user_details({:id => user_id })
+				RedisHelper::User.delete_friend_of_friend_details({:id => user_id })
+				RedisHelper::User.delete_details({:id => user_id })
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -493,6 +514,17 @@ module Api
 				user_id = session[:user_id]
 				book_id = params[:id]
 				info = Api::V0::UserApi.notify_borrow(book_id, user_id).execute
+				begin
+					FeedHelper::UserFeedHelper.handle_redis({
+						:user_id => user_id,
+						:book_id => book_id,
+						:id 	=> info[0]["borrow_node_id"],
+						:action => FeedHelper::ActionCreate
+						}, Constant::NodeLabel::BorrowNode)
+				rescue Exception => e
+					puts e.to_s.red					
+				end
+				info.each{|elem| (RedisHelper::User.increment_notification_count elem["id"])}
 				render :json => info, :status => 200
 			end
 
@@ -524,10 +556,10 @@ module Api
 			def get_friends_of_friend
 				user_id = session[:user_id]
 				if user_id
-					info = RedisHelper.get_friend_of_friend_details({:id => session[:user_id]})
+					info = RedisHelper::User.get_friend_of_friend_details({:id => session[:user_id]})
 					unless !info.nil?
 						info = Api::V0::UserApi.get_friends_of_friend(user_id)
-						RedisHelper.set_friend_of_friend_details({:id => session[:user_id], :info => info})
+						RedisHelper::User.set_friend_of_friend_details({:id => session[:user_id], :info => info})
 					end
 				else
 					info = []

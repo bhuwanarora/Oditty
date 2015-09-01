@@ -74,12 +74,24 @@ class Book < Neo
 	end
 
 	def self.basic_info
-		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label "
+		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metrics_info
 	end
 
 	def self.get_book_by_isbn isbn
 		" MATCH (book:Book) WHERE book.isbn =~\'.*" + isbn.to_s.strip + ".*\' "\
 		" WITH book "
+	end
+
+	def self.metrics_info
+		Constant::RatingIndices::BookMetrics.map{|property| (" book." + property + " AS " + property + " ")}.join(",")
+	end
+
+	def self.grouped_metrics_info
+		Constant::RatingIndices::BookMetrics.map{|property| (property + ": book." + property + " ")}.join(",")
+	end
+
+	def self.gr_info
+		" book.gr_reviews_count AS gr_reviews_count, book.gr_ratings_count AS gr_ratings_count, book.gr_rating AS gr_rating "
 	end
 
 	def self.get_books_by_isbn isbn_array
@@ -92,11 +104,11 @@ class Book < Neo
 	end
 
 	def self.grouped_basic_info
-		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, popularity: TOINT(book.total_weight) "
+		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, " + Book.grouped_metrics_info
 	end
 
 	def self.match_genre
-		" MATCH (book)-[belongs_to:Belongs_to]->(genre:Genre) "
+		" MATCH (book)<-[belongs_to:Belongs_to]-(genre:Genre) "
 	end
 
 	def set_total_page_count
@@ -161,6 +173,10 @@ class Book < Neo
 
 	def self.match_communities 
 		" MATCH (community:Community)-[:RelatedBooks]->(book) WITH community, book "
+	end
+
+	def match_communities
+		match + Book.match_communities + Book.return_group(Community.basic_info)
 	end
 
 	def self.grouped_news_community

@@ -28,10 +28,10 @@ module Api
 
 			def get_basic_info
 				id = params[:id]
-				info = RedisHelper.get_basic_author_info({:id => id})
+				info = RedisHelper::Author.get_basic_info({:id => id})
 				unless !info.nil?
 					info = Api::V0::AuthorApi.get_basic_info id
-					RedisHelper.set_basic_author_info({:id => id, :info => info})
+					RedisHelper::Author.set_basic_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
@@ -70,12 +70,18 @@ module Api
 
 			def get_interview_details
 				author_id = params[:id]
-				info = RedisHelper.get_interview_details({:id => author_id})
+				info = RedisHelper::Author.get_interview_details({:id => author_id})
 				unless !info.nil?
 					info = Api::V0::AuthorApi.get_interview_details(author_id)
-					RedisHelper.set_interview_details({:id => author_id, :info => info})
+					RedisHelper::Author.set_interview_details({:id => author_id, :info => info})
 				end
 				render :json => info, :status => 200
+			end
+
+			def get_authors_interviewed
+				skip = params[:skip]
+				info = Api::V0::AuthorApi.get_interviewed(skip)
+				render :json => info, :status => 200			
 			end
 		end
 	end

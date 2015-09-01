@@ -65,6 +65,8 @@ ReadersDoor::Application.routes.draw do
       match "get_friends_of_friend"                   => 'users_api#get_friends_of_friend',             :via => [:put, :get, :post]
       match "get_social_feed"                         => 'users_api#get_social_feed',                   :via => [:put, :get, :post]
       match "get_global_feed"                         => 'users_api#get_global_feed',                   :via => [:put, :get, :post]
+      match "invite"                          => 'users_api#invite',
+                            :via => [:get]
     end
   end
 end

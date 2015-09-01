@@ -361,32 +361,33 @@ module Api
 			def self.recommend_book(user_id, friends_id, book_id)
 				@neo = Neography::Rest.new
 				clause = UsersUser.new(user_id,friends_id).recommend_book(book_id)				
-				clause.execute
+				output = clause.execute[0]
 				clause = "MATCH (book:Book), (user:User), (friend:User) WHERE ID(user)=" + user_id.to_s + " AND ID(book)=" + book_id.to_s + " AND ID(friend)=" + friends_id.to_s + User.return_group("book.title AS title, ID(book) as book_id, book.author_name AS author_name, book.isbn AS isbn", "user.image_url AS image_url, ID(user) as id, user.first_name AS first_name, user.last_name AS last_name", "friend.first_name as friends_first_name, friend.last_name AS friends_last_name, ID(friend) AS friends_id, friend.email AS friends_email")
 				info = clause.execute[0]
 				isbn = info["isbn"].split(",")[0] rescue ""
 				params = {
 					:template => Constant::EmailTemplate::RecommendBooks, 
 				  	:user => {
-				  		:image_url => info["image_url"], 
+				  		:image_url => info["image_url"].to_s, 
 				  		:id => info["id"],
-				  		:name => info["first_name"] + " " + info["last_name"],
+				  		:name => info["first_name"].to_s + " " + info["last_name"].to_s,
 				  	},
 				  	:friend =>{
-				  		:name => info["friends_first_name"],
-				  		:email => info["friends_email"],
+				  		:name => info["friends_first_name"].to_s,
+				  		:email => info["friends_email"].to_s,
 				  		:id => info["friends_id"]
 				  	},
 				  	:book => {
 				  		:id => info["book_id"],
-				  		:title => info["title"],
-				  		:author_name => info["author_name"],
+				  		:title => info["title"].to_s,
+				  		:author_name => info["author_name"].to_s,
 				  		:isbn => isbn
 				  	}
 				}
 				if params[:friend][:email]
 					SubscriptionMailer.recommend_book(params).deliver
 				end
+				output
 			end
 
 			def self.comment_on_book(user_id, params)
@@ -401,6 +402,43 @@ module Api
 					:message => message
 				}
 				UsersGraphHelper.comment_on_book(user_id, params[:id], tweet)
+			end
+
+			# Don't send email if user is active. otherwise send him email.
+			def self.invite params, user_id
+				output = 0
+				neo_output = (User::InvitedUser.check_before_invite(user_id, params[:email])).execute[0]
+				if !neo_output["invitee_id"].present? || neo_output[User::InvitedUser::InvitationProperty]
+					if neo_output["invitee_id"].present?
+						output = 0
+					else
+						neo_output = User::InvitedUser.invite(user_id, params[:email]).execute[0]
+				        output = 1
+				    end
+			        email_params = {
+			            :user => {
+			                :name => neo_output['inviter_name'],
+			                :id => user_id
+			            },
+			            :friend => {
+			                :email => params[:email]
+			            },
+			            :template => 'invite'
+			        }
+			        SubscriptionMailer.invite(email_params).deliver
+			    end
+
+		        #TODO: 
+		        # Create an INACTIVE user, status=false with the email params[:email]..Set created_at
+		        # Set status=true in other users..
+		        # Call only active users in followers and followings...
+		        # On every signup completion set the status to true
+
+		        # Make sure 5 invitation emails he has sent are unique before this tasks is marked as done in the task list
+		        # Send him an invitation mail
+		        # Create a mutual follow link between both the users
+		        # DONT search index this New User right now
+		        output
 			end
 
 			def self.save_info(user_id, params)
@@ -437,7 +475,7 @@ module Api
 					else
 						duplicate_email
 					end
-					RedisHelper.delete_user_details({:id => user_id})
+					RedisHelper::User.delete_details({:id => user_id})
 				end
 			end
 
@@ -476,13 +514,12 @@ module Api
 			def self.handle_google_user params
 				@neo = Neography::Rest.new
 				# clause = "MATCH ()"
-				debugger
 				# @neo.execute_query clause
 			end
 
 			def self.get_notifications user_id
-				info = User.new(user_id).get_notifications.execute
-				notifications = NotificationStructure.new(info).execute
+				url = Rails.application.config.feed_service + "/" + "api/v0/get_notifications?user_id=" + user_id.to_s
+				notifications = Net::HTTP.get(URI.parse(url))
 				notifications
 			end
 
