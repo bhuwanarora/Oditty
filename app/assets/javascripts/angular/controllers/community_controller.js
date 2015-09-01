@@ -59,6 +59,20 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         window.location.reload();
     }
 
+    $scope.update_room_news_visit= function(){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.room.news){
+                    deleteCookie("todo");
+                    userService.update_todo_key('room/news');
+                }
+            }
+        }
+        _handle_todo_update();
+    }
+
     $scope.goto_news_page = function(id, community_id){
         userService.news_visited(id);
         deleteCookie("active_community");
