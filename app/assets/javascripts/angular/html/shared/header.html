@@ -8,10 +8,12 @@
          ng-hide="info.mobile_search" layout-fill layout-padding 
          hide-md hide-lg class="z_index_1" 
          ng-include src="'/assets/angular/html/shared/mobile_search.html'"></div>
+    <div flex-sm="15" hide show-sm></div>
     <div flex="40" flex-md="45" 
          ng-controller="searchController"
-         flex-sm="15"  class="search_container" 
+          class="search_container" 
          layout="row" 
+         hide-sm
          layout-align="start center" 
          layout-align-sm="start center"
          ng-include src="'/assets/angular/html/shared/search.html'">
