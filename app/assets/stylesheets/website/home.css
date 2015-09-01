@@ -1293,3 +1293,6 @@ h3 a:hover{
 	outline: 1px solid;
 }
 
+md-autocomplete button{
+    background-color: white;
+}
