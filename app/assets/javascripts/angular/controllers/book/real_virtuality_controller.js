@@ -2,19 +2,7 @@ homeApp.controller('realVirtualityController', ["$scope", "$rootScope", "bookSer
 
     var _init = (function(){
         if(angular.isDefined($rootScope.active_book)){
-            var _handle_todo_update = function(){
-                var todo = getCookie("todo");
-                if(todo){
-                    todo = JSON.parse(todo);
-                    if(!todo.room.news){
-                        deleteCookie("todo");
-                        userService.update_todo_key('room/news');
-                    }
-                }
-            }
-
-            _handle_todo_update();
-
+            
             var book_id = $rootScope.active_book.book_id;
             bookService.get_real_news(book_id).then(function(data){
                 if(data != null){
