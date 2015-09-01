@@ -253,6 +253,19 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         });
     }
 
+    $scope.show_full_todos = function(event){
+        $scope.flatten_todo = JSON.flatten($scope.todo);
+        $mdDialog.show({
+            templateUrl: 'assets/angular/html/todo/list.html',
+            clickOutsideToClose: true,
+            hasBackdrop: true,
+            targetEvent: event,
+            scope: $scope,
+            preserveScope: true
+        });
+        event.stopPropagation();
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
