@@ -16,7 +16,7 @@ module DataCheckHelper
 	def self.invert_wrong_belongs_to_links
 		min = 384296
 		max = 4830210
-		skip = 1000
+		skip = 100
 		count = min
 		while count < max
 			puts "execute... #{count}"
