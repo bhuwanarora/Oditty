@@ -1,0 +1,119 @@
+<md-dialog aria-label="Todo List" class="yellow">
+	<div layout-padding></div>
+	<div layout-padding layout="column" layout-align="center center" flex>
+		<h3 layout-padding class="white_color">List of tasks</h3>
+		<div class="less_important white_color">
+			I am looking for a GUIDE button on each page
+		</div>
+	</div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<md-divider></md-divider>
+	<md-content class="white">
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Follow an Author</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="author.follow" ng-model="flatten_todo['author.follow']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Visit an Author Profile</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="book.author" ng-model="flatten_todo['book.author']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Recommend a book to a friend</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="book.recommend" ng-model="flatten_todo['book.recommend']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Goto a Book Page</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="filters.book" ng-model="flatten_todo['filters.book']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Add a book to a shelf</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="filters.shelf" ng-model="flatten_todo['filters.shelf']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Go to advanced books filters</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="home.filters" ng-model="flatten_todo['home.filters']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Invite 5 friends to Oditty.me</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="home.invite" ng-model="flatten_todo['home.invite']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Goto Profile Page</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="home.profile" ng-model="flatten_todo['home.profile']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Goto Rooms Page</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="home.rooms" ng-model="flatten_todo['home.rooms']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Checkout News you have visited.</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="profile.history" ng-model="flatten_todo['profile.history']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Checkout your personal Book Shelves</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="profile.shelves" ng-model="flatten_todo['profile.shelves']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Checkout related News in a Room.</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="room.news" ng-model="flatten_todo['room.news']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Checkout Goodness Rating for a Book</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="room.rating" ng-model="flatten_todo['room.rating']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Join a room.</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="rooms.join" ng-model="flatten_todo['rooms.join']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+		<md-divider></md-divider>
+		<div layout="row" layout-padding flex layout-align="space-between center">
+			<div>Visit a room.</div>
+			<div layout-padding></div>
+			<md-checkbox aria-label="rooms.visit" ng-model="flatten_todo['rooms.visit']" 
+				ng-disabled="true"></md-checkbox>
+		</div>
+	</md-content>
+	
+</md-dialog>
