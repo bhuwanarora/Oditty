@@ -78,17 +78,16 @@ homeApp.controller('customiseController', ["$scope", "$rootScope", "$timeout", '
 
         if(angular.isDefined($scope.data.selectedIndex)){
             if($scope.data.selectedIndex == 2){
-                _handle_todo_update();    
                 window.location.href = "/profile";
             }
             else{
                 if($scope.data.selectedIndex == 0){
                 }
                 else if($scope.data.selectedIndex == 1){
+                    _handle_todo_update();
                     _check_selected_genres_count();
                 }
                 else if($scope.data.selectedIndex == 2){
-
                 }
                 $scope.data.selectedIndex = $scope.data.selectedIndex + 1;
             }
