@@ -28,7 +28,7 @@
 		</md-list-item>
 		<md-list-item layout-padding layout-margin class="todo_block_container">
   			<a layout="column" layout-align="center center" href="#/room/news"
-  				ng-if="!todo.room.news" ng-click="hide_bottomsheet()"
+  				ng-if="!todo.room.news" ng-click="hide_bottomsheet();update_room_news_visit();"
   				class="center_text icon_block purple_color" layout-padding>
 				<md-icon md-font-set="material-icons" class="todo_icon_small purple_color">check_box_outline_blank</md-icon>
 				<div layout-padding>TWO</div>
