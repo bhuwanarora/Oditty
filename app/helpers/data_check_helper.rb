@@ -18,13 +18,14 @@ module DataCheckHelper
 		max = 4830210
 		skip = 1
 		count = min
-		limit = 50
+		limit = 1000
 		while count < max
 			puts "execute... #{count}"
 			clause = "MATCH (g:Genre) "\
 			" WHERE ID(g) >= "+count.to_s + " AND ID(g) < " + (count + skip).to_s + " "\
 			" WITH g "\
 			" MATCH (g)<-[r1:Belongs_to]-(b:Book) "\
+			" WHERE NOT (g)-[:Belongs_to]->(b) "\
 			" WITH g,r1, b LIMIT " + limit.to_s + " "\
 			" MERGE (g)-[r2:Belongs_to]->(b) "\
 			" ON CREATE SET r2.weight = r1.weight "\
