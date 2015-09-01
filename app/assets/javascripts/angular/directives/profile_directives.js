@@ -161,7 +161,7 @@ homeApp.directive('articleShelf', ["$rootScope", "roomService", "ColorConstants"
     };
 }]);
 
-homeApp.directive('articles', ["$rootScope", "roomService", "ColorConstants", function($rootScope, roomService, ColorConstants){
+homeApp.directive('articles', ["$rootScope", "roomService", "userService", function($rootScope, roomService, userService){
     return {
         restrict: 'E',
         scope: {userId: '='},
@@ -172,22 +172,9 @@ homeApp.directive('articles', ["$rootScope", "roomService", "ColorConstants", fu
                     if(angular.isUndefined($scope.visited_articles)){
                         $scope.visited_articles = [];
                     }
-                    _set_data(data, $scope.visited_articles);
+                    $scope.visited_articles = $scope.visited_articles.concat(data);
                     $scope.shelf_loading = false;
                 });
-            }
-
-            var _set_data = function(data, array){
-                angular.forEach(data, function(value){
-                    var random_int = Math.floor(Math.random()*ColorConstants.value.length);
-                    var width = _get_random_init(70, 100);
-                    var height = _get_random_init(40, 60);
-                    var margin_left = _get_random_init(1, 10);
-                    var random_style = {"width": width+"%", "height": height+"px", "background-color": ColorConstants.value[random_int], "margin-left": margin_left+"px"};
-                    var json = angular.extend(value, {"random_style": random_style, "color": ColorConstants.value[random_int]});
-                    this.push(json);
-                }, array);
-                return array;
             }
 
             var _get_random_init = function(min, max){

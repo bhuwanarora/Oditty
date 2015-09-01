@@ -12,7 +12,7 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
 
     this.update_todo_key = function(type){
         var params = {"type": type};
-        return _deferred_post_request('/api/v0/set_todos', type, $q, $http, todo_service_url);
+        return _deferred_post_request('/api/v0/set_todos', params, $q, $http, todo_service_url);
     }
 
     this.get_social_feed = function(skip, count){
