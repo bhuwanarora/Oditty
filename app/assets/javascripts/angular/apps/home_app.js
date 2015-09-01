@@ -239,6 +239,7 @@ var _deferred_post_request = function(url, params, $q, $http, service_url){
         }
     }
     if(angular.isDefined(service_url)){
+        params = angular.extend(params, {"withCredentials": true});
         $http.post(service_url + url, params).then(success_callback, error_callback);
     }
     else{
