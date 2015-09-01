@@ -1,6 +1,6 @@
 <div layout-padding></div>
 <div layout-padding></div>
-<div class="author_profile_header" >
+<div class="author_profile_header">
     <div layout="row">
         <section flex="10" flex-md="5" hide-sm></section>
         <div layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
@@ -19,7 +19,7 @@
             </div>
             <div ng-include src="'/assets/angular/html/author/info.html'" 
                 layout-align="center center" layout-padding></div>
-            <div layout-padding class="light_grey" layout-align="center center" layout="row" id="authorNav">
+            <div class="light_grey" layout-align="center center" layout="row" id="pageHeader">
                 <a ng-href="#books" layout-padding 
                     ng-class="get_active_class('books')">
                     <div layout="column" layout-align="center center">
@@ -69,11 +69,6 @@
         right: 0px;
         bottom: 50px;
         width: 100px;
-    }
-
-    #authorNav a:hover{
-        text-decoration: none !important;
-        color: #333 !important;
     }
 
     .author_profile_header{
