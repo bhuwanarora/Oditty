@@ -12,6 +12,12 @@
 	border-bottom: 3px solid;
 }
 
+#pageHeader .custom_button{
+	outline: 1px solid #CECECE !important;
+	background-image: -webkit-linear-gradient(top,#FFFFFF,#FFFFFF) !important;
+	background-color: white !important;
+}
+
 .todo{
 	width: 100vw;
 	height: 200px;
