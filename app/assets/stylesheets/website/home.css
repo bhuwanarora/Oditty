@@ -1,6 +1,7 @@
 #pageHeader a{
 	padding: 20px 20px 5px 20px;
 	text-transform: uppercase;
+	font-size: 12px;
 }
 
 #pageHeader a:hover{
@@ -9,6 +10,12 @@
 
 #pageHeader .red_color{
 	border-bottom: 3px solid;
+}
+
+#pageHeader .custom_button{
+	outline: 1px solid #CECECE !important;
+	background-image: -webkit-linear-gradient(top,#FFFFFF,#FFFFFF) !important;
+	background-color: white !important;
 }
 
 .todo{
@@ -1292,3 +1299,6 @@ h3 a:hover{
 	outline: 1px solid;
 }
 
+md-autocomplete button{
+    background-color: white;
+}
