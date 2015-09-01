@@ -1,4 +1,4 @@
-namespace :crawl do
+namespace :data_check do
 
   	desc "relabel_null_book_title"
   	task :relabel_null_book_title => :environment do
