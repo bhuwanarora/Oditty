@@ -1,0 +1,24 @@
+<div class="progress" ng-click="show_full_todos($event);">
+    <div class="progress_count">{{profile_progress}}</div>
+    <md-progress-circular md-mode="determinate" value="{{profile_progress}}" class="absolute">
+    </md-progress-circular>
+    <md-progress-circular md-mode="determinate" value="100" class="progress_wrapper">
+    </md-progress-circular>
+    <md-tooltip>Profile Progress</md-tooltip>
+</div>
+<style>
+	.progress_wrapper {
+        opacity: 0.2;
+    }
+
+    .progress_count{
+        left: 14px;
+        top: 14px;
+        position: absolute;
+    }
+
+    .progress{
+    	position: relative;
+    	cursor: pointer;
+    }
+</style>

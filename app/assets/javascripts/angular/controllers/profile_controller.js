@@ -245,6 +245,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         else{
             _set_my_profile();
         }
+        _profile_progress();
     }
 
     var _get_feed = function(){
@@ -255,6 +256,24 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
        		$timeout.cancel(feed_timeout);
        	});
     }
+
+	
+
+	var _profile_progress = function(){
+		var todo = getCookie("todo");
+        if(todo){
+            todo = JSON.flatten(JSON.parse(todo));
+        }
+
+        var count = 0;
+        angular.forEach(todo, function(value, key){
+        	if(value){
+        		count = count + 1;
+        	}
+        });
+        $scope.profile_progress = Math.round(100*(count/15));
+
+	}
 
 	var _init = (function(){
 		$scope.profile_user = {};
@@ -270,5 +289,8 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         }
        _get_feed();
        $scope.is_profile = true;
+
+       
+
     }());
 }]);
