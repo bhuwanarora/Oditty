@@ -222,7 +222,7 @@ function detect_browser(){
     }
 }
 
-var _deferred_post_request = function(url, params, $q, $http, todo_service_url){
+var _deferred_post_request = function(url, params, $q, $http, service_url){
     var deferred = $q.defer();
     var success_callback = function(result){
         return deferred.resolve(result.data); 
