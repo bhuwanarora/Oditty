@@ -29,9 +29,9 @@
     </md-item-content>
 </md-item>
 <div layout-padding ng-if="users_list && users_list.length > 9" ng-hide="hide_show_more">
-    <md-button class="md-button-clear md-warn" ng-click="load_users()">
+    <a ng-click="load_users()">
         Show more
-    </md-button>
+    </a>
 </div>
 <style>
     .favourite_books{
