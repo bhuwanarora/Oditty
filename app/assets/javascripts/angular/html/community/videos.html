@@ -1,15 +1,22 @@
 <md-list ng-controller="videoController" layout="column"  layout-wrap layout-align="center">
-	<md-list-item ng-repeat="video in videos" layout-margin layout="row" flex layout-sm="column">
-		<a ng-href="{{video.url}}" target="_blank">
+	<md-list-item ng-repeat="video in videos" layout-margin layout="row" flex layout-sm="column" 
+		class="relative" ng-class="{'md-whiteframe-z1': !video.play}">
+		<div class="video_wrapper" ng-click="video.play = true" ng-if="!video.play">
+			<i class="material-icons video_icon">video_library</i>
 			<img ng-src="{{video.thumbnail}}" class="video_thumb md-3-line">
-		</a>
-		<div layout="column" flex class="md-list-item-text">
-			<h3 ng-bind-html="video.title"></h3>
-			<div layout="row" layout-align="space-between" layout-padding>
+		</div>
+		<div layout="column" flex class="md-list-item-text" ng-if="!video.play">
+			<a ng-click="video.play = true" ng-bind-html="video.title"></a>
+			<div layout-padding></div>
+			<div layout="column" layout-align="space-between">
+				<a ng-href="{{video.url}}" target="_blank" ng-bind-html="video.url" class="less_important"></a>
 				<div ng-bind-html="video.published_date | timestamp| date:'dd MMM'" class="less_important"></div>
 				<!-- <div ng-bind-html="Number((video.duration/60).toFixed(2))" class="less_important bold"></div> -->
 			</div>
 		</div>
+		<iframe ng-if="video.play" class="embed" 
+			ng-src="{{video.url}}">
+		</iframe>
 	</md-list-item>
 </md-list>
 <style>
@@ -20,5 +27,31 @@
 	.video_container,
 	.video_thumb{
 		width: 150px;
+	}
+
+	.video_icon{
+		position: absolute;
+	    left: 50%;
+	    top: 50%;
+	    margin-left: -10px;
+	    margin-top: -10px;
+	    color: white;
+	}
+
+	.video_wrapper{
+		position: relative;
+		cursor: pointer;
+	}
+
+	.video_wrapper:hover .video_icon{
+		color: #f5f5f5;
+	}
+
+	.embed{
+	  	top: 0;
+	  	left: 0;
+	  	width: 100%;
+	  	max-height: 80vh;
+	  	height: 400px;
 	}
 </style>
