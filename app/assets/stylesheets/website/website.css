@@ -474,6 +474,7 @@ md-toast.md-default-theme{
 
 .md-autocomplete-suggestions{
     max-width: 400px !important;
+    max-height: 300px !important;
 }
 
 .md-autocomplete-suggestions li{
