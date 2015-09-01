@@ -37,16 +37,21 @@
             </div>  
             <div flex="10" flex-md="5" hide-sm></div>
         </section>
-        <a href="/filters" layout-padding class="less_important" >Advanced Filter Books</a>
-        
+        <div layout="row" layout-align="center center" layout-padding>
+            <div layout-padding>
+                <a ng-click="show_todo_list($event)" 
+                    ng-if="!todo.home.profile || !todo.home.filters || !todo.home.rooms || !todo.home.invite" 
+                    class="custom_button" >
+                    Guide
+                </a>
+            </div>
+            <div layout-padding>
+                <a href="/filters" layout-padding class="custom_button" >Advanced Filter Books</a>
+            </div>
+        </div>
         <div layout-padding></div>
         
      </div>
      <div></div>
 
 </div>
-<div layout-padding></div>
- <div layout-padding></div>
- <div layout-padding></div>
-<div ng-if="!todo.home.profile || !todo.home.filters || !todo.home.rooms || !todo.home.invite" 
-    ng-include src="'/assets/angular/html/todo/link.html'"></div>
