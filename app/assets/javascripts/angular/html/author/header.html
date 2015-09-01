@@ -19,42 +19,47 @@
             </div>
             <div ng-include src="'/assets/angular/html/author/info.html'" 
                 layout-align="center center" layout-padding></div>
-            <div class="light_grey" layout-align="center center" layout="row" id="pageHeader">
-                <a ng-href="#books" layout-padding 
-                    ng-class="get_active_class('books')">
-                    <div layout="column" layout-align="center center">
-                        <div><i class="material-icons">library_books</i></div>
-                        <div hide-sm>Books</div>
-                    </div>
-                </a>
-                <a ng-href="#feed" layout-padding 
-                    ng-class="get_active_class('feed')">
-                    <div layout="column" layout-align="center center">
-                        <div><i class="material-icons">home</i></div>
-                        <div hide-sm>Feed</div>
-                    </div>
-                </a>
-                <a ng-href="#interview" layout-padding 
-                    ng-class="get_active_class('interview')">
-                    <div layout="column" layout-align="center center">
-                        <div><i class="material-icons">speaker_notes</i></div>
-                        <div hide-sm>Interview</div>
-                    </div>
-                </a>
-                <a ng-href="#wiki" layout-padding 
-                    ng-class="get_active_class('wiki')">
-                    <div layout="column" layout-align="center center">
-                        <div><i class="material-icons">toys</i></div>
-                        <div hide-sm>Wiki</div>
-                    </div>
-                </a>
-                <a ng-href="#followers" layout-padding 
-                    ng-class="get_active_class('followers')">
-                    <div layout="column" layout-align="center center">
-                        <div><i class="material-icons">people_outline</i></div>
-                        <div hide-sm>Followers</div>
-                    </div>
-                </a>
+            <div class="light_grey" layout-align="space-between center" layout="row" id="pageHeader">
+                <div layout-padding></div>
+                <div layout="row">
+                    <a ng-href="#books" layout-padding 
+                        ng-class="get_active_class('books')">
+                        <div layout="column" layout-align="center center">
+                            <div><i class="material-icons">library_books</i></div>
+                            <div hide-sm>Books</div>
+                        </div>
+                    </a>
+                    <a ng-href="#feed" layout-padding 
+                        ng-class="get_active_class('feed')">
+                        <div layout="column" layout-align="center center">
+                            <div><i class="material-icons">home</i></div>
+                            <div hide-sm>Feed</div>
+                        </div>
+                    </a>
+                    <a ng-href="#interview" layout-padding 
+                        ng-class="get_active_class('interview')">
+                        <div layout="column" layout-align="center center">
+                            <div><i class="material-icons">speaker_notes</i></div>
+                            <div hide-sm>Interview</div>
+                        </div>
+                    </a>
+                    <a ng-href="#wiki" layout-padding 
+                        ng-class="get_active_class('wiki')">
+                        <div layout="column" layout-align="center center">
+                            <div><i class="material-icons">toys</i></div>
+                            <div hide-sm>Wiki</div>
+                        </div>
+                    </a>
+                    <a ng-href="#followers" layout-padding 
+                        ng-class="get_active_class('followers')">
+                        <div layout="column" layout-align="center center">
+                            <div><i class="material-icons">people_outline</i></div>
+                            <div hide-sm>Followers</div>
+                        </div>
+                    </a>
+                </div>
+                <div  ng-include src="'/assets/angular/html/todo/link.html'" ng-if="!todo.author.follow"></div>
+                <div layout-padding></div>
             </div>
             <div ng-if="author.has_birthday">
                 <img src="/assets/balloons.png" class="balloons">
