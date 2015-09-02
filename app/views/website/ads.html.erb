@@ -1,0 +1,83 @@
+<div layout="row" class="feed_margin">
+	<div flex="15" flex-md="10" hide-sm></div>
+	<div flex="70" flex-md="80" flex-sm="100" layout="column" ng-model="ad">
+		<h1 layout-padding>Create an Ad</h1>
+		<div layout="row" layout-sm="column" layout-align="center start" layout-align-sm="center center">
+			<div layout-padding class="full_width">
+
+				<form novalidate class="simple-form"  flex name="adForm">
+					<md-input-container flex>
+		                <label>Enter the Website Url</label>
+		                <input class="border_bottom" required type="url" ng-model="ad.website_url"/>
+		            </md-input-container>
+		            <md-input-container flex>
+		                <label>Enter the Headline</label>
+		                <input class="border_bottom" required ng-model="ad.headline"/>
+		            </md-input-container>
+		            <md-input-container flex>
+		                <label>Enter the Text</label>
+		                <input class="border_bottom" required ng-model="ad.text"/>
+		            </md-input-container>
+		            <md-input-container flex>
+		                <label>Enter the Description</label>
+		                <input class="border_bottom" required ng-model="ad.description"/>
+		            </md-input-container>
+		            <md-input-container flex>
+		                <label>Enter Image Url</label>
+		                <input class="border_bottom" required ng-model="ad.image_url"/>
+		            </md-input-container>
+		            <md-chips
+				        ng-model="ad.tags"
+				        placeholder="Add only relevant Tags"
+				        delete-button-label="Remove Tag"
+				        delete-hint="Press delete to remove tag"
+				        secondary-placeholder="+Tag">
+				    </md-chips>
+				    <div role="alert">
+						<span class="error" ng-show="adForm.input.$error.required">Required!</span>
+						<span class="error" ng-show="adForm.input.$error.url">Not valid url!</span>
+					</div>
+				    <div layout-padding></div>
+				    <div ng-bind-html="status" class="red_color"></div>
+				    <div layout-padding></div>
+				    <div layout-padding></div>
+				    <div layout-padding layout="row" >
+				    	<div layout-padding>
+					    	<md-button type="button" ng-click="reset()" class="custom_button">Reset</md-button>
+				    	</div>
+				    	<div layout-padding>
+					    	<md-button type="submit" ng-click="save()" class="custom_button">Save</md-button>
+				    	</div>
+				    </div>
+			  </form>
+
+			</div>
+			<div>
+				<div class="ad_block md-whiteframe-z1">
+		 			<div class="less_important" layout-padding>Ad Preview</div>
+		 			<md-divider></md-divider>
+					<div layout-padding>
+						<a ng-href="{{ad.website_url}}" ng-bind-html="ad.headline || 'Headline for my Ad'" 
+							class="bold" target="_blank"></a>
+					</div>
+					<div ng-bind-html="(ad.text | reduced_summary) || 'Text about my Ad'" layout-padding></div>
+					<img ng-src="{{ad.image_url || 'http://www.ad.co.il/images/logos/ad_logo_big.png'}}"/>
+					<div class="less_important" layout-padding 
+						ng-bind-html="(ad.description | reduced_summary) || 'Description for my ad'"></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<div flex="15" flex-md="10" hide-sm></div>
+</div>
+<style>
+	.ad_block{
+		width: 250px;
+	}
+
+	.ad_block img{
+	    width: 100%;
+    	border: 1px solid #E6E6E6;
+	}
+</style>

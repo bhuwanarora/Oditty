@@ -11,7 +11,7 @@
                  READING LIFE
              </div>
              <h3 class="site_description center_text">
-                Discovering me through Books, Friends, and the World.
+                Discovering me through Books, News, and Videos.
              </h3>
          </div>
          <div layout-padding></div>
@@ -36,7 +36,7 @@
             <div flex="10" flex-md="5" hide-sm></div>
         </section>
         <div layout="row" layout-align="center center" layout-padding>
-            <div layout-padding>
+            <div layout-padding ng-if="info.hide_signin">
                 <a ng-click="show_todo_list($event)" 
                     ng-if="!todo.home.profile || !todo.home.filters || !todo.home.rooms || !todo.home.invite" 
                     class="custom_button" >
