@@ -29,6 +29,7 @@ module DataCheckHelper
 			" WITH g,r1, b LIMIT " + limit.to_s + " "\
 			" MERGE (g)-[r2:Belongs_to]->(b) "\
 			" ON CREATE SET r2.weight = r1.weight "\
+			" WITH g "\
 			" RETURN ID(g) AS id LIMIT 1"
 			output = clause.execute
 			if output.empty?
