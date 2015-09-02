@@ -4,7 +4,7 @@ module GenericHelper::MergeNodes
 
 	NodeProperties =
 	{
-		Constant::NodeLabel::Genre => Constant::NodeLabelProperties::GenreLabel[0..-2]
+		Constant::NodeLabel::Genre => Constant::NodeLabelProperties::GenreLabel
 	}
 
 	MergeRelationshipParams = {
