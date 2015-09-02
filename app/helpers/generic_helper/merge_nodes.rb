@@ -1,8 +1,26 @@
 module GenericHelper::MergeNodes
 	RedisKeyPrefix = 'merge/node/'
-	NodeProperties = {
-		Constant::EntityLabel::Genre => []
+
+	NodeProperties =
+	{
+		Constant::EntityLabel::Genre => Constant::NodeLabelProperties::GenreLabel[0..-2]
 	}
+
+	NodeRelationShips =
+	{
+		Constant::EntityLabel::Genre
+	}
+
+	MergeRelationshipParams = {
+			:source_node 		=> "duplicate",
+			:destination_node	=> "original",
+			:with_elements 		=> [],	# fill in these
+			:edge_types			=> nil	# fill in these
+		}
+
+
+
+
 	def self.merge params
 		label 		= params[:label]
 		step		= (params[:step].present?) ? params[:step] : 500
@@ -59,15 +77,44 @@ module GenericHelper::MergeNodes
 		clause
 	end
 
-	def self.merge_node_property label
-
+	def self.copy_labels
+		" WITH original, duplicate, LABELS(duplicate) AS labelset "\
+		" FOREACH ( label IN labelset | "\
+			" SET original :label "\
+		" ) "\
+		" WITH original, duplicate "
 	end
 
+	def self.merge_node_property label
+		properties = NodeProperties[label]
+		clause_array = []
+		properties.each do |property|
+			clause_array << ("original." + property + "= (CASE WHEN HAS(original." + property + ") THEN original." + property + " ELSE duplicate." + property + ") ")
+		end
+		clause = " SET " + clause_array.join(", ")
+		clause
+	end
+
+	def self.merge_nodes
+		clause  = GenericHelper::MergeNodes.copy_labels
+		clause += GenericHelper::MergeNodes.merge_node_property
+		clause
+	end
+
+	def self.merge_relationships label
+		rel_params = MergeRelationshipParams.clone
+		rel_params[:edge_types] = Constant::LabelRelationships::Incoming[label]
+		clause  = GenericHelper.optional_copy_incoming_edges rel_params
+		rel_params[:edge_types] = Constant::LabelRelationships::Outgoing[label]
+		clause += GenericHelper.optional_copy_outgoing_edges rel_params
+		clause
+	end
+
+
 	def self.merge_clause params
-		label 			= params[:label]
-		
+		label 	= params[:label]
 		clause  = GenericHelper::MergeNodes.match_duplicates params
-		clause += GenericHelper::MergeNodes.merge_node_property label
+		clause += GenericHelper::MergeNodes.merge_nodes label
 		clause += GenericHelper::MergeNodes.merge_relationships label
 		clause
 	end
