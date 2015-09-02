@@ -23,6 +23,12 @@ class WebsiteController < ApplicationController
 		render :json => {:message => "Success"}, :status => 200
 	end
 
+	def ads
+		@ads = true
+		@title = "Create an Advertisement | Oditty"
+		render :layout => "material"
+	end
+
 	def email_subscription
 		email = params[:subscription][:email]
 		existing_user = User.where(:email => email).first
