@@ -15,14 +15,13 @@
         <meta property="fb:app_id" content="667868653261167"/>
         <meta charset="utf-8" />
         <title><% unless @title %>
-                Oditty | Discover yourself through Books, Friends, and the World.
+                    Oditty | Discover me through Books, News, and Videos.
                 <% else %>
                     <%= @title %>
                 <% end %>
         </title>
         <link rel="icon" type="image/png" href="assets/favicon.png">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script>document.write('<base href="' + document.location + '" />');</script>
         <% if Rails.env.development? %>
             <link rel="stylesheet" href="assets/website/material_icons.css" />
@@ -39,12 +38,14 @@
 
     <body ng-controller="appController" 
         class="<% if @filters || @profile || @book || @news || @room || @customise || @authors || @news_group %>white<% end %>" 
-        ng-keydown="scroll_on_keypress($event)" 
-         ng-click="close_popups()" 
+        ng-keydown="scroll_on_keypress($event)"
+        ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
         <div layout="column" layout-fill>
             <% if @home || @signup%>
                 <md-content class="white" flex ng-controller="newHomeController">
+            <% elsif @ads%>
+                <md-content class="white super_container" flex ng-controller="adsController">
             <% elsif @authors %>
                 <md-content class="white super_container" flex ng-controller="authorsController" 
                     check-scroll-bottom="get_authors_interviewed()">
@@ -198,6 +199,8 @@
                 <script src="assets/angular/services/rooms_service.js"></script>
                 <script src="assets/angular/services/news_service.js"></script>
                 <script src="assets/angular/controllers/rooms_controller.js"></script>
+            <% elsif @ads %>
+                <script src="assets/angular/controllers/ads_controller.js"></script>
             <% elsif @authors %>
                 <script src="assets/angular/controllers/authors_controller.js"></script>
             <% elsif @news_group %>
