@@ -1,5 +1,4 @@
 module GenericHelper
-	#TerminationString = "You have reached end of your process :). Good Bye !! "
 	def self.set_up_redis label, key
 		(max_id,min_id) = Neo.get_max_min_id label
 		cur_id = RedisHelper.set_up_redis key, min_id
