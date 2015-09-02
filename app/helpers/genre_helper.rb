@@ -3,6 +3,7 @@ module GenreHelper
 	def self.init_variables
 		@@genre_search_index 	= UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Genre][0]
 		@@category_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Category][0]
+		@@community_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Community][0]
 	end
 
 	def self.convert_genre_to_category
@@ -165,16 +166,20 @@ module GenreHelper
 		end
 	end
 
-	def self.set_search_indices
-		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Genre
-		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Category
-	end
-
 	def self.merge_with_category
 		GenreHelper.init_variables
 		GenreHelper.merge_common_category_genre
 		GenreHelper.convert_category_to_genre
 		GenreHelper.convert_genre_to_category
+	end
+
+	def self.merge_with_community
+	end
+
+	private
+	def self.set_search_indices
+		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Genre
+		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Category
 	end
 	
 end

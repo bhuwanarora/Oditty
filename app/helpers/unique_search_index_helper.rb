@@ -3,7 +3,7 @@ module UniqueSearchIndexHelper
 		Constant::EntityLabel::Author 		=> ["indexed_main_author_name", "search_index"],
 		Constant::EntityLabel::Book			=> [],
 		Constant::EntityLabel::User 		=> [],
-		Constant::EntityLabel::Community	=> ["indexed_community_name", "search_index"],
+		Constant::EntityLabel::Community	=> ["search_index", "indexed_community_name"],
 		Constant::NodeLabel::Genre	 		=> ["indexed_genre_name", "search_index"],
 		Constant::NodeLabel::Category 		=> ["indexed_category_name", "search_index"]
 
@@ -41,13 +41,6 @@ module UniqueSearchIndexHelper
 
 	}
 
-	def self.set_unique_indices_internal nodename, indices, indexbasis
-		index_string = 	indexbasis.map{
-			|basis| Neo.replace_string(
-				ReplacementHash, nodename + "." + basis)
-		}.join(" + ")
-		" SET " + indices.map{|index| (nodename + "." + index + " = " + index_string)}.join(", ")
-	end
 
 	def self.set_unique_indices node_label
 		clause = ""
@@ -86,6 +79,16 @@ module UniqueSearchIndexHelper
 			$redis[redis_key] = cur_id
 			params[:start_id] = cur_id
 		end
+	end
+
+	private
+
+	def self.set_unique_indices_internal nodename, indices, indexbasis
+		index_string = 	indexbasis.map{
+			|basis| Neo.replace_string(
+				ReplacementHash, nodename + "." + basis)
+		}.join(" + ")
+		" SET " + indices.map{|index| (nodename + "." + index + " = " + index_string)}.join(", ")
 	end
 
 end
