@@ -10,6 +10,10 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return user_id;
     }
 
+    this.save_ad = function(params){
+        return _deferred_post_request('/api/v0/save_ad', params, $q, $http);
+    }
+
     this.recover_password = function(data){
         return _deferred_request('/api/v0/recover_password?'+data, $q, $http);
     }

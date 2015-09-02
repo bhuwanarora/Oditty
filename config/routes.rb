@@ -43,6 +43,7 @@ ReadersDoor::Application.routes.draw do
   get 'recommendations'          => "recommendations#index",    :as => "recommendations"
 
   get 'random_quote'             => "website#random_quote",    :as => "random_quote"
+  get 'ads'                      => "website#ads",             :as => "ads"
   get 'coming_soon'              => "website#coming_soon",     :as => "coming_soon"
   get "invalid_user"             => "users#invalid_user",      :as => "invalid_user"
   post "books/find_by_isbn"      => "books#find_by_isbn",      :as => "find_book_by_isbn"
