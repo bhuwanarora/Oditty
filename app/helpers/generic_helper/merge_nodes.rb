@@ -1,20 +1,16 @@
 module GenericHelper::MergeNodes
 	RedisKeyPrefix 	= 'merge/node/'
 	LogFilePrefix	= 'merge_nodes_'
-
 	NodeProperties =
 	{
 		Constant::NodeLabel::Genre => Constant::NodeLabelProperties::GenreLabel
 	}
-
 	MergeRelationshipParams = {
 			:source_node 		=> "duplicate",
 			:destination_node	=> "original",
 			:with_elements 		=> [],	# fill in these
 			:edge_types			=> nil	# fill in these
 		}
-
-
 
 
 	def self.merge params
