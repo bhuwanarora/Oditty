@@ -3,7 +3,8 @@ module GenericHelper::MergeNodes
 	LogFilePrefix	= 'merge_nodes_'
 	NodeProperties =
 	{
-		Constant::NodeLabel::Genre => Constant::NodeLabelProperties::GenreLabel
+		Constant::NodeLabel::Genre => Constant::NodeLabelProperties::GenreLabel,
+		Constant::EntityLabel::Community => Constant::NodeLabelProperties::CommunityLabel
 	}
 	MergeRelationshipParams = {
 			:source_node 		=> "duplicate",

@@ -3,7 +3,7 @@ module GenreHelper
 	def self.init_variables
 		@@genre_search_index 	= UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Genre][0]
 		@@category_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Category][0]
-		@@community_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Community][0]
+		@@community_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::EntityLabel::Community][0]
 	end
 
 	def self.convert_genre_to_category
@@ -28,6 +28,16 @@ module GenreHelper
 		clause.execute
 	end
 
+	def self.match_in_range_with_community search_prefix
+		clause = ""\
+				" MATCH (genre:Genre),(community:Community) "\
+				" WHERE genre." + @@genre_search_index + "=~ \'" + search_prefix + ".*\' "\
+				" AND "\
+				" community." + @@community_search_index + "=~ \'" + search_prefix + ".*\' "\
+				" WITH genre, community "
+		clause
+	end
+
 	def self.match_in_range_with_category search_prefix
 		clause = ""\
 				" MATCH (genre:Genre),(category:Category) "\
@@ -42,6 +52,12 @@ module GenreHelper
 		clause = ""\
 				" WHERE genre." + @@genre_search_index + "= category." + @@category_search_index + " "\
 				" WITH category, genre LIMIT 1 "
+	end
+
+	def self.exact_match_with_community limit = 1
+		clause = ""\
+				" WHERE genre." + @@genre_search_index + "= community." + @@community_search_index + " AND ID(genre) <> ID(community) AND NOT community:Genre "\
+				" WITH community, genre LIMIT " + limit.to_s + " "
 	end
 
 	def self.copy_category_properties
@@ -120,6 +136,27 @@ module GenreHelper
 	# 		@@logger.info("Changing Search_prefix...")
 	# 	end
 	# end
+	def self.merge_common_community_genre_in_range search_prefix
+		return_output = 0
+		label = Constant::NodeLabel::Genre
+		clause  = GenreHelper.match_in_range_with_community search_prefix
+		clause += GenreHelper.exact_match_with_community
+		clause += " WITH community AS original, genre AS duplicate "
+		clause += GenericHelper::MergeNodes.merge_node_property label
+		clause += GenericHelper::MergeNodes.merge_relationships label
+		clause += ", LABELS(duplicate) AS label "
+		clause += GenericHelper::MergeNodes.hide_duplicate label
+		clause += " RETURN ID(original) AS id_orig, ID(duplicate) AS id_dup, label "
+		output = clause.execute
+		if output.present?
+			GenericHelper::MergeNodes.set_labels output[0], label
+			return_output = 1
+			ELogger.log_info("Search_prefix: #{search_prefix} Genre_id: #{output[0]['id_dup']}, Community_id: #{output[0]['id_orig']}", @logfile)
+		else
+			ELogger.log_info("Changing Search_prefix...", @logfile)
+		end
+		return_output
+	end
 
 	def self.merge_common_category_genre_in_range search_prefix
 		return_output = 0
@@ -140,15 +177,32 @@ module GenreHelper
 		return_output
 	end
 
+	def self.merge_common_community_genre
+		redis_key = "community_genre_merge"
+		cur_index = GenericHelper.set_up_redis_by_name redis_key
+		params = { :node_label => [Constant::EntityLabel::Community, Constant::NodeLabel::Genre] }
+		while cur_index.present?
+			params[:prefix_search_index] = cur_index
+			cur_index = GraphHelper.manage_node_pair_index_prefix params
+			puts "Selected index: #{cur_index}".green
+			matched   = GenreHelper.merge_common_community_genre_in_range(cur_index)
+			if matched == 0
+				puts " No match with #{cur_index}. Incrementing the index "
+				cur_index = GraphHelper.next_regex_recursive(cur_index, cur_index.length - 1)
+				$redis[redis_key] = cur_index
+			end
+		end
+	end
+
 	def self.merge_common_category_genre
-		category_genre_prefix_regex = 'merge_category_genre_regex'
-		@@logger = GraphHelper.log_setup category_genre_prefix_regex
+		category_genre_redis_key = 'merge_category_genre_regex'
+		@@logger = GraphHelper.log_setup category_genre_redis_key
 		cur_index = ""
-		if (!$redis[category_genre_prefix_regex].nil?)			
-			cur_index = $redis[category_genre_prefix_regex]
+		if (!$redis[category_genre_redis_key].nil?)
+			cur_index = $redis[category_genre_redis_key]
 		else
 			cur_index = "aaa"
-			$redis[category_genre_prefix_regex] = cur_index
+			$redis[category_genre_redis_key] = cur_index
 		end
 		params = {
 			:node_label =>[Constant::NodeLabel::Genre, Constant::NodeLabel::Category]
@@ -174,6 +228,11 @@ module GenreHelper
 	end
 
 	def self.merge_with_community
+		@logfile = 'genre_community_merge'
+		GenreHelper.init_variables
+		GenreHelper.merge_common_community_genre
+		GenreHelper.convert_community_to_genre
+		GenreHelper.convert_genre_to_community
 	end
 
 	private
@@ -181,5 +240,4 @@ module GenreHelper
 		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Genre
 		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Category
 	end
-	
 end
