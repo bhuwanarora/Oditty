@@ -2,6 +2,8 @@ module Constant::EntityLabel
 	Author			= "Author"
 	Book			= "Book"
 	User			= "User"
-	HiddenUser 		= "HiddenUser"
 	Community		= "Community"
+
+	HiddenUser 		= "HiddenUser"
+	HiddenBook		= "HiddenBook"
 end
