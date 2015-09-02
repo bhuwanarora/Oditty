@@ -3,12 +3,7 @@ module GenericHelper::MergeNodes
 
 	NodeProperties =
 	{
-		Constant::EntityLabel::Genre => Constant::NodeLabelProperties::GenreLabel[0..-2]
-	}
-
-	NodeRelationShips =
-	{
-		Constant::EntityLabel::Genre
+		Constant::NodeLabel::Genre => Constant::NodeLabelProperties::GenreLabel[0..-2]
 	}
 
 	MergeRelationshipParams = {
@@ -33,11 +28,11 @@ module GenericHelper::MergeNodes
 		}
 		while search_prefix.present?
 			params_get_prefix[:prefix_search_index] = search_prefix
-			search_prefix = GraphHelper.manage_node_pair_index_prefix
+			search_prefix = GraphHelper.manage_node_pair_index_prefix params_get_prefix
 			clause_params = 
 			{
 				:prefix => search_prefix,
-				:label => label
+				:label => label,
 				:step => step
 			}
 			clause = GenericHelper::MergeNodes.merge_clause( clause_params)
@@ -52,7 +47,7 @@ module GenericHelper::MergeNodes
 	private
 	
 	def self.prefix_regex_match node, search_index, search_prefix
-		" " + node + "." + search_index + " =~ \'" + search_prefix + "\' "
+		" " + node + "." + search_index + " =~ \'" + search_prefix + "\'.* "
 	end
 
 	def self.duplicate search_index
@@ -89,15 +84,16 @@ module GenericHelper::MergeNodes
 		properties = NodeProperties[label]
 		clause_array = []
 		properties.each do |property|
-			clause_array << ("original." + property + "= (CASE WHEN HAS(original." + property + ") THEN original." + property + " ELSE duplicate." + property + ") ")
+			clause_array << ("original." + property + "= (CASE WHEN HAS(original." + property + ") THEN original." + property + " ELSE duplicate." + property + " END ) ")
 		end
-		clause = " SET " + clause_array.join(", ")
+		clause  = " SET " + clause_array.join(", ")
+		clause += " WITH original, duplicate "
 		clause
 	end
 
-	def self.merge_nodes
+	def self.merge_nodes label
 		clause  = GenericHelper::MergeNodes.copy_labels
-		clause += GenericHelper::MergeNodes.merge_node_property
+		clause += GenericHelper::MergeNodes.merge_node_property label
 		clause
 	end
 

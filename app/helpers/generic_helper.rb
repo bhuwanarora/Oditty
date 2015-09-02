@@ -8,8 +8,8 @@ module GenericHelper
 
 	def self.set_up_redis_by_name key, init_depth = 3
 		init_string = Array.new(init_depth) { 'a' }.join
-		output = RedisHelper.set_up_redis key, init_string
-		output
+		RedisHelper.update_value key, init_string
+		init_string
 	end
 
 	def self.update_redis key, value
@@ -59,12 +59,11 @@ module GenericHelper
 		edge_info 			= params[:edge_info]
 		source_node 		= params[:source_node]
 		destination_node 	= params[:destination_node]
-		with_elems 			= params[:with_elements]
+		with_elems 			= params[:with_elements] + [source_node, ]
 
 		with_elems_string	= " WITH DISTINCT " + with_elems.map{|elem| (elem)}.join(", ")
 		clause  = GenericHelper.copy_edges_clause(edge_info, source_node, destination_node)
 		clause += with_elems_string + " "
-		end
 	end
 
 	def self.copy_edges_clause edge_info, source_node, destination_node
