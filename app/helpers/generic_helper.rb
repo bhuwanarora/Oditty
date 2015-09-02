@@ -28,7 +28,7 @@ module GenericHelper
 	def self.optional_copy_edges relation_param, direction
 		relation 			= relation_param[:edge_types]
 		clause 				= " "
-		relation.each do |edge_type,edge_info|
+		relation.each do |edge_info|
 			edge_info = edge_info.clone.merge({:direction => direction})
 			params = relation_param.clone.merge({:edge_info => edge_info})
 			clause += GenericHelper.handle_each_edge_type params
@@ -59,7 +59,7 @@ module GenericHelper
 		edge_info 			= params[:edge_info]
 		source_node 		= params[:source_node]
 		destination_node 	= params[:destination_node]
-		with_elems 			= params[:with_elements] + [source_node, ]
+		with_elems 			= params[:with_elements] + [source_node, destination_node]
 
 		with_elems_string	= " WITH DISTINCT " + with_elems.map{|elem| (elem)}.join(", ")
 		clause  = GenericHelper.copy_edges_clause(edge_info, source_node, destination_node)
@@ -71,19 +71,19 @@ module GenericHelper
 		node_labels		= edge_info[:label]
 		properties		= edge_info[:property]
 		direction 		= edge_info[:direction]
-		property_string = properties.map{|property| ("new_rel." + property + "= old_rel." + property)}.join(", ")
+		property_string = properties.map{|property| ("new_rel." + property + "= (CASE WHEN old_rel IS NULL THEN null ELSE old_rel." + property + " END )")}.join(", ")
 		node = node_labels.map{|label| label.downcase}.join("") + "_" + String.get_random
 		label_string = node_labels.map{|label| (":" + label)}.join
 		if direction == Constant::LabelRelationships::OutgoingRel
 			clause = " "\
 				" OPTIONAL MATCH (" + source_node + ")-[old_rel:" + edge_type + "]->(" + node + label_string + ") "\
-				" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\
-					"MERGE (" + destination_node + ")-[new_rel:" + edge_type + "]->(" + node + ") "
+				" FOREACH (ignore IN (CASE WHEN old_rel IS NULL THEN [] ELSE [1] END) |"\
+					" MERGE (" + destination_node + ")-[new_rel:" + edge_type + "]->( " + node + " ) "
 		elsif direction == Constant::LabelRelationships::IncomingRel
 			clause = " "\
 				" OPTIONAL MATCH (" + source_node + ")<-[old_rel:" + edge_type + "]-(" + node + label_string + ") "\
-				" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\
-					"MERGE (" + destination_node + ")<-[new_rel:" + edge_type + "]-(" + node + ") "
+				" FOREACH (ignore IN (CASE WHEN old_rel IS NULL THEN [] ELSE [1] END) | "\
+					" MERGE (" + destination_node + ")<-[new_rel:" + edge_type + "]-( " + node + " ) "
 		else
 			puts " Direction of relationship : #{edge_type} not mentioned !!".red
 			clause = ""

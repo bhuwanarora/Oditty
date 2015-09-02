@@ -1,5 +1,6 @@
 module GenericHelper::MergeNodes
-	RedisKeyPrefix = 'merge/node/'
+	RedisKeyPrefix 	= 'merge/node/'
+	LogFilePrefix	= 'merge_nodes_'
 
 	NodeProperties =
 	{
@@ -19,7 +20,7 @@ module GenericHelper::MergeNodes
 	def self.merge params
 		label 		= params[:label]
 		step		= (params[:step].present?) ? params[:step] : 500
-
+		logfile 	= LogFilePrefix + label
 		redis_key = RedisKeyPrefix + label.downcase
 		search_prefix = GenericHelper.set_up_redis_by_name redis_key
 		params_get_prefix = 
@@ -39,6 +40,9 @@ module GenericHelper::MergeNodes
 			output = clause.execute
 			if output.empty?
 				search_prefix = GraphHelper.next_regex_recursive(search_prefix)
+			else
+				GenericHelper::MergeNodes.set_labels output[0], label
+				ELogger.log_info("original:" + output[0]["id_orig"].to_s + " duplicate:" + output[0]["id_dup"].to_s, logfile)
 			end
 		end
 	end
@@ -47,17 +51,17 @@ module GenericHelper::MergeNodes
 	private
 	
 	def self.prefix_regex_match node, search_index, search_prefix
-		" " + node + "." + search_index + " =~ \'" + search_prefix + "\'.* "
+		" " + node + "." + search_index + " =~ \'" + search_prefix + ".*\' "
 	end
 
 	def self.duplicate search_index
-		"( original." + search_index + " = duplicate." + search_index + " )"
+		"( original." + search_index + " = duplicate." + search_index + " ) AND ID(original) <> ID(duplicate) "
 	end
 
 	def self.match_prefix_filter label, prefix
 		search_index = UniqueSearchIndexHelper::UniqueIndices[label][0]
 		" MATCH (original:" + label + "), (duplicate:" + label + ") "\
-		" WHERE " + GenericHelper::MergeNodes.prefix_regex_match("original", search_index, prefix) + " AND " + GenericHelper::MergeNodes.prefix_regex_match("duplicate", search_index, prefix) + " AND ID(original) <> ID(duplicate) "\
+		" WHERE " + GenericHelper::MergeNodes.prefix_regex_match("original", search_index, prefix) + " AND " + GenericHelper::MergeNodes.prefix_regex_match("duplicate", search_index, prefix) + " "\
 		" WITH original, duplicate "\
 		" WHERE " + GenericHelper::MergeNodes.duplicate(search_index) + ""\
 		" WITH original, duplicate "
@@ -72,12 +76,19 @@ module GenericHelper::MergeNodes
 		clause
 	end
 
-	def self.copy_labels
-		" WITH original, duplicate, LABELS(duplicate) AS labelset "\
-		" FOREACH ( label IN labelset | "\
-			" SET original :label "\
-		" ) "\
-		" WITH original, duplicate "
+	def self.set_labels neo_output, original_label
+		labels  = neo_output['label']
+		id 		= neo_output['id_orig']
+
+		labels.delete(Constant::NodeLabel::Hidden + original_label)
+		label_string = labels.map{|label| (":" + label)}.join("")
+		if label_string.present?
+			clause = ""\
+			" MATCH (node) "\
+			" WHERE ID(node) = " + id.to_s + " "\
+			" SET node" + label_string + " "
+			clause.execute
+		end
 	end
 
 	def self.merge_node_property label
@@ -91,12 +102,6 @@ module GenericHelper::MergeNodes
 		clause
 	end
 
-	def self.merge_nodes label
-		clause  = GenericHelper::MergeNodes.copy_labels
-		clause += GenericHelper::MergeNodes.merge_node_property label
-		clause
-	end
-
 	def self.merge_relationships label
 		rel_params = MergeRelationshipParams.clone
 		rel_params[:edge_types] = Constant::LabelRelationships::Incoming[label]
@@ -106,12 +111,19 @@ module GenericHelper::MergeNodes
 		clause
 	end
 
+	def self.hide_duplicate label
+		" REMOVE duplicate:" + label + " "\
+		" SET duplicate:" + Constant::NodeLabel::Hidden + label + " "
+	end
+
 
 	def self.merge_clause params
 		label 	= params[:label]
 		clause  = GenericHelper::MergeNodes.match_duplicates params
-		clause += GenericHelper::MergeNodes.merge_nodes label
+		clause += GenericHelper::MergeNodes.merge_node_property label
 		clause += GenericHelper::MergeNodes.merge_relationships label
+		clause += GenericHelper::MergeNodes.hide_duplicate label
+		clause += " RETURN ID(original) AS id_orig, ID(duplicate) AS id_dup, LABELS(duplicate) AS label "
 		clause
 	end
 end
