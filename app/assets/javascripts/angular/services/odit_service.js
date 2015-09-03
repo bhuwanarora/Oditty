@@ -19,4 +19,8 @@ oditApp.service('oditService', ["$http", "$q", "$rootScope", "todo_service_url",
         return _deferred_request('/api/v0/get_todos?type='+type, $q, $http, todo_service_url);
     }
 
+    this.invite = function(email){
+        return _deferred_request('/api/v0/invite?email='+email, $q, $http);
+    }
+
 }]);
