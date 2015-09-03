@@ -20,7 +20,7 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
               subject: subject,
               to: {email: params[:email]},
               vars: {
-                'WAITLIST': params[:waitlist]
+                'WAITLIST' => params[:waitlist]
               },
               important: true,
               inline_css: true
