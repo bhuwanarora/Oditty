@@ -1,4 +1,4 @@
-homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'ColorConstants', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', 'bookService', '$mdBottomSheet', function($scope, newsService, $rootScope, ColorConstants, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce, bookService, $mdBottomSheet){
+homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope', 'websiteService', '$timeout', '$location', '$mdDialog', 'userService', '$mdSidenav', 'sharedService', '$sce', 'bookService', '$mdBottomSheet', function($scope, newsService, $rootScope, websiteService, $timeout, $location, $mdDialog, userService, $mdSidenav, sharedService, $sce, bookService, $mdBottomSheet){
     
     $scope.get_detailed_community_info = function(){
         if(angular.isDefined($scope.active_tag)){
@@ -13,6 +13,11 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 }
             });
         }
+    }
+
+    $scope.add_videos = function(){
+        var id = $scope.active_tag.id;
+        websiteService.add_videos(id);
     }
 
     $scope.hide_bottomsheet = function($event){
