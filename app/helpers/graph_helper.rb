@@ -879,7 +879,7 @@ module GraphHelper
 
 	# This function operates on any given class and calls the specific function passed in parameters.
 	def self.iterative_entity_operations params
-		class_name  			= params[:class]
+		class_name  		= params[:class]
 		label_name 			= params[:label]
 		step_size  			= (params[:step_size].nil?)? 500 : params[:step_size].to_i
 		function_for_exec 	= params[:function]
@@ -896,8 +896,13 @@ module GraphHelper
 		while next_id <= max_id
 			clause  = Neo.get_nodes_with_id_range({:start_id => next_id, :step_size => step_size, :label => label_name})
 			params[:init_clause] = clause
-			clause += function_for_exec.call params
-			output  = clause.execute
+			exec_output = function_for_exec.call params
+			if exec_output.is_a? String
+				clause += exec_output
+				output  = clause.execute
+			else
+				output = exec_output
+			end
 			if output.empty?
 				next_id += 1
 			else

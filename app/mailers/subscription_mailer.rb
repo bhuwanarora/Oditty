@@ -13,6 +13,19 @@ class SubscriptionMailer < MandrillMailer::TemplateMailer
               inline_css: true
     end
 
+    def waitlist params
+        template = "waiting-list"
+        subject = "You're at number #{params[:waitlist]} on Waiting list for oditty.me"
+        mandrill_mail template: template,
+              subject: subject,
+              to: {email: params[:email]},
+              vars: {
+                'WAITLIST': params[:waitlist]
+              },
+              important: true,
+              inline_css: true
+    end
+
     def webhooks params
         subject = params[:params][:commits][0][:message] + ' : ' + params[:params][:pusher][:name] rescue ""
         mandrill_mail template: params[:template] ,
