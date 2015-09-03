@@ -10,7 +10,7 @@ class UsersTestimonial < Neo
 	end
 
 	def self.set_description description
-		" SET testimonial.description = " + description + " "
+		" SET testimonial.description = \"" + description + "\" "
 	end
 
 	def self.set_created_at
