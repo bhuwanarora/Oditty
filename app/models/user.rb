@@ -168,7 +168,7 @@ class User < Neo
 
 	def self.handle_new(email, password=nil, verification_token=nil)
 		default_user_name = email.split("@")[0]
-		wait_list_count = RedisHelper::UserWaitList.add
+		wait_list_count = RedisHelper::UserWaitList.push
 		User.create(email, password, verification_token) + User.set_name(default_user_name) + User.set_wait_list(wait_list_count) + User.create_links_for_new + User.return_init + User.basic_info
 	end
 
