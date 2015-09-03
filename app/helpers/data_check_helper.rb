@@ -16,17 +16,24 @@ module DataCheckHelper
 	def self.invert_wrong_belongs_to_links
 		min = 384296
 		max = 4830210
-		skip = 100
+		skip = 1
 		count = min
+		limit = 1000
 		while count < max
 			puts "execute... #{count}"
 			clause = "MATCH (g:Genre) "\
-			" WHERE ID(g) >= "+count.to_s+" AND ID(g) < "+(count+skip).to_s+" WITH g "\
+			" WHERE ID(g) >= "+count.to_s + " AND ID(g) < " + (count + skip).to_s + " "\
+			" WITH g "\
 			" MATCH (g)<-[r1:Belongs_to]-(b:Book) "\
-			" CREATE UNIQUE (g)-[r2:Belongs_to]->(b) "\
-			" SET r2.weight = r1.weight "\
-			" DELETE r1 "
-			clause.execute
+			" WHERE NOT (g)-[:Belongs_to]->(b) "\
+			" WITH g,r1, b LIMIT " + limit.to_s + " "\
+			" MERGE (g)-[r2:Belongs_to]->(b) "\
+			" ON CREATE SET r2.weight = r1.weight "\
+			" RETURN 1 AS id"
+			output = clause.execute
+			if output.empty?
+				count += skip
+			end
 		end
 	end
 

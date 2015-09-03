@@ -11,5 +11,7 @@ module Constant::NodeLabel
 	Category			= "Category"
 	Genre				= "Genre"
 
+	Hidden			= "Hidden"
+
 	BookEraLabels = ["PostModernLiterature", "Modernism", "VictorianLiterature", "Romanticism", "NeoClassicalPeriod", "EnglishRenaissance", "MiddleEnglishLiterature", "OldEnglishLiterature", "Contemporary"]
 end

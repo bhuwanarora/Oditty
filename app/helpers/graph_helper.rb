@@ -879,16 +879,16 @@ module GraphHelper
 
 	# This function operates on any given class and calls the specific function passed in parameters.
 	def self.iterative_entity_operations params
-		className  			= params[:class]
+		class_name  		= params[:class]
 		label_name 			= params[:label]
 		step_size  			= (params[:step_size].nil?)? 500 : params[:step_size].to_i
 		function_for_exec 	= params[:function]
 		function_name 		= params[:function_name]
 		log_output 			= (params[:log_function].present?)? params[:log_function] : GraphHelper::Default_logging_function
 
-		label_name = (label_name.nil?)? className.to_s : label_name
-		redis_key = (label_name + className.to_s + "_" + function_name.to_s)
-		id_temp = className.set_up_redis label_name, redis_key
+		label_name = (label_name.nil?)? class_name.to_s : label_name
+		redis_key = (label_name + class_name.to_s + "_" + function_name.to_s)
+		id_temp = class_name.set_up_redis label_name, redis_key
 		next_id = id_temp[:cur_id]
 		max_id  = id_temp[:max_id]
 		params[:step_size] = step_size
@@ -896,15 +896,20 @@ module GraphHelper
 		while next_id <= max_id
 			clause  = Neo.get_nodes_with_id_range({:start_id => next_id, :step_size => step_size, :label => label_name})
 			params[:init_clause] = clause
-			clause += function_for_exec.call params
-			output  = clause.execute
+			exec_output = function_for_exec.call params
+			if exec_output.is_a? String
+				clause += exec_output
+				output  = clause.execute
+			else
+				output = exec_output
+			end
 			if output.empty?
 				next_id += 1
 			else
 				log_output.call output, @@logger
 				next_id = output[0]["id"] + 1
 			end
-			className.update_redis redis_key, next_id
+			class_name.update_redis redis_key, next_id
 		end
 	end
 
