@@ -231,11 +231,35 @@ module GenreHelper
 		@logfile = 'genre_community_merge'
 		GenreHelper.init_variables
 		GenreHelper.merge_common_community_genre
-		GenreHelper.convert_community_to_genre
-		GenreHelper.convert_genre_to_community
+	end
+
+	def self.convert_to_community
+		clause  = GenreHelper.add_community_properties
+		clause += GenreHelper.add_community_edges
+		clause += GenreHelper.add_community_label
 	end
 
 	private
+
+	def self.add_community_properties
+		search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::EntityLabel::Community]
+		" SET " + search_index.map{|index| ('genre.' + index + " = genre." + @@genre_search_index)}.join(", ")
+	end
+
+	def self.add_community_label
+		" SET genre:" + Constant::EntityLabel::Community + " "
+	end
+
+	def self.add_incoming_community_edges
+		clause =
+	end
+
+	def self.add_community_edges
+		clause  = GenreHelper.add_incoming_community_edges
+		clause += GenreHelper.add_outgoing_community_edges
+		clause
+	end
+
 	def self.set_search_indices
 		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Genre
 		UniqueSearchIndexHelper.set_search_indices Constant::NodeLabel::Category
