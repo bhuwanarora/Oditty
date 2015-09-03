@@ -13,7 +13,7 @@
 	<div layout="row" flex layout-padding>
 		<div layout="row" layout-align="space-between">
 			<div></div>
-			<img ng-src="{{testimonial.image_url}}" class="square" 
+			<img ng-src="{{testimonial.image_url || '/assets/user_profile.jpg'}}" class="square" 
 				onerror="this.src='/assets/user_profile.jpg'" layout-padding/>
 		</div>
 		<div flex layout-padding layout="column" flex-md="70" flex-sm="70">
