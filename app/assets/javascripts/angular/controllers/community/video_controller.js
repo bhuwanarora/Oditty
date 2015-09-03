@@ -1,5 +1,10 @@
 homeApp.controller('videoController', ["$scope", "$rootScope", "$timeout", 'websiteService', '$sce', function($scope, $rootScope, $timeout, websiteService, $sce){
 
+	$scope.add_video = function(url){
+		var id = $scope.active_tag.id;
+		websiteService.add_video(id, url);
+	}
+
 	var _init = (function(){
 		if(angular.isDefined($scope.active_tag) && angular.isDefined($scope.active_tag.id)){
 			var id = $scope.active_tag.id;
