@@ -9,7 +9,7 @@
 	<div layout="row" layout-padding layout-wrap>
 		<div layout="column" layout-align="center center" class="testimonial_block" layout-padding ng-repeat="testimonial in testimonials | limitTo: 4">
 			<div layout-padding>
-				<img ng-src="{{testimonial.image_url}}" class="square"/>
+				<img ng-src="{{testimonial.image_url || '/assets/user_profile.jpg'}}" class="square" onerror="this.src='/assets/user_profile.jpg'" />
 			</div>
 			<div>
 				<a class="bold" ng-href="/profile?id={{testimonial.user_id}}" ng-bind-html="testimonial.name"></a>
