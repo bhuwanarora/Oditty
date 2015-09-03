@@ -155,9 +155,21 @@ class User < Neo
 		" WITH user "
 	end
 
+	def self.daily_decrement_wait_list
+		wait_list_count = " user.wait_list_count -" + RedisHelper::UserWaitList::UserWaitListDecrementOnEachDay.to_s + " "
+		clause = ""\
+		" SET user.wait_list_count = (CASE WHEN (" + wait_list_count + " > 0) THEN " + wait_list_count + " ELSE 0 END ) "
+		clause
+	end
+
+	def self.set_wait_list wait_list_count
+		" SET user.wait_list_count = " + wait_list_count.to_s + " "
+	end
+
 	def self.handle_new(email, password=nil, verification_token=nil)
 		default_user_name = email.split("@")[0]
-		User.create(email, password, verification_token) + User.set_name(default_user_name) + User.create_links_for_new + User.return_init + User.basic_info
+		wait_list_count = RedisHelper::UserWaitList.add
+		User.create(email, password, verification_token) + User.set_name(default_user_name) + User.set_wait_list(wait_list_count) + User.create_links_for_new + User.return_init + User.basic_info
 	end
 
 	def self.create_links_for_new
@@ -271,7 +283,7 @@ class User < Neo
 	end
 
 	def self.authentication_info
-		" user.password AS password, user.active AS active, user.created_at AS user_created_at "
+		" user.password AS password, user.active AS active, user.wait_list_count AS wait_list_count, user.created_at AS user_created_at "
 	end
 
 	def self.set_last_login_for_verified_user

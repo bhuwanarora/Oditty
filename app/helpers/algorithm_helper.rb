@@ -12,6 +12,11 @@ module AlgorithmHelper
 		(num*(10**decimal_places)).round / ((10**decimal_places)*1.0)
 	end
 
+	def self.random lower_limit, upper_limit
+		offset = rand(upper_limit - lower_limit + 1)
+		lower_limit + offset
+	end
+
 	def self.to_float object
 		if object.is_a? Array
 			output = object.map{|elem| elem.to_f}
