@@ -29,6 +29,12 @@ class WebsiteController < ApplicationController
 		render :layout => "material"
 	end
 
+	def testimonials
+		@testimonials = true
+		@title = "Testimonials on Oditty"
+		render :layout => "material"
+	end
+
 	def email_subscription
 		email = params[:subscription][:email]
 		existing_user = User.where(:email => email).first

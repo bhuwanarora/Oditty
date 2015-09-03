@@ -142,6 +142,7 @@ ReadersDoor::Application.routes.draw do
   get "about"                           => "website#about",                        :as => "about"
   get "work"                              => "website#work",                        :as => "work"
   get "data_analytics"                   => "website#data_analytics",            :as => "data_analytics"
+  get "testimonials"                   => "website#testimonials",            :as => "testimonials"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
 
 

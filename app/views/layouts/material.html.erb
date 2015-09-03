@@ -37,7 +37,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile || @book || @news || @room || @customise || @authors || @news_group %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
@@ -49,6 +49,9 @@
             <% elsif @authors %>
                 <md-content class="white super_container" flex ng-controller="authorsController" 
                     check-scroll-bottom="get_authors_interviewed()">
+            <% elsif @testimonials %>
+                <md-content class="white super_container" flex ng-controller="testimonialsController" 
+                    check-scroll-bottom="get_testimonials()">
             <% elsif @personalised_suggestions %>
                 <md-content ng-controller="personalisedController" class="super_container">
             <% elsif @network %>
@@ -185,6 +188,7 @@
             <script src="assets/angular/controllers/book/specific_book_controller.js"></script>
             <script src="assets/angular/controllers/book/timeline_controller.js"></script>
             <script src="assets/angular/controllers/book/real_virtuality_controller.js"></script>
+            <script src="assets/angular/controllers/testimonials_controller.js"></script>
             <script src="assets/angular/controllers/toast_controller.js"></script>
             <script src="assets/angular/directives/site_directives.js"></script>
             <script src="assets/angular/services/search_service.js"></script>
