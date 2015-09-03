@@ -8,7 +8,7 @@
 				<img ng-src="{{feed.data.user.thumb || '/assets/author_profile.jpg'}}" class="circular"
 					onerror="this.src='/assets/author_profile.jpg'"/>
 			</div>
-			<div layout="column" layout-padding>
+			<div layout="column" layout-padding flex>
 				<div class="less_important">{{feed.created_at | timestamp | date:'dd MMM'}}</div>
 				<div ng-if="feed.label == 'FollowsNode'" layout="row">
 					<div ng-if="::feed.data.community" layout="row" layout-wrap>
