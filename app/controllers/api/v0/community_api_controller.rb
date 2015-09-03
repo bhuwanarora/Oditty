@@ -24,6 +24,12 @@ module Api
 				render :json => {:message => "Success"}, :status => 200
 			end
 
+			def add_videos
+				id = params[:id]
+				VideosWorker.perform_async(VideosWorker::WorkAddToCommunityAutomated,{:id => id})
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def popular_communities
 				info = Api::V0::CommunityApi.get_popular_communities.execute
 				render :json => info, :status => 200				
