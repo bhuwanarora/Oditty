@@ -46,6 +46,10 @@
             <div layout-padding>
                 <a href="/filters" layout-padding class="custom_button" >Advanced Filter Books</a>
             </div>
+            <div layout-padding ng-if="!user.verified">
+                <i class="red_color material-icons">error_outline</i>
+                <md-tooltip>Please verify your email, only 1 day open access left.</md-tooltip>
+            </div>
         </div>
         <div layout-padding></div>
         
