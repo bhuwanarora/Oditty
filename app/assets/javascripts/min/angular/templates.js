@@ -859,7 +859,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/invite.html',
-    "<md-dialog aria-label=\"Invite\" class=\"invite_container\" layout=\"row\" layout-align=\"center center\"><div flex=\"10\" hide-sm></div><div flex=\"80\" flex-sm=\"100\" layout=\"column\"><div layout-padding><div layout-padding></div><div class=\"big_title\">Introduce your friends to Oditty</div><div class=\"less_important\">You have introduced {{user.invite_count || 0}} friends.</div><div layout-padding></div></div><md-divider></md-divider><div layout=\"column\" layout-padding layout-align=\"center center\" class=\"full_width\"><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 1 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 2 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 3 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 4 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 5 of 5</label></div><email-invite></email-invite></div><div layout-padding></div><div layout-padding></div></div></div><div flex=\"10\" hide-sm></div></md-dialog>"
+    "<md-dialog aria-label=\"Invite\" class=\"invite_container\" layout=\"row\" layout-align=\"center center\"><div ng-include src=\"'/assets/angular/html/shared/partials/invite.html'\"></div></md-dialog>"
   );
 
 
@@ -958,8 +958,18 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('/assets/angular/html/shared/partials/invite.html',
+    "<div flex=\"10\" hide-sm></div><div flex=\"80\" flex-sm=\"100\" layout=\"column\"><div layout-padding><div layout-padding></div><div class=\"big_title\">Introduce your friends to Oditty</div><div class=\"less_important\">You have introduced {{user.invite_count || 0}} friends.</div><div layout-padding></div></div><md-divider></md-divider><div layout=\"column\" layout-padding layout-align=\"center center\" class=\"full_width\"><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 1 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 2 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 3 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 4 of 5</label></div><email-invite></email-invite></div><div layout=\"column\" layout-margin class=\"full_width\" layout=\"center center\"><div><label class=\"less_important\">Introduce 5 of 5</label></div><email-invite></email-invite></div><div layout-padding></div><div layout-padding></div></div></div><div flex=\"10\" hide-sm></div>"
+  );
+
+
   $templateCache.put('/assets/angular/html/shared/partials/invite_email.html',
     "<div layout=\"row\" layout-align=\"space-between\" ng-model=\"invite\"><md-input-container flex=\"70\" md-no-float><input placeholder=\"Enter email here...\" class=\"grey_color\" ng-model=\"email\" type=\"email\"></md-input-container><div layout-padding><md-button class=\"md-raised md-warn md-button-clear\" ng-click=\"send_invitation_mail()\" ng-disabled=\"!email || sending_mail\"><div ng-show=\"!sending_mail\">Invite</div><div ng-show=\"sending_mail\">Sending...</div></md-button></div></div>"
+  );
+
+
+  $templateCache.put('/assets/angular/html/shared/partials/odit_invitation.html',
+    "<div layout-padding flex layout=\"column\" layout-align=\"center center\" ng-if=\"!user.in_waitlist\"><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><md-button class=\"md-raised md-button-clear md-primary\" ng-href=\"{{continue_url}}\">Continue</md-button></div><div ng-if=\"in_waitlist\"><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><div layout-padding></div><h3 class=\"bold\">You are number #{{user.waitlist}} in Waitlist for Oditty.me. Introduce friends to oditty.me to get 10 places up on successful invitation accept.</h3><div ng-include src=\"'/assets/angular/html/shared/partials/invite.html'\"></div></div>"
   );
 
 

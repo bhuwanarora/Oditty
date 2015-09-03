@@ -132,6 +132,38 @@ function detect_browser(){
     }
 }
 
+
+oditApp.directive('emailInvite', ["oditService", "$timeout", function(userService, $timeout){
+    return {
+        restrict: 'E',
+        scope: {},
+        controller: ["$scope", function($scope){
+            $scope.send_invitation_mail = function(){
+                $scope.sending_mail = true;
+                var _handle_todo_update = function(){
+                    var todo = getCookie("todo");
+                    if(todo){
+                        todo = JSON.parse(todo);
+                        if(!todo.home.invite){
+                            deleteCookie("todo");
+                            oditService.update_todo_key('home/invite');
+                        }
+                    }
+                }
+
+                _handle_todo_update();
+
+                oditService.invite($scope.email).then(function(data){
+                    $scope.sending_mail = false;
+                    $scope.email = "";
+                    // $scope.invitation_sent = true;
+                });
+            }
+        }],
+        templateUrl: '/assets/angular/html/shared/partials/invite_email.html'
+    };
+}]);
+
 var _deferred_post_request = function(url, params, $q, $http, service_url){
     var deferred = $q.defer();
     var success_callback = function(result){
