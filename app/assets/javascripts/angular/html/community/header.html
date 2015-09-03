@@ -32,5 +32,10 @@
     </div>
     <div  ng-include src="'/assets/angular/html/todo/link.html'" 
         ng-if="!todo.room.news || !todo.room.rating"></div>
+    <div ng-if="user && (user.id == 4986324)">
+        <md-button ng-click="add_videos()">
+            <md-icon md-font-set="material-icons">cloud_upload</md-icon>
+            <md-tooltip>Upload Videos</md-tooltip>
+        </md-button></div>
     <div layout-padding></div>
 </div>
