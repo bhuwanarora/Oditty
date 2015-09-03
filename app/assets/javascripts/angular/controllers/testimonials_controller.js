@@ -16,8 +16,8 @@ homeApp.controller('testimonialsController', ["$scope", 'websiteService', '$root
 	$scope.save_testimonial = function(event){
         if(angular.isDefined($rootScope.user) && angular.isDefined($rootScope.user.id)){
         	if(angular.isDefined($scope.info.new_testimonial) && $scope.info.new_testimonial.length > 10){
-	        	delete $scope.info.new_testimonial;
 	            websiteService.add_testimonial($scope.info.new_testimonial);
+	        	delete $scope.info.new_testimonial;
 	            window.location.reload();
         	}
         	else{
