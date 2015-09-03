@@ -18,6 +18,14 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return _deferred_request('/api/v0/recover_password?'+data, $q, $http);
     }
 
+    this.add_video = function(id, url){
+        return _deferred_request('/api/v0/add_video?id='+id+'&url='+url, $q, $http);
+    }
+
+    this.add_videos = function(id){
+        return _deferred_request('/api/v0/add_videos?id='+id, $q, $http);
+    }
+
     this.fb_books_map = function(id){
         return _deferred_request('/api/v0/fb_books_map?id='+id, $q, $http);
     }
