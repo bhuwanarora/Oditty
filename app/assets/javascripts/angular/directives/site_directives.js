@@ -1,3 +1,11 @@
+homeApp.directive('testimonials', ["websiteService", "$timeout", function(websiteService, $timeout){
+    return {
+        restrict: 'E',
+        controller: 'testimonialsController',
+        templateUrl: '/assets/angular/html/shared/testimonials.html'
+    };
+}]);
+
 homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
     return {
         restrict: 'E',
