@@ -1,5 +1,4 @@
 class User::Authenticate::SignUp < User::Authenticate
-	
 	def initialize params
 		@params = params
 		@verification_token = SecureRandom.hex

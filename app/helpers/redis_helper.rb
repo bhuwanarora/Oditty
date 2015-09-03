@@ -64,4 +64,5 @@ module RedisHelper
 	def self.update_user id
 		RedisHelper.clear id
 	end
+
 end
