@@ -41,7 +41,7 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
             },
             "rooms": {
                 "join": false,
-                "visit": true
+                "visit": false
             },
             "book": {
                 "recommend": false,
@@ -52,7 +52,7 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
             },
             "filters": {
                 "shelf": false,
-                "book": true
+                "book": false
             },
             "profile": {
                 "shelves": true,

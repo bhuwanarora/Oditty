@@ -132,8 +132,9 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             if(todo){
                 todo = JSON.parse(todo);
                 if(!todo.filters.book){
-                    deleteCookie("todo");
-                    userService.update_todo_key('filters/book');
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_book";
                 }
             }
         }
@@ -154,9 +155,6 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         $scope.is_book = true;
 
         $scope.constant = {"show_book": true};
-
-
-        
     }
 
     _init();

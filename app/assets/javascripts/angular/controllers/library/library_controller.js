@@ -238,8 +238,9 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             if(todo){
                 todo = JSON.parse(todo);
                 if(!todo.home.filters){
-                    deleteCookie("todo");
-                    userService.update_todo_key('home/filters');
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_filters";
                 }
             }
         }
