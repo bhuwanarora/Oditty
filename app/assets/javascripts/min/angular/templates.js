@@ -994,7 +994,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/user_list.html',
-    "<md-list layout=\"row\" layout-wrap><a ng-repeat=\"user in active_tag.users\" ng-href=\"/profile?q={{::user.id}}\" ng-if=\"user.id\" layout-margin layout=\"row\" layout-align=\"center center\"><img class=\"circular\" ng-src=\"{{user.image_url || '/assets/user_profile.jpg'}}\" alt=\"{{::user.first_name}} {{::user.last_name}}\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"><md-tooltip>{{::user.first_name}} {{::user.last_name}}</md-tooltip></a></md-list>"
+    "<md-list layout=\"row\" layout-wrap><a ng-repeat=\"user in active_tag.users\" ng-href=\"/profile?q={{::user.id}}\" ng-if=\"user.id\" layout=\"row\" layout-align=\"center center\"><img class=\"square\" ng-src=\"{{user.image_url || '/assets/user_profile.jpg'}}\" alt=\"{{::user.first_name}} {{::user.last_name}}\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\">&nbsp;<md-tooltip>{{::user.first_name}} {{::user.last_name}}</md-tooltip></a></md-list>"
   );
 
 
