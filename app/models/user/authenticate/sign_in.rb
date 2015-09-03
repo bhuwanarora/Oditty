@@ -1,5 +1,5 @@
 class User::Authenticate::SignIn < User::Authenticate
-	
+	VerifyEmailTimeout = 60*60*24
 	def initialize params 
 		@params = params
 	end
@@ -17,6 +17,10 @@ class User::Authenticate::SignIn < User::Authenticate
 			elsif  user["password"] != @params[:password]
 				message = Constant::StatusMessage::AuthenticationFailed
 			elsif !user["verified"]
+				created_at = user["user_created_at"]
+				if (created_at.present? && (Time.now.to_i - created_at < VerifyEmailTimeout))
+					authenticate = true
+				end
 				message = Constant::StatusMessage::VerifyEmail
 			else
 				message = Constant::StatusMessage::AuthenticationFailed

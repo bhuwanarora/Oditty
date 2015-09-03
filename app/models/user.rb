@@ -98,7 +98,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count, user.invite_count AS invite_count "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count, user.invite_count AS invite_count, user.verified AS verified "
 	end
 
 	def self.grouped_basic_info
@@ -142,7 +142,7 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time :" + Time.now.to_i.to_s + "}) "
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, created_at:" + Time.now.to_i.to_s + ", verification_time :" + Time.now.to_i.to_s + "}) "
 	end
 
 	def self.link_root_categories
@@ -271,7 +271,7 @@ class User < Neo
 	end
 
 	def self.authentication_info
-		" user.password AS password , user.verified AS verified, user.active AS active "
+		" user.password AS password, user.active AS active, user.created_at AS user_created_at "
 	end
 
 	def self.set_last_login_for_verified_user
