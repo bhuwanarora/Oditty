@@ -104,6 +104,10 @@ module CommunitiesHelper
 		!books.blank? && books.length >= Constant::Count::MinimumCommunityBooks
 	end
 
+	def self.map_videos_by_id community_id, videos
+		Community.new(community_id).match + videos.map{|video| (Video.merge(video) + ", community " + Video.merge_community(video[:rank]))}.join(" WITH community ")
+	end
+
 	def self.map_community_videos community, videos
 		Community.merge(community) + videos.map{|video| (Video.merge(video) + ", community " + Video.merge_community(video[:rank]))}.join(" WITH community ")
 	end

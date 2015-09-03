@@ -36,11 +36,11 @@ class Community < Neo
 	end
 
 	def match_videos
-		" MATCH (community)-[:HasVideo]->(video:Video) WITH community, video "
+		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
 	end
 
 	def get_videos
-		match + match_videos + Community.return_group(Video.basic_info)
+		match + match_videos + " ORDER BY video_relevance " + Community.return_group(Video.basic_info)
 	end
 
 	def get_basic_info
