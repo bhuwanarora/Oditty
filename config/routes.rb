@@ -143,6 +143,15 @@ ReadersDoor::Application.routes.draw do
   get "work"                              => "website#work",                        :as => "work"
   get "data_analytics"                   => "website#data_analytics",            :as => "data_analytics"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
+
+
+
+  get "odit_book"                   => "odit#book",            :as => "odit_book"
+  get "odit_filters"                   => "odit#filters",            :as => "odit_filters"
+  get "odit_author"                   => "odit#author",            :as => "odit_author"
+  get "odit_room"                   => "odit#room",            :as => "odit_room"
+  get "odit_rooms"                   => "odit#rooms",            :as => "odit_rooms"
+  get "odit_profile"                   => "odit#profile",            :as => "odit_profile"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
 
