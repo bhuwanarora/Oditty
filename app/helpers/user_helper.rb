@@ -10,4 +10,9 @@ module UserHelper
 		user_present
 	end
 
+	def self.wait_list_decrement
+		clause = User.match + User.daily_decrement_wait_list
+		clause.execute
+	end
+
 end

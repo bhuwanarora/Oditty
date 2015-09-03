@@ -5,8 +5,8 @@ module Api
 				UsersTestimonial.new(user_id).create(description).execute
 			end
 
-			def self.get_all
-				Testimonial.get_all.execute
+			def self.get_all skip
+				Testimonial.get_all(skip).execute
 			end
 		end
 	end

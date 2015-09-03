@@ -11,9 +11,15 @@ class User::Authenticate::SignIn < User::Authenticate
 		puts "signin".red
 		begin
 			user_authenticated = user["password"] == @params[:password] && user["verified"]
+			User::Authenticate::SignIn.set_in_wait_list user
 			if user_authenticated
-				authenticate = true
-				message = Constant::StatusMessage::LoginSuccess
+				if !user["in_wait_list"]
+					authenticate = true
+					message = Constant::StatusMessage::LoginSuccess
+				else
+					message = Constant::StatusMessage.waitlist_message user["wait_list_count"]
+				end
+				UserWorker.perform_async(UserWorker::WorkUserWaitListDecrementInvitee, {:id => user["id"]})
 			elsif  user["password"] != @params[:password]
 				message = Constant::StatusMessage::AuthenticationFailed
 			elsif !user["verified"]
@@ -32,5 +38,13 @@ class User::Authenticate::SignIn < User::Authenticate
 		puts message.red
 		info = {:authenticate => authenticate, :message => message, :user => user}
 		info
+	end
+
+	def self.set_in_wait_list user_hash
+		if user_hash["wait_list_count"] > 0
+			user_hash["in_wait_list"] = true
+		else
+			user_hash["in_wait_list"] = false
+		end
 	end
 end

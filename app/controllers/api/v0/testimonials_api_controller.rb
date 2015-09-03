@@ -10,7 +10,8 @@ module Api
 			end
 
 			def get_testimonials
-				info = Api::V0::TestimonialApi.get_all
+				skip = params[:skip]
+				info = Api::V0::TestimonialApi.get_all skip
 				render :json => info, :status => 200
 			end
 		end
