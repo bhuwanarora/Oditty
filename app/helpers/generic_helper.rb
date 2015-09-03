@@ -7,7 +7,11 @@ module GenericHelper
 
 	def self.set_up_redis_by_name key, init_depth = 3
 		init_string = Array.new(init_depth) { 'a' }.join
-		RedisHelper.update_value key, init_string
+		if $redis[key].present?
+			init_string = $redis[key]
+		else
+			RedisHelper.update_value key, init_string
+		end
 		init_string
 	end
 
