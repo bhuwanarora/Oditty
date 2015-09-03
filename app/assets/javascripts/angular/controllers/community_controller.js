@@ -176,8 +176,9 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
             if(todo){
                 todo = JSON.parse(todo);
                 if(!todo.rooms.visit){
-                    deleteCookie("todo");
-                    userService.update_todo_key('rooms/visit');
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_room";
                 }
             }
         }

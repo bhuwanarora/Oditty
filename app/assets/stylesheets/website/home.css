@@ -504,16 +504,6 @@ md-toolbar{
 	overflow: hidden;
 }
 
-.big_title, h2{
-	font-size: 28px;
-  	letter-spacing: -0.02em;
-  	line-height: 1.2;
-  	font-weight: 500;
-	font-family: sans-serif;
-	margin: 0px;
-	text-transform: capitalize;
-}
-
 @media only screen
 and (min-width : 320px)
 and (max-width : 800px){
@@ -945,35 +935,13 @@ md-tooltip .md-content{
 	margin-left: 0px !important;
 }
 
-.important_title, h3{
-	font: 300 20px Roboto,arial,sans-serif;
-	color: #898989;
-	margin: 0px;
-}
 
-h3 a{
-	color: #898989;
-}
 
 .small_book_thumb{
 	width: 35px;
   	height: 50px;
 }
 
-h1{
-	font-family: "Myriad Set Pro", "Lucida Grande", "Helvetica Neue", "Helvetica", "Arial", "Verdana", "sans-serif";
-	font-size: 52px;
-  	line-height: 1.08654;
-  	letter-spacing: -0.014em;
-  	font-weight: 200;
-  	text-decoration: none;
-  	margin: 10px;
-}
-
-h1 a:hover,
-h3 a:hover{
-	text-decoration: none !important;
-}
 
 .feed_ticker{
 	max-height: 300px !important;

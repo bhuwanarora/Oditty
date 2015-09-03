@@ -1,4 +1,4 @@
-homeApp.controller('roomsController', ["$scope", "$rootScope", "roomsService", "$mdSidenav", "newsService", "$mdBottomSheet", "userService", function($scope, $rootScope, roomsService, $mdSidenav, newsService, $mdBottomSheet, userService){
+homeApp.controller('roomsController', ["$scope", "$location", "roomsService", "$mdSidenav", "newsService", "$mdBottomSheet", "userService", function($scope, $location, roomsService, $mdSidenav, newsService, $mdBottomSheet, userService){
     $scope.get_rooms = function(){
         if(!$scope.info.loading){
             $scope.info.loading = true;
@@ -53,8 +53,9 @@ homeApp.controller('roomsController', ["$scope", "$rootScope", "roomsService", "
             if(todo){
                 $scope.todo = JSON.parse(todo);
                 if(!$scope.todo.home.rooms){
-                    deleteCookie("todo");
-                    userService.update_todo_key('home/rooms');
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_rooms";
                 }
             }
         }
