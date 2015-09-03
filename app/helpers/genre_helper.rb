@@ -1,9 +1,17 @@
 module GenreHelper
 	
+	def self.set_up_redis label, key
+		GenericHelper.set_up_redis label, key
+	end
+	def self.update_redis key, value
+		GenericHelper.update_redis key, value
+	end
+
 	def self.init_variables
 		@@genre_search_index 	= UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Genre][0]
 		@@category_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::NodeLabel::Category][0]
 		@@community_search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::EntityLabel::Community][0]
+
 	end
 
 	def self.convert_genre_to_category
@@ -233,29 +241,81 @@ module GenreHelper
 		GenreHelper.merge_common_community_genre
 	end
 
+	ConvertToCommunity = Proc.new do |params, *args|
+		clause = params[:init_clause]
+		clause += GenreHelper.is_not_community
+		clause += GenreHelper.add_community_properties
+		clause += " WITH genre "
+		clause += GenreHelper.convert_edges_to_community
+		clause += " WITH genre "
+		clause += GenreHelper.change_labels
+		clause += " RETURN MAX(ID(genre)) AS id "
+		output = clause.execute
+		if output.empty?
+			# Don't convert edges as they are not present.(There is only one edge to convert)
+			clause = params[:init_clause]
+			clause += GenreHelper.is_not_community
+			clause += GenreHelper.add_community_properties
+			clause += " WITH genre "
+			clause += GenreHelper.change_labels
+			clause += " RETURN MAX(ID(genre)) AS id "
+			output = clause.execute
+		end
+		output
+	end
+
 	def self.convert_to_community
-		clause  = GenreHelper.add_community_properties
-		clause += GenreHelper.add_community_edges
-		clause += GenreHelper.add_community_label
+		GenreHelper.init_variables
+		params = {
+			:class 			=> GenreHelper,
+			:label 			=> 'Genre',
+			:function 		=> GenreHelper::ConvertToCommunity,
+			:function_name 	=> 'convert_to_community',
+			:step_size 		=> 500
+		}
+		GraphHelper.iterative_entity_operations params
 	end
 
 	private
+
+	def self.is_not_community
+		" WHERE NOT genre:Community "\
+		" WITH genre LIMIT 1 "
+	end
 
 	def self.add_community_properties
 		search_index = UniqueSearchIndexHelper::UniqueIndices[Constant::EntityLabel::Community]
 		" SET " + search_index.map{|index| ('genre.' + index + " = genre." + @@genre_search_index)}.join(", ")
 	end
 
-	def self.add_community_label
-		" SET genre:" + Constant::EntityLabel::Community + " "
+	def self.change_labels
+		" SET genre:" + Constant::EntityLabel::Community + ": " + Constant::NodeLabel::Hidden + Constant::NodeLabel::Genre + " "\
+		" REMOVE genre:" + Constant::NodeLabel::Genre + " "
 	end
 
-	def self.add_incoming_community_edges
+	def self.convert_outgoing_edges_to_community
+		rel_key = RelationshipConverter.get_relation_key ['Genre'], 'Belongs_to', ['Book']
+		relation_type = RelationshipConverter.get_relationship_type rel_key, 'Community'
+		property_hash = RelationshipConverter.get_property rel_key, 'Community'
+		if property_hash.empty?
+			property_string = ""
+		else
+			property_string = " ON CREATE SET " + property_hash.map{|genre_property,community_property| ("new_relation." + community_property + " = " + "belongs_to." + genre_property)}.join(", ")
+		end
+		clause = ""\
+			" MATCH (genre)-[belongs_to:Belongs_to]->(book:Book) "\
+			" MERGE (genre)-[new_relation:" + relation_type + "]->(book) "\
+			" " + property_string + " "
+		clause
 	end
 
-	def self.add_community_edges
-		clause  = GenreHelper.add_incoming_community_edges
-		clause += GenreHelper.add_outgoing_community_edges
+	def self.convert_incoming_edges_to_community
+		""
+	end
+
+	def self.convert_edges_to_community
+		clause  = GenreHelper.convert_incoming_edges_to_community
+		clause += GenreHelper.convert_outgoing_edges_to_community
 		clause
 	end
 
