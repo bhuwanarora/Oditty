@@ -28,6 +28,7 @@ class VideosWorker
 			clause = CommunitiesHelper.map_videos_by_id community_id, videos
 			clause += " RETURN ID(community) AS id "
 			clause.execute
+			RedisHelper.update community_id, Constant::EntityLabel::Community
 		end
 	end
 end
