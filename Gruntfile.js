@@ -173,7 +173,8 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/controllers/home/list_bottom_sheet_controller.js',
                     "app/assets/javascripts/min/angular/controllers/book/specific_book_controller.js",
                     "app/assets/javascripts/min/angular/controllers/book/timeline_controller.js",
-                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js"
+                    "app/assets/javascripts/min/angular/controllers/book/real_virtuality_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/testimonials_controller.js"
                 ],
 
                 'app/assets/javascripts/min/angular/directives.js': [

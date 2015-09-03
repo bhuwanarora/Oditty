@@ -10,6 +10,14 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return user_id;
     }
 
+    this.get_testimonials = function(skip){
+        return _deferred_request('/api/v0/get_testimonials?skip='+skip, $q, $http);
+    }
+
+    this.add_testimonial = function(data){
+        return _deferred_request('/api/v0/add_testimonial?data='+data, $q, $http);   
+    }
+
     this.save_ad = function(params){
         return _deferred_post_request('/api/v0/save_ad', params, $q, $http);
     }
