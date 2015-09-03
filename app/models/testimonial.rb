@@ -5,7 +5,7 @@ class Testimonial < Neo
 	end
 
 	def self.get_all skip=0
-		Testimonial.match + Testimonial.return_group("user.name AS name", "user.image_url AS image_url", Testimonial.basic_info) + Testimonial.skip(skip) + Testimonial.limit(10)
+		Testimonial.match + Testimonial.return_group("user.name AS name", "user.thumb AS image_url", Testimonial.basic_info) + Testimonial.skip(skip) + Testimonial.limit(10)
 	end
 
 	def self.match
