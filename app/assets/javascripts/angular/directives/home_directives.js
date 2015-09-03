@@ -23,3 +23,4 @@ homeApp.directive('joinCommunity', ["$rootScope", "newsService", "$mdSidenav", f
         templateUrl: '/assets/angular/html/home/partials/community.html'
     };
 }]);
+

@@ -52,6 +52,7 @@ homeApp.controller('shelfController', ['$scope', '$mdBottomSheet', '$mdToast', '
                 $scope.new_label = "";
             }
         }
+        delete $scope.new_label;
     }
 
     $scope.toggle_shelves = function(){
