@@ -9,5 +9,11 @@ namespace :merge do
       include GenericHelper::MergeNodes
       GenericHelper::MergeNodes.merge args
     end
+
+    desc "converts all genre which are not community to community"
+    task :convert_genre_to_community => :environment do
+    	include GenreHelper
+    	GenreHelper.convert_to_community
+    end
 	
 end
