@@ -37,6 +37,7 @@ module GenericHelper::MergeNodes
 			output = clause.execute
 			if output.empty?
 				search_prefix = GraphHelper.next_regex_recursive(search_prefix)
+				GenericHelper.update_redis redis_key, search_prefix
 			else
 				GenericHelper::MergeNodes.set_labels output[0], label
 				ELogger.log_info("original:" + output[0]["id_orig"].to_s + " duplicate:" + output[0]["id_dup"].to_s, logfile)
