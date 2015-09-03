@@ -251,7 +251,6 @@ module GenreHelper
 	end
 
 	def self.add_incoming_community_edges
-		clause =
 	end
 
 	def self.add_community_edges
