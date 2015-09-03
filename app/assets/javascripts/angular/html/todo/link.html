@@ -1,6 +1,10 @@
-<div flex layout-align="center center" layout="column" ng-if="info.hide_signin">
+<div flex layout-align="center center" layout="row" ng-if="info.hide_signin">
     <div ng-click="show_todo_list($event)" 
-    	class="custom_button" >
+    	class="custom_button" layout-padding>
         Get Started
+    </div>
+    <div layout-padding ng-if="!user.verified">
+		<i class="red_color material-icons">error_outline</i>
+		<md-tooltip>Please verify your email, only 1 day open access left.</md-tooltip>
     </div>
 </div>

@@ -200,8 +200,9 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
             if(todo){
                 todo = JSON.parse(todo);
                 if(!todo.book.author){
-                    deleteCookie("todo");
-                    userService.update_todo_key('book/author');
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_author";
                 }
             }
         }
