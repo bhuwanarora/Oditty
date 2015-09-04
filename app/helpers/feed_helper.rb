@@ -22,7 +22,7 @@ module FeedHelper
 
 		clause = " MATCH (n1), (n2) WHERE ID(n1)="+user_id.to_s+" AND ID(n2)="+feed[0]["id"].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 		clause.execute
-		for index in 0..(feed.length - 1)
+		for index in 0..(feed.length - 2)
 			clause = " MATCH (n1), (n2) WHERE ID(n1)="+feed[index]["id"].to_s+" AND ID(n2)="+feed[index+1]["id"].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 			clause.execute
 		end
