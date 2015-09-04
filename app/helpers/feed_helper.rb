@@ -15,6 +15,9 @@ module FeedHelper
 		" RETURN ID(a) AS id, a.created_at AS created_at "\
 		" UNION ALL MATCH (a:StatusNode) "\
 		" WHERE a.user_id = "+user_id.to_s+" "\
+		" RETURN ID(a) AS id, a.created_at AS created_at "\
+		" UNION ALL MATCH (a:RecommendNode) "\
+		" WHERE a.user_id = "+user_id.to_s+" "\
 		" RETURN ID(a) AS id, a.created_at AS created_at "
 		feed = clause.execute
 
