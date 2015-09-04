@@ -20,7 +20,7 @@ module FeedHelper
 
 		if feed.length == 0
 			clause = "MATCH (u) WHERE ID(u)="+user_id.to_s+" CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(u)"
-			clause.execute
+			clause.execute 
 		else
 			feed.sort_by!{|single_feed| single_feed["created_at"]}
 
