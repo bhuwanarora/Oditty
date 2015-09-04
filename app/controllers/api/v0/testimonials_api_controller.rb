@@ -6,6 +6,7 @@ module Api
 				user_id = session[:user_id]
 				description = params[:data]
 				Api::V0::TestimonialApi.create(user_id, description)
+				RedisHelper::Testimonial.delete_all
 				render :json => {:message => "Success"}, :status => 200
 			end
 
