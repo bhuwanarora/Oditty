@@ -1,88 +1,107 @@
-<h2 layout-padding>Judge a book by its Cover</h2>
-<div layout-padding></div>
-<div layout-padding></div>
-<div layout-padding></div>
-<div class="message animate-fast" ng-if="message" 
-	layout-align="center center" layout="column">
-	<div ng-bind-html="message"></div>
-	<div ng-if="done">
-		{{score*10}}% Accuracy
-	</div>
-	<div ng-if="play">
-		<video width="320" height="240" autoplay>
-		  <source src="/assets/rate.mov" type="video/mov">
-		  <source src="/assets/rate" type="video/ogg">
-				Your browser does not support the video tag.
-		</video>
-		<video controls="controls" width="800" height="600" name="Video Name" 
-			src="/assets/rate.mov"></video>
-	</div>
-	<div>
-		<md-button class="md-button-clear md-raised md-warn" 
-			ng-if="play" ng-bind-html="play_message" ng-click="start_playing()"></md-button>
-	</div>
-</div>
-<div layout="row" layout-align="center start" layout-sm="column">
-	<div layout-padding>
-		<div layout-padding>
-		</div>
-		<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{book.isbn}}/L.jpg"/>
-	</div>
-	<div layout-padding layout="column" layout-align="center center">
-		<div ng-if="next" class="center_text">
-			<h4><a ng-bind-html="book.title" ng-href="/book?id={{book.id}}"></a></h4>
-			<div class="less_important">
-				<a ng-bind-html="book.author_name" ng-href="/author?id={{book.author_id}}"></a>
+<div ng-style="game_background" class="background_game" layout="row">
+	<section flex="20" flex-md="5" hide-sm></section>
+	<section flex="60" flex-md="90" layout="column" flex-sm="100" class="z_index_1">
+		<div class="game_wrapper"></div>
+		<h2 class="center_text white_color z_index_1" layout-padding>Judge a book by its Cover</h2>
+		<div layout-padding></div>
+		<div layout-padding></div>
+		<div layout-padding></div>
+		<div class="message animate-fast" ng-if="message" 
+			layout-align="center center" layout="column">
+			<div ng-bind-html="message"></div>
+			<div ng-if="done">
+				{{score*10}}% Accuracy
 			</div>
-			<div layout-padding ng-if="next">Your Rating</div>
+			<div ng-if="play">
+				<video controls="controls" width="320" height="240" autoplay loop
+					src="/assets/rate.mov"></video>
+			</div>
+			<div>
+				<md-button class="md-button-clear md-raised md-warn" 
+					ng-if="play" ng-bind-html="play_message" ng-click="start_playing()"></md-button>
+			</div>
 		</div>
-		<h1>{{book.user_rating || 0}}</h1>
-	 	<md-slider flex="20" md-discrete 
-   			class="game_slider md-primary"
-   			ng-model="book.user_rating"
-   			ng-disabled="next"
-   			step="1" min="1" max="10" aria-label="rating">
-    	</md-slider>
+		<div layout="column" class="game_content white md-whiteframe-z1">
+			<div class="center_text">
+				<h4><a ng-bind-html="book.title" ng-href="/book?id={{book.id}}"></a></h4>
+				<div class="less_important">
+					<a ng-bind-html="book.author_name" ng-href="/author?id={{book.author_id}}"></a>
+				</div>
+			</div>
+			<div layout="row" layout-align="center start" layout-sm="column">
+				<div layout-padding>
+					<div layout-padding></div>
+					<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{book.isbn}}/L.jpg" class="md-whiteframe-z3" />
+				</div>
+				<div layout-padding layout="column" layout-align="space-between center">
+					<div layout="column" layout-align="center center">
+						<div ng-if="next" class="center_text">
+							<div layout-padding ng-if="next">Your Rating</div>
+						</div>
+						<div class="rd_title">{{book.user_rating || 0}}</div>
+					 	<md-slider flex="20" md-discrete 
+				   			class="game_slider md-primary"
+				   			ng-model="book.user_rating"
+				   			ng-disabled="next"
+				   			step="1" min="1" max="10" aria-label="rating">
+				    	</md-slider>
 
-    	<md-slider flex="20" md-discrete 
-   			class="game_slider md-primary"
-   			ng-model="book.rating" ng-if="next"
-   			ng-disabled="true"
-   			step="1" min="1" max="10" aria-label="rating">
-    	</md-slider>
+				    	<md-slider flex="20" md-discrete 
+				   			class="game_slider md-primary"
+				   			ng-model="book.rating" ng-if="next"
+				   			ng-disabled="true"
+				   			step="1" min="1" max="10" aria-label="rating">
+				    	</md-slider>
 
-    	<div layout-padding></div>
-    	<div layout-padding></div>
-    	<div layout-padding ng-if="next">Oditty's Rating</div>
-    	<h1 ng-if="next" class="site_color">{{book.rating}}</h1>
-    	<div layout="row" layout-align="center center" flex>
-	    	<md-button class="md-button-clear md-raised md-warn" ng-click="next_book()">
-	    		<span ng-if="next">Next</span>
-	    		<span ng-if="!next">Judge</span>
-	    	</md-button>
-    	</div>
-	</div>
+				    	<div layout-padding></div>
+				    	<div layout-padding></div>
+				    	<div layout-padding ng-if="next">Oditty's Rating</div>
+				    	<div class="rd_title" ng-if="next" class="site_color">{{book.rating}}</div>
+					</div>
+			    	<div layout="row" layout-align="center center" flex>
+				    	<md-button class="md-button-clear md-raised md-warn" ng-click="next_book()">
+				    		<span ng-if="next">Next</span>
+				    		<span ng-if="!next">Judge</span>
+				    	</md-button>
+			    	</div>
+				</div>
+			</div>
+			<div layout-padding></div>
+			<div layout-padding></div>
+		</div>
+		<div layout-padding></div>
+		<div layout-padding></div>
+		<md-progress-linear class="md-primary" ng-value="active_index*10" md-mode="buffer">
+		</md-progress-linear>
+	</section>
+	<section flex="20" flex-md="5" hide-sm></section>
 </div>
-<md-progress-linear class="md-primary" ng-value="active_index*10" md-mode="buffer">
-</md-progress-linear>
+
 <md-divider></md-divider>
-<div layout-padding></div>
-<div layout-padding></div>
-<h1>Leaderboard</h1>
-<div layout="column" flex>
-	<div layout="row" ng-repeat="user in users" layout-padding>
-		<div>
-			<h1>#{{user.ranking}}</h1>
+<div layout="row">
+	<section flex="20" flex-md="5" hide-sm></section>
+	<section flex="60" flex-md="90" layout="column" flex-sm="100">
+		<div layout-padding></div>
+		<div layout-padding></div>
+		<h1>Leaderboard</h1>
+		<div layout="column" flex>
+			<div layout="row" ng-repeat="user in users" layout-padding>
+				<div>
+					<h1>#{{user.ranking}}</h1>
+				</div>
+				<div>
+					<img ng-src="{{user.image_url}}" class="square" />
+				</div>
+				<div layout-padding>
+					<a href="/profile?id={{user.id}}" ng-bind-html="user.name"></a>
+					<div>Accuracy {{user.accuracy}}</div>
+				</div>
+			</div>
 		</div>
-		<div>
-			<img ng-src="{{user.image_url}}" class="square" />
-		</div>
-		<div layout-padding>
-			<a href="/profile?id={{user.id}}" ng-bind-html="user.name"></a>
-			<div>Accuracy {{user.accuracy}}</div>
-		</div>
-	</div>
+	</section>
+	<section flex="20" flex-md="5" hide-sm></section>
 </div>
+
 
 <style>
 	.game_slider{
@@ -95,7 +114,7 @@
 	    top: 0px;
 	    right: 0px;
 	    bottom: 0px;
-	    z-index: 1;
+	    z-index: 2;
 	    font-size: 70px;
 	    font-weight: bold;
 	    color: #FFC107;
@@ -112,5 +131,29 @@
 
 	md-progress-linear .md-bar2{
 		background-color: rgb(33,150,243);
+	}
+
+	.background_game{
+		background-size: cover;
+		position: relative;
+	}
+
+	.game_wrapper{
+	    position: absolute;
+	    left: 0px;
+	    right: 0px;
+	    top: 0px;
+	    height: 100%;
+    	background-color: rgba(74,74,74,0.5);
+    	background-image: -webkit-linear-gradient(-135deg, rgba(74,74,74,0.5) 0%, rgba(0,0,0,0.4) 100%);
+    	background-image: linear-gradient(-135deg, rgba(74,74,74,0.5) 0%, rgba(0,0,0,0.4) 100%);
+	}
+
+	.game_content{
+		z-index: 1;
+	}
+
+	.md-button{
+
 	}
 </style>
