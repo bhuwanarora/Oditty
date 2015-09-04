@@ -27,6 +27,153 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_game_users = function(){
+        return [
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            },
+            {
+                "name": "Bhuwan",
+                "id": 34567,
+                "ranking": 2,
+                "accuracy": 35,
+                "image_url": "https://scontent.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p200x200/1549437_745546432181663_2556840033990065814_n.jpg?oh=33a5ac0efa0939444962a442dcafc333&oe=565B011E"
+            }
+        ];
+    }
+
+    this.get_game_books = function(){
+        var data = [
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            },
+            {
+                "title": "Social Psychology: The Heart And The Mind",
+                "isbn": "9780321024350",
+                "id": 1933707,
+                "author_id": 442323,
+                "author_name": "Elliot Aronson",
+                "rating": 6
+            }
+        ];
+        return data;
+    }
+
     this.get_todos = function(){
         var data = {
             "home": {
