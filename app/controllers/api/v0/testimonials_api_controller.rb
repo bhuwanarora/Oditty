@@ -15,7 +15,7 @@ module Api
 				info = RedisHelper::Testimonial.get_all skip
 				if info.nil?
 					info = Api::V0::TestimonialApi.get_all skip
-					RedisHelper::Testimonial.set_all skip
+					RedisHelper::Testimonial.set_all {:skip => skip, :info => info}
 				end
 				render :json => info, :status => 200
 			end
