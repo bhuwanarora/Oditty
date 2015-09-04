@@ -23,6 +23,12 @@ class WebsiteController < ApplicationController
 		render :json => {:message => "Success"}, :status => 200
 	end
 
+	def games
+		@games = true
+		@title = "Judge a Book by its cover | Games on Oditty"
+		render :layout => "material"
+	end
+
 	def ads
 		@ads = true
 		@title = "Create an Advertisement | Oditty"

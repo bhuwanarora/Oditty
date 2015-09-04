@@ -43,3 +43,13 @@
 	height: 220px;
 	overflow: hidden;
 }
+
+.message.ng-enter,
+.message.ng-leave.ng-leave-active{
+	opacity: 0;
+}
+
+.message.ng-leave,
+.message.ng-enter.ng-enter-active{
+	opacity: 1;
+}

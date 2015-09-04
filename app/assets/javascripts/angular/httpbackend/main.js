@@ -10,6 +10,16 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/get_game_books\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.get_game_books();
+        return [200, data, {}];
+    });
+
+    $httpBackend.whenGET(/api\/v0\/get_game_users\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.get_game_users();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET(/api\/v0\/book_shelves\?.*/).respond(function(method, url, data) {
         var data = ServerDataModel.get_book_shelves();
         return [200, data, {}];
