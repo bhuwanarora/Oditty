@@ -177,6 +177,22 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/testimonials_controller.js"
                 ],
 
+                'app/assets/javascripts/min/angular/odit_group.min.js': [
+                    'app/assets/javascripts/min/angular/vendors/angular.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_messages.min.js',
+                    'app/assets/javascripts/min/angular/vendors/hammer.js',
+                    'app/assets/javascripts/min/angular/vendors/angular-aria.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_router.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_material.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_cookies.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular_animate.min.js',
+                    'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
+                    "app/assets/javascripts/min/angular/apps/odit_app.js",
+                    "app/assets/javascripts/min/angular/constants/odit.js",
+                    'app/assets/javascripts/min/angular/services/odit_service.js',
+                    "app/assets/javascripts/min/angular/controllers/odit_controller.js"
+                ],
+
                 'app/assets/javascripts/min/angular/directives.js': [
                     "app/assets/javascripts/min/angular/directives/site_directives.js"
                 ],
