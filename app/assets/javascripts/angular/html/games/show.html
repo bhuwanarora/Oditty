@@ -8,6 +8,13 @@
 	<div ng-if="done">
 		{{score*10}}% Accuracy
 	</div>
+	<div ng-if="play">
+		<video width="320" height="240" autoplay>
+		  <source src="/assets/rate.mov" type="video/mov">
+		  <source src="/assets/rate" type="video/ogg">
+				Your browser does not support the video tag.
+		</video>
+	</div>
 	<div>
 		<md-button class="md-button-clear md-raised md-warn" 
 			ng-if="play" ng-bind-html="play_message" ng-click="start_playing()"></md-button>
