@@ -6,16 +6,16 @@ module FeedHelper
 
 		clause = " MATCH (a:BookmarkNode) "\
 		" WHERE a.user_id="+user_id.to_s+" AND a.label <> 'FromFacebook' AND a.label <> 'Visited' "\
-		" RETURN ID(a) AS id, a.created_at AS created_at"\
+		" RETURN ID(a) AS id, a.created_at AS created_at "\
 		" UNION ALL MATCH (a:EndorseNode) "\
 		" WHERE  a.user_id ="+user_id.to_s+" "\
-		" RETURN ID(a) AS id, a.created_at AS created_at"\
+		" RETURN ID(a) AS id, a.created_at AS created_at "\
 		" UNION ALL MATCH (a:FollowsNode) "\
 		" WHERE a.user_id = "+user_id.to_s+
-		" RETURN ID(a) AS id, a.created_at AS created_at"\
+		" RETURN ID(a) AS id, a.created_at AS created_at "\
 		" UNION ALL MATCH (a:StatusNode) "\
 		" WHERE a.user_id = "+user_id.to_s+" "\
-		" RETURN ID(a) AS id, a.created_at AS created_at"
+		" RETURN ID(a) AS id, a.created_at AS created_at "
 		feed = clause.execute
 
 		feed.sort_by!{|single_feed| single_feed["created_at"]}
