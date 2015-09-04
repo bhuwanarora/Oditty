@@ -147,6 +147,10 @@ class Community < Neo
 		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
 	end
 
+	def self.search_by_index name
+		" MATCH (community:Community{indexed_community_name: \'" + name.search_ready + "\'}) WITH community "
+	end
+
 	def self.top_communities user_id, skip_count=0
 		" MATCH (community:Community) WITH community " + Community.return_init + Community.basic_info + Community.order_by("community.follow_count, community.view_count DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::CommunitiesSuggested) 
 	end
