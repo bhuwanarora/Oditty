@@ -11,8 +11,26 @@ module UserHelper
 	end
 
 	def self.wait_list_decrement
-		clause = User.match + User.daily_decrement_wait_list
-		clause.execute
+		clause = User.match + User.daily_decrement_wait_list + User.return_group(User.authentication_info, "user.email AS email")
+		neo_output = clause.execute
+		debugger
+		neo_output.each do |output|
+			if output["wait_list_count"].present? && output["wait_list_count"] > 0
+				params =
+				{
+					:waitlist => output["wait_list_count"],
+					:email => output["email"]
+				}
+				SubscriptionMailer.waitlist(params).deliver
+			elsif output["wait_list_count"].present? && output["wait_list_count"] == 0
+				params =
+				{
+					:waitlist => output["wait_list_count"],
+					:email => output["email"]
+				}
+				SubscriptionMailer.waitlist_zero(params).deliver
+			end
+		end
 	end
 
 end
