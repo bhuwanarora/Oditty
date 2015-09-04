@@ -41,7 +41,7 @@ class User::Authenticate::SignIn < User::Authenticate
 	end
 
 	def self.set_in_wait_list user_hash
-		if user_hash["wait_list_count"] > 0
+		if user_hash["wait_list_count"].present? && user_hash["wait_list_count"] > 0
 			user_hash["in_wait_list"] = true
 		else
 			user_hash["in_wait_list"] = false
