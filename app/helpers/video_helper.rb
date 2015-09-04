@@ -22,4 +22,13 @@ module VideoHelper
 		GraphHelper.iterative_entity_operations params
 	end
 
+	def self.add_videos
+		clause = "MATCH (c:Community) WHERE NOT (c)-[]-(:Video) RETURN ID(c) AS id"
+		ids = clause.execute
+		for id in ids
+			id = id["id"]
+			VideosWorker.perform_async(VideosWorker::WorkAddToCommunityAutomated,{:id => id})
+		end
+	end
+
 end
