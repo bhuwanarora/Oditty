@@ -20,13 +20,13 @@ module FeedHelper
 
 		feed.sort_by!{|single_feed| single_feed["created_at"]}
 
-		clause = " MATCH (n1), (n2) WHERE ID(n1)="+user_id.to_s+" AND ID(n2)="+feed[0].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
+		clause = " MATCH (n1), (n2) WHERE ID(n1)="+user_id.to_s+" AND ID(n2)="+feed[0]["id"].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 		clause.execute
 		for index in 0..(feed.length - 1)
-			clause = " MATCH (n1), (n2) WHERE ID(n1)="+feed[index].to_s+" AND ID(n2)="+feed[index+1].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
+			clause = " MATCH (n1), (n2) WHERE ID(n1)="+feed[index]["id"].to_s+" AND ID(n2)="+feed[index+1]["id"].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 			clause.execute
 		end
-		clause = " MATCH (n1), (n2) WHERE ID(n1)="+feed[feed.length - 1].to_s+" AND ID(n2)="+user_id.to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
+		clause = " MATCH (n1), (n2) WHERE ID(n1)="+feed[feed.length - 1]["id"].to_s+" AND ID(n2)="+user_id.to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 		clause.execute
 	end
 end
