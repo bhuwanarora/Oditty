@@ -156,9 +156,16 @@ class User < Neo
 	end
 
 	def self.daily_decrement_wait_list
-		wait_list_count = " user.wait_list_count -" + RedisHelper::UserWaitList::UserWaitListDecrementOnEachDay.to_s + " "
+		decrement_count 	= RedisHelper::UserWaitList::UserWaitListDecrementOnEachDay.to_s
+		decrement_string 	= " user.wait_list_count -" + decrement_count + " "
+		zero_to_threshold 	= "user.wait_list_count >= 0 AND user.wait_list_count <= " + decrement_count + " "
+		more_than_threshold = "user.wait_list_count > " + decrement_count + " "
 		clause = ""\
-		" SET user.wait_list_count = (CASE WHEN (" + wait_list_count + " > 0) THEN " + wait_list_count + " ELSE 0 END ) "
+		" SET user.wait_list_count = ( CASE "\
+			" WHEN ( " + zero_to_threshold + ") THEN 0 "\
+			" WHEN ( " + more_than_threshold + ") THEN " + decrement_string + " "\
+			" ELSE NULL "\
+		" END ) "
 		clause
 	end
 
