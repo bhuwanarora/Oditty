@@ -11,15 +11,11 @@ module Api
 
 			def get_testimonials
 				skip = params[:skip]
-<<<<<<< HEAD
-				info = Api::V0::TestimonialApi.get_all skip
-=======
 				info = RedisHelper::Testimonial.get_all skip
 				if info.empty?
 					info = Api::V0::TestimonialApi.get_all skip
 					RedisHelper::Testimonial.set_all({:skip => skip, :info => info})
 				end
->>>>>>> 66fcd8a... added files
 				render :json => info, :status => 200
 			end
 		end
