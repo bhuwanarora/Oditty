@@ -272,42 +272,24 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.info.show_share = false;
         var url = $location.absUrl();
 
-        _get_user_details();
-
-        // var _handle_labels = function(){
-        //     if(angular.isUndefined($cookieStore.get('labels')) || $cookieStore.get('labels') == null || $cookieStore.get('labels').length == 0){
-        //         var data_timeout = $timeout(function(){
-        //             shelfService.get_all_shelves().then(function(data){
-        //                 $rootScope.labels = data;
-        //                 $cookieStore.put('labels', data);
-        //             });
-        //         }, 100);
-        //         $scope.$on('destroy', function(){
-        //             $timeout.cancel(data_timeout);
-        //         });
-        //     }
-        //     else{
-        //         $rootScope.labels = $cookieStore.get('labels');
-        //     }
-        // }
-
         $scope.search_results = [];
 
         if(getCookie("logged") != ""){
             $scope.info.hide_signin = true;
+            _get_user_details();
+            var todo = getCookie("todo");
+
+            if(!todo){
+                $scope.fetch_todos();
+            }
+            else{
+                $scope.todo = JSON.parse(todo);
+            }
         }
 
         $scope.data = {"selectedIndex" : 0};
         // deleteCookie("todo");
 
-        var todo = getCookie("todo");
-
-        if(!todo){
-            $scope.fetch_todos();
-        }
-        else{
-            $scope.todo = JSON.parse(todo);
-        }
 
     }());
 
