@@ -4,8 +4,8 @@ module RedisHelper::Testimonial
 		$redis.del key
 	end
 
-	def self.set_all skip
-		key = RedisHelper::User.get_key_details skip
+	def self.set_all params
+		key = RedisHelper::User.get_key_details params[:skip]
 		$redis.set(key, params[:info].to_json)
 		$redis.expire(key, RedisHelper::MonthExpiry)
 	end
