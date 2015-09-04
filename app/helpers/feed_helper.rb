@@ -15,13 +15,14 @@ module FeedHelper
 		"RETURN ID(a) AS id, a.created_at AS created_at"\
 		"UNION ALL MATCH (a:StatusNode) "\
 		"WHERE a.user_id = "+user_id.to_s+" "\
-		"RETURN ID(a) AS id, a.created_at AS created_at"\
+		"RETURN ID(a) AS id, a.created_at AS created_at"
 		feed = clause.execute
+
 		feed.sort_by!{|single_feed| single_feed["created_at"]}
-		
+
 		clause = " MATCH (n1), (n2) WHERE ID(n1)="+user_id.to_s+" AND ID(n2)="+feed[0].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 		clause.execute
-		for i in 0..(feed.length - 1) do |index|
+		for index in 0..(feed.length - 1)
 			clause = " MATCH (n1), (n2) WHERE ID(n1)="+feed[index].to_s+" AND ID(n2)="+feed[index+1].to_s+" CREATE UNIQUE (n1)-[:FeedNext{user_id:"+user_id.to_s+"}]->(n2) "
 			clause.execute
 		end
