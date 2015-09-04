@@ -1,4 +1,8 @@
 module FeedHelper
+   	# Note that we are treating notifications, global feed and any other feed as feed
+   	ActionCreate = "Create"
+   	ActionUpdate = "Update"
+   	ActionDelete = "Delete"
 
 	def self.create_user_feed user_id
 		clause = "MATCH ()-[r:FeedNext{user_id:"+user_id.to_s+"}]-() DELETE r"
