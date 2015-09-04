@@ -7,9 +7,16 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         var skip = $scope.books.length;
         gamesService.get_books(skip).then(function(data){
             $scope.books = $scope.books.concat(data);
-            debugger
-            $scope.book = $scope.books[$scope.active_index];
+            $scope.set_book();
         });
+    }
+
+    $scope.set_book = function(){
+        delete $scope.book;
+        $scope.book = $scope.books[$scope.active_index];
+        $scope.book.isbn = $scope.book.isbn.split(",")[0];
+        $scope.game_background = {"background-image": "url('http://rd-images.readersdoor.netdna-cdn.com/"+$scope.book.isbn+"/L.jpg')"};
+        $scope.book.user_rating = 0;
     }
 
     $scope.get_users = function(){
@@ -34,17 +41,16 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
     $scope.next_book = function(){
         if($scope.next){
             $scope.next = false;
-            if($scope.active_index == 10){
+            if($scope.active_index == 9){
                 $scope.message = "Done!";
                 $scope.done = true;
                 $scope.play = true;
+                $scope.score = parseInt($scope.score);
                 $scope.play_message = "Play Again";
             }
             else{
                 $scope.active_index = $scope.active_index + 1;
-                delete $scope.book;
-                $scope.book = $scope.books[$scope.active_index];
-                $scope.book.user_rating = 0;
+                $scope.set_book();
             }
         }
         else{
