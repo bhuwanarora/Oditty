@@ -37,7 +37,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile || @book || @news || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
+        class="<% if @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
@@ -49,6 +49,8 @@
             <% elsif @authors %>
                 <md-content class="white super_container" flex ng-controller="authorsController" 
                     check-scroll-bottom="get_authors_interviewed()">
+            <% elsif @games %>
+                <md-content class="white super_container" flex ng-controller="gamesController">
             <% elsif @testimonials %>
                 <md-content class="white super_container" flex ng-controller="testimonialsController" 
                     check-scroll-bottom="get_testimonials()">
@@ -164,9 +166,9 @@
                 <script src="assets/angular/constants/staging.js"></script>
             <% else %>
                 <script src="assets/angular/constants/development.js"></script>
+                <script src="assets/angular/httpbackend/server_data_model.js"></script>
+                <script src="assets/angular/httpbackend/main.js"></script>
             <% end %>
-            <script src="assets/angular/httpbackend/server_data_model.js"></script>
-            <script src="assets/angular/httpbackend/main.js"></script>
             <script src="assets/angular/services/user_service.js"></script>
             <script src="assets/angular/services/genre_service.js"></script>
             <script src="assets/angular/services/book_service.js"></script>
@@ -205,6 +207,9 @@
                 <script src="assets/angular/controllers/rooms_controller.js"></script>
             <% elsif @ads %>
                 <script src="assets/angular/controllers/ads_controller.js"></script>
+            <% elsif @games %>
+            <script src="assets/angular/services/games_service.js"></script>
+                <script src="assets/angular/controllers/games_controller.js"></script>
             <% elsif @authors %>
                 <script src="assets/angular/controllers/authors_controller.js"></script>
             <% elsif @news_group %>

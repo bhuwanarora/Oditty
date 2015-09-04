@@ -1,0 +1,1 @@
+homeApp.service("gamesService",["$http","$q","$rootScope","WebsiteUIConstants",function(a,b,c,d){this.get_books=function(c){return _deferred_request("/api/v0/get_game_books?skip="+c,b,a)},this.get_users=function(c){return _deferred_request("/api/v0/get_game_users?skip="+c,b,a)}}]);

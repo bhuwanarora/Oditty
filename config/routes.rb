@@ -144,7 +144,7 @@ ReadersDoor::Application.routes.draw do
   get "testimonials"                   => "website#testimonials",            :as => "testimonials"
   post 'webhooks'                        => "website#webhooks",                  :as => "webhooks"
 
-
+  get 'games'                         => "website#games",                 :as => "games"
 
   get "odit_book"                   => "odit#book",            :as => "odit_book"
   get "odit_filters"                   => "odit#filters",            :as => "odit_filters"
