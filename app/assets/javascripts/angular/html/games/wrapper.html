@@ -1,0 +1,14 @@
+<div class="message animate-fast" ng-if="message" layout-align="center center" layout="column">
+	<div ng-bind-html="message"></div>
+	<h1 ng-if="done">
+		{{score*10}}% Accuracy
+	</h1>
+	<div ng-if="play">
+		<video controls="controls" width="320" height="240" autoplay loop
+			src="/assets/rate.mov"></video>
+	</div>
+	<div>
+		<md-button class="md-button-clear md-raised md-warn" 
+			ng-if="play" ng-bind-html="play_message" ng-click="start_playing()"></md-button>
+	</div>
+</div>
