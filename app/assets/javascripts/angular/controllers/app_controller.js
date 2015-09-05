@@ -186,7 +186,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
                 "/"+app_id,
                 function (response) {
                     if(response && !response.error){
-                        websiteService.handle_facebook_books(response);
+                        websiteService.map_facebook_books(response);
                     }
                 }
             );
