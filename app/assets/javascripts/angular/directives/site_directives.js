@@ -15,99 +15,147 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                 var rooms = [
                     {
                         "name" : "Social Psychology",
-                        "id": 4998086
+                        "id": 4998086,
+                        "col": 4,
+                        "row": 4
                     },
                     {
                         "name" : "Comic Book Superhero",
-                        "id": 5017968
+                        "id": 5017968,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Political Philosophy",
-                        "id": 4972796
+                        "id": 4972796,
+                        "col": 2,
+                        "row": 2
                     },
                     // {
                     //     "name" : "Art History",
-                    //     "id": 4977592
+                    //     "id": 4977592,
+                    // "col": 2,
+                    // "row": 2
                     // },
                     {
                         "name" : "Sports",
-                        "id": 5024590
+                        "id": 5024590,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Brain",
-                        "id": 4988942
+                        "id": 4988942,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Religion",
-                        "id": 5023062
+                        "id": 5023062,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Technology",
-                        "id": 5021552
+                        "id": 5021552,
+                        "col": 4,
+                        "row": 2
                     },
                     {
                         "name" : "Health",
-                        "id": 5020478
+                        "id": 5020478,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Blanching(Cooking)",
-                        "id": 5107299
+                        "id": 5107299,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Kumaon Literary Festival",
-                        "id": 5408842
+                        "id": 5408842,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Medicine",
-                        "id": 5020467
+                        "id": 5020467,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Pornography Ring",
-                        "id": 5002021
+                        "id": 5002021,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Harry Potter Universe",
-                        "id": 5250069
+                        "id": 5250069,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Sports Cars",
-                        "id": 4978290
+                        "id": 4978290,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Ghost",
-                        "id": 5014454
+                        "id": 5014454,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Self Portrait",
-                        "id": 4996889
+                        "id": 4996889,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Travel",
-                        "id": 4980414
+                        "id": 4980414,
+                        "col": 4,
+                        "row": 4
                     },
                     {
                         "name" : "Walt Disney Co",
-                        "id": 5100214
+                        "id": 5100214,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Biology",
-                        "id": 5023104
+                        "id": 5023104,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Quantum Gravity",
-                        "id": 5013921
+                        "id": 5013921,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Time",
-                        "id": 4980633
+                        "id": 4980633,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Space",
-                        "id": 4975850
+                        "id": 4975850,
+                        "col": 2,
+                        "row": 2
                     },
                     {
                         "name" : "Terrorism",
-                        "id": 5035970
+                        "id": 5035970,
+                        "col": 2,
+                        "row": 2
                     },
 
                 ];
