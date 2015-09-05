@@ -15,32 +15,6 @@ module Api
 					IndexerWorker.perform_async(params_indexer)  	
 				end  
 			end
-
-			def self.test_
-				json_string = "{
-			  \"id\": \"106488369388190\", 
-			  \"can_post\": false, 
-			  \"category\": \"Book\", 
-			  \"checkins\": 0, 
-			  \"description\": \" test description \", 
-			  \"has_added_app\": false, 
-			  \"is_community_page\": true, 
-			  \"is_published\": true, 
-			  \"likes\": 39295, 
-			  \"link\": \"https://www.facebook.com/pages/The-Twits/108160689204689\", 
-			  \"name\": \"Sir Nigel and the White Company\", 
-			  \"parking\": {
-			    \"lot\": 0, 
-			    \"street\": 0, 
-			    \"valet\": 0
-			  }, 
-			  \"talking_about_count\": 60, 
-			  \"were_here_count\": 0, 
-			  \"written_by\": \"Arthur Conan Doyle\"
-			}"
-			params = JSON.parse(json_string)
-			self.map params
-			end
 		end
 	end
 end
