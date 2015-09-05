@@ -13,7 +13,6 @@ module UserHelper
 	def self.wait_list_decrement
 		clause = User.match + User.daily_decrement_wait_list + User.return_group(User.authentication_info, "user.email AS email")
 		neo_output = clause.execute
-		debugger
 		neo_output.each do |output|
 			if output["wait_list_count"].present? && output["wait_list_count"] > 0
 				params =
