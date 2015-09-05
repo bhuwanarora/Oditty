@@ -13,5 +13,9 @@ class User::Game < User
 		
 	end
 
+	def save_score
+		
+	end
+
 
 end
