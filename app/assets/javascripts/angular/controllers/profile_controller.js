@@ -205,9 +205,16 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         else{
         	userService.get_user_details($scope.active_user_id).then(function(data){
     			$scope.profile_user = data;
+    			_set_profile_wrapper();
     		});
         }
     }
+
+    var _set_profile_wrapper = function(){
+    	var image =  $scope.profile_user.image_url || '/assets/user_profile.jpg';
+    	$scope.profile_wrapper = {'background-image': image};
+    }
+
 
     var _handle_id_from_url = function(url_parser){
     	var user_is_me = false;
@@ -226,6 +233,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
     var _set_my_profile = function(){
     	$scope.profile_user = $rootScope.user;
         $scope.active_user_id = $scope.profile_user.id;
+        _set_profile_wrapper();
     }
 
     var _handle_me = function(){
@@ -290,7 +298,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
        _get_feed();
        $scope.is_profile = true;
 
-       
 
     }());
 }]);

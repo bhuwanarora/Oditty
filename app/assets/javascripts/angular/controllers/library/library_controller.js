@@ -66,7 +66,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                 "bookmark_count": $scope.info.books[index].bookmark_count,
                 "goodness_index": $scope.info.books[index].goodness_index,
                 "book_reader_relationship_index": $scope.info.books[index].book_reader_relationship_index,
-                "likeability_index": $scope.info.books[index].likeability_index,
+                "likability_index": $scope.info.books[index].likeability_index,
                 "popularity_index": $scope.info.books[index].popularity_index
             }
             $scope.expanded_index = index;
