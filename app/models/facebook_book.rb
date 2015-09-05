@@ -16,7 +16,8 @@ class FacebookBook < Neo
 	end
 
 	def merge book
-		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + book["type"].to_s.gsub("book.","") + "\", book :Book WITH book "
+		type_string = FacebookBook.get_type(book["type"])
+		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + type_string + "\" WITH book "
 	end
 
 	def handle_relations original_book_id, relations
@@ -90,5 +91,11 @@ class FacebookBook < Neo
 	private
 	def self.set_property( property ,first_preference, second_prefernce)
 		" SET facebook_book." + property + " = CASE WHEN " + first_preference + " IS NULL THEN " + second_prefernce + " ELSE " + first_preference + " END "
+	end
+
+	def self.get_type booktype
+		type_string = booktype.gsub("books.","").split(":")
+		output = type_string[type_string.length - 1]
+		output
 	end
 end
