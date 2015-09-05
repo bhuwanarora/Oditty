@@ -11,6 +11,8 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                 if(angular.isDefined(follow_node) && (follow_node != null)){
                     $scope.active_tag.status = true;
                 }
+                $scope.refresh_data();
+                $scope.get_community_news();
             });
         }
     }
@@ -88,7 +90,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_active_class = function(path){
-        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/books");
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/news");
         if(($location.path().substr(1, path.length+1) == path) || is_init){
             return "bold red_color";
         } else {
@@ -134,9 +136,15 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_community_news = function(){
-        var is_news_tab = $location.path() == "/room/news";
-        if(angular.isDefined($scope.active_tag) && is_news_tab){
-            var id = $scope.active_tag.id;
+        var is_news_tab = $location.path() != "/room/books" && $location.path() != "/room/videos" && $location.path() != "/room/wiki";
+        // if(angular.isUndefined($scope.active_tag)){
+        //     $scope.active_tag.news = {};
+        // }
+        var id = $scope.active_tag.id;
+        if(angular.isUndefined($scope.active_tag.news)){
+            $scope.active_tag.news = [];
+        }
+        if(is_news_tab){
             var skip_count = $scope.active_tag.news.length;
             if(!$scope.info.loading){
                 $scope.info.loading = true;
@@ -151,17 +159,27 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
     }
 
+    var _handle_todo_update = function(){
+        var todo = getCookie("todo");
+        if(todo){
+            todo = JSON.parse(todo);
+            if(!todo.rooms.visit){
+                deleteCookie("continue_to");
+                setCookie("continue_to", $location.absUrl());
+                window.location.href = "/odit_room";
+            }
+        }
+    }
+
     var _init = (function(){
+        _handle_todo_update();
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
         if(url_parsed != null){
-            $scope.info.loading = true;
+            // $scope.info.loading = true;
             var id = url_parsed[2];
             $scope.active_tag = {"id": id};
             $scope.get_detailed_community_info();
-            $timeout(function(){
-                $scope.refresh_data();
-            }, 2000);
         }
         else{
             alert("Bad url");
@@ -171,19 +189,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
         $scope.is_room = true;
 
-        var _handle_todo_update = function(){
-            var todo = getCookie("todo");
-            if(todo){
-                todo = JSON.parse(todo);
-                if(!todo.rooms.visit){
-                    deleteCookie("continue_to");
-                    setCookie("continue_to", $location.absUrl());
-                    window.location.href = "/odit_room";
-                }
-            }
-        }
 
-        _handle_todo_update();
 
         $scope.limit_count = 6;
     }());

@@ -1,41 +1,76 @@
-<div class="light_grey md-whiteframe-z1" layout="row" layout-align="space-between center">
-    <div layout-padding></div>
-    <div layout="row">
-        <a ng-href="#room/books" 
-            ng-class="get_active_class('room/books')" layout-padding>
-           	<div layout="column" layout-align="center center">
-    	       	<div><i class="material-icons">library_books</i></div>
-    	        <div hide-sm>Books</div>
-    	    </div>
-        </a>
-        <a ng-href="#room/news" ng-click="update_room_news_visit()"
-            ng-class="get_active_class('room/news')" layout-padding>
-           	<div layout="column" layout-align="center center">
-    	       	<div><i class="material-icons">local_library</i></div>
-    	        <div hide-sm>News</div>
-    	    </div>
-        </a>
-        <a ng-href="#room/videos" 
-            ng-class="get_active_class('room/videos')" layout-padding>
-           	<div layout="column" layout-align="center center">
-    	       	<div><i class="material-icons">video_library</i></div>
-    	        <div hide-sm>Videos</div>
-    	    </div>
-        </a>
-        <a ng-href="#room/wiki" 
-            ng-class="get_active_class('room/wiki')" layout-padding>
-           	<div layout="column" layout-align="center center">
-    	       	<div><i class="material-icons">toys</i></div>
-    	        <div hide-sm>Wiki</div>
-    	    </div>
-        </a>
-    </div>
-    <div  ng-include src="'/assets/angular/html/todo/link.html'" 
-        ng-if="!todo.room.news || !todo.room.rating"></div>
-    <div ng-if="user && (user.id == 4986324)">
-        <md-button ng-click="add_videos()">
-            <md-icon md-font-set="material-icons">cloud_upload</md-icon>
-            <md-tooltip>Upload Videos</md-tooltip>
-        </md-button></div>
-    <div layout-padding></div>
+<div class="profile_container">
+    <div class="dark_wrapper"></div>
+    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{active_tag.id}}/M.png"  class="profile_wrapper">
 </div>
+<div flex="10" flex-md="5" hide-sm></div>
+<div flex="80" flex-md="90" flex-sm="100">
+    <div layout="column" layout-align="center center" class="profile_header">
+        <div layout-padding></div>
+        <div layout-padding></div>
+        <div layout="column" layout-align="center center" class="z_index_1">
+            <h2 class="bold white_color" ng-bind-html="active_tag.name"></h2>
+            <div layout-padding></div>
+            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{active_tag.id}}/M.png" class="profile_pic" layput-padding/>
+            <div layout-padding></div>
+            <div layout="row" layout-align="end start" layout-padding class="top_section">
+                <md-button aria-label="toggle_follow" ng-class="{'md-raised': !active_tag.status}" 
+                    class="md-warn md-button-clear" ng-click="toggle_follow()">
+                    <span ng-if="!active_tag.status">Join Room&nbsp;</span>
+                    <span ng-if="active_tag.status">Joined</span>
+                    <span ng-if="!active_tag.status" class="icon-user-add"></span>
+                </md-button>
+            </div>
+        </div>
+        <div layout-padding></div>
+        <div class="light_grey md-whiteframe-z1 z_index_1 full_width" layout="row" layout-align="space-between center" flex>
+            <div layout-padding></div>
+            <div layout="row">
+                <a ng-href="#room/news" ng-click="update_room_news_visit()"
+                    ng-class="get_active_class('room/news')" layout-padding>
+                   	<div layout="column" layout-align="center center">
+            	       	<div><i class="material-icons">local_library</i></div>
+            	        <div hide-sm>News</div>
+            	    </div>
+                </a>
+                <a ng-href="#room/books" 
+                    ng-class="get_active_class('room/books')" layout-padding>
+                    <div layout="column" layout-align="center center">
+                        <div><i class="material-icons">library_books</i></div>
+                        <div hide-sm>Books</div>
+                    </div>
+                </a>
+                <a ng-href="#room/videos" 
+                    ng-class="get_active_class('room/videos')" layout-padding>
+                   	<div layout="column" layout-align="center center">
+            	       	<div><i class="material-icons">video_library</i></div>
+            	        <div hide-sm>Videos</div>
+            	    </div>
+                </a>
+                <a ng-href="#room/wiki" 
+                    ng-class="get_active_class('room/wiki')" layout-padding>
+                   	<div layout="column" layout-align="center center">
+            	       	<div><i class="material-icons">toys</i></div>
+            	        <div hide-sm>Wiki</div>
+            	    </div>
+                </a>
+            </div>
+            <div  ng-include src="'/assets/angular/html/todo/link.html'" 
+                ng-if="!todo.room.news || !todo.room.rating"></div>
+            <div ng-if="user && (user.id == 4986324)">
+                <md-button ng-click="add_videos()">
+                    <md-icon md-font-set="material-icons">cloud_upload</md-icon>
+                    <md-tooltip>Upload Videos</md-tooltip>
+                </md-button></div>
+            <div layout-padding></div>
+        </div>
+    </div>
+</div>
+<div flex="10" flex-md="5" hide-sm></div>
+    
+<style>
+    .profile_pic{
+        width: 150px !important;
+        border: 5px solid white;
+    }
+
+</style>
