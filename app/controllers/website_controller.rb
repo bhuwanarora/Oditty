@@ -190,7 +190,7 @@ class WebsiteController < ApplicationController
 			else
 				@info["image_url"] = "https://scontent-cdg.xx.fbcdn.net/hphotos-xpf1/t31.0-8/10958828_401228046714738_8995198285620261747_o.jpg";
 			end
-			@info["description"] ||= "Discovering me through Books, News and Videos."
+			@info["description"] ||= "Discovering me through News, Books and Videos."
 			render :layout => "social"
 		else
 			user_id = session[:user_id]
@@ -264,7 +264,7 @@ class WebsiteController < ApplicationController
 		if BotDetector.detect(request.env['HTTP_USER_AGENT'])
 			id = params[:id] || params[:q]
 			@info = Community.new(id).get_basic_info.execute[0]
-			@info["description"] = "Discovering me through Books, News and Videos."
+			@info["description"] = "Discovering me through News, Books and Videos."
 			render :layout => "social"
 		else
 			user_id = session[:user_id]

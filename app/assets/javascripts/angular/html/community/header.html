@@ -9,6 +9,13 @@
         <div layout-padding></div>
         <div layout="column" layout-align="center center" class="z_index_1">
             <h2 class="bold white_color" ng-bind-html="active_tag.name"></h2>
+            <div layout="row" layout-column ng-hide="hide_follow_links" class="white_color less_important">
+                <div ng-if="active_tag.view_count && active_tag.view_count != 0">
+                    <span>{{active_tag.view_count}} </span>
+                    <span ng-if="active_tag.view_count == 1">View</span>
+                    <span ng-if="active_tag.view_count != 1">Views</span>
+                </div>
+            </div>
             <div layout-padding></div>
             <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{active_tag.id}}/M.png" class="profile_pic" layput-padding/>
             <div layout-padding></div>
@@ -21,15 +28,41 @@
                 </md-button>
             </div>
         </div>
+         <div layout="row" layout-align="start center">
+            <a title="facebook" ng-if="active_tag.facebook_url"
+                class="md-whiteframe-z1 facebook" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="{{::active_tag.facebook_url}}">
+                <div>
+                    <span class="icon-facebook"></span>
+                </div>
+            </a>
+            <a title="twitter" ng-if="active_tag.twitter_handle" 
+                class="md-whiteframe-z1 twitter" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="http://twitter.com/{{::active_tag.twitter_handle}}">
+                <div>
+                    <span class="icon-twitter"></span>
+                </div>
+            </a>
+            <a title="website" ng-if="active_tag.website_url" 
+                class="md-whiteframe-z1 google-plus" layout-padding layout-align="center center" layout-margin
+                layout="row"
+                target="_blank" ng-href="{{::active_tag.website_url}}">
+                <div>
+                    <i class="material-icons">link</i>
+                </div>
+            </a>
+        </div>
         <div layout-padding></div>
         <div class="light_grey md-whiteframe-z1 z_index_1 full_width" layout="row" layout-align="space-between center" flex>
             <div layout-padding></div>
             <div layout="row">
-                <a ng-href="#room/news" ng-click="update_room_news_visit()"
-                    ng-class="get_active_class('room/news')" layout-padding>
+                <a ng-href="#room/home" ng-click="update_room_news_visit()"
+                    ng-class="get_active_class('room/home')" layout-padding>
                    	<div layout="column" layout-align="center center">
-            	       	<div><i class="material-icons">local_library</i></div>
-            	        <div hide-sm>News</div>
+            	       	<div><i class="material-icons">home</i></div>
+            	        <div hide-sm>home</div>
             	    </div>
                 </a>
                 <a ng-href="#room/books" 

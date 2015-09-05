@@ -194,21 +194,6 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
 
         $scope.limit_count = 8;
 
-
-        var _handle_todo_update = function(){
-            var todo = getCookie("todo");
-            if(todo){
-                todo = JSON.parse(todo);
-                if(!todo.book.author){
-                    deleteCookie("continue_to");
-                    setCookie("continue_to", $location.absUrl());
-                    window.location.href = "/odit_author";
-                }
-            }
-        }
-
-        _handle_todo_update();
-
     }());
 
 }]);

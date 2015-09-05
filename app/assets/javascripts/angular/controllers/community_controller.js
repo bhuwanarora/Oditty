@@ -90,7 +90,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_active_class = function(path){
-        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/news");
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/home");
         if(($location.path().substr(1, path.length+1) == path) || is_init){
             return "bold red_color";
         } else {
@@ -159,20 +159,9 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
     }
 
-    var _handle_todo_update = function(){
-        var todo = getCookie("todo");
-        if(todo){
-            todo = JSON.parse(todo);
-            if(!todo.rooms.visit){
-                deleteCookie("continue_to");
-                setCookie("continue_to", $location.absUrl());
-                window.location.href = "/odit_room";
-            }
-        }
-    }
+   
 
     var _init = (function(){
-        _handle_todo_update();
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
         if(url_parsed != null){
@@ -188,9 +177,6 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
             $scope.popular_books = [];
         }
         $scope.is_room = true;
-
-
-
         $scope.limit_count = 6;
     }());
 

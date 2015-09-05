@@ -1,4 +1,4 @@
-<md-list layout="row" layout-wrap>
+<md-list layout="row" layout-wrap layout-align="center center">
     <a ng-repeat="user in active_tag.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" 
         layout="row" layout-align="center center">
         <img class="square" ng-src="{{user.image_url || '/assets/user_profile.jpg'}}"  alt="{{::user.first_name}} {{::user.last_name}}" onerror="this.src='/assets/user_profile.jpg'"/>&nbsp;
