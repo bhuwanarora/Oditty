@@ -57,6 +57,10 @@ class Book < Neo
 		" MATCH (author:Author)-[:Wrote]->(book) WITH author, book "
 	end
 
+	def self.merge_author book = 'book'
+		" MERGE (author)-[:Wrote]->(" + book + ") WITH author, " + book + " "
+	end
+
 	def self.set_bookmark_count operation
 		if operation == "+"
 			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 0)) + 1 "

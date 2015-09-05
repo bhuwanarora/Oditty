@@ -17,7 +17,7 @@ module Api
 
 			def map_fb_book
 				book_data = params[:book]
-				Api::V0::FacebookApi.map_fb_book book_data
+				Api::V0::FacebookApi.map book_data
 				render :json => "Success", :status => 200
 			end
 
