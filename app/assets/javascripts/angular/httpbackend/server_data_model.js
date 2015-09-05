@@ -27,6 +27,14 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_user_score = function(){
+        return {
+            "ranking": 23,
+            "score": 567,
+            "games": 45
+        }
+    }
+
     this.get_game_users = function(){
         return [
             {
