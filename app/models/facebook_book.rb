@@ -55,6 +55,7 @@ class FacebookBook < Neo
 		facebook_description = params["description"] rescue ""
 		facebook_talking_about_count = params["talking_about_count"] rescue 0
 		facebook_likes_count = params["likes"] rescue 0
+		facebook_book_name = params["name"].strip
 
 		author = params["written_by"]
 		author_search_index = author.search_ready
@@ -62,6 +63,7 @@ class FacebookBook < Neo
 		title = params["name"]
 		title_search_index = title.search_ready
 		clause = 
+		" SET facebook_book.facebook_book_title = \'" + title + "\' " +
 		" SET facebook_book.facebook_id = " + facebook_id.to_s + 
 		" SET facebook_book.facebook_likes = " + facebook_likes.to_s + 
 		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\"" +
@@ -77,7 +79,12 @@ class FacebookBook < Neo
 
 	def self.set_book_property
 		FacebookBook.set_property("url", "facebook_book.url", "facebook_book.facebook_url") +
-		FacebookBook.set_property("description", "facebook_book.description", "facebook_book.facebook_description") + ""
+		FacebookBook.set_property("description", "facebook_book.description", "facebook_book.facebook_description") +
+		FacebookBook.set_property("title", "facebook_book.title", "facebook_book.facebook_book_title") + " "
+	end
+
+	def self.set_book_label
+		" SET facebook_book:Book "
 	end
 
 	private
