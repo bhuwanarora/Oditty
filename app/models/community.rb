@@ -5,7 +5,7 @@ class Community < Neo
 	end
 
 	def get_combined_details
-		match + match_videos + Community.with_group("{#{Video.grouped_basic_info}} AS content") + Community.return_group("content") + Community.limit(4) + " UNION ALL " + Community.match_books + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{Book.grouped_basic_info}} AS content") + Community.return_group("content") + Community.limit(4) + " UNION ALL " + Community.match_news + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{News.grouped_basic_info}} AS content") + Community.return_group("content") + Community.limit(4)
+		match + match_videos + Community.with_group("{#{Video.grouped_basic_info}} AS content", , "labels(video) AS labels") + Community.return_group("content", "labels") + Community.limit(4) + " UNION ALL " + Community.match_books + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{Book.grouped_basic_info}} AS content", "labels(book) AS labels") + Community.return_group("content", "labels") + Community.limit(4) + " UNION ALL " + Community.match_news + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{News.grouped_basic_info}} AS content", "labels(news) AS labels") + Community.return_group("content", "labels") + Community.limit(4)
 	end
 
 	def self.grouped_books_users
