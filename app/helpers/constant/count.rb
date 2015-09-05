@@ -35,4 +35,6 @@ module Constant::Count
 
 	GoogleKeysCount				= 8
 	RoomPageRoomCount			= 12
+
+	TestimonialShowCount		= 10
 end
