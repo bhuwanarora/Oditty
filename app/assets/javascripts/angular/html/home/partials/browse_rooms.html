@@ -19,7 +19,7 @@
                     class="pointer">
             <a ng-href="/room?id={{trend.id}}" class="room_container">
                 <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
-                <md-grid-tile-footer layout="row" layout-padding>
+                <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
                     <div class="less_important white_color trend_name">{{trend.name}}</div>
                 </md-grid-tile-footer>
             </a>
@@ -54,8 +54,12 @@
         right: 0px;
         top: 0px;
         bottom: 0px;
-        border-radius: 5px;
+        border-radius: 2px;
         font-weight: 600;
+    }
+
+    #browseRooms md-grid-tile-footer:hover{
+        background-color: rgba(0, 0, 0, 0.7);
     }
 
     #browseRooms md-grid-tile-footer figcaption{
