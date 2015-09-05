@@ -4,6 +4,10 @@ class Community < Neo
 		@id = id
 	end
 
+	def get_combined_details
+		match + match_videos + Community.with_group("community", "video AS content") + Community.return_group("community", "content") + Community.limit(4) + " UNION ALL " + Community.match_books + Community.where_group("ID(Community) = #{@id}") + Community.with_group("community", "video AS content") + Community.return_group("community", "content") + Community.limit(4) + " UNION ALL " + Community.match_news + Community.where_group("ID(Community) = #{@id}") + Community.with_group("community", "video AS content") + Community.return_group("community", "content") + Community.limit(4)
+	end
+
 	def self.grouped_books_users
 		Community.optional_match_grouped_books + Community.optional_match_users + ", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info "})
 	end
