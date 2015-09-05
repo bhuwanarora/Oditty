@@ -2,7 +2,8 @@ module Api
 	module V0
 		class GamesApi
 
-			def self.get_books
+			def self.get_books user_id
+				User::Game.new(user_id).get_books
 			end
 
 			def self.get_users
