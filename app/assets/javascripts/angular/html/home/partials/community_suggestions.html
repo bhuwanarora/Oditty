@@ -18,7 +18,7 @@
             class="pointer">
         <a ng-href="/room?id={{trend.id}}">
             <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
-            <md-grid-tile-footer layout="row" layout-padding>
+            <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
             	<div class="less_important white_color">{{trend.name}}</div>
             	<div class="less_important white_color">{{trend.view_count}} Views</div>
             </md-grid-tile-footer>
@@ -28,3 +28,16 @@
 <div layout-padding>
     <a href="/news_group" class="less_important site_color bold">Today's News...</a>
 </div>
+<style>
+    md-grid-tile-footer{
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+    }
+
+    md-grid-tile-footer:hover{
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+</style>
