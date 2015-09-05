@@ -1,4 +1,4 @@
-homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '$timeout', 'feedService', function($scope, gamesService, $rootScope, $timeout, feedService){
+homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '$timeout', 'feedService', 'sharedService', function($scope, gamesService, $rootScope, $timeout, feedService, sharedService){
 
     $scope.get_books = function(){
         if(angular.isUndefined($scope.books)){
@@ -24,8 +24,9 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
     }
 
     $scope.toggle_bookmark = function(shelf){
+        var bookmark_object = {"type": "Book", "id": $scope.book.id};
+        sharedService.toggle_bookmark(shelf, shelf.status, bookmark_object, $scope);
         shelf.status = !shelf.status;
-        
     }
 
     $scope.get_users = function(){
@@ -56,6 +57,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
                 $scope.done = true;
                 $scope.play = true;
                 $scope.score = parseInt($scope.score);
+                $scope.save_score();
                 if(angular.isUndefined($scope.total_score)){
                     $scope.total_score = 0;
                 }
@@ -99,8 +101,23 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         }
     }
 
+    $scope.save_score = function(){
+        var score = {"score": $scope.score};
+        gamesService.save_score(score);
+    }
+
+    $scope.get_user_score = function(){
+        gamesService.get_user_score().then(function(data){
+            if(angular.isUndefined($rootScope.user)){
+                $rootScope.user = {};
+            }
+            $rootScope.user = angular.extend($rootScope.user, data);
+        });
+    }
+
     var _init = (function(){
         $scope.play = true;
+        $scope.get_user_score();
         $scope.play_message = "GOT IT";
         $scope.message = "<div class='guide'><div><b>How to Play</b></div><br/><div>We'll serve up 10 book covers in a row. Just slide the circle and rate the book based off its cover. Then click JUDGE.</div><br/><div>Got it?</div></div>";
     }());
