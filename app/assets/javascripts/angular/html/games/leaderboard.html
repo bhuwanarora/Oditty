@@ -3,6 +3,12 @@
 	<div layout-padding></div>
 	<div layout-padding></div>
 	<h1>Leaderboard</h1>
+	<div layout-padding layout="row">
+		<div layout-padding>I rank</div>
+		<div layout-padding>#{{user.ranking}}</div>
+		<div layout-padding>with a score of {{user.score}}</div>
+		<div layout-padding>in {{user.games}} games</div>
+	</div>
 	<div layout="column" flex>
 		<div layout="row" ng-repeat="user in users" layout-padding>
 			<div>
@@ -17,5 +23,10 @@
 			</div>
 		</div>
 	</div>
+	<div layout-align="center center" layout="row">
+		<a ng-click="get_users()">Show more people...</a>
+	</div>
+	<div layout-padding></div>
+	<div layout-padding></div>
 </section>
 <section flex="20" flex-md="5" hide-sm></section>
