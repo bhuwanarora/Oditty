@@ -16,7 +16,7 @@ class FacebookBook < Neo
 	end
 
 	def merge book
-		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + book["type"].to_s.gsub("book.","") + "\" WITH book "
+		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + book["type"].to_s.gsub("book.","") + "\", book :Book WITH book "
 	end
 
 	def handle_relations original_book_id, relations
@@ -55,12 +55,40 @@ class FacebookBook < Neo
 		facebook_description = params["description"] rescue ""
 		facebook_talking_about_count = params["talking_about_count"] rescue 0
 		facebook_likes_count = params["likes"] rescue 0
+		facebook_book_name = params["name"].strip
 
 		author = params["written_by"]
 		author_search_index = author.search_ready
 
 		title = params["name"]
 		title_search_index = title.search_ready
-		" SET facebook_book.facebook_id = " + facebook_id.to_s + " SET facebook_book.facebook_likes = " + facebook_likes.to_s + " SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + " SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + " SET facebook_book.facebook_url = \"" + params["link"].to_s + "\""
+		clause = 
+		" SET facebook_book.facebook_book_title = \'" + title + "\' " +
+		" SET facebook_book.facebook_id = " + facebook_id.to_s + 
+		" SET facebook_book.facebook_likes = " + facebook_likes.to_s + 
+		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\"" +
+		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + 
+		" SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + 
+		" SET facebook_book.facebook_url = \"" + params["link"].to_s + "\"" + 
+		" SET facebook_book.author_name = \'" + author + "\' " +
+		" " + FacebookBook.set_book_property + " " +
+		" WITH facebook_book " +
+		" " + Author.merge_by_index(author_search_index) + ", facebook_book " +
+		" " + Book.merge_author('facebook_book') + " "
+	end
+
+	def self.set_book_property
+		FacebookBook.set_property("url", "facebook_book.url", "facebook_book.facebook_url") +
+		FacebookBook.set_property("description", "facebook_book.description", "facebook_book.facebook_description") +
+		FacebookBook.set_property("title", "facebook_book.title", "facebook_book.facebook_book_title") + " "
+	end
+
+	def self.set_book_label
+		" SET facebook_book:Book "
+	end
+
+	private
+	def self.set_property( property ,first_preference, second_prefernce)
+		" SET facebook_book." + property + " = CASE WHEN " + first_preference + " IS NULL THEN " + second_prefernce + " ELSE " + first_preference + " END "
 	end
 end

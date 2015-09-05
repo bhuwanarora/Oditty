@@ -14,6 +14,10 @@ module Api
 				News.new(news_id).create_visited(user_id)
 			end
 
+			def self.get_combined_details id
+				Community.new(id).get_combined_details.execute
+			end
+
 			def self.suggest_communities user_id
 				# clause = User::Suggest::CommunitySuggestion.new(user_id).get_communities
 				clause = User::Suggest::CommunitySuggestion.get_trending_communities
