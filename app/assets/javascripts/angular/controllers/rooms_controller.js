@@ -48,19 +48,6 @@ homeApp.controller('roomsController', ["$scope", "$location", "roomsService", "$
 
     var _init = (function(){
         $scope.get_rooms();
-        var _handle_todo_update = function(){
-            var todo = getCookie("todo");
-            if(todo){
-                $scope.todo = JSON.parse(todo);
-                if(!$scope.todo.home.rooms){
-                    deleteCookie("continue_to");
-                    setCookie("continue_to", $location.absUrl());
-                    window.location.href = "/odit_rooms";
-                }
-            }
-        }
-
-        _handle_todo_update();
     }());
 
 }]);

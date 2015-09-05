@@ -592,3 +592,11 @@ h3 a:hover{
 .pointer_cursor{
     cursor: pointer;
 }
+
+
+#parent{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
