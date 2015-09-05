@@ -8,6 +8,11 @@ class Author < Neo
 		" MATCH (author: Author) "
 	end
 
+	def self.merge_by_index search_index
+		" MERGE (author:Author{search_index:\'" + search_index +  "\'}) "\
+		" WITH author "
+	end
+
 	def match
 		Author.match + " WHERE ID(author)="+@id.to_s+" WITH author "
 	end
