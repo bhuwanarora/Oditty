@@ -27,6 +27,116 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_community_news = function(){
+        var data = [
+                {
+                news: [
+                {
+                image_url: "http://s1.firstpost.in/wp-content/uploads/2015/08/Gomis-vs-United-Getty.jpg",
+                view_count: 0,
+                description: "Swansea City came from behind to end Manchester United's unbeaten start to the Premier League season with an impressive 2-1 victory at the Liberty Stadium on Sunday.",
+                news_id: 5787117,
+                news_url: "http://www.firstpost.com/sports/epl-surprising-swansea-shock-manchester-united-again-2414210.html",
+                bookmark_count: 0,
+                created_at: 1441074917,
+                title: "EPL: Surprising Swansea shock Manchester United again - Firstpost"
+                },
+                {
+                image_url: "http://manilastandardtoday.com/panel/_files/modbuild/wp-images/wp-content/uploads/2015/08/cc160__jimeno-300x300.jpg",
+                view_count: 0,
+                description: "For 117 years now, the Philippines has been independent of foreign subjugation, thanks to the self-sacrifice, bravery and heroism of our heroes.",
+                news_id: 5785799,
+                news_url: "http://manilastandardtoday.com/2015/08/31/wanted-new-heroes/",
+                bookmark_count: 0,
+                created_at: 1441064120,
+                title: "Wanted: new heroes - The Standard"
+                },
+                {
+                image_url: "http://e1.365dm.com/15/08/150x150/jose-mourinho-chelsea-manchester-city-premier-league_3340488.jpg",
+                view_count: 0,
+                description: "Jose Mourinho said he is as motivated as ever to win the Premier League and has called on his Chelsea players to re-discover their fire after a dismal start to the campaign.",
+                news_id: 5784722,
+                news_url: "http://www.skysports.com/football/news/11668/9973251/mourinho-burning-for-trophies",
+                bookmark_count: 0,
+                created_at: 1441062064,
+                title: "Jose Mourinho says his desire to win the title with Chelsea burns deep"
+                },
+                {
+                image_url: "http://media.therakyatpost.com/wp-content/uploads/2015/08/plug-L.jpg",
+                view_count: 0,
+                description: "DETROIT, Aug 31, 2015: A Nasa-sponsored research produced a liquid compound that hardens in a matter of seconds after contacting air, reported Russian news portal RT. The  liquid compound can be used to create self-sealing walls on aircraft, making punctures a less-threatening threat in space. RT reports that the resin must be put between a polymer …",
+                news_id: 5782910,
+                news_url: "http://www.therakyatpost.com/world/2015/08/31/scientists-create-self-healing-material-that-can-plug-holes-in-spaceships/",
+                bookmark_count: 0,
+                created_at: 1441050304,
+                title: "Scientists create self-healing material that can plug holes in spaceships - The Rakyat Post"
+                },
+                {
+                image_url: "http://e0.365dm.com/15/08/150x150/andre-ayew-goal_3344179.jpg",
+                view_count: 0,
+                description: "We pick out the key talking points from Swansea's 2-1 win over Manchester United at the Liberty Stadium. ",
+                news_id: 5782446,
+                news_url: "http://www.skysports.com/football/news/11667/9972976/swansea-2-1-manchester-united-talking-points-from-liberty-stadium",
+                bookmark_count: 0,
+                created_at: 1441049599,
+                title: "Swansea 2-1 Manchester United: Talking points from Liberty Stadium"
+                },
+                {
+                image_url: "http://www.freemalaysiatoday.com/wp-content/uploads/2015/08/Poon-Fook-Loke_600.jpg",
+                view_count: 0,
+                description: "When Malaysia stood as one nation to beat World Cup champions Holland",
+                news_id: 5782091,
+                news_url: "http://www.freemalaysiatoday.com/category/nation/2015/08/30/unsurpassed-after-40-years-fook-loke-recalls-1975-greats/",
+                bookmark_count: 0,
+                created_at: 1441048843,
+                title: "Unsurpassed after 40 years: Fook Loke recalls 1975 greats"
+                },
+                {
+                image_url: "http://s1.firstpost.in/wp-content/uploads/2015/08/Dhammika-Prasad_AP_Wicket.jpg",
+                view_count: 0,
+                description: "Live scores and updates of day 4 of the 3rd Test between Sri Lanka and India.",
+                news_id: 5775937,
+                news_url: "http://www.firstpost.com/sports/sri-lanka-vs-india-3rd-test-day-4-live-kohli-rohit-look-to-rebuild-after-top-order-failure-2414172.html",
+                bookmark_count: 0,
+                created_at: 1441007143,
+                title: "Sri Lanka vs India 3rd Test, day 4 Live: Kohli fails again, onus on Rohit - Firstpost"
+                },
+                {
+                image_url: "http://manilastandardtoday.com/panel/_files/modbuild/wp-images/wp-content/uploads/2015/08/09b54_andres_bautista-300x300.jpg",
+                view_count: 0,
+                description: "THE Commission on Elections assured that the base source code to be installed in the vote count machines to be used next year will be known by October 15 even as...",
+                news_id: 5769043,
+                news_url: "http://manilastandardtoday.com/2015/08/30/poll-source-code-deal-hit/",
+                bookmark_count: 0,
+                created_at: 1440977361,
+                title: "Poll source code deal hit - The Standard"
+                },
+                {
+                image_url: "http://www.arabnews.com/sites/default/files/2015/08/28/file-28-1398608905028179600_0.jpg",
+                view_count: 0,
+                description: "RIYADH: The Ministry of Health announced on Friday that two more people were infected with the Middle East Respiratory Syndrome (MERS) coronavirus.",
+                news_id: 5762469,
+                news_url: "http://www.arabnews.com/featured/news/798586",
+                bookmark_count: 0,
+                created_at: 1440945236,
+                title: "MERS infections continue in capital"
+                },
+                {
+                image_url: "http://media.therakyatpost.com/wp-content/uploads/2015/08/slash.jpg",
+                view_count: 0,
+                description: "IT takes one, to know one. Rocker Slash, will be producing a slasher movie. According to The Hollywood Reporter, the Guns ‘n Roses and Velvet Revolver guitarist has been tapped to produce a horror flick with Revolver Picture Company. Though plot details aren’t yet available, the script is being penned by Brian Sieve, the writer …",
+                news_id: 5744999,
+                news_url: "http://www.therakyatpost.com/life/entertainment-life/2015/08/29/slash-is-producing-a-slasher-movie/",
+                bookmark_count: 0,
+                created_at: 1440842537,
+                title: "Slash is producing a slasher movie - The Rakyat Post"
+                }
+                ]
+                }
+                ];
+        return data;
+    }
+
     this.get_user_score = function(){
         return {
             "ranking": 23,

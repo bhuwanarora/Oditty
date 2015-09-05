@@ -1,4 +1,4 @@
 <div ng-include src="'/assets/angular/html/book/_timeline.html'" ng-if="is_book && !is_profile"></div>
 <div ng-include src="'/assets/angular/html/author/books.html'" ng-if="!is_book && !is_room && !is_profile"></div>
-<div ng-include src="'/assets/angular/html/community/books.html'" ng-if="!is_book && is_room && !is_profile"></div>
+<div ng-include src="'/assets/angular/html/community/feed.html'" ng-if="!is_book && is_room && !is_profile" layout="row"></div>
 <div ng-include src="'/assets/angular/html/profile/feed.html'" ng-if="!is_book && !is_room && is_profile"></div>
