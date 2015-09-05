@@ -1,0 +1,21 @@
+<section flex="20" flex-md="5" hide-sm></section>
+<section flex="60" flex-md="90" layout="column" flex-sm="100">
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<h1>Leaderboard</h1>
+	<div layout="column" flex>
+		<div layout="row" ng-repeat="user in users" layout-padding>
+			<div>
+				<h1>#{{user.ranking}}</h1>
+			</div>
+			<div>
+				<img ng-src="{{user.image_url}}" class="square" />
+			</div>
+			<div layout-padding>
+				<a href="/profile?id={{user.id}}" ng-bind-html="user.name"></a>
+				<div>Accuracy {{user.accuracy}}</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section flex="20" flex-md="5" hide-sm></section>

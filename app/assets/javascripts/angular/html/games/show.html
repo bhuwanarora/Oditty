@@ -2,72 +2,12 @@
 	<section flex="20" flex-md="5" hide-sm></section>
 	<section flex="60" flex-md="90" layout="column" flex-sm="100" class="z_index_1">
 		<div class="game_wrapper"></div>
-		<h2 class="center_text white_color z_index_1" layout-padding>Judge a book by its Cover</h2>
 		<div layout-padding></div>
 		<div layout-padding></div>
 		<div layout-padding></div>
-		<div class="message animate-fast" ng-if="message" 
-			layout-align="center center" layout="column">
-			<div ng-bind-html="message"></div>
-			<div ng-if="done">
-				{{score*10}}% Accuracy
-			</div>
-			<div ng-if="play">
-				<video controls="controls" width="320" height="240" autoplay loop
-					src="/assets/rate.mov"></video>
-			</div>
-			<div>
-				<md-button class="md-button-clear md-raised md-warn" 
-					ng-if="play" ng-bind-html="play_message" ng-click="start_playing()"></md-button>
-			</div>
-		</div>
-		<div layout="column" class="game_content white md-whiteframe-z1">
-			<div class="center_text">
-				<h4><a ng-bind-html="book.title" ng-href="/book?id={{book.id}}"></a></h4>
-				<div class="less_important">
-					<a ng-bind-html="book.author_name" ng-href="/author?id={{book.author_id}}"></a>
-				</div>
-			</div>
-			<div layout="row" layout-align="center start" layout-sm="column">
-				<div layout-padding>
-					<div layout-padding></div>
-					<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{book.isbn}}/L.jpg" class="md-whiteframe-z3" />
-				</div>
-				<div layout-padding layout="column" layout-align="space-between center">
-					<div layout="column" layout-align="center center">
-						<div ng-if="next" class="center_text">
-							<div layout-padding ng-if="next">Your Rating</div>
-						</div>
-						<div class="rd_title">{{book.user_rating || 0}}</div>
-					 	<md-slider flex="20" md-discrete 
-				   			class="game_slider md-primary"
-				   			ng-model="book.user_rating"
-				   			ng-disabled="next"
-				   			step="1" min="1" max="10" aria-label="rating">
-				    	</md-slider>
-
-				    	<md-slider flex="20" md-discrete 
-				   			class="game_slider md-primary"
-				   			ng-model="book.rating" ng-if="next"
-				   			ng-disabled="true"
-				   			step="1" min="1" max="10" aria-label="rating">
-				    	</md-slider>
-
-				    	<div layout-padding></div>
-				    	<div layout-padding></div>
-				    	<div layout-padding ng-if="next">Oditty's Rating</div>
-				    	<div class="rd_title" ng-if="next" class="site_color">{{book.rating}}</div>
-					</div>
-			    	<div layout="row" layout-align="center center" flex>
-				    	<md-button class="md-button-clear md-raised md-warn" ng-click="next_book()">
-				    		<span ng-if="next">Next</span>
-				    		<span ng-if="!next">Judge</span>
-				    	</md-button>
-			    	</div>
-				</div>
-			</div>
-			<div layout-padding></div>
-			<div layout-padding></div>
+		<div ng-include src="'/assets/angular/html/games/wrapper.html'"></div>
+		<div layout="column" class="game_content white md-whiteframe-z1" 
+			ng-include src="'/assets/angular/html/games/book_card.html'">
 		</div>
 		<div layout-padding></div>
 		<div layout-padding></div>
@@ -78,29 +18,7 @@
 </div>
 
 <md-divider></md-divider>
-<div layout="row">
-	<section flex="20" flex-md="5" hide-sm></section>
-	<section flex="60" flex-md="90" layout="column" flex-sm="100">
-		<div layout-padding></div>
-		<div layout-padding></div>
-		<h1>Leaderboard</h1>
-		<div layout="column" flex>
-			<div layout="row" ng-repeat="user in users" layout-padding>
-				<div>
-					<h1>#{{user.ranking}}</h1>
-				</div>
-				<div>
-					<img ng-src="{{user.image_url}}" class="square" />
-				</div>
-				<div layout-padding>
-					<a href="/profile?id={{user.id}}" ng-bind-html="user.name"></a>
-					<div>Accuracy {{user.accuracy}}</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<section flex="20" flex-md="5" hide-sm></section>
-</div>
+<div layout="row" ng-include src="'/assets/angular/html/games/leaderboard.html'"></div>
 
 
 <style>
@@ -115,10 +33,18 @@
 	    right: 0px;
 	    bottom: 0px;
 	    z-index: 2;
+	    background-color: white;
+	    text-align: center;
+	}
+
+	.message h1{
 	    font-size: 70px;
 	    font-weight: bold;
 	    color: #FFC107;
-	    background-color: white;
+	}
+
+	.message .guide{
+		max-width: 300px;
 	}
 
 	md-progress-linear .md-bar{
@@ -153,7 +79,39 @@
 		z-index: 1;
 	}
 
-	.md-button{
-
+	.game_container{
+		min-height: 400px;
+		max-height: 60vh;
 	}
+
+	md-slider .md-track-container{
+		height: 20px;
+	}
+
+	md-slider .md-thumb:after{
+	    top: -23px;
+	    width: 70px;
+	    height: 70px;
+	}
+
+	md-slider .md-sign{
+	    left: -31px;
+	    top: -45px;
+	    width: 80px;
+	    height: 80px;
+	    border-radius: 80px;
+	}
+
+	md-progress-linear:not([md-mode="indeterminate"]) .md-bar,
+	md-progress-linear:not([md-mode="indeterminate"]) .md-container{
+		height: 35px;
+	}
+
+	.background_game .book_cover{
+		width: 100%;
+		height: 100%;
+		max-width: 400px;
+	}
+
+
 </style>

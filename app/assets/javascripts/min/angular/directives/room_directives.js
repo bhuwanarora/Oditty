@@ -1,0 +1,1 @@
+homeApp.directive("gotoTestimonial",["$rootScope",function(a){return{restrict:"E",controller:["$scope",function(a){}],templateUrl:"/assets/angular/html/shared/partials/goto_testimonial.html"}}]);

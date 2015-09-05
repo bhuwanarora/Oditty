@@ -1,0 +1,63 @@
+<h2 class="center_text" layout-padding>Judge a book by its Cover</h2>
+<div class="center_text">
+	<div class="bold"><a ng-bind-html="book.title" ng-href="/book?id={{book.id}}"></a></div>
+	<div class="less_important">
+		<a ng-bind-html="book.author_name" ng-href="/author?id={{book.author_id}}"></a>
+	</div>
+</div>
+<div layout-padding></div>
+<div layout-padding></div>
+<div layout-padding></div>	
+<div layout="row" layout-align="center start" layout-sm="column" flex>
+	<div layout-padding flex layout="row">
+		<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{book.isbn}}/L.jpg" 
+			class="md-whiteframe-z3 book_cover" />
+	</div>
+	<div layout-padding layout="column" layout-align="space-between center" class="game_container" flex>
+		<div layout="column" layout-align="center center">
+	    	<div layout-padding ng-if="next">Oditty's Rating</div>
+	    	<div class="rd_title" ng-if="next" class="site_color">{{book.rating}}</div>
+	    	<md-slider flex="20" md-discrete 
+	   			class="game_slider md-primary"
+	   			ng-model="book.rating" ng-if="next"
+	   			ng-disabled="true"
+	   			step="1" min="1" max="10" aria-label="rating">
+	    	</md-slider>
+
+	    	<div layout-padding></div>
+	    	<div layout-padding></div>
+		</div>
+    	<div layout="column" layout-align="center center" flex class="footer">
+			<div class="rd_title">{{book.user_rating || 0}}</div>
+		 	<md-slider flex="20" md-discrete 
+	   			class="game_slider md-primary"
+	   			ng-model="book.user_rating"
+	   			ng-disabled="next"
+	   			step="1" min="1" max="10" aria-label="rating">
+	    	</md-slider>
+
+			<div ng-if="next" class="center_text">
+				<div layout-padding ng-if="next">Your Rating</div>
+			</div>
+			<div layout-padding></div>
+	    	<md-button class="md-button-clear md-raised md-warn" ng-click="next_book()">
+	    		<span ng-if="next">NEXT</span>
+	    		<span ng-if="!next">JUDGE</span>
+	    	</md-button>
+    	</div>
+	</div>
+</div>
+<div layout-padding></div>
+<div layout-padding></div>
+<div layout-padding>
+	<div class="bold less_important" layout-padding>
+		Add to Shelf
+	</div>
+	<div layout="row" layout-wrap>
+		<div ng-repeat="shelf in shelves">
+			<md-button ng-bind-html="shelf.label_name" class="md-button-clear" 
+				ng-class="{'md-raised': !shelf.status}"
+				ng-click="toggle_bookmark(shelf)"></md-button>
+		</div>
+	</div>
+</div>
