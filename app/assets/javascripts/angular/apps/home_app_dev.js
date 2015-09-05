@@ -34,7 +34,7 @@ homeApp.config(["$routeProvider", function($routeProvider){
     .when('/room/books', {
         templateUrl : 'assets/angular/html/community/books.html',
     })
-    .when('/room/news', {
+    .when('/room/home', {
         templateUrl : 'assets/angular/html/community/feed.html',
     })
     .when('/room/videos', {
@@ -156,6 +156,80 @@ homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", fun
     		window.location.href = "/signup";
         }
 	}
+
+
+    if(window.location.pathname == "/room"){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.rooms.visit){
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_room";
+                }
+            }
+        }
+        _handle_todo_update();
+    }
+    else if(window.location.pathname == "/book"){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.filters.book){
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_book";
+                }
+            }
+        }
+        _handle_todo_update();
+    }
+    else if(window.location.pathname == "/rooms"){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                $scope.todo = JSON.parse(todo);
+                if(!$scope.todo.home.rooms){
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_rooms";
+                }
+            }
+        }
+        _handle_todo_update();
+    }
+    else if(window.location.pathname == "/filters"){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.home.filters){
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_filters";
+                }
+            }
+        }
+        _handle_todo_update();
+    }
+    else if(window.location.pathname == "/author"){
+        var _handle_todo_update = function(){
+            var todo = getCookie("todo");
+            if(todo){
+                todo = JSON.parse(todo);
+                if(!todo.book.author){
+                    deleteCookie("continue_to");
+                    setCookie("continue_to", $location.absUrl());
+                    window.location.href = "/odit_author";
+                }
+            }
+        }
+
+        _handle_todo_update();
+    }
+
 }]);
 
 function setCookie(cname, cvalue, exdays) {

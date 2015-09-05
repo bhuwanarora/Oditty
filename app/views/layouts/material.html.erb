@@ -15,7 +15,7 @@
         <meta property="fb:app_id" content="667868653261167"/>
         <meta charset="utf-8" />
         <title><% unless @title %>
-                    Oditty | Discover me through Books, News, and Videos.
+                    Oditty | Discover me through News, Books, and Videos.
                 <% else %>
                     <%= @title %>
                 <% end %>
@@ -38,12 +38,13 @@
 
     <body ng-controller="appController" 
         class="<% if @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
+        id="parent"
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
         <div layout="column" layout-fill>
             <% if @home || @signup%>
-                <md-content class="white" flex ng-controller="newHomeController">
+                <md-content class="white super_container" flex ng-controller="newHomeController" id="homeScreen">
             <% elsif @ads%>
                 <md-content class="white super_container" flex ng-controller="adsController">
             <% elsif @authors %>
@@ -71,7 +72,7 @@
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
                     check-scroll-bottom="get_blog_feed()" id="home" class="super_container">
             <% elsif @room %>
-                <md-content ng-controller="communityController" id="community" class="super_container white" 
+                <md-content ng-controller="communityController" id="community" class="white super_container"
                     check-scroll-bottom="get_community_news()">
             <% elsif @filters %>
                 <md-content ng-controller="libraryController" 
@@ -80,18 +81,18 @@
             <% elsif @shelves %>
                 <md-content ng-controller="roomController" class="super_container full_height white">
             <% elsif @author %>
-                <md-content ng-controller="authorController" layout="row" layout-wrap class="super_container white"
+                <md-content ng-controller="authorController" layout="row" layout-wrap class="white super_container"
                     ng-keydown="keypress_scroll($event)">
             <% elsif @profile %>
-                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="super_container white">
+                <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white super_container">
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" 
                     class="super_container"
                     check-scroll-bottom="show_all_results()">
             <% elsif @book %>
-                <div ng-controller="specificBookController" class="super_div_container white">
+                <div ng-controller="specificBookController" class="white super_div_container">
             <% elsif @customise %>
-                <md-content ng-controller="customiseController" class="super_container white" flex="100">
+                <md-content ng-controller="customiseController" class="white super_div_container" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController" class="super_container">
             <% else %>

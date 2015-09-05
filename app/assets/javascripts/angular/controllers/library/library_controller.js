@@ -233,18 +233,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             });
         }
 
-        var _handle_todo_update = function(){
-            var todo = getCookie("todo");
-            if(todo){
-                todo = JSON.parse(todo);
-                if(!todo.home.filters){
-                    deleteCookie("continue_to");
-                    setCookie("continue_to", $location.absUrl());
-                    window.location.href = "/odit_filters";
-                }
-            }
-        }
-        _handle_todo_update();
+        
         $scope.constant = {"show_book": false};
     }());
 
