@@ -7,7 +7,7 @@
                 <a layout="column" layout-align="center center" ng-href="/room?id={{::community.id}}" 
                     class="animate-fast vertical_expansion" 
                     ng-if="!communityFeed.expand">
-                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="square" alt="{{::community.name}}" />
+                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="square" alt="   {{::community.name}}" />
                     <md-tooltip>
                         {{::community.name}}
                     </md-tooltip>
@@ -22,7 +22,7 @@
         </div>
         <div class="content">
             <h2>
-                <a ng-href="/news?id={{communityFeed.id || communityFeed.news_id}}"
+                <a ng-href="{{::communityFeed.news_url}}" target="_blank" 
                     ng-bind-html="::communityFeed.title">
                 </a>
             </h2>
