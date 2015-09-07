@@ -153,6 +153,7 @@ ReadersDoor::Application.routes.draw do
   get "odit_room"                   => "odit#room",            :as => "odit_room"
   get "odit_rooms"                   => "odit#rooms",            :as => "odit_rooms"
   get "odit_profile"                   => "odit#profile",            :as => "odit_profile"
+  get "utilities"                       => "website#utilities",          :as => "utilities"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
 

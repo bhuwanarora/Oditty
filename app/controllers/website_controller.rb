@@ -23,6 +23,11 @@ class WebsiteController < ApplicationController
 		render :json => {:message => "Success"}, :status => 200
 	end
 
+	def utilities
+		@redirect_url = params[:url]
+		render :layout => "material_clean"
+	end
+
 	def games
 		@games = true
 		@title = "Judge a Book by its cover | Games on Oditty"
