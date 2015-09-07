@@ -16,6 +16,13 @@ class Book::BookFeed < Book
 		" WITH book, "+ object + " "
 	end
 
+	def self.create_self_feed
+		" OPTIONAL MATCH (book)-[bookfeed:BookFeed]->() "\
+		" FOREACH (ignore IN (CASE WHEN bookfeed IS NULL THEN [1] ELSE [] END) |"\
+		" 	CREATE UNIQUE (book)-[:BookFeed]->(book) "\
+		" ) "
+	end
+
 	def self.delete_feed_optional object, with_elements
 		" OPTIONAL MATCH (s)-[b1:BookFeed]->(" + object + ")-[b2:BookFeed]->(e) "\
 		" WITH " + object + ", COLLECT([s, e]) AS path_nodes, COLLECT([b1, b2]) AS path_edges " + with_elements.map{|elem| (", " + elem)}.join("") + " "\
