@@ -439,7 +439,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/news/iframe.html',
-    "<md-dialog aria-label=\"News\" class=\"full_width\"><iframe width=\"100%\" height=\"500px\" ng-src=\"{{communityFeed.news_url}}\" show hide-sm hide-md></iframe><iframe width=\"100%\" height=\"400px\" ng-src=\"{{communityFeed.news_url}}\" hide show-md hide-sm style=\"-webkit-transform:scale(0.5);-moz-transform-scale(0.5)\"></iframe><iframe width=\"100%\" height=\"100%\" ng-src=\"{{communityFeed.news_url}}\" hide show-sm style=\"-webkit-transform:scale(0.5);-moz-transform-scale(0.5)\"></iframe></md-dialog>"
+    "<md-dialog aria-label=\"News\" class=\"full_width\"><iframe width=\"100%\" height=\"500px\" ng-src=\"{{communityFeed.news_url}}\" hide-sm hide-md></iframe><iframe width=\"100%\" height=\"500px\" ng-src=\"{{communityFeed.news_url}}\" hide show-md hide-sm style=\"-webkit-transform:scale(0.9);-moz-transform-scale(0.5)\"></iframe><iframe width=\"100%\" height=\"350px\" ng-src=\"{{communityFeed.news_url}}\" hide show-sm style=\"-webkit-transform:scale(0.9);-moz-transform-scale(0.5)\"></iframe></md-dialog>"
   );
 
 
