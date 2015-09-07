@@ -17,6 +17,10 @@ class User < Neo
 		"MATCH (user:User) WITH user "
 	end
 
+	def get_fb_books skip
+		match + match_facebook_likes + FacebookLike.match_books + " WITH DISTINCT book, COLLECT(facebook_like.name) AS fb_like_page_title, " + Book.get_goodness_index + Book.order_by_goodness + User.skip(skip) + User.limit(Constant::Count::FacebookLikeBookCount) + User.return_group(Book.basic_info,"fb_like_page_title")
+	end
+
 	def self.link_basic_labels
 		" CREATE UNIQUE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
