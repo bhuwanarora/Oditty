@@ -1,6 +1,6 @@
 <md-list ng-controller="videoController" layout="column"  layout-wrap layout-align="center">
     <md-list-item ng-repeat="video in active_tag.videos" layout-margin layout="row" flex layout-sm="column" 
-        class="video_group_container" ng-class="{'md-whiteframe-z1': !video.play}" layout-align="start start">
+        class="video_group_container" layout-align="start start">
         <div class="video_wrapper" ng-click="video.play = true" ng-if="!video.play">
             <i class="material-icons video_icon">video_library</i>
             <img ng-src="{{video.thumbnail}}" class="video_thumb md-3-line">

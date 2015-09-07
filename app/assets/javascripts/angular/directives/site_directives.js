@@ -504,13 +504,25 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', function($rootScope, userService, $timeout){
+homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', '$mdDialog', '$sce', function($rootScope, userService, $timeout, $mdDialog, $sce){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
         controller: ["$scope", function($scope){
             $scope.toggle_expand = function(){
                 $scope.communityFeed.expand = !$scope.communityFeed.expand;
+            }
+
+            $scope.show_news = function(event){
+                $scope.communityFeed.news_url = $sce.trustAsResourceUrl($scope.communityFeed.news_url+"?action=render");
+                $mdDialog.show({
+                    templateUrl: '/assets/angular/html/news/iframe.html',
+                    scope: $scope,
+                    preserveScope: true,
+                    clickOutsideToClose: true,
+                    targetEvent: event
+                });
+                event.stopPropagation();
             }
 
             var _init = function(){
