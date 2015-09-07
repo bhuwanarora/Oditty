@@ -514,6 +514,7 @@ homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', '$m
             }
 
             $scope.show_news = function(event){
+                $scope.communityFeed.news_url = "https://www.google.com/search?q=%" + $scope.communityFeed.news_url;
                 $scope.communityFeed.news_url = $sce.trustAsResourceUrl($scope.communityFeed.news_url+"?action=render");
                 $mdDialog.show({
                     templateUrl: '/assets/angular/html/news/iframe.html',
