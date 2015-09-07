@@ -127,20 +127,6 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
             bookService.update_visited(book_id);
         }, 100);
         
-        var _handle_todo_update = function(){
-            var todo = getCookie("todo");
-            if(todo){
-                todo = JSON.parse(todo);
-                if(!todo.filters.book){
-                    deleteCookie("continue_to");
-                    setCookie("continue_to", $location.absUrl());
-                    window.location.href = "/odit_book";
-                }
-            }
-        }
-
-        _handle_todo_update();
-
         $scope.$on('destroy', function(){
             $timeout.cancel(book_data_timeout);
         });

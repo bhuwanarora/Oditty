@@ -4,7 +4,7 @@
                     Rooms of Knowledge
                 </a>
             </h1>
-            <div class="site_description">Not everything which needs to be discovered is searchable. I want to read this life through a specific collection of Books, News and Videos on...</div>
+            <div class="site_description">Not everything which needs to be discovered is searchable. I want to read this life through a specific collection of News, Books and Videos on...</div>
         <!-- <div class="primary round_corners less_important white_color" layout-padding>New</div> -->
     </div>
     <div layout-padding></div>
@@ -13,13 +13,13 @@
         md-row-height="4:3" md-row-height-gt-md="1:1" md-row-height-md="1:1" md-row-height-sm="12:13"
         md-gutter="50px" md-gutter-gt-sm="10px" md-gutter-md="10px" md-gutter-sm="20px">
         <md-grid-tile ng-repeat="trend in rooms"
-                    md-rowspan="2"
-                    md-colspan="2"
+                    md-rowspan="{{trend.row}}"
+                    md-colspan="{{trend.col}}"
                     md-colspan-sm="2"
                     class="pointer">
             <a ng-href="/room?id={{trend.id}}" class="room_container">
-                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="trends" />
-                <md-grid-tile-footer layout="row" layout-padding>
+                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
+                <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
                     <div class="less_important white_color trend_name">{{trend.name}}</div>
                 </md-grid-tile-footer>
             </a>
@@ -54,8 +54,12 @@
         right: 0px;
         top: 0px;
         bottom: 0px;
-        border-radius: 5px;
+        border-radius: 2px;
         font-weight: 600;
+    }
+
+    #browseRooms md-grid-tile-footer:hover{
+        background-color: rgba(0, 0, 0, 0.7);
     }
 
     #browseRooms md-grid-tile-footer figcaption{

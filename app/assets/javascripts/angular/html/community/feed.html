@@ -1,4 +1,5 @@
-<div layout="column" layout-padding>
+<div hide flex-md="15" show-md ></div>
+<div layout="column" layout-padding flex="60" flex-md="70" flex-sm="100">
     <h3 layout-padding>
         <div layout-padding>
             News clippings related to {{active_tag.name}}
@@ -8,3 +9,16 @@
         ng-repeat="community_feed in active_tag.news">
     </community-feed>
 </div>
+<div flex="40" layout="column" hide-md hide-sm>
+	<div layout-padding ng-if="(active_tag.videos && active_tag.videos.length > 0) || (active_tag.videos.length == 1 && active_tag.videos[0].title != null )">
+        <a ng-href="#room/videos"><h3 layout-padding>Videos related to {{active_tag.name}}</h3></a>
+    </div>
+	<div ng-include src="'/assets/angular/html/community/videos.html'" class="room_content_container"></div>
+	<div layout-padding></div>
+	<div layout-padding></div>
+	<div layout-padding ng-if="(active_tag.books && active_tag.books.length > 0) || (active_tag.books.length == 1 && active_tag.books[0].title != null )">
+        <a ng-href="#room/books"><h3 layout-padding>Books related to {{active_tag.name}}</h3></a>
+    </div>
+	<div ng-include src="'/assets/angular/html/community/books.html'" class="room_content_container"></div>
+</div>
+<div hide flex-md="15" show-md ></div>

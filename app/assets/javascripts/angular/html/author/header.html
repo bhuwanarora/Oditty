@@ -1,19 +1,18 @@
 <div layout-padding></div>
 <div layout-padding></div>
-<div class="author_profile_header">
-    <div layout="row">
-        <section flex="10" flex-md="5" hide-sm></section>
-        <div layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
-            class="md-whiteframe-z1 primary relative">
-            <div layout="row" layout-align="end start" layout-padding class="top_div">
-                <md-button aria-label="toggle_follow" class=" md-button-clear md-warn" 
-                    ng-hide="!info.hide_signin"
-                    ng-class="{'md-raised': !author.status}" 
-                    ng-click="toggle_follow()">
-                    <span ng-if="!author.status">Follow</span>
-                    <span ng-if="author.status">Following</span>
-                </md-button>
-            </div>
+<div class="author_profile_header" layout="row">
+    <div class="profile_container">
+        <div class="dark_wrapper"></div>
+        <img ng-src="{{author.id | author_thumb}}"  class="profile_wrapper"
+            onerror="this.src='/assets/author_profile.jpg'"/>
+    </div>
+    <section flex="10" flex-md="5" hide-sm></section>
+    <div layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
+        class="md-whiteframe-z1 relative">
+        <div layout-padding></div>
+        <div layout-padding></div>
+        <div layout="column" class="z_index_1">
+           
             <div layout-padding class="bold" ng-if="author.has_birthday">
                 HAPPY BIRTHDAY
             </div>
@@ -65,8 +64,8 @@
                 <img src="/assets/balloons.png" class="balloons">
             </div>
         </div>
-        <section flex="10" flex-md="5" hide-sm></section>
     </div>
+    <section flex="10" flex-md="5" hide-sm></section>
 </div>
 <style>
     .balloons{
@@ -79,6 +78,8 @@
     .author_profile_header{
         color: white !important;
         box-shadow: none;
+        position: relative;
+        overflow: hidden;
     }
 
     .author_profile_header h2{

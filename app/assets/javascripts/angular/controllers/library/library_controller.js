@@ -66,7 +66,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
                 "bookmark_count": $scope.info.books[index].bookmark_count,
                 "goodness_index": $scope.info.books[index].goodness_index,
                 "book_reader_relationship_index": $scope.info.books[index].book_reader_relationship_index,
-                "likeability_index": $scope.info.books[index].likeability_index,
+                "likability_index": $scope.info.books[index].likeability_index,
                 "popularity_index": $scope.info.books[index].popularity_index
             }
             $scope.expanded_index = index;
@@ -233,18 +233,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             });
         }
 
-        var _handle_todo_update = function(){
-            var todo = getCookie("todo");
-            if(todo){
-                todo = JSON.parse(todo);
-                if(!todo.home.filters){
-                    deleteCookie("continue_to");
-                    setCookie("continue_to", $location.absUrl());
-                    window.location.href = "/odit_filters";
-                }
-            }
-        }
-        _handle_todo_update();
+        
         $scope.constant = {"show_book": false};
     }());
 

@@ -39,7 +39,11 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
     }
 
     this.handle_facebook_books = function(params){
-        return _deferred_post_request('/api/v0/fb_books', params, $q, $http);
+        // return _deferred_post_request('/api/v0/fb_books', params, $q, $http);
+    }
+
+    this.map_facebook_books = function(params){
+        return _deferred_post_request('/api/v0/map_fb_book', params, $q, $http);   
     }
 
     this.get_user = function(){
