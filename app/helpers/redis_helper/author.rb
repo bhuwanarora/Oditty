@@ -40,6 +40,17 @@ module RedisHelper::Author
 		info
 	end
 
+	def self.clear_details params
+		author_id 	= params[:id]
+		user_id 	= params[:user_id]
+		if user_id.present?
+			RedisHelper::Author.delete_details params
+		else
+			key = RedisHelper::Author.get_key_details author_id, user_id
+			RedisHelper.clear key
+		end
+	end
+
 	def self.delete_interview_details params
 		key = RedisHelper::Author.get_key_interview_details params[:id]
 		$redis.del key

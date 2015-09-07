@@ -62,6 +62,7 @@ module Api
 				id = params[:id]
 				if params[:status].present? && params[:status]== "true"
 					Api::V0::AuthorApi.follow(id, user_id).execute
+					RedisHelper::Author.clear_details({:id => id })
 					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:author_id => id,
@@ -74,6 +75,7 @@ module Api
 						:action => FeedHelper::ActionDelete
 						}, Constant::NodeLabel::FollowsNode)
 					Api::V0::AuthorApi.unfollow(id, user_id).execute
+					RedisHelper::Author.clear_details({:id => id })
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
