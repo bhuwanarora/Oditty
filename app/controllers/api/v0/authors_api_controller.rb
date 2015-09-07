@@ -21,7 +21,17 @@ module Api
 				if skip_count.present? && (skip_count != 0)
 					info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count
 				else
-					info = Api::V0::AuthorApi.get_details author_id, user_id
+					redis_params =
+					{
+						:id => author_id,
+						:user_id => user_id
+					}
+					info = RedisHelper::Author.get_details(redis_params)
+					unless !info.nil?
+						info = Api::V0::AuthorApi.get_details author_id, user_id
+						redis_params[:info] = info
+						RedisHelper::Author.set_details(redis_params)
+					end
 				end
 				render :json => info, :status => 200
 			end
