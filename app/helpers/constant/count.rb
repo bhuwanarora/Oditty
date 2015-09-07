@@ -37,4 +37,5 @@ module Constant::Count
 	RoomPageRoomCount			= 12
 
 	TestimonialShowCount		= 10
+	FacebookLikeBookCount		= 10
 end
