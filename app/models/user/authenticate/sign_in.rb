@@ -18,6 +18,10 @@ class User::Authenticate::SignIn < User::Authenticate
 					message = Constant::StatusMessage::LoginSuccess
 				else
 					message = Constant::StatusMessage.waitlist_message user["wait_list_count"]
+					created_at = user["user_created_at"]
+					if (created_at.present? && (Time.now.to_i - created_at < VerifyEmailTimeout))
+						authenticate = true
+					end
 				end
 				UserWorker.perform_async(UserWorker::WorkUserWaitListDecrementInvitee, {:id => user["id"]})
 			elsif  user["password"] != @params[:password]
