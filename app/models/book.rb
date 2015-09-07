@@ -155,6 +155,14 @@ class Book < Neo
 		" ORDER BY TOINT(book.total_weight) DESC "
 	end
 
+	def self.order_by_goodness
+		" ORDER BY goodness_index DESC "
+	end
+
+	def self.get_goodness_index
+		" (CASE WHEN HAS(book.goodness_index) THEN book.goodness_index ELSE 0.0 END) AS goodness_index "
+	end
+
 	def self.get_complete_info
 		UsersBook::Rate.optional_match + UsersBook::Endorse.optional_match + Book.optional_match_root_category + Book.return_group(Book.detailed_info, "rating_node.rating AS user_rating", " ID(endorse) AS endorse_status", " COLLECT(ID(root_category)) AS root_category_ids ")
 	end
