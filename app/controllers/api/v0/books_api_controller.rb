@@ -15,6 +15,18 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def books_from_fb_likes
+				user_id = session[:user_id]
+				skip 	= (params[:skip].present?) ? params[:skip] : 0
+				debugger
+				if user_id
+					info = Api::V0::BookApi.get_book_from_fb_likes(user_id, skip)
+				else
+					info = {:message => " Session not set.! "}
+				end
+				render :json => info, :status => 200
+			end
+
 			def map_fb_book
 				book_data = params[:book]
 				Api::V0::FacebookApi.map_fb_book book_data

@@ -7,6 +7,10 @@ class FacebookLike < Neo
 		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + @app_id + " WITH facebook_like "
 	end
 
+	def self.match_books
+		" MATCH (facebook_like)-[:HasCommunity]->(community:Community)-[relatedbooks:RelatedBooks]->(book:Book) "
+	end
+
 	def merge
 		" MERGE (facebook_like:FacebookLike{app_id: " + @app_id + "}) WITH facebook_like "
 	end
