@@ -15,14 +15,17 @@
                 <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
                     class="animate-fast vertical_expansion"
                     ng-if="communityFeed.expand">
-                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="circular" alt="{{::community.name}}" />
+                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" 
+                        class="circular" alt="{{::community.name}}" />
                     <md-tooltip>{{::community.name}}</md-tooltip>
                 </a>
             </div>
         </div>
         <div class="content">
+        
+        <!-- ng-href="{{::communityFeed.news_url}}" -->
             <h2>
-                <a ng-href="{{::communityFeed.news_url}}" target="_blank" 
+                <a target="_blank" ng-click="show_news($event)"
                     ng-bind-html="::communityFeed.title">
                 </a>
             </h2>
