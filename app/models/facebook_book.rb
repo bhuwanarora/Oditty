@@ -17,7 +17,13 @@ class FacebookBook < Neo
 
 	def merge book
 		type_string = FacebookBook.get_type(book["type"])
-		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET book.title =  \"" + book["title"].to_s + "\", book.url = \"" + book["url"].to_s + "\" ,book.type = \"" + type_string + "\" WITH book "
+		" MERGE (book :FacebookBook{facebook_id: " + book["id"].to_s + "}) ON CREATE SET"\
+		" book.title =  \"" + book["title"].to_s + "\", "\
+		" book.url = \"" + book["url"].to_s + "\" , "\
+		" book.type = \"" + type_string + "\" "\
+		" WITH book "\
+		"" + Book::BookFeed.create_self_feed + " "\
+		" WITH book "
 	end
 
 	def handle_relations original_book_id, relations

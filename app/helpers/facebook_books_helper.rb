@@ -43,7 +43,7 @@ module FacebookBooksHelper
 		book 			= data["data"]["book"]
 		book["type"] 	= data["type"]
 		facebook_id 	= book["id"]
-		(FacebookBook.new(facebook_id).merge(book) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group(Book.basic_info)).execute[0]['book_id'] 
+		(FacebookBook.new(facebook_id).merge(book) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group(Book.basic_info)).execute[0]['book_id']
 	end
 
 	def self.set_bookmark type, user_id, book_id, publish_time
@@ -58,15 +58,18 @@ module FacebookBooksHelper
 	end
 
 	def self.handle_wants_to_reads user_id, book_id, publish_time
-		(Bookmark::Type::IntendingToRead.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.timestamp = " + Time.parse(publish_time).to_i.to_s + " RETURN ")).execute
+		publish_time = Time.parse(publish_time).to_i.to_s rescue publish_time.to_s
+		(Bookmark::Type::IntendingToRead.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.timestamp = " + publish_time + " RETURN ")).execute
 	end
 
 	def self.handle_from_facebook user_id, book_id, publish_time
-		(Bookmark::Type::FromFacebook.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.timestamp = " + Time.parse(publish_time).to_i.to_s + " RETURN ")).execute
+		publish_time = Time.parse(publish_time).to_i.to_s rescue publish_time.to_s
+		(Bookmark::Type::FromFacebook.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.timestamp = " + publish_time + " RETURN ")).execute
 	end
 
 	def self.handle_read user_id, book_id, publish_time
-		(Bookmark::Type::Read.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.timestamp = " + Time.parse(publish_time).to_i.to_s + " RETURN ")).execute
+		publish_time = Time.parse(publish_time).to_i.to_s rescue publish_time.to_s
+		(Bookmark::Type::Read.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.timestamp = " + publish_time + " RETURN ")).execute
 	end
 
 	def self.handle_progress_in_reading_journey
