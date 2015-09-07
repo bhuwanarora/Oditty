@@ -62,12 +62,10 @@ class FacebookBook < Neo
 		facebook_description = params["description"] rescue ""
 		facebook_talking_about_count = params["talking_about_count"] rescue 0
 		facebook_likes_count = params["likes"] rescue 0
-		facebook_book_name = params["name"].strip
-
 		author = params["written_by"]
 		author_search_index = author.search_ready
 
-		title = params["name"]
+		title = params["name"].strip
 		title_search_index = title.search_ready
 		clause = 
 		" SET facebook_book.facebook_book_title = \'" + title + "\' " +
