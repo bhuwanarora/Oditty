@@ -38,7 +38,7 @@
 
     <body ng-controller="appController" 
         class="<% if @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
-        id="parent"
+        id="<% unless @book %>parent<% end %>"
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
