@@ -16,7 +16,13 @@ class FacebookLike < Neo
 	end
 
 	def merge_info(category, created_time, name)
-		merge + FacebookLike.set_category(category) + FacebookLike.set_name(name) + FacebookLike.set_created_time(created_time)
+		clause = merge
+		if category.present?
+			clause += FacebookLike.set_category(category)
+		end
+		clause += FacebookLike.set_name(name)
+		clause += FacebookLike.set_created_time(created_time)
+		clause
 	end
 
 	def self.get_relationship_type field_name
