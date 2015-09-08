@@ -184,7 +184,7 @@ class User < Neo
 	end
 
 	def self.create_links_for_new
-		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories
+		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Game.new_user
 	end
 
 	def get_notifications
