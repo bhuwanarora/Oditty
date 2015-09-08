@@ -80,4 +80,5 @@ private
 	def self.increment_games_played_string
 		" (CASE WHEN HAS(user.played_games_count) THEN (user.played_games_count + 1) ELSE 1 END) "
 	end
+
 end
