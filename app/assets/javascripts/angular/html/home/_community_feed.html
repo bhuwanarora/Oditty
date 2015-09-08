@@ -22,10 +22,9 @@
             </div>
         </div>
         <div class="content">
-        
-        <!-- ng-href="{{::communityFeed.news_url}}" -->
+            <!-- ng-click="show_news($event)" -->
             <h2>
-                <a target="_blank" ng-click="show_news($event)"
+                <a target="_blank" ng-href="{{::communityFeed.news_url}}"
                     ng-bind-html="::communityFeed.title">
                 </a>
             </h2>
