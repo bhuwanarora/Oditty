@@ -9,7 +9,7 @@ class User::Game < User
 	end
 
 	def self.score_board_info
-		User::Game.score_info + " user.first_name AS name, user.thumb AS image_url "
+		User::Game.score_info + ", user.first_name AS name, user.thumb AS image_url "
 	end
 
 
@@ -62,6 +62,10 @@ class User::Game < User
 
 	def self.get_score_board skip
 		User::Game.match_top_rankers(skip) + User::Game.return_group(User::Game.score_board_info)
+	end
+
+	def get_score_board
+		match + User::Game.return_group(User::Game.score_board_info)
 	end
 
 	def self.increment_games_played_count
