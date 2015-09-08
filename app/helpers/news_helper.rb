@@ -1,11 +1,11 @@
 module NewsHelper
 
 	def self.handle
-		news_sources ||= self.fetch_news_sources
+		news_sources ||= NewsHelper.fetch_news_sources
 		puts news_sources
 		for news_source in news_sources
 			
-			news_links = self.fetch_news news_source["url"]
+			news_links = NewsHelper.fetch_news news_source["url"]
 			puts news_links
 			for news_link in news_links
 				news_metadata = {}
@@ -40,7 +40,7 @@ module NewsHelper
 	end
 
 	def self.fetch_tags news_link
-		query = Rails.application.config.nlp_service + "api/v0/parser?q=" + news_link 
+		query = Rails.application.config.nlp_service + "api/v0/parser?q=" + URI.encode(news_link,/\W/)
 		puts query
 		uri = URI(query)
 		response = Net::HTTP.get(uri)
@@ -50,6 +50,32 @@ module NewsHelper
 		topics.each do |topic|
 			clause = News.new(news_id).match + " MERGE (topic:Topic{name:'" + topic["value"].to_s + "'}) <-[:HasTopic {relevance :"+ topic["relevance"].to_s+" }]-(news) "
 			clause.execute
+		end
+	end
+
+	def self.delete_communit_links news_id
+		clause = News.new(news_id).match + News.match_community + " DELETE has_community "\
+		" RETURN news.url AS url"
+		url = clause.execute[0]["url"]
+	end
+
+	def self.handle_wrong_community_linkage news_id
+		begin
+			news_link = NewsHelper.delete_communit_links news_id
+			news_metadata = {"available" => true, "news_link" => news_link}
+			CommunitiesHelper.create news_metadata
+		rescue Exception => e
+			puts e.to_s.red
+		end
+	end
+
+	def self.handle_wrong_communities_linkage
+		clause = " MATCH (news:News) "\
+				" WHERE news.url =~'.*&.*'"\
+				" RETURN ID(news) AS id"
+		id_list = clause.execute.map{|elem| elem["id"]}
+		id_list.each do |news_id|
+			NewsHelper.handle_wrong_community_linkage news_id
 		end
 	end
 
@@ -107,6 +133,21 @@ module NewsHelper
 		params[:news4][:community2][:image_url] = info[3]["communities"][1]["image_url"]  rescue ""
 		params[:template] = Constant::EmailTemplate::Newsletter
 		SubscriptionMailer.news_subscription(params).deliver
+	end
+
+	def self.insert_news
+		NewsSources.init_news_queue
+		producer_thread  = Thread.new{ NewsSources.producer_thread }
+		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
+		consumer_thread.join
+	end
+
+	def self.insert_old_lit_news
+		NewsSources.init_news_queue
+		producer_thread  = Thread.new{ NewsSources.producer_thread_old_news_no_google }
+		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
+		producer_thread.join
+		consumer_thread.join
 	end
 
 

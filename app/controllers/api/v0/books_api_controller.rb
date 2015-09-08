@@ -15,9 +15,21 @@ module Api
 				render :json => info, :status => status
 			end
 
+			def books_from_fb_likes
+				user_id = session[:user_id]
+				skip 	= (params[:skip].present?) ? params[:skip] : 0
+				debugger
+				if user_id
+					info = Api::V0::BookApi.get_book_from_fb_likes(user_id, skip)
+				else
+					info = {:message => " Session not set.! "}
+				end
+				render :json => info, :status => 200
+			end
+
 			def map_fb_book
 				book_data = params[:book]
-				Api::V0::FacebookApi.map_fb_book book_data
+				Api::V0::FacebookApi.map book_data
 				render :json => "Success", :status => 200
 			end
 
@@ -57,26 +69,20 @@ module Api
 
 			def get_basic_feed_info
 				id = params[:id]
-				key = "GBFI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper::Book.get_basic_feed_info({:id => id})
 				unless info
 					info = Api::V0::BookApi.get_basic_feed_info(id)
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Book.set_basic_feed_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def get_primary_info
 				id = params[:id]
-				key = "GPI" + id.to_s
-				info = $redis.get key
+				info = RedisHelper::Book.get_primary_info({:id => id})
 				unless info
 					info = Api::V0::BookApi.get_primary_info(id)
-					$redis.set(key, info.to_json) if info
-				else
-					info = JSON.parse info
+					RedisHelper::Book.set_primary_info({:id => id, :info => info}) if info
 				end
 				render :json => info, :status => 200
 			end
@@ -113,13 +119,10 @@ module Api
 
 			def get_interesting_info
 				book_id = params[:id]
-				key = "GIF" + book_id.to_s
-				info = $redis.get key
+				info = RedisHelper::Book.get_interesting_info({:id => book_id})
 				unless info
 					info = Api::V0::BookApi.get_interesting_info book_id
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Book.set_interesting_info({:id => book_id, :info => info})
 				end
 				render :json => info, :status => 200
 			end

@@ -21,20 +21,27 @@ module Api
 				if skip_count.present? && (skip_count != 0)
 					info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count
 				else
-					info = Api::V0::AuthorApi.get_details author_id, user_id
+					redis_params =
+					{
+						:id => author_id,
+						:user_id => user_id
+					}
+					info = RedisHelper::Author.get_details(redis_params)
+					unless !info.nil?
+						info = Api::V0::AuthorApi.get_details author_id, user_id
+						redis_params[:info] = info
+						RedisHelper::Author.set_details(redis_params)
+					end
 				end
 				render :json => info, :status => 200
 			end
 
 			def get_basic_info
 				id = params[:id]
-				key = "GBI" + id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::Author.get_basic_info({:id => id})
+				unless !info.nil?
 					info = Api::V0::AuthorApi.get_basic_info id
-					$redis.set(key, info.to_json)  if info
-				else
-					info = JSON.parse info
+					RedisHelper::Author.set_basic_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
@@ -55,6 +62,7 @@ module Api
 				id = params[:id]
 				if params[:status].present? && params[:status]== "true"
 					Api::V0::AuthorApi.follow(id, user_id).execute
+					RedisHelper::Author.clear_details({:id => id })
 					FeedHelper::UserFeedHelper.handle_redis({
 						:user_id => user_id,
 						:author_id => id,
@@ -67,21 +75,25 @@ module Api
 						:action => FeedHelper::ActionDelete
 						}, Constant::NodeLabel::FollowsNode)
 					Api::V0::AuthorApi.unfollow(id, user_id).execute
+					RedisHelper::Author.clear_details({:id => id })
 				end
 				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def get_interview_details
 				author_id = params[:id]
-				key = "GID" + author_id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::Author.get_interview_details({:id => author_id})
+				unless !info.nil?
 					info = Api::V0::AuthorApi.get_interview_details(author_id)
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Author.set_interview_details({:id => author_id, :info => info})
 				end
 				render :json => info, :status => 200
+			end
+
+			def get_authors_interviewed
+				skip = params[:skip]
+				info = Api::V0::AuthorApi.get_interviewed(skip)
+				render :json => info, :status => 200			
 			end
 		end
 	end

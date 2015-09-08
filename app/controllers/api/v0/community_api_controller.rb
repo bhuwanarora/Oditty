@@ -5,13 +5,17 @@ module Api
 			def get_books
 				id = params["id"]
 				key = "GB" + id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::Community.get_books({:id => id})
+				unless !info.nil?
 					info = Api::V0::CommunityApi.get_books(id).execute[0]
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Community.set_books({:id => id, :info => info})
 				end
+				render :json => info, :status => 200
+			end
+
+			def get_combined_details
+				id = params[:id]
+				info = Api::V0::CommunityApi.get_combined_details(id)
 				render :json => info, :status => 200
 			end
 
@@ -21,9 +25,14 @@ module Api
 				user_id = session[:user_id]
 				if user_id
 					info = Api::V0::CommunityApi.add_book(id, book_id, user_id)
-					key = "BCI" + id.to_s
-					$redis.del key
+					RedisHelper::Community.delete_basic_info({:id => id})
 				end
+				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def add_videos
+				id = params[:id]
+				VideosWorker.perform_async(VideosWorker::WorkAddToCommunityAutomated,{:id => id})
 				render :json => {:message => "Success"}, :status => 200
 			end
 
@@ -34,15 +43,11 @@ module Api
 
 			def suggest_communities
 				user_id = session[:user_id]
-				info = $redis.get 'trends'
-				unless info
+				info = RedisHelper::Community.get_suggested({:id => user_id})
+				unless !info.nil?
 					info = Api::V0::CommunityApi.suggest_communities(user_id).execute
-					$redis.set('trends', info.to_json)
-					$redis.expire('trends', 86400)
-				else
-					info = JSON.parse info
+					RedisHelper::Community.set_suggested({:id =>user_id, :info => info})
 				end
-
 				render :json => info, :status => 200
 			end
 
@@ -57,6 +62,10 @@ module Api
 				community_id = params[:id]
 				user_id = session[:user_id]
 				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id)
+				args = {:id => community_id, :view_count => info["view_count"]}
+				RedisHelper::Community.increment_view_count(args)
+				args[:work] = RedisHelper::WorkUpdateSuggestCommunities
+				RedisWorker.perform_async(args)
 				render :json => info, :status => 200 
 			end
 
@@ -75,15 +84,28 @@ module Api
 
 			def get_videos
 				id = params[:id]
-				key = "GV"+id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::Community.get_videos({:id => id})
+				unless !info.nil?
 					info = Api::V0::CommunityApi.get_videos(id)
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Community.set_videos({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
+			end
+
+			def get_rooms
+				user_id = session[:user_id]
+				skip_count = params[:skip] || 0
+				info = nil
+				status = 200
+				begin
+					info = Api::V0::CommunityApi.get_rooms user_id, skip_count
+				rescue Exception => e
+					puts e.to_s.red
+					info = e.to_s
+					status = 500
+				end
+				render :json => info, :status => status
+
 			end
 		end
 	end

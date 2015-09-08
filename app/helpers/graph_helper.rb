@@ -124,7 +124,10 @@ module GraphHelper
 		set_root.execute
 		while !blogs_set
 			latest_blog = Blog.get_latest_blog.execute[0]
-			BlogsHelper.handle
+			duplicate = BlogsHelper.handle
+			if duplicate == 1
+				break
+			end
 			updated_latest_blog = Blog.get_latest_blog.execute[0]
 			if latest_blog["blog_url"] == updated_latest_blog["blog_url"]
 				blogs_set = true
@@ -331,6 +334,12 @@ module GraphHelper
 		" DELETE answered "\
 		" WITH " + original + "," + duplicate + " "\
 		" "\
+		" OPTIONAL MATCH (question:Question)-[answerof:AnswerOf{author_id: ID(" + duplicate + ")}]-(answer) "\
+		" FOREACH (answer_rel IN (CASE WHEN answerof IS NULL THEN [] ELSE [answerof] END)| "\
+			" SET answer_rel.author_id = ID(" + original + ") "\
+		") "\
+		" WITH " + original + ", " + duplicate + " "\
+		" "\
 		" OPTIONAL MATCH(" + duplicate + ")<-[follows:OfAuthor]-(followsnodes:FollowsNode) "\
 		" FOREACH (followsnode in ( CASE WHEN followsnodes IS NULL THEN [] ELSE [followsnodes] END)| "\
 		" MERGE(" + original + ")<-[:OfAuthor]-(followsnode) " \
@@ -361,17 +370,57 @@ module GraphHelper
 		clause.execute
 	end
 
+	def self.log_setup file_name
+		@@logger ||= Logger.new("#{Rails.root}/log/#{file_name}.log")
+	end
+
+	def self.log_info log_hash, message_tag
+		output_string = log_hash.map{|key,value| (key + ":" + value.to_s)}.join(", ")
+		@@logger.info(message_tag + ": " + output_string)
+	end
+
+	def self.count_authors_with_prefix_index indexed_main_author_name_prefix
+		clause = "START original=node:node_auto_index('indexed_main_author_name:" + indexed_main_author_name_prefix +"*" + "') "\
+		"  RETURN COUNT (original) AS count "
+		query_exec = clause.execute
+		if query_exec.empty?
+			output = 0
+		else
+			output = query_exec[0]["count"]
+		end
+		output
+	end
+
+	def self.count_node_with_prefix_index params
+		search_index 			= params[:search_index]
+		label 					= params[:label]
+		search_index_property 	= UniqueSearchIndexHelper::UniqueIndices[label][0]
+
+		clause = ""\
+				" MATCH (node:" + label + ") "\
+				" WHERE node." + search_index_property + "=~ \'" + search_index + ".*\'"\
+				" RETURN COUNT(node) AS count "
+		query_exec = clause.execute
+		output = (query_exec.empty?)? 0 : query_exec[0]["count"]
+		output
+	end
+
 	def self.merge_duplicate_authors_in_range_auto_index(starting_regex)
 		puts "Removing duplicate authors with search_index starting with: " + starting_regex
 		clause = "START original=node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "')  WITH original "\
 			"START duplicate = node:node_auto_index('indexed_main_author_name:" + starting_regex +"*" + "') "\
 			"WHERE ( (ID(original) <> ID(duplicate)) "\
 			"AND " + GraphHelper.match_duplicate_authors_conditions("original","duplicate") + " ) "\
-				" RETURN ID(original),ID(duplicate) LIMIT 1"
+				" RETURN ID(original), original.name, ID(duplicate), duplicate.name LIMIT 1"
 		output = clause.execute
 		if (output.length >0)
 			id_orig = output[0]["ID(original)"]
 			id_dup = output[0]["ID(duplicate)"]
+			name_o = output[0]["original.name"]
+			name_d = output[0]["duplicate.name"]
+			GraphHelper.log_info({
+				'original_id' => id_orig, 'original author name' => name_o, 'duplicate_id' => id_dup, 'duplicate author name' => name_d
+			}, " Duplicate Author removal")
 			GraphHelper.copy_properties_author(id_orig,id_dup)
 			clause = "MATCH (original:Author),(duplicate:Author) WHERE "\
 				"ID(original) = " + id_orig.to_s + " AND ID(duplicate) = " + id_dup.to_s + " "\
@@ -412,6 +461,24 @@ module GraphHelper
 		matched
 	end
 	
+	def self.next_regex_recursive prefix_search_index, array_position = nil
+		if array_position.nil?
+			array_position = prefix_search_index.length - 1
+		end
+		output = prefix_search_index
+		if array_position >= 0
+			if prefix_search_index[array_position] != 'z'
+				prefix_search_index[array_position] = prefix_search_index[array_position].ord.next.chr
+			else
+				prefix_search_index[array_position] = 'a'
+				output = GraphHelper.next_regex_recursive(prefix_search_index, array_position - 1)
+			end
+		else
+			output = ""
+		end
+		output
+	end
+
 	def self.next_regex(first_letter, second_letter, third_letter)
 		if (third_letter == 'z')
 			third_letter = 'a'
@@ -427,24 +494,68 @@ module GraphHelper
 		[first_letter,second_letter, third_letter]
 	end
 
-	def self.merge_duplicate_authors		
-		author_id_key = 'dup_author_regex'		
-		if(!$redis[author_id_key].nil?)			
-			cur_state = $redis[author_id_key]
-			fl = cur_state[0]
-			sl = cur_state[1]
-			tl = cur_state[2]
-		else
-			$redis[author_id_key] = "aaa"
-			fl = "a"
-			sl = "a"
-			tl = "a"
+	def self.manage_author_index_prefix prefix_search_index, reduction_allowed = true
+		count_max_threshold = 300
+		output_index = prefix_search_index
+		count = GraphHelper.count_authors_with_prefix_index prefix_search_index
+		if count > count_max_threshold
+			output_index = GraphHelper.manage_author_index_prefix(prefix_search_index + "a", false)
+		elsif prefix_search_index[-1] == 'a' && prefix_search_index.length > 1 && reduction_allowed == true
+			temp_index = output_index[0,output_index.length - 1]
+			output_index = GraphHelper.manage_author_index_prefix(temp_index)
 		end
-		while (!(fl == 'z' && sl == 'z' && tl == 'z'))
-			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index("" + fl + sl + tl)
-			if(matched == 0 )				
-				(fl,sl,tl) = GraphHelper.next_regex(fl,sl,tl)
-				$redis[author_id_key] = "" + fl + sl + tl
+		output_index
+	end
+
+	def self.manage_node_pair_index_prefix params
+		prefix_search_index = params[:prefix_search_index]
+		reduction_allowed = (params[:reduction_allowed].nil?)? true: params[:reduction_allowed]
+		label_one = params[:node_label][0]
+		label_two = params[:node_label][1]
+		count_max_threshold = 45000
+
+		params_one = {
+			:search_index 			=> prefix_search_index,
+			:label 					=> label_one
+		}
+		params_two = {
+			:search_index 			=> prefix_search_index,
+			:label 					=> label_two
+		}
+		count_one = GraphHelper.count_node_with_prefix_index params_one
+		count_two = GraphHelper.count_node_with_prefix_index params_two
+		count = count_one*count_two
+		output_index = prefix_search_index
+		if count > count_max_threshold
+			params_new = params.clone
+			params_new[:prefix_search_index] = params[:prefix_search_index] + "a"
+			params_new[:reduction_allowed] = false
+			output_index = GraphHelper.manage_node_pair_index_prefix params_new
+		elsif prefix_search_index[-1] == 'a' && prefix_search_index.length > 1 && reduction_allowed == true
+			temp_index = output_index[0,output_index.length - 1]
+			params_new = params.clone
+			params_new[:prefix_search_index] = temp_index
+			output_index = GraphHelper.manage_node_pair_index_prefix params_new
+		end
+		output_index
+	end
+
+	def self.merge_duplicate_authors		
+		author_id_key = 'dup_author_regex'
+		GraphHelper.log_setup author_id_key
+		cur_index = ""
+		if(!$redis[author_id_key].nil?)			
+			cur_index = $redis[author_id_key]
+		else
+			cur_index = "aaa"
+			$redis[author_id_key] = cur_index
+		end
+		while (cur_index != "")
+			cur_index = GraphHelper.manage_author_index_prefix cur_index
+			matched = GraphHelper.merge_duplicate_authors_in_range_auto_index(cur_index)
+			if matched == 0
+				cur_index = GraphHelper.next_regex_recursive(cur_index, cur_index.length - 1)
+				$redis[author_id_key] = cur_index
 			end
 		end
 	end
@@ -674,18 +785,139 @@ module GraphHelper
 		clause.execute
 	end
 
-	def self.test_function
-		clause = ""\
-				" MATCH (author:Author) "\
-				" WHERE HAS(author.born) "\
-				" RETURN author.born AS born LIMIT 100"
-		output = clause.execute.map{|elem| elem["born"]}
-		output.each do |born_string|
-			#born_string = "Baptised 26 April 1564 (birth date unknown), Stratford-upon-Avon, Warwickshire, England"
-			date = TimeHelper.get_birthday born_string, Constant::EntityLabel::Author
-			puts born_string.red
-			puts date.to_s.green
+	def self.generic_optional_copy_incoming_edges params
+		clause 				= " "
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		params[:with_elements] += [source_node, destination_node]
+		with_elements_string	= " WITH DISTINCT " + params[:with_elements].map{|elem| (elem)}.join(", ")
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause += ""\
+					" OPTIONAL MATCH (" + source_node + ")<-[:" + edge_type + "]-(" + node + ":" + node_label + ") "\
+					" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\
+						"MERGE (" + destination_node + ")<-[:" + edge_type + "]-(" + node + ") "\
+					") "\
+					"" + with_elements_string + " "
+			end
 		end
+		clause
+	end
+	def self.generic_copy_incoming_edges params
+		init_clause 		= params[:init_clause]
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		output 				= []
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause = init_clause + ""\
+					" MATCH (" + source_node + ")<-[:" + edge_type + "]-(" + node + ":" + node_label + ") "\
+						"MERGE (" + destination_node + ")<-[:" + edge_type + "]-(" + node + ") "\
+						" RETURN ID(" + destination_node + ")"
+				output << clause.execute
+			end
+		end
+		output
+	end
+
+	def self.generic_copy_outgoing_edges params
+		init_clause 		= params[:init_clause]
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		output 				= []
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause = init_clause + ""\
+					" MATCH (" + source_node + ")-[:" + edge_type + "]->(" + node + ":" + node_label + ") "\
+						"MERGE (" + destination_node + ")-[:" + edge_type + "]->(" + node + ") "\
+						" RETURN ID(" + destination_node + ")"
+				output << clause.execute
+			end
+		end
+		output
+	end
+
+	def self.generic_optional_copy_outgoing_edges params
+		clause 				= " "
+		source_node 		= params[:source_node]
+		destination_node 	= params[:destination_node]
+		params[:with_elements] += [source_node, destination_node]
+		with_elements_string	= " WITH DISTINCT " + params[:with_elements].map{|elem| (elem)}.join(", ")
+		params[:edge_types].each do |edge_type,node_labels|
+			node_labels.each do |node_label|
+				node = node_label.downcase + "_" + String.get_random
+				clause += ""\
+					" OPTIONAL MATCH (" + source_node + ")-[:" + edge_type + "]->(" + node + ":" + node_label + ") "\
+					" FOREACH (elem IN (CASE WHEN " + node + " IS NULL THEN [] ELSE [" + node + "] END )| "\
+						"MERGE (" + destination_node + ")-[:" + edge_type + "]->(" + node + ") "\
+					") "\
+					"" + with_elements_string + " "
+			end
+		end
+		clause
+	end
+
+	def self.iterative_entity_operations_log_setup params
+		GraphHelper.log_setup 'iterative_entity_operations'
+		@@logger.info(" ")
+		@@logger.info(" ()()()()()()()()()()()())()()()()()() ")
+		@@logger.info(" ")
+		@@logger.info(" Starting new Iterative entity operation for ")
+		@@logger.info(" class: 				#{params[:class]}")
+		@@logger.info(" label: 				#{params[:label]}")
+		@@logger.info(" step_size: 			#{params[:step_size]}")
+		@@logger.info(" function_to_call: 	#{params[:function]}")
+		@@logger.info(" ")
+	end
+
+	Default_logging_function = Proc.new do |output, logger|
+		logger.info("ID: #{output[0]['id']}")
+	end
+
+	# This function operates on any given class and calls the specific function passed in parameters.
+	def self.iterative_entity_operations params
+		class_name  		= params[:class]
+		label_name 			= params[:label]
+		step_size  			= (params[:step_size].nil?)? 500 : params[:step_size].to_i
+		function_for_exec 	= params[:function]
+		function_name 		= params[:function_name]
+		log_output 			= (params[:log_function].present?)? params[:log_function] : GraphHelper::Default_logging_function
+
+		label_name = (label_name.nil?)? class_name.to_s : label_name
+		redis_key = (label_name + class_name.to_s + "_" + function_name.to_s)
+		id_temp = class_name.set_up_redis label_name, redis_key
+		next_id = id_temp[:cur_id]
+		max_id  = id_temp[:max_id]
+		params[:step_size] = step_size
+		GraphHelper.iterative_entity_operations_log_setup params
+		while next_id <= max_id
+			clause  = Neo.get_nodes_with_id_range({:start_id => next_id, :step_size => step_size, :label => label_name})
+			params[:init_clause] = clause
+			exec_output = function_for_exec.call params
+			if exec_output.is_a? String
+				clause += exec_output
+				output  = clause.execute
+			else
+				output = exec_output
+			end
+			if output.empty?
+				next_id += 1
+			else
+				log_output.call output, @@logger
+				next_id = output[0]["id"] + 1
+			end
+			class_name.update_redis redis_key, next_id
+		end
+	end
+
+	def self.test_function
+		t = Constant::Time
+		test_start_date = {t::Year => 2014, t::Month => 1, t::Date => 31}
+		test_end_date   = {t::Year => 2015, t::Month => 10, t::Date => 1}
+		output = NewsSources::LiteratureAlltopNews.fetch_news_info [test_start_date, test_end_date]
 	end
 
 end

@@ -33,5 +33,9 @@ module Constant::Count
 	UsersShownInFeed			= 4
 	TotalCountIncrementRecommendation = 10
 
-	GoogleKeysCount				= 7
+	GoogleKeysCount				= 8
+	RoomPageRoomCount			= 12
+
+	TestimonialShowCount		= 10
+	FacebookLikeBookCount		= 10
 end

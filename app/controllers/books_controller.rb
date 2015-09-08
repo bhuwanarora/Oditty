@@ -326,7 +326,6 @@ class BooksController < ApplicationController
     def count
         neo = Neography::Rest.new
         tags = params[:q]
-        # count = neo.execute_query("MATCH (b:Book)-[:Belongs_to]->(g:Genre) WHERE g.name=''")
         render :json => {:count => 1}, :status => 200
     end
 

@@ -14,93 +14,74 @@ module Api
 
 			def get_genre_details
 				id = params[:id]
-				key = "GGD"+id.to_s
-				info = $redis.get key
+				info = RedisHelper::Genre.get_details({:id => id})
 				unless info
 					info = Api::V0::WebsiteApi.get_genre_details(id)
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Genre.set_details({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def update_redis_cache
 				id = params[:id].to_s
-				type = params[:type].to_s.downcase
-				case type
-				when "author"
-					key = "GBI" + id
-					$redis.del key
-					key = "GID" + id
-					$redis.del key
-				when "book"
-					key = "GBFI" + id
-					$redis.del key
-					key = "GPI" + id
-					$redis.del key
-					key = "GIF" + id
-					$redis.del key
-				end
+				type = params[:type].to_s.capitalize
+				RedisHelper.update id, type
 				render :json => {:message => "Success"}, :status => 200	
 			end
 
 			def news_info
 				id = params[:id]
 				community_id = params[:tag_id]
-				key = "NI" + id.to_s + community_id.to_s
-				info = $redis.get key
-				unless info
+				params = {:news_id => id, :community_id => community_id}
+				info = RedisHelper::Community.get_important_info(params)
+				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_important_community_info(id, community_id).execute
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse(info)
+					params[:info] = info
+					RedisHelper::Community.set_important_info(params)
 				end
 				render :json => info, :status => 200
 			end
 
 			def basic_community_info
 				id = params[:id]
-				key = "BCI" + id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::Community.get_basic_info({:id => id})
+				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_basic_community_info(id).execute
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse(info)
+					RedisHelper::Community.set_basic_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def feed_community_info
 				id = params[:id]
-				key = "FCI" + id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::Community.get_feed_info({:id => id})
+				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_feed_community_info(id).execute[0]
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::Community.set_feed_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def chronological_news
 				id = params[:id]
-				key = "CN" + id.to_s
-				info = $redis.get key
-				unless info
+				info = RedisHelper::News.get_chronological_news_info({:id => id})
+				unless !info.nil?
 					info = Api::V0::WebsiteApi.get_chronological_news_info(id).execute
-					$redis.set(key, info.to_json)
-				else
-					info = JSON.parse info
+					RedisHelper::News.set_chronological_news_info({:id => id, :info => info})
 				end
 				render :json => info, :status => 200
 			end
 
 			def add_new_label
 				user_id = session[:user_id]
-				info = Api::V0::WebsiteApi.add_new_label(user_id, params[:label], params[:type]).execute[0]
+				if params[:type]
+					if params[:type].downcase == "book"
+						type = "BookShelf"
+					else
+						type = "ArticleShelf"
+					end
+					info = Api::V0::WebsiteApi.add_new_label(user_id, params[:label], type).execute[0]
+				end
 				render :json => info, :status => 200
 			end
 
