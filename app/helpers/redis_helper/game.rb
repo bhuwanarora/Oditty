@@ -34,6 +34,7 @@ module RedisHelper::Game
 		user_info = RedisHelper::Game.get_user_info params
 		unless user_info.nil?
 			user_info["score"] = (user_info["score"] + score) rescue score
+			user_info["games"] = (user_info["games"] + 1) rescue 1
 			info_params =
 			{
 				:id => params[:id],
