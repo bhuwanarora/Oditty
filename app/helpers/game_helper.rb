@@ -1,5 +1,5 @@
 module GameHelper
-
+BooksBatchSize = 10
 	def self.create_book_linked_list
 		clause = "MATCH (b:Book) "\
 			" WHERE b.goodness_index > 7 AND b.isbn IS NOT NULL "\
@@ -47,11 +47,11 @@ module GameHelper
 			clause += " RETURN ID(book) AS id "
 			clause_array << clause
 		end
-		clause = clause_array.join(" UNION ")
-		output = clause.execute
-		id_list = output.map{|elem| (elem["id"])}
-		id_list = id_list.shuffle
-		id_list
+		id_list = clause_array[0..7].join(" UNION ").execute.map { |elem| (elem["id"])  }
+		id_list_0_7 = id_list.shuffle
+		id_list_8_9 = clause_array[8..9].join(" UNION ").execute.map{|elem| (elem["id"])}
+		output_list = GameHelper.sprinkle_popular_books( id_list_0_7, id_list_8_9)
+		output_list
 	end
 
 	def self.create_book_linked_list_all_types
@@ -111,6 +111,36 @@ module GameHelper
 		" WITH next_judge, ID(book) AS id LIMIT 50 "\
 		" DELETE next_judge "\
 		" RETURN id "
+	end
+
+	def self.sprinkle_popular_books books_0_7, books8_9
+		output_id_list = []
+		popular_books_index = 0
+		index_1_7 = books_0_7.length / BooksBatchSize
+		(0..index_1_7).each do |index|
+			if popular_books_index <= books8_9.length - 1
+				famous_books_count = 1 + rand(3)
+				left_famous_books_count = books8_9.length - popular_books_index
+				famous_books_count = [left_famous_books_count, famous_books_count].min
+			else
+				famous_books_count = 0
+			end
+
+			if famous_books_count > 0
+				famous_books_ids = books8_9[popular_books_index..(popular_books_index + famous_books_count - 1)]
+				popular_books_index += famous_books_count
+			else
+				famous_books_ids = []
+			end
+			other_books_count = BooksBatchSize - famous_books_count
+			left_other_books_count = books_0_7.length - BooksBatchSize*index
+			other_books_count = [other_books_count, left_other_books_count].min
+			other_book_ids = books_0_7[BooksBatchSize*index..(BooksBatchSize*index + other_books_count - 1)]
+			book_ids = other_book_ids + famous_books_ids
+			book_ids = book_ids.shuffle
+			output_id_list += book_ids
+		end
+		output_id_list
 	end
 
 
