@@ -3,7 +3,7 @@
 	<div layout-padding></div>
 	<div layout-padding></div>
 	<h1>Leaderboard</h1>
-	<div layout-padding layout="row">
+	<div layout-padding layout="row" ng-if="user.ranking">
 		<div layout-padding>I rank</div>
 		<div layout-padding>#{{user.ranking}}</div>
 		<div layout-padding>with a score of {{user.score}}</div>
@@ -19,11 +19,12 @@
 			</div>
 			<div layout-padding>
 				<a href="/profile?id={{user.id}}" ng-bind-html="user.name"></a>
-				<div>Accuracy {{user.accuracy}}</div>
+				<div>Score {{user.score}}</div>
+				<div class="less_important">In {{user.games}} Games</div>
 			</div>
 		</div>
 	</div>
-	<div layout-align="center center" layout="row">
+	<div layout-align="center center" layout="row" ng-hide="hide_show_more">
 		<a ng-click="get_users()">Show more people...</a>
 	</div>
 	<div layout-padding></div>

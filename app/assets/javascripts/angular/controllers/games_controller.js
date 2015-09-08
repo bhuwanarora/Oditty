@@ -13,14 +13,14 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         $scope.book.isbn = $scope.book.isbn.split(",")[0];
         $scope.game_background = {"background-image": "url('http://rd-images.readersdoor.netdna-cdn.com/"+$scope.book.isbn+"/L.jpg')"};
         delete $scope.shelves;
-        feedService.get_bookmarks($scope.book.id, "Book").then(function(data){
+        feedService.get_bookmarks($scope.book.book_id, "Book").then(function(data){
             $scope.shelves = data;
         });
         $scope.book.user_rating = 0;
     }
 
     $scope.toggle_bookmark = function(shelf){
-        var bookmark_object = {"type": "Book", "id": $scope.book.id};
+        var bookmark_object = {"type": "Book", "id": $scope.book.book_id};
         sharedService.toggle_bookmark(shelf, shelf.status, bookmark_object, $scope);
         shelf.status = !shelf.status;
     }
@@ -31,6 +31,9 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         }
         var skip = $scope.users.length;
         gamesService.get_users(skip).then(function(data){
+            if(data && data.length < 10){
+                $scope.hide_show_more = true;
+            }
             $scope.users = $scope.users.concat(data);
         });
     }
@@ -71,7 +74,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
             if(angular.isUndefined($scope.book.user_rating)){
                 $scope.book.user_rating = 0;
             }
-            var difference = Math.abs($scope.book.user_rating - $scope.book.rating);
+            var difference = Math.abs($scope.book.user_rating - $scope.book.goodness_index);
             $scope.score = $scope.score + ((10-difference)/10);
             if(difference == 0){
                 var message = "<h1>Perfect<h1>";
