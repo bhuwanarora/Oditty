@@ -504,7 +504,7 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', function($rootScope, websiteService, $timeout, $mdDialog, $sce){
+homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdSidenav', '$sce', function($rootScope, websiteService, $timeout, $mdSidenav, $sce){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
@@ -522,13 +522,14 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                         $scope.communityFeed.data = data;
                     });
                 }
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/iframe.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    clickOutsideToClose: true,
-                    targetEvent: event
-                });
+                $mdSidenav('embed_news').toggle();
+                // $mdSidenav.show({
+                //     templateUrl: '/assets/angular/html/news/iframe.html',
+                //     scope: $scope,
+                //     preserveScope: true,
+                //     clickOutsideToClose: true,
+                //     targetEvent: event
+                // });
                 event.stopPropagation();
             }
 
