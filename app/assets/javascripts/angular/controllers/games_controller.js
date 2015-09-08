@@ -1,4 +1,4 @@
-homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '$timeout', 'feedService', 'sharedService', function($scope, gamesService, $rootScope, $timeout, feedService, sharedService){
+homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '$timeout', 'feedService', 'sharedService', '$mdSidenav', function($scope, gamesService, $rootScope, $timeout, feedService, sharedService, $mdSidenav){
 
     $scope.get_books = function(){
         gamesService.get_books().then(function(data){
@@ -53,13 +53,18 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
     }
 
     $scope.start_playing = function(){
-        $scope.score = 0;
-        $scope.play = false;
-        $scope.done = false;
-        delete $scope.message;
-        $scope.active_index = 0;
-        $scope.get_books();
-        $scope.get_users();
+        if(angular.isUndefined($rootScope.user.id)){
+            $mdSidenav('signup').toggle();
+        }
+        else{
+            $scope.score = 0;
+            $scope.play = false;
+            $scope.done = false;
+            delete $scope.message;
+            $scope.active_index = 0;
+            $scope.get_books();
+            $scope.get_users();
+        }
     }
 
     $scope.next_book = function(){
