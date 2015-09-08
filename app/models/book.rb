@@ -104,7 +104,7 @@ class Book < Neo
 	end
 
 	def get_display_info
-		match + match_author + Book.return_group(Book.basic_info, " book.description AS description", "ID(author) AS author_id")
+		match + match_author + Book.return_group(Book.basic_info, " book.description AS description")
 	end
 
 	def self.grouped_basic_info
