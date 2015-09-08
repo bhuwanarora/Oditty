@@ -2,6 +2,8 @@
 	<section flex="20" flex-md="5" hide-sm></section>
 	<section flex="60" flex-md="90" layout="column" flex-sm="100" class="z_index_1">
 		<div class="game_wrapper"></div>
+		<md-progress-linear class="md-primary" ng-value="active_index*10" md-mode="buffer">
+		</md-progress-linear>
 		<div layout-padding></div>
 		<div layout-padding></div>
 		<div layout-padding></div>
@@ -11,8 +13,6 @@
 		</div>
 		<div layout-padding></div>
 		<div layout-padding></div>
-		<md-progress-linear class="md-primary" ng-value="active_index*10" md-mode="buffer">
-		</md-progress-linear>
 	</section>
 	<section flex="20" flex-md="5" hide-sm></section>
 </div>

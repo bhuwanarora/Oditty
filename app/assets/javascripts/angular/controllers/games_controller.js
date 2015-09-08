@@ -31,6 +31,10 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
             $scope.shelves = data;
         });
         $scope.book.user_rating = 0;
+        $scope.disbale = true;
+        $timeout(function(){
+            $scope.disbale = false;
+        }, 3000);
     }
 
     $scope.toggle_bookmark = function(shelf){
