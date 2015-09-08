@@ -4,27 +4,34 @@ module Api
 
 			def get_books
 				user_id = session[:user_id]
-				info = Api::V0::GamesApi.get_books(user_id)
+				info = Api::V0::GamesApi.get_books(user_id).execute
 				render :json => info, :status => 200
 			end
 
 			def get_users
-				skip = params[:skip]
-				user_id = session[:user_id]
-				info = Api::V0::GamesApi.get_users(user_id)
+				skip = (params[:skip].present?) ? params[:skip] : 0
+				params_user = {:skip => skip}
+				info = RedisHelper::Game.get_top_rankers(params_user)
 				render :json => info, :status => 200
 			end
 
 			def get_score
 				user_id = session[:user_id]
-				info = Api::V0::GamesApi.get_score(user_id)
+				info = Api::V0::GamesApi.get_score(user_id).execute[0]
+				info["ranking"] = RedisHelper::Game.get_user_rank({:id => user_id})
 				render :json => info, :status => 200
 			end
 
 			def save_score
 				user_id = session[:user_id]
 				score = params[:score]
-				info = Api::V0::GamesApi.save_score(user_id, score)
+				info = Api::V0::GamesApi.save_score(user_id, score).execute
+				params_user = 
+				{
+					:score => score,
+					:id => user_id
+				}
+				RedisHelper::Game.set_user_rank params_user
 				render :json => {:message => "Success"}, :status => 200
 			end
 		end
