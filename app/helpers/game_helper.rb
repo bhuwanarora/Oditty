@@ -58,6 +58,7 @@ BooksBatchSize = 10
 		GameHelper.clean_up_history
 		id_list = GameHelper.get_book_ids
 		GameHelper.create_book_linked_list_from_id id_list
+		GameHelper.create_last_book_judged.execute
 	end
 
 	def self.clean_up_history
@@ -82,7 +83,6 @@ BooksBatchSize = 10
 			clause += " CREATE UNIQUE (book1)-[:NextJudge]->(book2) "
 			clause.execute
 		end
-		GameHelper.create_last_book_judged.execute
 	end
 
 	def self.create_last_book_judged
