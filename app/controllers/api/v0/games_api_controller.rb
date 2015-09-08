@@ -18,7 +18,7 @@ module Api
 			def get_score
 				user_id = session[:user_id]
 				info = Api::V0::GamesApi.get_score(user_id).execute[0]
-				info["rank"] = RedisHelper::Game.get_user_rank({:id => user_id})
+				info["ranking"] = RedisHelper::Game.get_user_rank({:id => user_id})
 				render :json => info, :status => 200
 			end
 
