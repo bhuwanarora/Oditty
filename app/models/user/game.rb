@@ -72,6 +72,24 @@ class User::Game < User
 		" SET user.played_games_count = " + User::Game.increment_games_played_string
 	end
 
+	def self.match_initial_book
+		" MATCH (book:Book) "\
+		" WHERE (book)-[:NextJudge]->() AND NOT (book)<-[:NextJudge]-() "\
+		" WITH book, user "
+	end
+
+	def self.match_initial_book_by_id
+		" MATCH (book:Book) "\
+		" WHERE ID(book)=" + Constant::Id::GameStartingBookId.to_s + " "\
+		" WITH book"
+	end
+
+	def self.new_user
+		User::Game.match_initial_book_by_id + ", user "\
+			" MERGE (user)-[:LastBookJudged]->(book) "\
+		" WITH user "
+	end
+
 private
 	def self.order_by_top
 		" ORDER BY rank "
