@@ -189,4 +189,23 @@ module BookHelper
 		}
 		GraphHelper.iterative_entity_operations params
 	end
+
+	AddAuthorIds = Proc.new do |params, *args|
+		init_clause = params[:init_clause]
+		clause  = init_clause
+		clause += Author.match_books
+		clause += " SET book.author_id = ID(author) "
+		clause
+	end
+
+	def self.add_author_id
+		params = {
+			:class 			=> BookHelper,
+			:label 			=> 'Book',
+			:function 		=> BookHelper::AddAuthorIds,
+			:function_name 	=> 'AddAuthorIds',
+			:step_size 		=> 500
+		}
+		GraphHelper.iterative_entity_operations params
+	end
 end
