@@ -22,9 +22,10 @@
             </div>
         </div>
         <div class="content">
-            <!-- ng-click="show_news($event)" -->
+        
+        <!-- ng-href="{{::communityFeed.news_url}}" -->
             <h2>
-                <a target="_blank" ng-href="{{::communityFeed.news_url}}"
+                <a target="_blank" ng-click="show_news($event)"
                     ng-bind-html="::communityFeed.title">
                 </a>
             </h2>
@@ -54,3 +55,4 @@
     </md-card>
     <div layout-padding></div>
 </div>
+
