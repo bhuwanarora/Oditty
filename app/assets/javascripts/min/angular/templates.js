@@ -439,7 +439,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/news/iframe.html',
-    "<md-dialog aria-label=\"News\" class=\"full_width\" layout=\"row\" layout-align=\"center center\"><div ng-if=\"!cirular_loading\"><h1 ng-bind-html=\"data.title\"></h1><div class=\"description_card\" ng-bind-html=\"data.content\"></div><div class=\"less_important\" ng-bind-html=\"data.published | timestamp | date:'h:mm a, dd MMM'\"></div></div><h2></h2><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\" ng-if=\"cirular_loading\"></md-progress-circular></md-dialog>"
+    "<md-dialog aria-label=\"News\" class=\"full_width\" layout=\"row\" layout-align=\"center center\" layout-padding><div ng-if=\"!cirular_loading\" layout-padding><h1 ng-bind-html=\"communityFeed.data.title\"></h1><div class=\"description_card\" ng-bind-html=\"communityFeed.data.content\"></div><div class=\"less_important\" ng-bind-html=\"communityFeed.data.published | timestamp | date:'h:mm a, dd MMM'\"></div></div><h2></h2><md-progress-circular class=\"md-warn\" md-mode=\"indeterminate\" ng-if=\"cirular_loading\"></md-progress-circular></md-dialog>"
   );
 
 
