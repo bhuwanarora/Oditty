@@ -36,20 +36,23 @@ module GameHelper
 	end
 
 	def self.create_book_linked_list_all_types
+		GameHelper.clean_up_history
 		id_list = GameHelper.get_book_ids
 		GameHelper.create_book_linked_list_from_id id_list
 	end
 
 	def self.clean_up_history
 		RedisHelper::Game.clean_up
-		clause  = GameHelper.clean_up_user
-		clause += GameHelper.clean_up_user_links
-		clause += GameHelper.clean_up_book_links
-		clause.execute
+		all_cleaned_up = false
+		while !all_cleaned_up
+			output1 = (GameHelper.clean_up_user).execute
+			output2 = (GameHelper.clean_up_user_links).execute
+			output3 = (GameHelper.clean_up_book_links).execute
+			all_cleaned_up = output1.empty? && output2.empty? && output3.empty?
+		end
 	end
 
 	def self.create_book_linked_list_from_id id_list
-		GameHelper.clean_up_history
 		(0..(id_list.length - 2)).each do |index|
 			match_param =
 			{
@@ -71,19 +74,24 @@ module GameHelper
 
 	def self.clean_up_user
 		" MATCH (user:User) "\
+		" WHERE HAS(user.score) "\
+		" WITH user LIMIT 50 "\
 		" REMOVE user.rank, user.score, user.played_games_count "\
-		" WITH user "
+		" RETURN ID(user) AS id "
 	end
 
 	def self.clean_up_user_links
-		" MATCH (user:User)-[last_book_judged:LastBookJudged]->() "\
+		" MATCH (user:User)-[last_book_judged:LastBookJudged]->(:Book) "\
+		" WITH last_book_judged, ID(user) AS id LIMIT 50 "\
 		" DELETE last_book_judged "\
-		" WITH user "
+		" RETURN id "
 	end
 
 	def self.clean_up_book_links
-		" MATCH (book:Book)-[next_judge:NextJudge]->() "\
-		" DELETE next_judge "
+		" MATCH (book:Book)-[next_judge:NextJudge]->(:Book) "\
+		" WITH next_judge, ID(book) AS id LIMIT 50 "\
+		" DELETE next_judge "\
+		" RETURN id "
 	end
 
 
