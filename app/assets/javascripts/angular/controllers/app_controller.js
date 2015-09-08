@@ -120,7 +120,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
 
     var _get_user_details = function(){
         var user_timeout = $timeout(function(){
-            if(angular.isUndefined($rootScope.user)){
+            if(angular.isUndefined($rootScope.user) || angular.isUndefined($rootScope.user.id)){
                 userService.get_user_details().then(function(data){
                     if(angular.equals(data, {}) && (getCookie("logged") != "")){
                         deleteCookie("logged");
