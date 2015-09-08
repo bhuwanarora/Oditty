@@ -40,7 +40,7 @@
 				<div layout-padding ng-if="next">Your Rating</div>
 			</div>
 			<div layout-padding></div>
-	    	<md-button class="md-button-clear md-raised md-warn" ng-click="next_book()">
+	    	<md-button class="md-button-clear md-raised md-warn" ng-click="next_book()" ng-disabled="disbale">
 	    		<span ng-if="next">NEXT</span>
 	    		<span ng-if="!next">JUDGE</span>
 	    	</md-button>
