@@ -1,10 +1,10 @@
 <div ng-class="{'dark_grey': communityFeed.expand}">
     <md-card class="community" ng-class="{'no_shadow': !communityFeed.expand}"
         ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
-        <div class="vote">
+        <!-- <div class="vote" layout-padding>
             <i class="material-icons">arrow_drop_up</i>
             <div ng-bind-html="communityFeed.votes"></div>
-        </div>
+        </div> -->
         <div layout="row" class="communities" ng-if="communityFeed.communities">
             <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
                 layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
