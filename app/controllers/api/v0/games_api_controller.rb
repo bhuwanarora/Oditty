@@ -9,7 +9,7 @@ module Api
 			end
 
 			def get_users
-				skip = (params[:skip].present?) ? params[:skip] : 0
+				skip = (params[:skip].present?) ? params[:skip].to_i : 0
 				params_user = {:skip => skip}
 				info = RedisHelper::Game.get_top_rankers(params_user)
 				render :json => info, :status => 200
