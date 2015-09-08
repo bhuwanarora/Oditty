@@ -34,7 +34,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         $scope.disbale = true;
         $timeout(function(){
             $scope.disbale = false;
-        }, 1000);
+        }, 3000);
     }
 
     $scope.toggle_bookmark = function(shelf){
