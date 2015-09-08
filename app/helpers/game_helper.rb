@@ -67,7 +67,7 @@ module GameHelper
 	end
 
 	def self.create_last_book_judged
-		User.match + User::Game.match_initial_book + " MERGE (user)-[:LastBookJudged]->(book) "
+		User.match + User::Game.match_initial_book_by_id + ", user MERGE (user)-[:LastBookJudged]->(book) "
 	end
 
 	private
