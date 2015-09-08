@@ -9,7 +9,21 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
 
     $scope.set_book = function(){
         delete $scope.book;
-        $scope.book = $scope.books[$scope.active_index];
+        var book = {
+            "title": $scope.books[$scope.active_index].title,
+            "author_name": $scope.books[$scope.active_index].author_name,
+            "page_count": $scope.books[$scope.active_index].page_count,
+            "published_year": $scope.books[$scope.active_index].published_year,
+            "author_id": $scope.books[$scope.active_index].author_id,
+            "book_id": ($scope.books[$scope.active_index].id || $scope.books[$scope.active_index].book_id),
+            "isbn": $scope.books[$scope.active_index].isbn,
+            "goodness_index": $scope.books[$scope.active_index].goodness_index,
+            "book_reader_relationship_index": $scope.books[$scope.active_index].book_reader_relationship_index,
+            "likability_index": $scope.books[$scope.active_index].likeability_index,
+            "popularity_index": $scope.books[$scope.active_index].popularity_index
+        }
+
+        $scope.book = book;
         $scope.book.isbn = $scope.book.isbn.split(",")[0];
         $scope.game_background = {"background-image": "url('http://rd-images.readersdoor.netdna-cdn.com/"+$scope.book.isbn+"/L.jpg')"};
         delete $scope.shelves;
