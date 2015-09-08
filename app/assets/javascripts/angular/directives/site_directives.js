@@ -514,10 +514,11 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
             }
 
             $scope.show_news = function(event){
-                $scope.communityFeed.news_url ="https://api.embed.ly/1/extract?key=0038e86d5e754f8d9a0c3823e338563d&url="+$scope.communityFeed.news_url+"&format=json";
+                var url = $scope.communityFeed.news_url || $scope.communityFeed.url;
+                url ="https://api.embed.ly/1/extract?key=0038e86d5e754f8d9a0c3823e338563d&url="+url+"&format=json";
                 $scope.cirular_loading = true;
                 if(angular.isUndefined($scope.communityFeed.data)){
-                    websiteService.extract_embed($scope.communityFeed.news_url).then(function(data){
+                    websiteService.extract_embed(url).then(function(data){
                         $scope.cirular_loading = false;
                         $scope.communityFeed.data = data;
                     });
