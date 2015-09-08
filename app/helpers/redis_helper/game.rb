@@ -69,6 +69,11 @@ module RedisHelper::Game
 		output
 	end
 
+	def self.clean_up
+		RedisHelper.clear(RedisHelper::Game.get_key_user_rank(""))
+		RedisHelper.clear(RedisHelper::Game.get_key_user_info(""))
+	end
+
 private
 	def self.get_key_user_rank user_id
 		"UserRank" + user_id.to_s
