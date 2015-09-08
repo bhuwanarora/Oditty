@@ -1,6 +1,6 @@
 <h2 class="center_text" layout-padding>Judge a book by its Cover</h2>
 <div class="center_text">
-	<div class="bold"><a ng-bind-html="book.title" ng-href="/book?id={{book.id}}"></a></div>
+	<div class="bold"><a ng-bind-html="book.title" ng-href="/book?id={{book.book_id}}"></a></div>
 	<div class="less_important">
 		<a ng-bind-html="book.author_name" ng-href="/author?id={{book.author_id}}"></a>
 	</div>
@@ -16,10 +16,10 @@
 	<div layout-padding layout="column" layout-align="space-between center" class="game_container" flex>
 		<div layout="column" layout-align="center center">
 	    	<div layout-padding ng-if="next">Oditty's Rating</div>
-	    	<div class="rd_title" ng-if="next" class="site_color">{{book.rating}}</div>
+	    	<div class="rd_title" ng-if="next" class="site_color">{{book.goodness_index}}</div>
 	    	<md-slider flex="20" md-discrete 
 	   			class="game_slider md-primary"
-	   			ng-model="book.rating" ng-if="next"
+	   			ng-model="book.goodness_index" ng-if="next"
 	   			ng-disabled="true"
 	   			step="1" min="1" max="10" aria-label="rating">
 	    	</md-slider>
