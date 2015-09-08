@@ -19,12 +19,31 @@ module GameHelper
 		" WITH book LIMIT " + limit.to_s + " "
 	end
 
+	def self.get_limits start_goodness_index
+		goodness_book_limit_hash =
+		{
+			0 => 100,
+			1 => 100,
+			2 => 100,
+			3 => 100,
+			4 => 100,
+			5 => 100,
+			6 => 200,
+			7 => 200,
+			8 => 200,
+			9 => 200
+		}
+		goodness_book_limit_hash[start_goodness_index]
+	end
+
 	def self.get_book_ids
 		bucket_width = 1
 		clause = ""
 		clause_array = []
+
 		(0..9).each do |start_goodness_index|
-			clause = GameHelper.get_books_in_goodness_range(start_goodness_index, start_goodness_index + bucket_width)
+			limit = GameHelper.get_limits(start_goodness_index)
+			clause = GameHelper.get_books_in_goodness_range(start_goodness_index, start_goodness_index + bucket_width, limit)
 			clause += " RETURN ID(book) AS id "
 			clause_array << clause
 		end
