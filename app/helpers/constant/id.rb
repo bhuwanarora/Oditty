@@ -34,4 +34,6 @@ module Constant::Id
 	BookIdForGame				= 384873
 	FacebookAppId 				= "174275722710475"
 	GoodreadsAppId				= "2415071772"
+
+	GameStartingBookId			= '384867'
 end

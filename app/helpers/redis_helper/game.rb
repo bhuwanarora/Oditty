@@ -30,12 +30,24 @@ module RedisHelper::Game
 		key   = RedisHelper::Game.get_key_user_rank params[:id]
 		score = params[:score]
 		$redis.zincrby SortedSetKey, score, key
+
+		user_info = RedisHelper::Game.get_user_info params
+		unless user_info.nil?
+			user_info["score"] = (user_info["score"] + score) rescue score
+			user_info["games"] = (user_info["games"] + 1) rescue 1
+			info_params =
+			{
+				:id => params[:id],
+				:info => user_info
+			}
+			RedisHelper::Game.set_user_info info_params
+		end
 	end
 
 	def self.get_user_rank params
 		key  = RedisHelper::Game.get_key_user_rank params[:id]
 		rank = $redis.zrevrank SortedSetKey, key
-		rank + 1
+		output = rank + 1 rescue nil
 	end
 
 	def self.get_top_rankers params
@@ -56,6 +68,12 @@ module RedisHelper::Game
 			rank_current += 1
 		end
 		output
+	end
+
+	def self.clean_up
+		RedisHelper.clear(RedisHelper::Game.get_key_user_rank(""))
+		RedisHelper.clear(RedisHelper::Game.get_key_user_info(""))
+		RedisHelper.clear(SortedSetKey)
 	end
 
 private
