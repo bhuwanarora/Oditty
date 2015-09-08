@@ -29,5 +29,4 @@ class User::Game < User
 		@user.match + " MATCH (user)-[:LastBookJudged]->(book:Book) WITH user, book "
 	end
 
-
 end
