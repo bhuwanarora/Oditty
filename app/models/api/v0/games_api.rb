@@ -10,6 +10,10 @@ module Api
 				User::Game.get_score_board
 			end
 
+			def self.get_user_info user_id
+				User::Game.new(user_id).get_score_board
+			end
+
 			def self.get_score user_id
 				User::Game.new(user_id).get_score
 			end
