@@ -439,7 +439,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/news/iframe.html',
-    "<md-sidenav class=\"md-sidenav-right md-whiteframe-z2\" md-component-id=\"embed_news\" layout-padding><div ng-if=\"!cirular_loading\" layout-padding class=\"embed_container\"><h1 ng-bind-html=\"communityFeed.data.title\"></h1><div class=\"description_card\" layout-padding ng-bind-html=\"communityFeed.data.content\"></div><div class=\"less_important\" layout-padding ng-bind-html=\"communityFeed.data.published | timestamp | date:'h:mm a, dd MMM'\"></div></div><h2></h2><md-progress-circular class=\"md-warn\" md-mode=\"indeterminate\" ng-if=\"cirular_loading\"></md-progress-circular><style>.embed_container{margin-top:100px}.embed_container img{display:none}</style></md-sidenav>"
+    "<md-dialog aria-label=\"News\" class=\"full_width\" layout=\"row\" layout-align=\"center center\" layout-padding><div ng-if=\"!cirular_loading\" layout-padding class=\"embed_container\"><h1 ng-bind-html=\"communityFeed.data.title\"></h1><div class=\"description_card\" layout-padding ng-bind-html=\"communityFeed.data.content\"></div><div class=\"less_important\" layout-padding ng-bind-html=\"communityFeed.data.published | timestamp | date:'h:mm a, dd MMM'\"></div></div><h2></h2><md-progress-circular class=\"md-warn\" md-mode=\"indeterminate\" ng-if=\"cirular_loading\"></md-progress-circular></md-dialog><style>.embed_container{margin-top:100px}.embed_container img{display:none}</style>"
   );
 
 
