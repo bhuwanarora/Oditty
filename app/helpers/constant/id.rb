@@ -35,5 +35,5 @@ module Constant::Id
 	FacebookAppId 				= "174275722710475"
 	GoodreadsAppId				= "2415071772"
 
-	GameStartingBookId			= '384873'
+	GameStartingBookId			= '542577'
 end
