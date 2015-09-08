@@ -1,8 +1,8 @@
 <h2 class="center_text" layout-padding>Judge a book by its Cover</h2>
 <div class="center_text">
-	<div class="bold"><a ng-bind-html="book.title" ng-href="/book?id={{book.book_id}}"></a></div>
+	<div class="bold"><a ng-bind-html="book.title" target="_blank" ng-href="/book?id={{book.book_id}}"></a></div>
 	<div class="less_important">
-		<a ng-bind-html="book.author_name" ng-href="/author?id={{book.author_id}}"></a>
+		<a ng-bind-html="book.author_name" target="_blank" ng-href="/author?id={{book.author_id}}"></a>
 	</div>
 </div>
 <div layout-padding></div>
