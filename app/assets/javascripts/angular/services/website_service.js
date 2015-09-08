@@ -14,6 +14,10 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return _deferred_request('/api/v0/get_testimonials?skip='+skip, $q, $http);
     }
 
+    this.extract_embed = function(url){
+        return _deferred_request(url, $q, $http);
+    }
+
     this.add_testimonial = function(data){
         return _deferred_request('/api/v0/add_testimonial?data='+data, $q, $http);   
     }
