@@ -132,7 +132,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
     $scope.get_user_score = function(){
         gamesService.get_user_score().then(function(data){
             if(angular.isUndefined($rootScope.user)){
-                $rootScope.user = {};
+                $rootScope.user = {}; 
             }
             $rootScope.user = angular.extend($rootScope.user, data);
         });
