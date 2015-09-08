@@ -1,12 +1,8 @@
 homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '$timeout', 'feedService', 'sharedService', function($scope, gamesService, $rootScope, $timeout, feedService, sharedService){
 
     $scope.get_books = function(){
-        if(angular.isUndefined($scope.books)){
-            $scope.books = [];
-        }
-        var skip = $scope.books.length;
-        gamesService.get_books(skip).then(function(data){
-            $scope.books = $scope.books.concat(data);
+        gamesService.get_books().then(function(data){
+            $scope.books = data;
             $scope.set_book();
         });
     }
@@ -61,6 +57,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
                 if(angular.isUndefined($scope.total_score)){
                     $scope.total_score = 0;
                 }
+                
                 $scope.total_score = $scope.total_score + $scope.score;
                 $scope.play_message = "PLAY AGAIN";
             }

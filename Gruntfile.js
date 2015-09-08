@@ -286,6 +286,11 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/authors_controller.js"
                 ],
 
+                "app/assets/javascripts/min/angular/controllers/games_group.min.js":[
+                    "app/assets/javascripts/min/angular/services/games_service.js",
+                    "app/assets/javascripts/min/angular/controllers/games_controller.js"
+                ],
+
                 "app/assets/javascripts/min/angular/controllers/network_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/network_controller.js"
                 ],
