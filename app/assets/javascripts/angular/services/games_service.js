@@ -16,5 +16,4 @@ homeApp.service('gamesService', ["$http", "$q", "$rootScope", "WebsiteUIConstant
 		return _deferred_post_request('/api/v0/save_score', params, $q, $http);
 	}
 
-
 }]);
