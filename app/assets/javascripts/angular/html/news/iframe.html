@@ -1,10 +1,19 @@
-<md-dialog aria-label="News" class="full_width" >
+<md-dialog aria-label="News" class="full_width" layout="row" layout-align="center center">
 	<!-- <iframe width="1024" height="768"  ng-src="{{communityFeed.news_url}}"  -->
 		<!-- style="-webkit-transform:scale(0.5);-moz-transform-scale(0.5);"></iframe> -->
 
-    <iframe width="100%" height="500px" ng-src="{{communityFeed.news_url}}" hide-sm hide-md></iframe>
+    <!-- <iframe width="100%" height="500px" ng-src="{{communityFeed.news_url}}" hide-sm hide-md></iframe>
 	<iframe width="100%" height="500px" ng-src="{{communityFeed.news_url}}" hide show-md hide-sm
     	style="-webkit-transform:scale(0.9);-moz-transform-scale(0.5);"></iframe>
 	<iframe width="100%" height="350px" ng-src="{{communityFeed.news_url}}" hide show-sm
-    	style="-webkit-transform:scale(0.9);-moz-transform-scale(0.5);"></iframe>
+    	style="-webkit-transform:scale(0.9);-moz-transform-scale(0.5);"></iframe> -->
+    <div ng-if="!cirular_loading">
+    	<h1 ng-bind-html="data.title"></h1>
+    	<div class="description_card" ng-bind-html="data.content"></div>
+    	<div class="less_important" ng-bind-html="data.published | timestamp | date:'h:mm a, dd MMM'"></div>
+    </div>
+    <h2></h2>
+ 	<md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+            ng-if="cirular_loading">
+    </md-progress-circular>
 </md-dialog>

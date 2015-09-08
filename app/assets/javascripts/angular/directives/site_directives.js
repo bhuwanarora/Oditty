@@ -504,7 +504,7 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', '$mdDialog', '$sce', function($rootScope, userService, $timeout, $mdDialog, $sce){
+homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', function($rootScope, websiteService, $timeout, $mdDialog, $sce){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
@@ -514,8 +514,12 @@ homeApp.directive('communityFeed', ["$rootScope", 'userService', '$timeout', '$m
             }
 
             $scope.show_news = function(event){
-                $scope.communityFeed.news_url = "/utilities?url=" + $scope.communityFeed.news_url;
-                $scope.communityFeed.news_url = $sce.trustAsResourceUrl($scope.communityFeed.news_url+"?output=embed");
+                $scope.communityFeed.news_url ="https://api.embed.ly/1/extract?key=0038e86d5e754f8d9a0c3823e338563d&url="+$scope.communityFeed.news_url+"&format=json";
+                $scope.cirular_loading = true;
+                websiteService.extract_embed($scope.communityFeed.news_url).then(function(data){
+                    $scope.cirular_loading = false;
+                    $scope.data = data;
+                });
                 $mdDialog.show({
                     templateUrl: '/assets/angular/html/news/iframe.html',
                     scope: $scope,
