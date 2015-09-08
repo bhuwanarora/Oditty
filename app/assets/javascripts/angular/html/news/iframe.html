@@ -1,4 +1,4 @@
-<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="embed_news" layout-padding>
+<md-dialog aria-label="News" class="full_width" layout="row" layout-align="center center" layout-padding>
     <div ng-if="!cirular_loading" layout-padding class="embed_container">
     	<h1 ng-bind-html="communityFeed.data.title"></h1>
     	<div class="description_card" layout-padding ng-bind-html="communityFeed.data.content"></div>
