@@ -24,7 +24,7 @@ class WebsiteController < ApplicationController
 	end
 
 	def journey
-		@authors = true
+		@journey = true
 		@title = "Our Journey So Far | Oditty"
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
 			@info = {"title" => "Our Journey So Far | Oditty", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/journey.png"}
