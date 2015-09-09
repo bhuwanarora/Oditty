@@ -399,7 +399,7 @@ class User < Neo
 	end
 
 	def get_facebook_likes
-		match + match_facebook_likes + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
+		match + match_facebook_likes + FacebookLike.not_completed + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
 	end
 
 	def popular_rooms skip_count=0

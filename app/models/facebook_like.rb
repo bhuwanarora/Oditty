@@ -4,7 +4,11 @@ class FacebookLike < Neo
 	end
 
 	def match
-		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + @app_id + " WITH facebook_like "
+		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + @app_id.to_s + " WITH facebook_like "
+	end
+
+	def self.match_by_neo_id node_id
+		" MATCH (facebook_like:FacebookLike) WHERE ID(facebook_like)=" + node_id.to_s + " WITH facebook_like "
 	end
 
 	def self.match_books
@@ -44,8 +48,17 @@ class FacebookLike < Neo
 		" SET facebook_like.created_time = " + created_time.to_s + " "
 	end
 
+	def self.set_completed node_id
+		 FacebookLike.match_by_neo_id(node_id) + " SET facebook_like.completed = true "
+	end
+
 	def self.basic_info
 		" facebook_like.app_id AS app_id, ID(facebook_like) AS id, facebook_like.name AS name "
+	end
+
+	def self.not_completed
+		" WHERE NOT HAS(facebook_like.completed) "\
+		" WITH user, facebook_like, likes "
 	end
 
 end
