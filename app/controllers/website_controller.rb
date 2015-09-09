@@ -23,6 +23,17 @@ class WebsiteController < ApplicationController
 		render :json => {:message => "Success"}, :status => 200
 	end
 
+	def journey
+		@authors = true
+		@title = "Our Journey So Far | Oditty"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "Our Journey So Far | Oditty", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/journey.png"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
+	end
+
 	def utilities
 		@redirect_url = params[:url]
 		render :layout => "material_clean"
@@ -226,16 +237,6 @@ class WebsiteController < ApplicationController
 			redirect_to :controller => 'website', :action => 'signup'			
 		else
 			@network = true
-			render :layout => "material"
-		end
-	end
-
-	def journey
-		unless session[:user_id]
-			cookies[:logged] = nil
-			cookies[:redirect_url] = request.original_fullpath.gsub!("/", "")
-			redirect_to :controller => 'website', :action => 'signup'			
-		else
 			render :layout => "material"
 		end
 	end
