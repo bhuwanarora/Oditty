@@ -15,7 +15,8 @@
 				<h1>#{{user.ranking}}</h1>
 			</div>
 			<div>
-				<img ng-src="{{user.image_url}}" class="square" />
+				<img ng-src="{{user.image_url || '/assets/user_profile.jpg'}}" 
+                class="square" onerror="this.src='/assets/user_profile.jpg'"/>
 			</div>
 			<div layout-padding>
 				<a href="/profile?id={{user.id}}" ng-bind-html="user.name" target="_blank"></a>

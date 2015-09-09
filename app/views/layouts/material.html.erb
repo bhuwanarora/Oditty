@@ -11,7 +11,7 @@
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Oditty: Global Community of Book Lovers" />
         <meta property="og:image" content="https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xpf1/v/t1.0-9/10999443_470788299758712_5554808311498390246_n.png?oh=5e0d331b375ed742cee3217b42fa2368&oe=56478548&__gda__=1446352162_2be4a71ebe3e0833076ffc7ea5ac40e8" />
-        <meta property="og:description" content="Oditty is a global community for book readers, where we intend to enrich and enhance users’ reading experience by focusing on virtualisation and idealisation of their real life interactions and experiences." />
+        <meta property="og:description" content="Oditty.me, My Smart and Social Knowledge Discovery Platform for News, Books, and Videos" />
         <meta property="fb:app_id" content="667868653261167"/>
         <meta charset="utf-8" />
         <title><% unless @title %>
@@ -37,7 +37,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
+        class="<% if @journey || @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
         id="<% unless @book %>parent<% end %>"
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
@@ -95,6 +95,8 @@
                 <md-content ng-controller="customiseController" class="white super_div_container" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController" class="super_container">
+            <% elsif @journey %>
+                <md-content class="super_container white">
             <% else %>
                 <md-content class="super_container">
             <% end %>

@@ -1,18 +1,14 @@
-<md-content>
-    <div ng-include src="'/assets/angular/html/profile/_header.html'"></div>
-    <section layout="row" layout-wrap>
-        <div flex="25" hide-sm flex-md="10"></div>
-        <div flex="50" flex-sm="100" flex-md="80" layout="column"
-             ng-include src="'/assets/angular/html/journey/_sub_header.html'">
-        </div>
-        <div flex="25" hide-sm 
-             flex-md="10"></div>
+<div layout="row" class="feed_margin">
+    <section flex="20" flex-md="5" hide-sm></section>
+    <section flex="60" flex-md="90" layout="column" flex-sm="100" 
+        ng-include src="'/assets/angular/html/journey/show.html'">
     </section>
-    <section layout="row" layout-wrap>
-        <div flex="25" hide-sm flex-md="10"></div>
-        <div flex="50" flex-sm="100" flex-md="80" layout="column"
-             ng-include src="'/assets/angular/html/journey/show.html'">
-        </div>
-        <div flex="25" hide-sm flex-md="10"></div>
-    </section>
-</md-content>
+    <section flex="20" flex-md="5" hide-sm></section>
+</div>
+<style>
+    #journey img{
+        width: 150px;
+        max-height: 90px;
+        border: 1px solid #EFEFEF;
+    }
+</style>
