@@ -52,10 +52,11 @@ module RedisHelper::Game
 
 	def self.get_top_rankers params
 		skip = params[:skip]
-		keys = $redis.zrevrange SortedSetKey, skip, 10
+		keys = $redis.zrevrange(SortedSetKey, skip, 10, :with_scores => true)
 		output = []
 		rank_current = skip + 1
-		keys.each do |key|
+		keys.each do |element|
+			key = element[0]
 			param_info = {:id => RedisHelper::Game.get_id_from_user_rank_key(key)}
 			user_info = RedisHelper::Game.get_user_info(param_info)
 			if user_info.nil?
@@ -64,6 +65,7 @@ module RedisHelper::Game
 				RedisHelper::Game.set_user_info(param_info)
 			end
 			user_info["ranking"] = rank_current
+			user_info["score"] = element[1]
 			output << user_info
 			rank_current += 1
 		end
