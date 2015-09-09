@@ -74,7 +74,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
     $scope.next_book = function(){
         if($scope.next){
             $scope.next = false;
-            if($scope.active_index == 9){
+            if($scope.active_index == 6){
                 $scope.message = "<h1>Done!</h1>";
                 $scope.done = true;
                 $scope.play = true;

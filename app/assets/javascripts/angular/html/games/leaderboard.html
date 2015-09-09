@@ -18,7 +18,7 @@
 				<img ng-src="{{user.image_url}}" class="square" />
 			</div>
 			<div layout-padding>
-				<a href="/profile?id={{user.id}}" ng-bind-html="user.name"></a>
+				<a href="/profile?id={{user.id}}" ng-bind-html="user.name" target="_blank"></a>
 				<div>Score {{user.score}}</div>
 				<div class="less_important">In {{user.games}} Games</div>
 			</div>

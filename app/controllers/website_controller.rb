@@ -32,7 +32,7 @@ class WebsiteController < ApplicationController
 		@games = true
 		@title = "Judge a Book by its cover | Games on Oditty"
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			@info = {"title" => "Judge a Book by its cover #Additive #PlayNow :)", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/games.png"}
+			@info = {"title" => "Judge a Book by its cover #Addictive #PlayNow", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/games.png"}
 			render :layout => "social"
 		else
 			render :layout => "material"
