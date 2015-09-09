@@ -70,6 +70,11 @@ module RedisHelper::Game
 		output
 	end
 
+	def self.get_score params
+		info = RedisHelper::Game.get_user_info(params)
+		info
+	end
+
 	def self.clean_up
 		RedisHelper.clear(RedisHelper::Game.get_key_user_rank(""))
 		RedisHelper.clear(RedisHelper::Game.get_key_user_info(""))
