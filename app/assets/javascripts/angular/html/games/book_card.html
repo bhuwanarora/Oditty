@@ -44,6 +44,14 @@
 	    		<span ng-if="next">NEXT</span>
 	    		<span ng-if="!next">JUDGE</span>
 	    	</md-button>
+
+	    	<div layout="column" layout-padding class="less_important">
+	    		<div>Questions Answered</div>
+	    		<div layout-padding layout="row" class="bold">
+		    		<div ng-bind-html="active_index || 0"></div>
+		    		<div>/10</div>
+	    		</div>
+	    	</div>
     	</div>
 	</div>
 </div>
