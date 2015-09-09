@@ -29,7 +29,7 @@
 		</div>
     	<div layout="column" layout-align="center center" flex class="footer">
 			<div class="rd_title">{{book.user_rating || 0}}</div>
-		 	<md-slider flex="20" md-discrete 
+		 	<md-slider flex="20" md-discrete
 	   			class="game_slider md-primary"
 	   			ng-model="book.user_rating"
 	   			ng-disabled="next"
@@ -49,7 +49,7 @@
 	    		<div>Questions Answered</div>
 	    		<div layout-padding layout="row" class="bold">
 		    		<div ng-bind-html="active_index || 0"></div>
-		    		<div>/7</div>
+		    		<div>/{{book_count}}</div>
 	    		</div>
 	    	</div>
     	</div>
