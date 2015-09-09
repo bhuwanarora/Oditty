@@ -3,11 +3,11 @@
 	<div layout-padding></div>
 	<div layout-padding></div>
 	<h1>Leaderboard</h1>
-	<div layout-padding layout="row" ng-if="user.ranking">
+	<div layout-padding layout="row" ng-if="ranking">
 		<div layout-padding>I rank</div>
-		<div layout-padding>#{{user.ranking}}</div>
-		<div layout-padding>with a score of {{user.score}}</div>
-		<div layout-padding>in {{user.games}} games</div>
+		<div layout-padding>#{{ranking}}</div>
+		<div layout-padding>with a score of {{user_score}}</div>
+		<div layout-padding>in {{games}} games</div>
 	</div>
 	<div layout="column" flex>
 		<div layout="row" ng-repeat="user in users" layout-padding>
