@@ -9,7 +9,7 @@ class User::Game < User
 	end
 
 	def self.score_board_info
-		User::Game.score_info + ", user.first_name AS name, user.thumb AS image_url "
+		User::Game.score_info + ", user.first_name AS name, user.thumb AS image_url, ID(user) AS id "
 	end
 
 
