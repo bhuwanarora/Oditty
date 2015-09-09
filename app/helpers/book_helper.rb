@@ -191,10 +191,9 @@ module BookHelper
 	end
 
 	AddAuthorIds = Proc.new do |params, *args|
-		init_clause = params[:init_clause]
-		clause  = init_clause
-		clause += Author.match_books
+		clause = Author.match_books
 		clause += " SET book.author_id = ID(author) "
+		clause += " RETURN MAX(ID(book)) AS id "
 		clause
 	end
 
