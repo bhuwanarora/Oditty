@@ -82,6 +82,7 @@ ReadersDoor::Application.routes.draw do
   
   get 'book'                      => "website#book",                  :as => "dev_book"
   get 'authors'                   => "website#authors",            :as => "authors"
+  
   # get ':book/:id'               => "website#book",           :as => "specific_book"
   get 'network'                   => "website#network",               :as => "network"
   get 'journey'                   => "website#journey",               :as => "journey"
