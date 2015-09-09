@@ -12,6 +12,7 @@ class FacebookLikesBooksWorker
 		begin
 			node_id = FacebookLikesBooksHelper.set_node_property_recursive(params, nil, true)
 			FacebookLikesBooksHelper.set_community_books node_id
+			FacebookLike.new(node_id).set_completed.execute
 		rescue Exception => e
 			puts e.to_s.red
 		end
