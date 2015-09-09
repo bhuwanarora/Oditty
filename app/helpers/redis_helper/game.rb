@@ -74,6 +74,7 @@ module RedisHelper::Game
 
 	def self.get_score params
 		info = RedisHelper::Game.get_user_info(params)
+		info["ranking"] = RedisHelper::Game.get_user_rank(params)
 		info
 	end
 
