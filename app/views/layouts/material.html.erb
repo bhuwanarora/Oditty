@@ -95,6 +95,8 @@
                 <md-content ng-controller="customiseController" class="white super_div_container" flex="100">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController" class="super_container">
+            <% elsif @journey %>
+                <md-content class="super_container white">
             <% else %>
                 <md-content class="super_container">
             <% end %>
