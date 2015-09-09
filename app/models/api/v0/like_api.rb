@@ -13,7 +13,11 @@ module Api
 			end
 
 			def self.set_info params
-				FacebookLikesBooksWorker.perform_async(params)
+				params_worker  = params.clone
+				unwanted_keys = ['controller','action']
+				unwanted_keys.each{|key| params_worker.delete(key)}
+				params_worker = {"data" => params_worker}
+				FacebookLikesBooksWorker.perform_async(params_worker)
 			end
 
 			def self.get_likes user_id

@@ -1,18 +1,29 @@
 class FacebookLike < Neo
-	def initialize app_id
+	def initialize app_id, neo_id = nil
 		@app_id = app_id
+		@neo_id = neo_id
 	end
 
 	def match
 		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + @app_id.to_s + " WITH facebook_like "
 	end
 
-	def self.match_by_neo_id node_id
-		" MATCH (facebook_like:FacebookLike) WHERE ID(facebook_like)=" + node_id.to_s + " WITH facebook_like "
+	def match_by_neo_id
+		" MATCH (facebook_like:FacebookLike) WHERE ID(facebook_like)=" + @neo_id.to_s + " WITH facebook_like "
 	end
 
 	def self.match_books
-		" MATCH (facebook_like)-[:HasCommunity]->(community:Community)-[relatedbooks:RelatedBooks]->(book:Book) "
+		" MATCH (facebook_like)-[related_community:RelatedCommunity]->(community:Community)-[relatedbooks:RelatedBooks]->(book:Book) "\
+		" WITH facebook_like, community, book, relatedbooks"
+	end
+
+	def get_books
+		match_by_neo_id + FacebookLike.match_books + " WITH DISTINCT book " + Book.order_by_goodness + FacebookLike.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
+	end
+
+	def self.match_community
+		" MATCH (facebook_like:FacebookLike)-[:RelatedCommunity]->(community:Community) "\
+		" WITH facebook_like, community "
 	end
 
 	def merge
@@ -49,7 +60,7 @@ class FacebookLike < Neo
 	end
 
 	def self.set_completed node_id
-		 FacebookLike.match_by_neo_id(node_id) + " SET facebook_like.completed = true "
+		 FacebookLike.match_by_neo_id(node_id) + " SET facebook_like.completed = true, facebook_like:Community "
 	end
 
 	def self.basic_info
@@ -59,6 +70,14 @@ class FacebookLike < Neo
 	def self.not_completed
 		" WHERE NOT HAS(facebook_like.completed) "\
 		" WITH user, facebook_like, likes "
+	end
+
+	def self.merge_community relevance, node = 'node'
+		clause = " MERGE (" + node + ")-[h:RelatedCommunity]->(community)"\
+		" ON CREATE SET h +={relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}"\
+		" ON MATCH  SET h +={relevance: "+ relevance['relevance'].to_s+",relevanceOriginal:"+relevance['relevanceOriginal'].to_s+"}"\
+		" WITH "+ node + ",community"
+		clause
 	end
 
 end
