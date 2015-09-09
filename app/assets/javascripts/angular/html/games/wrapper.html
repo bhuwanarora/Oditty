@@ -1,7 +1,7 @@
 <div class="message animate-fast" ng-if="message" layout-align="center center" layout="column">
 	<div ng-bind-html="message"></div>
 	<h1 ng-if="done">
-		{{score*100/7}}% Accuracy
+		{{accuracy}}% Accuracy
 	</h1>
 	<div ng-if="play">
 		<video controls="controls" width="320" height="240" autoplay loop
