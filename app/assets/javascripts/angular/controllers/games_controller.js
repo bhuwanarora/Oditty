@@ -79,6 +79,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
                 $scope.done = true;
                 $scope.play = true;
                 $scope.score = parseInt($scope.score);
+                $scope.accuracy = parseInt(100*($scope.score/$scope.book_count));
                 $scope.save_score();
                 if(angular.isUndefined($scope.total_score)){
                     $scope.total_score = 0;
@@ -143,6 +144,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         $scope.play = true;
         $scope.get_user_score();
         $scope.play_message = "GOT IT";
-        $scope.message = "<div class='guide'><div><b>How to Play</b></div><br/><div>We'll serve up 10 book covers in a row. Just slide the circle and rate the book based off its cover. Then click JUDGE.</div><br/><div>Got it?</div></div>";
+        $scope.book_count = 7;
+        $scope.message = "<div class='guide'><div><b>How to Play</b></div><br/><div>We'll serve up "+$scope.book_count+" book covers in a row. Just slide the circle and rate the book based off its cover. Then click JUDGE.</div><br/><div>Got it?</div></div>";
     }());
 }]);
