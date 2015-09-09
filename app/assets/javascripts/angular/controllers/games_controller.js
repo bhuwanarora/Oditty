@@ -134,7 +134,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
         gamesService.get_user_score().then(function(data){
             if(angular.isDefined(data) && angular.isDefined(data.ranking)){
                 $scope.ranking = data.ranking;
-                $scope.score = data.score;
+                $scope.user_score = data.score;
                 $scope.games = data.games;
             }
         });
