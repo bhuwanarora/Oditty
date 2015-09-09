@@ -98,7 +98,7 @@ homeApp.controller('gamesController', ["$scope", 'gamesService', '$rootScope', '
             if(angular.isUndefined($scope.book.user_rating)){
                 $scope.book.user_rating = 0;
             }
-            var difference = Math.abs($scope.book.user_rating - $scope.book.goodness_index);
+            var difference = Math.abs($scope.book.user_rating - Math.round($scope.book.goodness_index));
             $scope.score = $scope.score + ((10-difference)/10);
             if(difference == 0){
                 var message = "<h1>Perfect<h1>";
