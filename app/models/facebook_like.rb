@@ -17,8 +17,24 @@ class FacebookLike < Neo
 		" WITH facebook_like, community, book, relatedbooks"
 	end
 
+	def self.match_cover
+		" MATCH (facebook_like)-[:FbRelCover]->(cover:Cover) "
+	end
+
+	def self.get_image_url
+		FacebookLike.match_cover + " WITH facebook_like, cover.source AS image_url "
+	end
+
 	def get_books
-		match_by_neo_id + FacebookLike.match_books + " WITH DISTINCT book " + Book.order_by_goodness + FacebookLike.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
+		match_by_neo_id + FacebookLike.match_books + " WITH DISTINCT book, " + Book.get_goodness_index + Book.order_by_goodness + FacebookLike.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
+	end
+
+	def get_news skip_count
+		match_by_neo_id + FacebookLike.match_community + Community.match_news  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+	end
+
+	def get_videos
+		match_by_neo_id + FacebookLike.match_community + Community.new(nil).match_videos + " ORDER BY video_relevance " + Community.return_group(Video.basic_info)
 	end
 
 	def self.match_community
@@ -59,8 +75,8 @@ class FacebookLike < Neo
 		" SET facebook_like.created_time = " + created_time.to_s + " "
 	end
 
-	def self.set_completed node_id
-		 FacebookLike.match_by_neo_id(node_id) + " SET facebook_like.completed = true, facebook_like:Community "
+	def set_completed
+		 match_by_neo_id + " SET facebook_like.completed = true, facebook_like:Community "
 	end
 
 	def self.basic_info

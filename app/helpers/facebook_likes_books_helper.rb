@@ -4,7 +4,7 @@ module FacebookLikesBooksHelper
 		clause = FacebookLike.new(nil,node_id).match_by_neo_id + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
 		output = clause.execute
 		output.each do |id|
-			VideosWorker.add_to_community(id)
+			VideosWorker.add_to_community(id["id"])
 		end
 	end
 
