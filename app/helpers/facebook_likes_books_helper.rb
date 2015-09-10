@@ -1,5 +1,13 @@
 module FacebookLikesBooksHelper
-	
+
+	def self.set_community_videos node_id
+		clause = FacebookLike.new(nil,node_id).match_by_neo_id + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
+		output = clause.execute
+		output.each do |id|
+			VideosWorker.add_to_community(id["id"])
+		end
+	end
+
 	def self.set_community_books node_id
 		text_array = self.get_data_for_NLP node_id
 		text = self.concatenate_hash text_array
@@ -37,10 +45,11 @@ module FacebookLikesBooksHelper
 	def self.merge_node_to_community all_community_books_relevance, node_id
 		clause = self.match_node(node_id)
 		all_community_books_relevance.each do |element|
-			clause += Community.merge(element['name']) + ", node " + News.merge_community({
-										'relevance' =>element['relevance'],
-										'relevanceOriginal' => element['relevanceOriginal']
-										},'node')
+			param = {
+						'relevance' =>element['relevance'],
+						'relevanceOriginal' => element['relevanceOriginal']
+					}
+			clause += Community.merge(element['name']) + ", node " + FacebookLike.merge_community(param)
 			clause += " WITH node "
 		end
 		clause += " RETURN ID(node)"
