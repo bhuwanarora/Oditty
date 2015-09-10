@@ -12,7 +12,6 @@ class User::Game < User
 		User::Game.score_info + ", user.first_name AS name, user.thumb AS image_url, ID(user) AS id "
 	end
 
-
 	def self.match_top_rankers skip
 		User.match +
 		", CASE(WHEN HAS(user.rank) THEN user.rank ELSE 100000 END) AS rank " +
