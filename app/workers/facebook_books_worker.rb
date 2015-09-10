@@ -16,6 +16,8 @@ class FacebookBooksWorker
 
 	def self.add_fb_books params, user_id
 		FacebookBooksHelper.handle_books params, user_id	
+	 	clause = User.new(elem["user_id"]).match + User.set_facebook_books_retrieval_time
+		clause.execute
 	end
 
 	def self.bookmark book_id
@@ -28,8 +30,6 @@ class FacebookBooksWorker
 		 	if elem["from_goodreads"] == 0
 		 		FacebookBooksHelper.set_bookmark(FacebookBooksHelper::TypeFromFacebook, elem["user_id"], elem["id"], elem["publish_time"])
 		 	end
-		 	clause = User.new(elem["user_id"]).match + User.set_facebook_books_retrieval_time
-			clause.execute
 		 end
 	end
 
