@@ -57,31 +57,35 @@ class FacebookBook < Neo
 	end
 
 	def map params
-		facebook_id = params["id"]
-		facebook_likes = params["likes"] rescue 0
-		facebook_description = params["description"] rescue ""
-		facebook_talking_about_count = params["talking_about_count"] rescue 0
-		facebook_likes_count = params["likes"] rescue 0
-		facebook_book_name = params["name"].strip
-
-		author = params["written_by"]
+		facebook_id 					= params["id"]
+		facebook_likes 					= (params["likes"].nil?) ? 0 : params["likes"]
+		author 							= (params["written_by"].nil?) ? "" : params["written_by"]
+		title 							= (params["name"].nil?) ? "" : params["name"]
+		facebook_description 			= (params["description"].nil?) ? "" : params["description"]
+		facebook_url					= params["link"].to_s
+		facebook_talking_about_count 	= (params["talking_about_count"].nil?) ? "" : (params["talking_about_count"])
 		author_search_index = author.search_ready
-
-		title = params["name"]
-		title_search_index = title.search_ready
+		title_search_index	= title.search_ready
+		unique_index		= title_search_index + author_search_index
 		clause = 
-		" SET facebook_book.facebook_book_title = \'" + title + "\' " +
+		" SET facebook_book.indexed_title= \'" + title_search_index + "\' " +
+		" SET facebook_book.indexed_author_name= \'" + author_search_index + "\' " +
+		" SET facebook_book.unique_index= \'" + unique_index + "\' " +
+		" SET facebook_book.search_index= \'" + title_search_index + "\' " +
+		" SET facebook_book.facebook_book_title = \'" + title.escape_quotes + "\' " +
 		" SET facebook_book.facebook_id = " + facebook_id.to_s + 
 		" SET facebook_book.facebook_likes = " + facebook_likes.to_s + 
-		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\"" +
-		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + 
-		" SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + 
-		" SET facebook_book.facebook_url = \"" + params["link"].to_s + "\"" + 
+		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.escape_quotes + "\"" +
+		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s +
+		" SET facebook_book.facebook_url = \"" + facebook_url + "\"" +
 		" SET facebook_book.author_name = \'" + author + "\' " +
 		" " + FacebookBook.set_book_property + " " +
-		" WITH facebook_book " +
-		" " + Author.merge_by_index(author_search_index) + ", facebook_book " +
-		" " + Book.merge_author('facebook_book') + " "
+		" WITH facebook_book "
+		if author.present?
+			clause += " " + Author.merge_by_index(author_search_index) + ", facebook_book " +
+					  " " + Book.merge_author('facebook_book') + " "
+		end
+		clause
 	end
 
 	def self.set_book_property
