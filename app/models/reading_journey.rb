@@ -14,6 +14,10 @@ class ReadingJourney < Neo
 		" MATCH (user)-[:HasReadingJourney]-(reading_journey:ReadingJourney)-[:ForBook]-(book:FacebookBook) "
 	end
 
+	def self.bookmark_info
+		" reading_journey.publish_time AS publish_time, ID(user) AS user_id, book.type AS type,(CASE WHEN book:GoodreadsBook THEN 1 ELSE 0 END) AS from_goodreads "
+	end
+
 	def self.link_reading_journey user_id
 		User.new(user_id).match + ", book " + ReadingJourney.merge + ReadingJourney.optional_match_recent_reading_status 
 	end

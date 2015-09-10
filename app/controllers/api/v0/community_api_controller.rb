@@ -13,6 +13,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_combined_details
+				id = params[:id]
+				info = Api::V0::CommunityApi.get_combined_details(id)
+				render :json => info, :status => 200
+			end
+
 			def add_book
 				id = params[:id]
 				book_id = params[:book_id]

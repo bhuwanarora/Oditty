@@ -57,6 +57,10 @@ class Book < Neo
 		" MATCH (author:Author)-[:Wrote]->(book) WITH author, book "
 	end
 
+	def self.merge_author book = 'book'
+		" MERGE (author)-[:Wrote]->(" + book + ") WITH author, " + book + " "
+	end
+
 	def self.set_bookmark_count operation
 		if operation == "+"
 			" SET book.bookmark_count = TOINT(COALESCE(book.bookmark_count, 0)) + 1 "
@@ -74,7 +78,7 @@ class Book < Neo
 	end
 
 	def self.basic_info
-		" ID(book) AS book_id, book.isbn AS isbn, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metrics_info
+		" ID(book) AS book_id, book.isbn AS isbn, book.author_id AS author_id, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metrics_info
 	end
 
 	def self.get_book_by_isbn isbn
@@ -100,7 +104,7 @@ class Book < Neo
 	end
 
 	def get_display_info
-		match + match_author + Book.return_group(Book.basic_info, " book.description AS description", "ID(author) AS author_id")
+		match + match_author + Book.return_group(Book.basic_info, " book.description AS description")
 	end
 
 	def self.grouped_basic_info

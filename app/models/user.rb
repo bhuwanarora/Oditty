@@ -184,7 +184,7 @@ class User < Neo
 	end
 
 	def self.create_links_for_new
-		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories
+		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Game.new_user
 	end
 
 	def get_notifications
@@ -407,5 +407,6 @@ class User < Neo
 		" WITH user, community "\
 		" " + UsersCommunity.optional_match + ", COALESCE(community.view_count,0) AS view_count " +Community.order_by("view_count DESC, ID(community) DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status")
 	end
+
 
 end
