@@ -27,6 +27,11 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     }
 
+    $scope.show_apps = function(){
+        $mdSidenav('apps').toggle();
+        event.stopPropagation();   
+    }
+
     $scope.show_search_bar = function(){
         $scope.info.mobile_search = !$scope.info.mobile_search;
     }

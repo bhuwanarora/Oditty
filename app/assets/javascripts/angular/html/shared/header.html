@@ -1,6 +1,6 @@
 <section layout="row" layout-wrap>
     <div ng-include src="'/assets/angular/html/shared/logo.html'" class="z_index_1" 
-        flex="20" flex-md="30" flex-sm="50" layout="row" layout-align="start center"></div>
+        flex="20" flex-md="30" flex-sm="40" layout="row" layout-align="start center"></div>
     <!-- <div layout="row" layout-align="center center" flex="20" flex-md="15" flex-sm="30"  -->
          <!-- ng-if="info.hide_signin" ng-show="info.mobile_search" -->
          <!-- ng-include src="'/assets/angular/html/shared/discovery_options.html'"></div> -->
@@ -8,8 +8,8 @@
          ng-hide="info.mobile_search" layout-fill layout-padding 
          hide-md hide-lg class="z_index_1" 
          ng-include src="'/assets/angular/html/shared/mobile_search.html'"></div>
-    <div flex-sm="15" hide show-sm></div>
-    <div flex="40" flex-md="45" 
+    <div flex-sm="5" hide show-sm></div>
+    <div flex="40" hide-md
          ng-controller="searchController"
           class="search_container" 
          layout="row" 
@@ -21,10 +21,10 @@
     <!-- <div flex="20" hide-sm hide-md layout="row" layout-align="center center" class="z_index_1" >
         <div ng-include="'/assets/angular/html/shared/suggestions_link.html'"></div>
     </div> -->
-    <div flex="40" flex-sm="35" flex-md="25" 
+    <div flex="40" flex-sm="55" flex-md="70" 
         layout="row" layout-align="end center" ng-if="info.hide_signin" class="z_index_1" 
          ng-include src="'/assets/angular/html/shared/right_nav_options.html'"></div>
-    <div flex="40" flex-sm="35" flex-md="25" layout="row" layout-padding layout-align="end center" class="z_index_1"  
+    <div flex="40" flex-sm="55" flex-md="25" layout="row" layout-padding layout-align="space-between center" class="z_index_1"  
         ng-if="!info.hide_signin" ng-include src="'/assets/angular/html/shared/sign_in.html'">
     </div>
 </section>
