@@ -85,6 +85,10 @@ class FacebookLike < Neo
 		 match_by_neo_id + " SET facebook_like.completed = true, facebook_like:Community "
 	end
 
+	def self.order_desc
+		" ORDER BY likes.timestamp DESC "
+	end
+
 	def self.basic_info
 		" facebook_like.app_id AS app_id, ID(facebook_like) AS id, facebook_like.name AS name "
 	end

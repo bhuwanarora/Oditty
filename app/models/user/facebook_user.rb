@@ -36,6 +36,17 @@ class User::FacebookUser < User
 		output
 	end
 
+	def self.get_latest_like
+		User.new(nil).match_facebook_likes + FacbookLike.order_desc + FacbookLike.limit(1) + User::FacebookUser.return_group("like.timestamp AS created_at",FacbookLike.basic_info, "ID(user) AS user_id")
+	end
+
+	def set_access_token_when_expired
+		valid = RedisHelper::Facebook.is_access_token_valid @params
+		if !valid
+			create_long_term_token @params[:auth_response]
+		end
+	end
+
 	def create_long_term_token short_term_token
 		get_request_string_params  = "grant_type=fb_exchange_token&"
 		get_request_string_params += "client_id=" + Constant::Id::FacebookAppId.to_s + "&"
@@ -49,7 +60,7 @@ class User::FacebookUser < User
 			params=
 			{
 				:token 		=> response["access_token"],
-				:id 		=> @params["id"],
+				:id 		=> @params[:id],
 				:expires 	=> Time.now().to_i + response["expires"].to_i
 			}
 			RedisHelper::Facebook.set_access_token params
