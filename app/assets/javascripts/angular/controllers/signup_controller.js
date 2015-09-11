@@ -1,4 +1,4 @@
-homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", "$mdSidenav", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService, $mdSidenav){
+homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$timeout", "$cookieStore", "LoginConstants", "WebsiteUIConstants", "$location", "$routeParams", "websiteService", "$mdSidenav", "FacebookProvider", function($scope, $rootScope, Facebook, $timeout, $cookieStore, LoginConstants, WebsiteUIConstants, $location, $routeParams, websiteService, $mdSidenav, FacebookProvider){
     // $scope.processAuth = function(authResult){
     //     // Do a check if authentication has been successful.
     //     if(authResult['access_token']){
@@ -164,8 +164,10 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             if(angular.isUndefined($rootScope.user)){
                 $rootScope.user = {};
             }
-            // var auth_response = Facebook.getAuthResponse();
-            // response = angular.extend(response, {"auth_response": auth_response});
+            var auth_response = FacebookProvider.getAuthResponse();
+            if(angular.isDefined(auth_response)){
+                response = angular.extend(response, {"auth_response": auth_response});
+            }
             websiteService.handle_facebook_user(response).then(function(data){
                 $rootScope.user = angular.extend($rootScope.user, data);
                 $scope._init_user();
