@@ -223,9 +223,9 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                 'authors': {'bookmarked': [], 'follow': []},
                 'readers': {'follow': []},
                 'logged': false};
-        $scope.$on('Facebook:statusChange', function(ev, data){
-            FB.logout();
-        });
+        // $scope.$on('Facebook:statusChange', function(ev, data){
+        //     FB.logout();
+        // });
 
         // $rootScope.user.logged = true;
         // setCookie("logged", true, 31);
