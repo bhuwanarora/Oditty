@@ -694,22 +694,22 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_author.html',
-    "<md-card><md-card-content><section layout=\"row\" layout-align=\"space-between center\"></section><br><section layout=\"row\"><div flex=\"20\" flex-md=\"30\" flex-sm=\"35\" layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{result.id | author_thumb}}\" class=\"large_circular\" onerror=\"this.src=&quot;/assets/author_profile.jpg&quot;\"></div><div flex=\"80\" flex-md=\"70\" flex-sm=\"65\" layout=\"column\" layout-wrap class=\"side_padding\"><div class=\"author_title\"><a ng-href=\"/author?id={{::result.id}}\">{{::result.name}}</a></div><div class=\"less_important\">Author</div><div class=\"author_description\">{{::result.description}}</div></div></section></md-card-content></md-card><style>.author_title{font-size:1.2em;font-family:sans-serif}.author_description{margin-top:10px;font-size:.9em}</style>"
+    "<section layout=\"row\"><div flex=\"20\" flex-md=\"30\" flex-sm=\"35\" layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{result.id | author_thumb}}\" class=\"large_circular\" onerror=\"this.src=&quot;/assets/author_profile.jpg&quot;\"></div><div flex=\"80\" flex-md=\"70\" flex-sm=\"65\" layout=\"column\" layout-wrap class=\"side_padding\"><div class=\"author_title\"><a ng-href=\"/author?id={{::result.id}}\">{{::result.name}}</a></div><div class=\"less_important\">Author</div><div class=\"author_description\">{{::result.description}}</div></div></section><style>.author_title{font-size:1.2em;font-family:sans-serif}.author_description{margin-top:10px;font-size:.9em}</style>"
   );
 
 
   $templateCache.put('/assets/angular/html/search/_blog.html',
-    "<md-card><md-card-content><section layout=\"row\" layout-align=\"space-between center\"></section><br><section layout=\"column\"><div layout=\"column\" layout-wrap class=\"side_padding\"><h2><a ng-href=\"/room?id={{::result.id}}\">{{::result.title}}</a></h2><div class=\"less_important\">Blog</div><div class=\"margin_top\" ng-bind-html=\"::result.excerpt\"></div></div><div layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{::result.image_url}}\"></div></section></md-card-content></md-card>"
+    "<section layout=\"column\"><div layout=\"column\" layout-wrap class=\"side_padding\"><h2><a ng-href=\"/room?id={{::result.id}}\">{{::result.title}}</a></h2><div class=\"less_important\">Blog</div><div class=\"margin_top\" ng-bind-html=\"::result.excerpt\"></div></div><div layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{::result.image_url}}\"></div></section>"
   );
 
 
   $templateCache.put('/assets/angular/html/search/_book.html',
-    "<md-card><md-card-content><div class=\"footer\" ng-init=\"book = result\" ng-include src=\"'/assets/angular/html/shared/partials/book_info.html'\"></div></md-card-content></md-card>"
+    "<div><div><div class=\"footer\" ng-init=\"book = result\" ng-include src=\"'/assets/angular/html/shared/partials/book_info.html'\"></div></div></div>"
   );
 
 
   $templateCache.put('/assets/angular/html/search/_community.html',
-    "<md-card><md-card-content><section layout=\"row\"><img ng-src=\"{{::result.image_url}}\" class=\"square\"><div layout-wrap class=\"side_padding\"><h2><a ng-href=\"/room?id={{::result.id}}\">{{::result.name}}</a></h2><div class=\"less_important\">Room</div></div></section></md-card-content></md-card>"
+    "<section layout=\"row\"><img ng-src=\"{{::result.image_url}}\" class=\"square\"><div layout-wrap class=\"side_padding\"><h2><a ng-href=\"/room?id={{::result.id}}\">{{::result.name}}</a></h2><div class=\"less_important\">Room</div></div></section>"
   );
 
 
@@ -719,7 +719,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_news.html',
-    "<md-card><md-card-content><div layout-padding><h2><a ng-href=\"/news?id={{::result.id}}\">{{::result.title}}</a></h2><div class=\"less_important\">News, {{result.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"::result.description\"></div></div></md-card-content></md-card>"
+    "<div layout-padding><h2><a ng-href=\"/news?id={{::result.id}}\">{{::result.title}}</a></h2><div class=\"less_important\">News, {{result.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"::result.description\"></div></div>"
   );
 
 
@@ -734,12 +734,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_user.html',
-    "<md-card><md-card-content><div layout-padding><h2><a ng-href=\"/profile?id={{::result.id}}\">{{::result.first_name}} {{::result.last_name}}</a></h2><div class=\"less_important\">User</div></div></md-card-content></md-card>"
+    "<div layout-padding><h2><a ng-href=\"/profile?id={{::result.id}}\">{{::result.first_name}} {{::result.last_name}}</a></h2><div class=\"less_important\">User</div></div>"
   );
 
 
   $templateCache.put('/assets/angular/html/search/show.html',
-    "<md-list><md-card ng-if=\"!info.loading && all_results.length == 0\"><md-card-content>No results found for <a ng-href=\"/search?q={{::display_results_for}}&type={{::active_type}}\"><b>{{::display_results_for}}</b> <span ng-if=\"active_type\">in {{::active_type}}</span></a></md-card-content></md-card><md-card ng-if=\"!info.loading && all_results.length != 0\"><md-card-content>{{::all_results.length}} Search results for <a ng-href=\"/search?q={{::display_results_for}}&type={{::active_type}}\"><b>{{::display_results_for}}</b> in {{::active_type}}'s</a></md-card-content></md-card></md-list><md-list ng-if=\"all_results && all_results.length > 0\"><div ng-repeat=\"result in all_results\"><div ng-include src=\"'/assets/angular/html/search/_book.html'\" ng-if=\"(result | search_item_type) == 'Book'\"></div><div ng-include src=\"'/assets/angular/html/search/_author.html'\" ng-if=\"(result | search_item_type) == 'Author'\"></div><div ng-include src=\"'/assets/angular/html/search/_blog.html'\" ng-if=\"(result | search_item_type) == 'Blog'\"></div><div ng-include src=\"'/assets/angular/html/search/_community.html'\" ng-if=\"(result | search_item_type) == 'Room'\"></div><div ng-include src=\"'/assets/angular/html/search/_news.html'\" ng-if=\"(result | search_item_type) == 'News'\"></div><div ng-include src=\"'/assets/angular/html/search/_user.html'\" ng-if=\"(result | search_item_type) == 'User'\"></div></div></md-list><style>.left_image{max-width:100%;max-height:140px}.listopia_thumb{width:70px;height:100px}.large_circular{border-radius:50%;max-width:100%}md-card{margin-top:15px!important}</style>"
+    "<md-list><div ng-if=\"!info.loading && all_results.length == 0\"><div>No results found for <a ng-href=\"/search?q={{::display_results_for}}&type={{::active_type}}\"><b>{{::display_results_for}}</b> <span ng-if=\"active_type\">in {{::active_type}}</span></a></div></div><div ng-if=\"!info.loading && all_results.length != 0\"><div>{{::all_results.length}} Search results for <a ng-href=\"/search?q={{::display_results_for}}&type={{::active_type}}\"><b>{{::display_results_for}}</b> in {{::active_type}}'s</a></div></div></md-list><md-list ng-if=\"all_results && all_results.length > 0\"><div ng-repeat=\"result in all_results\"><div ng-include src=\"'/assets/angular/html/search/_book.html'\" ng-if=\"(result | search_item_type) == 'Book'\"></div><div ng-include src=\"'/assets/angular/html/search/_author.html'\" ng-if=\"(result | search_item_type) == 'Author'\"></div><div ng-include src=\"'/assets/angular/html/search/_blog.html'\" ng-if=\"(result | search_item_type) == 'Blog'\"></div><div ng-include src=\"'/assets/angular/html/search/_community.html'\" ng-if=\"(result | search_item_type) == 'Room'\"></div><div ng-include src=\"'/assets/angular/html/search/_news.html'\" ng-if=\"(result | search_item_type) == 'News'\"></div><div ng-include src=\"'/assets/angular/html/search/_user.html'\" ng-if=\"(result | search_item_type) == 'User'\"></div></div></md-list><style>.left_image{max-width:100%;max-height:140px}.listopia_thumb{width:70px;height:100px}.large_circular{border-radius:50%;max-width:100%}div{margin-top:15px!important}</style>"
   );
 
 
