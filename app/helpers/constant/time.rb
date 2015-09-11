@@ -15,5 +15,6 @@ module Constant::Time
 
 	OneHour				= 3600
 	OneDay				= 24*OneHour
+	OneWeek				= 7 *OneDay
 	OneMonth			= 30*OneDay
 end

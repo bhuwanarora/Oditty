@@ -12,6 +12,12 @@ class User::FacebookUser < User
 		" CREATE UNIQUE (user)-[:FacebookAuth]->(facebook_user:FacebookUser) WITH user, facebook_user "
 	end
 
+	def match_user
+		" MATCH (user:User)-[:FacebookAuth]->(facebook_user:FacebookUser) "\
+		" WHERE facebook_user.id = " + @params["id"] + " "\
+		" WITH user, facebook_user "
+	end
+
 	def self.set_name name
 		" SET user.name = COALESCE(user.name, \"" + name + "\" ), "\
 		" user.first_name = COALESCE(user.first_name, \'" + name + "\') "
@@ -36,8 +42,8 @@ class User::FacebookUser < User
 		output
 	end
 
-	def self.get_latest_like
-		User.new(nil).match_facebook_likes + FacbookLike.order_desc + FacbookLike.limit(1) + User::FacebookUser.return_group("like.timestamp AS created_at",FacbookLike.basic_info, "ID(user) AS user_id")
+	def get_latest_like
+		match_user + User.new(nil).match_facebook_likes + FacbookLike.order_desc + FacbookLike.limit(1) + User::FacebookUser.return_group("like.timestamp AS created_at",FacbookLike.basic_info, "ID(user) AS user_id")
 	end
 
 	def set_access_token_when_expired
