@@ -1,3 +1,79 @@
+<div>
+	<md-content layout="row" class="white quiz_container" layout-padding>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(1)" 
+				ng-class="{'md-whiteframe-z4': (key == 1)}">
+				<div class="quiz_title">
+					<div layout-padding>Which Fictional Land do you belong to?</div>
+				</div>
+				<img src="http://oditty.me/assets/quiz.png" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(2)" 
+				ng-class="{'md-whiteframe-z4': (key == 2)}">
+				<div class="quiz_title">
+					<div layout-padding>Which Character are you most like in Game of Thrones?</div>
+				</div>
+				<img src="http://byt.wpengine.netdna-cdn.com/wp-content/uploads/2013/04/Game-of-Thrones-Season-3-Posters-1-350x300.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(3)" 
+				ng-class="{'md-whiteframe-z4': (key == 3)}">
+				<div class="quiz_title">
+					<div layout-padding>How true of a Harry Potter fan are you?</div>
+				</div>
+				<img src="http://i53.tinypic.com/2n0ndsn.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(4)" 
+				ng-class="{'md-whiteframe-z4': (key == 4)}">
+				<div class="quiz_title">
+					<div layout-padding>Who is your literary best friend?</div>
+				</div>
+				<img src="http://www.carnetdevol.org/cerf-volant_pays/afghanistan/oppage04photo05.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(5)" 
+				ng-class="{'md-whiteframe-z4': (key == 5)}">
+				<div class="quiz_title">
+					<div layout-padding>Which Super Villain are you?</div>
+				</div>
+				<img src="http://i26.tinypic.com/6zvbl5.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(6)" 
+				ng-class="{'md-whiteframe-z4': (key == 6)}">
+				<div class="quiz_title">
+					<div layout-padding>Which book is perfect for you to read right now?</div>
+				</div>
+				<img src="https://s-media-cache-ak0.pinimg.com/474x/55/0f/46/550f46609877de499019f1abdfca1317.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(7)" 
+				ng-class="{'md-whiteframe-z4': (key == 7)}">
+				<div class="quiz_title">
+					<div layout-padding>Which love story is your life like?</div>
+				</div>
+				<img src="http://www.saywhatnews.com/images/Broken-Heart-Backgrounds-Wallpaper.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+		<section>
+			<md-button class="quiz_wrapper animate-fast md-button-clear" ng-click="show_quiz(8)" 
+				ng-class="{'md-whiteframe-z4': (key == 8)}">
+				<div class="quiz_title">
+					<div layout-padding>Which wand will choose you?</div>
+				</div>
+				<img src="http://mediafiles.cineplex.com/Blog/English/350x300/hptop_patronum_350x300.jpg" class="md-whiteframe-z1 " />
+			</md-button>
+		</section>
+	</md-content>
+</div>
 <div layout="row" class="white">
 	<div flex="10" hide-md hide-sm></div>
 	<div flex="80" flex-md="100" flex-sm="100" layout="row" class="feed_margin">
@@ -7,8 +83,38 @@
 			</div>
 			<br/>
 			<br/>
-			<div class='quizz-container' data-width='100%' data-height='auto' data-quiz='94518'></div>
-			<script src='//dcc4iyjchzom0.cloudfront.net/widget/loader.js' async></script>
+			<div ng-if="key == 1">
+				<div class='quizz-container' data-width='100%' data-height='auto' data-quiz='94518'></div>
+				<script ng-src='//dcc4iyjchzom0.cloudfront.net/widget/loader.js' async></script>
+			</div>
+			<div ng-if="key == 2">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="94517"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
+			<div ng-if="key == 3">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="93163"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
+			<div ng-if="key == 4">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="92027"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
+			<div ng-if="key == 5">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="90953"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
+			<div ng-if="key == 6">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="88847"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
+			<div ng-if="key == 7">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="88182"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
+			<div ng-if="key == 8">
+				<div class="quizz-container" data-width="100%" data-height="auto" data-quiz="87486"></div>
+				<script src="//dcc4iyjchzom0.cloudfront.net/widget/loader.js" async></script>
+			</div>
 			<br/>
 		</div>
 		<div flex="5" hide-md hide-sm></div>
@@ -16,3 +122,42 @@
 	</div>
 	<div flex="10" hide-md hide-sm></div>	
 </div>
+<style>
+	.quiz_wrapper{
+		position: relative;
+	}
+
+	.quiz-modal-content{
+		min-height: 600px !important;
+	}
+
+	.quiz_wrapper .quiz_title{
+	    position: absolute;
+	    top: 0px;
+	    color: white;
+	    bottom: 0px;
+		line-height: 30px !important;
+	    left: 0px;
+	    right: 0px;
+	    background-color: rgba(0, 0, 0, 0.37);
+	}
+
+	.quiz_wrapper img{
+		width: 350px;
+	}
+
+	.quiz_wrapper{
+	    min-width: 350px !important;
+		padding: 0px !important;
+		margin: 10px !important;
+		font-size: 20px;
+		white-space: inherit;
+		height: 200px;
+		overflow: hidden;
+	}
+
+	.quiz_container{
+		height: 235px;
+		overflow-y: hidden;
+	}
+</style>

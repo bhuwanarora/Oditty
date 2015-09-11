@@ -87,7 +87,7 @@ class WebsiteController < ApplicationController
 	def quiz
 		@quiz = true
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			@info = {"title" => "Which fictional land do you belong to?, Odit :)", "meta_type" => "Quiz", "image_url" => "http://oditty.me/assets/quiz.png"}
+			@info = {"title" => "Discover yourself through Oditty Quizzes", "meta_type" => "Quiz", "image_url" => "http://oditty.me/assets/quiz.png", "description" => "Quizzes are for fun. #OdittyQuizzes"}
 			render :layout => "social"
 		else
 			render :layout => "material"
