@@ -278,6 +278,10 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     }
 
+    $scope.show_quiz = function(key){
+        $scope.key = key;
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
@@ -301,7 +305,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
 
         $scope.data = {"selectedIndex" : 0};
         // deleteCookie("todo");
-
+        $scope.key = 3;    
 
     }());
 
