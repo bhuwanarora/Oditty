@@ -39,15 +39,26 @@ module Api
 			end
 
 			def self.get_books id
-				Community.new(id).get_books
+				community_clause = Community.new(id).get_books
+				facebook_clause = FacebookLike.new(nil, id).get_books
+				clause = community_clause + " UNION " + facebook_clause
+				clause
 			end
 
 			def self.get_news(id, skip_count)
-				Community.new(id).get_news(skip_count).execute
+				community_clause = Community.new(id).get_news(skip_count)
+				facebook_clause = FacebookLike.new(nil, id).get_news(skip_count)
+				clause = community_clause + " UNION " + facebook_clause
+				output = clause.execute
+				output
 			end
 
 			def self.get_videos(id)
-				Community.new(id).get_videos.execute
+				community_clause = Community.new(id).get_videos
+				facebook_clause = FacebookLike.new(nil, id).get_videos
+				clause = community_clause + " UNION " + facebook_clause
+				output = clause.execute
+				output
 			end
 
 			def self.get_rooms user_id, skip_count
