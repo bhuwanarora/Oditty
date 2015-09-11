@@ -12,7 +12,7 @@
     </div>
 </md-list>
 <md-list ng-if="all_results && all_results.length > 0">
-    <div ng-repeat="result in all_results">
+    <div ng-repeat="result in all_results" layout-padding>
         <div ng-include src="'/assets/angular/html/search/_book.html'" 
                 ng-if="(result | search_item_type) == 'Book'"></div>
         <div ng-include src="'/assets/angular/html/search/_author.html'" 
@@ -45,7 +45,4 @@
         max-width: 100%;
     }
 
-    div{
-        margin-top: 15px !important;
-    }
 </style>
