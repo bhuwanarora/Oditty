@@ -164,7 +164,8 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             if(angular.isUndefined($rootScope.user)){
                 $rootScope.user = {};
             }
-            
+            var auth_response = Facebook.getAuthResponse();
+            response = angular.extend(response, {"auth_response": auth_response});
             websiteService.handle_facebook_user(response).then(function(data){
                 $rootScope.user = angular.extend($rootScope.user, data);
                 $scope._init_user();
@@ -223,9 +224,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                 'authors': {'bookmarked': [], 'follow': []},
                 'readers': {'follow': []},
                 'logged': false};
-        // $scope.$on('Facebook:statusChange', function(ev, data){
-        //     FB.logout();
-        // });
+        
 
         // $rootScope.user.logged = true;
         // setCookie("logged", true, 31);
