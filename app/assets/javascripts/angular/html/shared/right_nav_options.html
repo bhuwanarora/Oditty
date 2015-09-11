@@ -6,7 +6,7 @@
         <a href="/profile" ng-if="info.mobile_search" hide-sm><div ng-bind-html="user.first_name"></div></a>
         <div layout-align="space-between" layout="row">
             <div></div>
-            <a href="/signup" class="less_important">Logout</a>
+            <a ng-click="logout()" class="less_important">Logout</a>
         </div>
     </div>
     <a href="/profile" ng-if="info.mobile_search">

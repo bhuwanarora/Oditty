@@ -117,6 +117,13 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     };
 
+    $scope.logout = function(){
+        $scope.$on('Facebook:statusChange', function(ev, data){
+            FB.logout();
+        });
+        window.location.href = "/signup";
+    }
+
     $scope.toggle_navigation_options = function(event){
         $scope.navigation_options = !$scope.navigation_options;
         $scope.show_notifications = false;
