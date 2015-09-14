@@ -49,7 +49,7 @@ module FacebookLikesBooksHelper
 						'relevance' =>element['relevance'],
 						'relevanceOriginal' => element['relevanceOriginal']
 					}
-			clause += Community.merge(element['name']) + ", node " + FacebookLike.merge_community(param)
+			clause += Community.merge(element['name'],{}, true) + ", node " + FacebookLike.merge_community(param)
 			clause += " WITH node "
 		end
 		clause += " RETURN ID(node)"
@@ -79,7 +79,7 @@ module FacebookLikesBooksHelper
 			if key == 'id'
 				next
 			end
-			clause += " node." + key + " = \"" + value + "\","
+			clause += " node." + key + " = \"" + value.escape_quotes + "\","
 		end
 		clause[clause.length - 1] = ''
 		clause
@@ -96,7 +96,7 @@ module FacebookLikesBooksHelper
 				if key == 'id'
 					next
 				end
-				clause += " node." + key + " = \"" + value.gsub('"','\\\\"').gsub("'","\\\\'") + "\","
+				clause += " node." + key + " = \"" + value.escape_quotes + "\","
 			end
 			clause[clause.length - 1] = ''
 		else
