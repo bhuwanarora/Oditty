@@ -18,6 +18,15 @@ class User::FacebookUser < User
 		" WITH user, facebook_user "
 	end
 
+	def self.match
+		" MATCH (user:User)-[:FacebookAuth]->(facebook_user:FacebookUser) "\
+		" WITH user, facebook_user "
+	end
+
+	def self.id_info
+		" ID(user) AS user_id, ID(facebook_user) AS fb_user_id, facebook_user.id AS fb_id "
+	end
+
 	def self.set_name name
 		" SET user.name = COALESCE(user.name, \"" + name + "\" ), "\
 		" user.first_name = COALESCE(user.first_name, \'" + name + "\') "
