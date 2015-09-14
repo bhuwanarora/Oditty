@@ -123,8 +123,12 @@ class Community < Neo
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
 
-	def self.merge community, url_list = {}
-		labels = NlpHelper.get_name_tags community
+	def self.merge community, url_list = {}, no_nlp = false
+		if !no_nlp
+			labels = NlpHelper.get_name_tags community
+		else
+			labels = []
+		end
 		clause = " MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) "\
 		" ON CREATE SET "\
 		" community.name = \"" + community + "\", "\
