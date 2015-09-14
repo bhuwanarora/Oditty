@@ -34,7 +34,7 @@ module FacebookLikesBooksHelper
 		all_community_books_relevance.each do |element|
 			books_id = element['books_id']
 			name 	= element['name']
-			clause = Community.merge(name)
+			clause = Community.merge(name, {}, true)
 			books_id.each do |book_id|
 				clause +=  self.match_node(book_id,"book") + ", community " + Community.merge_book + " WITH community "
 			end
