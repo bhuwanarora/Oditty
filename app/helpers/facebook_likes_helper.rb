@@ -72,7 +72,6 @@ module FacebookLikesHelper
 				next_iteration = new_like_count == response["data"].length
 				id_list += response["data"][0..(new_like_count - 1)].map{|like| (like["id"].to_i)}
 				url = FacebookLikesHelper.get_next_likes_url response
-				debugger
 			end
 		end
 		id_list
@@ -106,9 +105,6 @@ module FacebookLikesHelper
 		output.each do |fb_user|
 			user_id = fb_user["user_id"]
 			fb_id = fb_user["fb_id"].to_i
-			if user_id == 4974698
-				debugger
-			end
 			ids = FacebookLikesHelper.fetch_likes_iterative fb_id, user_id, 0
 			ids.each do |fb_like_id|
 				params = FacebookLikesHelper.get_info(fb_id, fb_like_id)
