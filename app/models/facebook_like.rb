@@ -25,6 +25,37 @@ class FacebookLike < Neo
 		FacebookLike.match_cover + " WITH facebook_like, cover.source AS image_url "
 	end
 
+	def get_combined_details
+		match_by_neo_id +
+		FacebookLike.match_community +
+		Community.new(nil).match_videos +
+		" ORDER BY video_relevance " +
+		Community.with_group("{#{Video.grouped_basic_info}} AS content", "labels(video) AS labels") +
+		Community.return_group("content", "labels") +
+		Community.limit(4) +
+		" UNION ALL " +
+
+		match_by_neo_id +
+		FacebookLike.match_books +
+		" WITH DISTINCT book, " +
+		Book.get_goodness_index + Book.order_by_goodness +
+		Community.with_group("{#{Book.grouped_basic_info}} AS content", "labels(book) AS labels") +
+		Community.return_group("content", "labels") +
+		Community.limit(4) +
+		" UNION ALL " +
+
+		match_by_neo_id +
+		FacebookLike.match_community + Community.match_news  +
+		" WITH news, community ORDER BY TOINT(news.created_at) DESC " +
+		Community.with_group("{#{News.grouped_basic_info}} AS content", "labels(news) AS labels") +
+		Community.return_group("content", "labels") +
+		Community.limit(4)
+	end
+
+	def get_info user_id
+		clause = match_by_neo_id + FacebookLike.match_community + Community.match_news + " WITH news, community ORDER BY news.timestamp DESC LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + User.new(user_id).match + ", community, news " + UsersCommunity.optional_match  + ", news "  + UsersCommunity.set_view_count + Community.return_group(UsersCommunity.basic_info, "news", Community.basic_info)
+	end
+
 	def get_books
 		match_by_neo_id + FacebookLike.match_books + " WITH DISTINCT book, " + Book.get_goodness_index + Book.order_by_goodness + FacebookLike.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
 	end
@@ -83,6 +114,10 @@ class FacebookLike < Neo
 
 	def set_completed
 		 match_by_neo_id + " SET facebook_like.completed = true, facebook_like:Community "
+	end
+
+	def self.order_desc
+		" ORDER BY likes.timestamp DESC "
 	end
 
 	def self.basic_info
