@@ -51,7 +51,10 @@ module Api
 			end
 
 			def self.get_basic_community_info community_id
-				Community.new(community_id).books_users_info
+				community_clause = Community.new(community_id).books_users_info
+				fb_clause = FacebookLike.new(nil,community_id).books_users_info
+				clause = community_clause + " UNION " + fb_clause
+				clause
 			end
 
 			def self.get_feed_community_info community_id

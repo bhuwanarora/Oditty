@@ -52,6 +52,10 @@ class FacebookLike < Neo
 		Community.limit(4)
 	end
 
+	def self.match_grouped_books
+		Community.match_books + ", facebook_like WITH community, facebook_like, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
+	end
+
 	def get_info user_id
 		clause = match_by_neo_id +	FacebookLike.match_community + Community.match_news + ", facebook_like " +
 		" WITH news, facebook_like AS community ORDER BY news.timestamp DESC LIMIT 10 WITH community, " +
@@ -62,6 +66,20 @@ class FacebookLike < Neo
 		", news "  +
 		UsersCommunity.set_view_count +
 		Community.return_group(UsersCommunity.basic_info, "news", Community.basic_info)
+	end
+
+	def self.grouped_books_users
+		" OPTIONAL " + FacebookLike.match_grouped_books +
+		" WITH facebook_like AS community, books_info " +
+		Community.optional_match_users +
+		", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " +
+		User.collect_map({"users_info" => User.grouped_basic_info }) +
+		" WITH users_info, books_info , community, "  +
+		Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info "})
+	end
+
+	def books_users_info 
+		match_by_neo_id + FacebookLike.match_community + FacebookLike.grouped_books_users + Community.return_group("most_important_tag", Community.basic_info)
 	end
 
 	def get_books
