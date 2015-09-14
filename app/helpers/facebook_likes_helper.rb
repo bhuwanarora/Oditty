@@ -123,8 +123,12 @@ module FacebookLikesHelper
 		output = clause.execute
 		facebook_like_id_list = output.map { |like| (like["app_id"]) }
 		output.each do |facebook_like|
-			params = FacebookLikesHelper.get_info(facebook_like["fb_id"] ,facebook_like["app_id"])
-			FacebookLikesBooksWorker.new.perform(params)
+			begin
+				params = FacebookLikesHelper.get_info(facebook_like["fb_id"] ,facebook_like["app_id"])
+				FacebookLikesBooksWorker.new.perform(params)
+			rescue Exception => e
+				puts e.to_s.red
+			end
 		end
 	end
 
