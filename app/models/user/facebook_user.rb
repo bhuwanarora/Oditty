@@ -44,7 +44,6 @@ class User::FacebookUser < User
 				output = {}
 			else
 				response.each do |elem|
-					debugger
 					key_value = elem.split("=")
 					key = key_value[0]
 					value = key_value[1]
@@ -74,7 +73,6 @@ class User::FacebookUser < User
 		get_request_string = "https://graph.facebook.com/oauth/access_token?" + get_request_string_params
 		response = Net::HTTP.get(URI.parse(get_request_string))
 		response = User::FacebookUser.parse_token_response response
-		debugger
 		if response[User::FacebookUser::AccessTokenKey].present?
 			params=
 			{
