@@ -2,8 +2,8 @@ module Api
 	module V0
 		class FacebookApi
 
-			def self.handle_facebook_likes fb_id, user_id
-				FacebookLikesWorker.perform_async(fb_id, user_id)
+			def self.handle_facebook_likes fb_id
+				FacebookLikesWorker.perform_async(fb_id)
 			end
 
 			def self.handle_facebook_books fb_id, user_id
