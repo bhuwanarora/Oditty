@@ -51,9 +51,12 @@ module Api
 			end
 
 			def self.get_basic_community_info community_id
-				community_clause = Community.new(community_id).books_users_info
-				fb_clause = FacebookLike.new(nil,community_id).books_users_info
-				clause = community_clause + " UNION " + fb_clause
+				fb_like = FacebookLike.new(nil, community_id).basic_info.execute
+				if fb_like.present?
+					clause = FacebookLike.new(nil,community_id).books_users_info
+				else
+					clause = Community.new(community_id).books_users_info
+				end
 				clause
 			end
 
