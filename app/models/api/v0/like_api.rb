@@ -21,8 +21,8 @@ module Api
 			end
 
 			def self.get_likes user_id
-				# @user = User.new(user_id)
-				# info = @user.get_facebook_likes.execute
+				@user = User.new(user_id)
+				info = @user.get_facebook_likes.execute
 			end
 
 		end

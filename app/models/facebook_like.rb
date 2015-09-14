@@ -53,7 +53,15 @@ class FacebookLike < Neo
 	end
 
 	def get_info user_id
-		clause = match_by_neo_id + FacebookLike.match_community + Community.match_news + " WITH news, community ORDER BY news.timestamp DESC LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + User.new(user_id).match + ", community, news " + UsersCommunity.optional_match  + ", news "  + UsersCommunity.set_view_count + Community.return_group(UsersCommunity.basic_info, "news", Community.basic_info)
+		clause = match_by_neo_id +	FacebookLike.match_community + Community.match_news + ", facebook_like " +
+		" WITH news, facebook_like AS community ORDER BY news.timestamp DESC LIMIT 10 WITH community, " +
+		 UsersCommunity.collect_map("news" => News.grouped_basic_info) +
+		User.new(user_id).match +
+		", community, news " +
+		UsersCommunity.optional_match  +
+		", news "  +
+		UsersCommunity.set_view_count +
+		Community.return_group(UsersCommunity.basic_info, "news", Community.basic_info)
 	end
 
 	def get_books
