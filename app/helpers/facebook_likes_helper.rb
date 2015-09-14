@@ -89,7 +89,7 @@ module FacebookLikesHelper
 			like_time = TimeHelper::Facebook.unix(like["created_time"])
 			recent_like = like_time > stop_time
 			if !recent_like
-				break
+				next
 			else
 				recent_like_count += 1
 			end
@@ -118,11 +118,11 @@ module FacebookLikesHelper
 	end
 
 	def self.set_backlog_likes_info
-		clause = User.match_facebook_likes + FacebookLike.not_completed + FacebookLike.return_group(FacebookLike.basic_info)
+		clause = User.new(nil).match_facebook_likes + FacebookLike.not_completed + FacebookLike.return_group(FacebookLike.basic_info,"user.fb_id AS fb_id")
 		output = clause.execute
 		facebook_like_id_list = output.map { |like| (like["app_id"]) }
-		facebook_like_id_list.each do |id|
-			params = FacebookLikesHelper.get_info(id)
+		output.each do |facebook_like|
+			params = FacebookLikesHelper.get_info(facebook_like["fb_id"] ,facebook_like["app_id"])
 			FacebookLikesBooksWorker.new.perform(params)
 		end
 	end
