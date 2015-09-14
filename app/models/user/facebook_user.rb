@@ -14,13 +14,26 @@ class User::FacebookUser < User
 
 	def match_user
 		" MATCH (user:User)-[:FacebookAuth]->(facebook_user:FacebookUser) "\
-		" WHERE facebook_user.id = " + @params["id"] + " "\
+		" WHERE facebook_user.id = \'" + @params["id"].to_s + "\' "\
 		" WITH user, facebook_user "
+	end
+
+	def self.match
+		" MATCH (user:User)-[:FacebookAuth]->(facebook_user:FacebookUser) "\
+		" WITH user, facebook_user "
+	end
+
+	def self.id_info
+		" ID(user) AS user_id, ID(facebook_user) AS fb_user_id, facebook_user.id AS fb_id "
 	end
 
 	def self.set_name name
 		" SET user.name = COALESCE(user.name, \"" + name + "\" ), "\
 		" user.first_name = COALESCE(user.first_name, \'" + name + "\') "
+	end
+
+	def set_recent_like unix_time
+		match_user + " SET facebook_user.recent_like_created_at=" + unix_time.to_s
 	end
 
 	def self.parse_token_response response
@@ -43,7 +56,7 @@ class User::FacebookUser < User
 	end
 
 	def get_latest_like
-		match_user + User.new(nil).match_facebook_likes + FacbookLike.order_desc + FacbookLike.limit(1) + User::FacebookUser.return_group("like.timestamp AS created_at",FacbookLike.basic_info, "ID(user) AS user_id")
+		match_user + User.new(nil).match_facebook_likes + FacebookLike.order_desc + FacebookLike.limit(1) + User::FacebookUser.return_group("likes.timestamp AS created_at",FacebookLike.basic_info, User.fb_like_retrieval_time_info)
 	end
 
 	def set_access_token_when_expired
@@ -66,7 +79,7 @@ class User::FacebookUser < User
 			params=
 			{
 				:token 		=> response["access_token"],
-				:id 		=> @params[:id],
+				:id 		=> @params['id'],
 				:expires 	=> Time.now().to_i + response["expires"].to_i
 			}
 			RedisHelper::Facebook.set_access_token params

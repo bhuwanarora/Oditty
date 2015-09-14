@@ -8,7 +8,7 @@ module RedisHelper::Facebook
 
 	def self.get_access_token params
 		key = RedisHelper::Facebook.get_key_long_term_access_token params[:id]
-		$redis.hmget key, Token
+		($redis.hmget key, Token)[0]
 	end
 
 	def self.is_access_token_valid params
