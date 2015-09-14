@@ -226,16 +226,8 @@ var constants = {
 			"PasswordLengthError": "Minimum password length is 8",
 			"ChooseAMoreSecurePassword": "Choose a more secure password",
 			"MaximumPasswordLengthError": "Maximum password length is 100",
-			"FacebookLoginStatusCheck" :"connected",
-			"Description": [
-				"<b>Connecting information</b> in news and media with books...",
-				"Creating <b>virtual shelves</b> of books...",
-				"Setting <b>filters</b> on books...",
-				"Capturing book reading journeys...",
-				"Working on your <b>personalised book recommendations</b>...",
-				"Building <b>Listopia</b> of books...",
-				"Get set Login..."
-			]
+			"FacebookLoginStatusCheck" :"connected"
+			
 		},
 		"RecommendationUIConstants": {
 			"TickerPopupMaxHeight": "54vh",

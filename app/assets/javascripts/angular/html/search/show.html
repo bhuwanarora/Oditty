@@ -1,18 +1,18 @@
 <md-list >
-    <md-card ng-if="!info.loading && all_results.length == 0">
-        <md-card-content>
+    <div ng-if="!info.loading && all_results.length == 0">
+        <div>
             No results found for <a ng-href="/search?q={{::display_results_for}}&type={{::active_type}}"> <b>{{::display_results_for}}</b>
             <span ng-if="active_type"> in {{::active_type}}</span></a>
-        </md-card-content>
-    </md-card>
-    <md-card ng-if="!info.loading && all_results.length != 0">
-        <md-card-content>
+        </div>
+    </div>
+    <div ng-if="!info.loading && all_results.length != 0">
+        <div>
             {{::all_results.length}} Search results for <a ng-href="/search?q={{::display_results_for}}&type={{::active_type}}"> <b>{{::display_results_for}}</b> in {{::active_type}}'s</a>
-        </md-card-content>
-    </md-card>
+        </div>
+    </div>
 </md-list>
 <md-list ng-if="all_results && all_results.length > 0">
-    <div ng-repeat="result in all_results">
+    <div ng-repeat="result in all_results" layout-padding>
         <div ng-include src="'/assets/angular/html/search/_book.html'" 
                 ng-if="(result | search_item_type) == 'Book'"></div>
         <div ng-include src="'/assets/angular/html/search/_author.html'" 
@@ -45,7 +45,4 @@
         max-width: 100%;
     }
 
-    md-card{
-        margin-top: 15px !important;
-    }
 </style>

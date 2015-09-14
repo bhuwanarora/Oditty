@@ -117,6 +117,13 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     };
 
+    $scope.logout = function(){
+        $scope.$on('Facebook:statusChange', function(ev, data){
+            FB.logout();
+        });
+        window.location.href = "/signup";
+    }
+
     $scope.toggle_navigation_options = function(event){
         $scope.navigation_options = !$scope.navigation_options;
         $scope.show_notifications = false;
@@ -271,6 +278,10 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     }
 
+    $scope.show_quiz = function(key){
+        $scope.key = key;
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
         $scope.info = {};
@@ -294,7 +305,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
 
         $scope.data = {"selectedIndex" : 0};
         // deleteCookie("todo");
-
+        $scope.key = 3;    
 
     }());
 

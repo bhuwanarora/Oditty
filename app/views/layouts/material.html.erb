@@ -37,7 +37,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @journey || @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
+        class="<% if @journey || @search || @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
         id="<% unless @book %>parent<% end %>"
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
@@ -87,7 +87,7 @@
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white super_container">
             <% elsif @search %>
                 <md-content layout="row" layout-wrap ng-controller="searchPageController" 
-                    class="super_container"
+                    class="super_container white"
                     check-scroll-bottom="show_all_results()">
             <% elsif @book %>
                 <div ng-controller="specificBookController" class="white super_div_container">
