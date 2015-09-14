@@ -250,7 +250,7 @@ module FacebookLikesBooksHelper
 			end
 		end
 		if(clause.length > 0)
-			clause += " RETURN ID(city) "
+			clause += " RETURN 1 "
 			clause.execute
 		end
 	end
