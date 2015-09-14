@@ -23,9 +23,8 @@ module FacebookLikesHelper
 
 	def self.set_community_properties web_urls, name
 		search_index = name.search_ready
-		" SET " +
+		clause = " SET " +
 		"facebook_like.wiki_url = \'" + web_urls[:wiki_url] + "\', " +
-		"facebook_like.image_url = \'" + web_urls[:image] + "\', " +
 		"facebook_like.status = 1, " +
 		"facebook_like.created_at = facebook_like.created_time, " +
 		"facebook_like.view_count = 0, " +
@@ -34,6 +33,10 @@ module FacebookLikesHelper
 		"facebook_like.twitter_url = \'" + web_urls[:twitter_url] + "\', " +
 		"facebook_like.indexed_community_name = \'" + search_index + "\', " +
 		"facebook_like.search_index = \'" + search_index + "\' "
+		if web_urls[:image].present?
+			clause += ", facebook_like.image_url = \'" + web_urls[:image] + "\' "
+		end
+		clause
 	end
 
 	def self.need_to_fetch created_at, facebook_likes_retrieval_time = 0
