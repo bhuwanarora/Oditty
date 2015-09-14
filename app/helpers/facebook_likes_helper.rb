@@ -15,6 +15,7 @@ module FacebookLikesHelper
 		image_url = neo_output["image_url"]
 		if image_url.present?
 			web_urls.merge!({:image => image_url})
+			VersionerWorker.new.perform(node_id, image_url, "community")
 		end
 		clause  = FacebookLike.new(nil, node_id).match_by_neo_id
 		clause += FacebookLikesHelper.set_community_properties(web_urls, neo_output["name"])
