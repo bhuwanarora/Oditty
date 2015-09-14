@@ -77,7 +77,7 @@ class User::FacebookUser < User
 			params=
 			{
 				:token 		=> response["access_token"],
-				:id 		=> @params['id'],
+				:id 		=> @params[:id],
 				:expires 	=> Time.now().to_i + response["expires"].to_i
 			}
 			RedisHelper::Facebook.set_access_token params
