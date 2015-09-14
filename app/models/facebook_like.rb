@@ -150,6 +150,10 @@ class FacebookLike < Neo
 		" facebook_like.app_id AS app_id, ID(facebook_like) AS id, facebook_like.name AS name "
 	end
 
+	def basic_info
+		match_by_neo_id + FacebookLike.return_group(FacebookLike.basic_info)
+	end
+
 	def self.not_completed
 		" WHERE NOT HAS(facebook_like.completed) "\
 		" WITH user, facebook_like, likes "
