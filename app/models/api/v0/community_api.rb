@@ -6,16 +6,16 @@ module Api
 				Community.get_popular
 			end
 
-			def self.get_detailed_info(id, user_id)
-				UsersCommunity.new(user_id, id).get_info.execute[0]
-			end
 
 			def self.create_visited_news user_id, news_id
 				News.new(news_id).create_visited(user_id)
 			end
 
 			def self.get_combined_details id
-				Community.new(id).get_combined_details.execute
+				community_clause = Community.new(id).get_combined_details
+				facebook_clause = FacebookLike.new(nil, id).get_combined_details
+				clause = community_clause + " UNION ALL " + facebook_clause
+				clause.execute
 			end
 
 			def self.suggest_communities user_id
@@ -36,6 +36,18 @@ module Api
 					clause = Community.top_communities skip_count
 				end
 				clause
+			end
+
+			def self.get_detailed_info(id, user_id)
+				if user_id.present?
+					community_clause = UsersCommunity.new(user_id, id).get_info
+					facebook_clause = FacebookLike.new(nil, id).get_info(user_id)
+					clause = community_clause + " UNION " + facebook_clause
+					output = clause.execute[0]
+				else
+					output = Api::V0::CommunityApi.get_news(id, 0)[0]
+				end
+				output
 			end
 
 			def self.get_books id

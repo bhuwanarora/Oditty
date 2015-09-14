@@ -43,6 +43,9 @@ module FeedHelper::UserFeedHelper
 		Net::HTTP.get(URI.parse(Rails.application.config.feed_service + "/api/v0/delete_feed?feed_id=" + feed_id.to_s + "&" + "user_id=" + user_id.to_s))
 	end
 
+	def self.insert_feed user_id, feed_id
+	end
+
 	def self.handle_redis params, node_label
 		id = nil
 		case node_label
