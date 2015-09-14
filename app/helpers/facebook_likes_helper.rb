@@ -1,7 +1,6 @@
 module FacebookLikesHelper
 
-	def self.add params, user_id
-		FacebookLikesHelper.add_facebook_likes(params, user_id)
+	def self.set_facebook_likes_retrieval_time user_id
 		clause = User.new(user_id).match + User.set_facebook_likes_retrieval_time
 		clause.execute
 	end
@@ -36,16 +35,20 @@ module FacebookLikesHelper
 		"facebook_like.search_index = \'" + search_index + "\' "
 	end
 
-	def self.need_to_fetch created_at
-		(Time.now().to_i - created_at) > Constant::Time::OneDay
+	def self.need_to_fetch created_at, facebook_likes_retrieval_time = 0
+		last_like_reason = (Time.now().to_i - created_at) > Constant::Time::OneDay
+		last_check_reason = ((Time.now().to_i - facebook_likes_retrieval_time) > Constant::Time::OneDay) rescue true
+		last_check_reason && last_like_reason
 	end
 
 	def self.fetch user_fb_id
-		clause = FacebookUser.new({'id' => user_fb_id}).get_latest_like
+		clause = User::FacebookUser.new({'id' => user_fb_id}).get_latest_like
 		output = clause.execute[0]
-		need_to_fetch_likes = FacebookLikesHelper.need_to_fetch output["created_at"]
+		user_id = output["user_id"]
+		need_to_fetch_likes = FacebookLikesHelper.need_to_fetch output["created_at"], output["facebook_likes_retrieval_time"]
 		if need_to_fetch_likes
-			new_fb_like_ids = FacebookLikesHelper.fetch_likes_iterative(user_fb_id, output["user_id"], output["created_at"])
+			new_fb_like_ids = FacebookLikesHelper.fetch_likes_iterative(user_fb_id, user_id, output["created_at"])
+			FacebookLikesHelper.set_facebook_likes_retrieval_time user_id
 		else
 			new_fb_like_ids = []
 		end
@@ -59,12 +62,12 @@ module FacebookLikesHelper
 		next_iteration = true
 		id_list = []
 		while next_iteration && url.present?
-			response = Net.HTTP.get(URI.parse(url))
+			response = JSON.parse(Net::HTTP.get(URI.parse(url)))
 			FacebookLikesHelper.add_facebook_likes(response, user_id)
 			new_like_count = FacebookLikesHelper.next_iteration_needed(response, stop_time)
 			next_iteration = new_like_count == response["data"].length
 			id_list += response["data"][0..(new_like_count - 1)].map{|like| (like["id"].to_i)}
-			url = FacebookLikesHelper.get_next_likes_url response["data", access_token_string
+			url = FacebookLikesHelper.get_next_likes_url response["data"], access_token_string
 		end
 		id_list
 	end
@@ -85,18 +88,18 @@ module FacebookLikesHelper
 		recent_like_count
 	end
 
-	def self.set_info user_fb_id, facebook_like_id
+	def self.get_info user_fb_id, facebook_like_id
 		url = Rails.application.config.fb_graph_url + facebook_like_id.to_s + "?"
 		access_token_string = "access_token=" + RedisHelper::Facebook.get_access_token({:id => user_fb_id})
 		url += access_token_string
-		response = Net::HTTP.get(URI.parse(url))
+		response = JSON.parse(Net::HTTP.get(URI.parse(url)))
 	end
 
-	def self.backlog_fetch_info
+	def self.backlog_info
 		clause = User.match_facebook_likes + FacebookLike.not_completed + FacebookLike.return_group(FacebookLike.basic_info)
 		output = clause.execute
 		facebook_like_id_list = output.map { |like| (like["app_id"]) }
-		facebook_like_id_list.each{|id| FacebookLikesHelper.set_info(id)}
+		facebook_like_id_list.each{|id| FacebookLikesHelper.get_info(id)}
 	end
 
 private
