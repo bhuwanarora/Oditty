@@ -40,8 +40,8 @@ module FacebookLikesHelper
 		clause
 	end
 
-	def self.need_to_fetch created_at, facebook_likes_retrieval_time = 0
-		last_like_reason = (Time.now().to_i - created_at) > Constant::Time::OneDay
+	def self.need_to_fetch latest_like_time, facebook_likes_retrieval_time = 0
+		last_like_reason = ((Time.now().to_i - latest_like_time) > Constant::Time::OneDay) rescue true
 		last_check_reason = ((Time.now().to_i - facebook_likes_retrieval_time) > Constant::Time::OneDay) rescue true
 		last_check_reason && last_like_reason
 	end
@@ -82,17 +82,19 @@ module FacebookLikesHelper
 		id_list
 	end
 
-	def self.next_iteration_needed(response, stop_time)
-		likes = response["data"]
-		earliest_like = likes[likes.length - 1]
+	def self.next_iteration_needed(response, stop_time, created_time_key = 'created_time')
 		recent_like_count = 0
-		likes.each do |like|
-			like_time = TimeHelper::Facebook.unix(like["created_time"])
-			recent_like = like_time > stop_time
-			if !recent_like
-				next
-			else
-				recent_like_count += 1
+		likes = response["data"]
+		if likes.present?
+			earliest_like = likes[likes.length - 1]
+			likes.each do |like|
+				like_time = TimeHelper::Facebook.unix(like[created_time_key])
+				recent_like = like_time > stop_time
+				if !recent_like
+					next
+				else
+					recent_like_count += 1
+				end
 			end
 		end
 		recent_like_count

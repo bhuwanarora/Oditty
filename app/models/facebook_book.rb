@@ -52,38 +52,38 @@ class FacebookBook < Neo
 		clause + " SET node.book_id = CASE WHEN node.book_id IS NOT NULL THEN ID(book) ELSE node.book_id END WITH book "
 	end
 
+
 	def self.get_relations id
 		FacebookBook.new(id).match + FacebookBook.where_not_book + " OPTIONAL MATCH (facebook_book)-[out]->(node) WITH facebook_book, COLLECT({ type: TYPE(out), node_id: ID(node)}) AS outgoing OPTIONAL MATCH (facebook_book)<-[in]-(node) WITH COLLECT({ type: TYPE(in), node_id: ID(node)}) AS incoming, outgoing RETURN outgoing, incoming "
 	end
 
 	def map params
-		facebook_id 					= params["id"]
-		facebook_likes 					= (params["likes"].nil?) ? 0 : params["likes"]
-		author 							= (params["written_by"].nil?) ? "" : params["written_by"]
-		title 							= (params["name"].nil?) ? "" : params["name"]
-		facebook_description 			= (params["description"].nil?) ? "" : params["description"]
-		facebook_url					= params["link"].to_s
-		facebook_talking_about_count 	= (params["talking_about_count"].nil?) ? "" : (params["talking_about_count"])
-		author_search_index = author.search_ready
-		title_search_index	= title.search_ready
-		unique_index		= title_search_index + author_search_index
+		facebook_id = params["id"]
+		facebook_likes = params["likes"] rescue 0
+		facebook_description = params["description"] rescue ""
+		facebook_talking_about_count = params["talking_about_count"] rescue 0
+		facebook_likes_count = params["likes"] rescue 0
+		author = params["written_by"]
+		author_search_index = author.search_ready rescue ""
+		title = params["name"].strip
+		title_search_index = title.search_ready
 		clause = 
-		" SET facebook_book.indexed_title= \'" + title_search_index + "\' " +
-		" SET facebook_book.indexed_author_name= \'" + author_search_index + "\' " +
-		" SET facebook_book.unique_index= \'" + unique_index + "\' " +
-		" SET facebook_book.search_index= \'" + title_search_index + "\' " +
-		" SET facebook_book.facebook_book_title = \'" + title.escape_quotes + "\' " +
+		" SET facebook_book.facebook_book_title = \'" + title.database_ready + "\' " +
 		" SET facebook_book.facebook_id = " + facebook_id.to_s + 
 		" SET facebook_book.facebook_likes = " + facebook_likes.to_s + 
-		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.escape_quotes + "\"" +
-		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s +
-		" SET facebook_book.facebook_url = \"" + facebook_url + "\"" +
-		" SET facebook_book.author_name = \'" + author + "\' " +
-		" " + FacebookBook.set_book_property + " " +
-		" WITH facebook_book "
+		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\"" +
+		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + 
+		" SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + 
+		" SET facebook_book.facebook_url = \"" + params["link"].to_s + "\"" + 
+		" " + FacebookBook.set_book_property + " "
 		if author.present?
-			clause += " " + Author.merge_by_index(author_search_index) + ", facebook_book " +
-					  " " + Book.merge_author('facebook_book') + " "
+		 	clause += 
+			" SET facebook_book.author_name = \'" + author + "\' " +
+			" WITH facebook_book " +
+			" " + Author.merge_by_index(author_search_index) + ", facebook_book " +
+			" " + Book.merge_author('facebook_book') + " "
+		else
+			clause += " WITH facebook_book "
 		end
 		clause
 	end

@@ -26,4 +26,9 @@ namespace :get_media do
         FacebookLikesHelper.fetch_backlog_likes
     end
 
+    desc "Get facebook books"
+    task :fb_books => [:dependent, :tasks] do
+        FacebookBooksHelper.fetch_backlog_books
+    end
+
 end

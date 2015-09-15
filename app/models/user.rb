@@ -394,6 +394,10 @@ class User < Neo
 		" ID(user) AS user_id, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
 	end
 
+	def self.fb_book_retrieval_time_info
+		" ID(user) AS user_id, user.fb_id AS fb_id, user.facebook_books_retrieval_time AS facebook_books_retrieval_time "
+	end
+
 	def create_like timestamp
 		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s + User.with_group("user", "likes", "facebook_like")
 	end

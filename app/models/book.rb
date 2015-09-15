@@ -58,7 +58,9 @@ class Book < Neo
 	end
 
 	def self.merge_author book = 'book'
-		" MERGE (author)-[:Wrote]->(" + book + ") WITH author, " + book + " "
+		" MERGE (author)-[:Wrote]->(" + book + ") "\
+		" ON CREATE SET " + book + ".author_id = ID(author) "\
+		" WITH author, " + book + " "
 	end
 
 	def self.set_bookmark_count operation

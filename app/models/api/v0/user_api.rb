@@ -347,17 +347,6 @@ module Api
 				User.new(id).get_detailed_info.execute
 			end
 
-			def self.add_books_from_fb(params, user_id)
-				if params[:data].present?
-					clause = User.new(user_id).match + User.return_group("user.facebook_books_retrieval_time AS time")
-					facebook_books_retrieval_time = clause.execute[0]['time'] rescue ""
-					time_to_add_books = !facebook_books_retrieval_time.present? || facebook_books_retrieval_time.to_i < (Time.now.to_i - 3600*24*30)
-					if time_to_add_books
-						FacebookBooksWorker.perform_async(params, user_id)
-					end
-				end
-			end
-
 			def self.recommend_book(user_id, friends_id, book_id)
 				@neo = Neography::Rest.new
 				clause = UsersUser.new(user_id,friends_id).recommend_book(book_id)				
