@@ -1,7 +1,8 @@
 class IndexerWorker
 	include Sidekiq::Worker
 	sidekiq_options :queue => :indexer
-	def perform(params)
+	def perform(params_orig)
+		params = params_orig.symbolize_keys
 		type = params[:type]
 		response = params[:response]
 		if type == "Blog"
