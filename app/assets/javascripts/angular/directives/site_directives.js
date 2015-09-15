@@ -504,13 +504,24 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', function($rootScope, websiteService, $timeout, $mdDialog, $sce){
+homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location', '$rootScope', function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location, $rootScope){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
         controller: ["$scope", function($scope){
             $scope.toggle_expand = function(){
                 $scope.communityFeed.expand = !$scope.communityFeed.expand;
+            }
+
+            $scope.remove_news = function(){
+                var news_id = $scope.communityFeed.news_id;
+                var regex = /[?&]([^=#]+)=([^&#]*)/g;
+                var url_parsed = regex.exec($location.absUrl());
+                if(url_parsed != null){
+                    var id = url_parsed[2];
+                    websiteService.remove_news(news_id, id);
+                    window.location.reload();
+                }
             }
 
             $scope.show_news = function(event){
@@ -534,6 +545,9 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
             }
 
             var _init = function(){
+                if(angular.isDefined($rootScope.user)){
+                    $scope.user = $rootScope.user;
+                }
                 $scope.communityFeed.expand = false;
             }
 

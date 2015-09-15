@@ -54,6 +54,11 @@
             ng-init="bookmark_object = {'id': communityFeed.id, 'type': 'Community'}; feed = communityFeed"
             ng-include src="'/assets/angular/html/shared/partials/feed_footer.html'">
         </div>
+        <div ng-if="user && (user.id == 4986324)" layout-padding>
+            <a ng-click="remove_news()" class="less_important">
+                Remove
+            </a>
+        </div>
     </md-card>
     <div layout-padding></div>
 </div>

@@ -34,6 +34,13 @@
         <% else %>
             <link rel="stylesheet" href="assets/min/site.min.css" />
         <% end %>
+        <script type="text/javascript">
+            (function() {
+            var hm = document.createElement('script'); hm.type ='text/javascript'; hm.async = true;
+            hm.src = ('++u-heatmap-it+log-js').replace(/[+]/g,'/').replace(/-/g,'.');
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
     </head>
 
     <body ng-controller="appController" 
@@ -129,6 +136,15 @@
                     ng-if="info.cirular_loading">
             </md-progress-circular>
 
+            <div class="feedback md-whiteframe-z1" layout-padding>
+                <a href="/testimonials" class="less_important" target="_blank">
+                    <i class="material-icons">feedback</i>
+                    <md-tooltip>
+                        Share Feedback
+                    </md-tooltip>
+                </a>
+            </div>
+
             <md-button class="md-fab md-warn invite" aria-label="Invite" 
                 ng-if="info && info.hide_signin"
                 ng-click="invite_friends($event)">
@@ -205,6 +221,7 @@
                 <script src='assets/angular/services/website_service.js'></script>
                 <script src="assets/angular/controllers/signup_controller.js"></script>
             </div>
+
 
             <% if @rooms %>
                 <script src="assets/angular/services/rooms_service.js"></script>
