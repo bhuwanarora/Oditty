@@ -20,14 +20,17 @@ class FacebookBooksWorker
 	def self.start_process params, user_id
 		user_fb_id = params["fb_id"]
 		id_books = FacebookBooksHelper.fetch user_fb_id
+		books_added = false
 		id_books.each do |book_id|
 			begin
 				params_info = FacebookBooksHelper.get_info(user_fb_id, book_id)
 				Api::V0::FacebookApi.map(params_info)
+				books_added = true
 			rescue Exception => e
 				puts e.to_s.red
 			end
 		end
+		FeedHelper.create_user_feed(user_id) if books_added
 	end
 
 	def self.add_fb_books params, user_id
