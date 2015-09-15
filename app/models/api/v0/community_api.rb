@@ -6,6 +6,9 @@ module Api
 				Community.get_popular
 			end
 
+			def self.remove_news id, news_id
+				Community.new(id).remove_news(news_id).execute
+			end
 
 			def self.create_visited_news user_id, news_id
 				News.new(news_id).create_visited(user_id)
