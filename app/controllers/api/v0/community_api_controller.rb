@@ -13,6 +13,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def remove_news
+				id = params[:id]
+				news_id = params[:news_id]
+				info = Api::V0::CommunityApi.remove_news(id, news_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def get_combined_details
 				id = params[:id]
 				info = Api::V0::CommunityApi.get_combined_details(id)
@@ -62,10 +69,12 @@ module Api
 				community_id = params[:id]
 				user_id = session[:user_id]
 				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id)
-				args = {:id => community_id, :view_count => info["view_count"]}
-				RedisHelper::Community.increment_view_count(args)
-				args[:work] = RedisHelper::WorkUpdateSuggestCommunities
-				RedisWorker.perform_async(args)
+				if info.present?
+					args = {:id => community_id, :view_count => info["view_count"]}
+					RedisHelper::Community.increment_view_count(args)
+					args[:work] = RedisHelper::WorkUpdateSuggestCommunities
+					RedisWorker.perform_async(args)
+				end
 				render :json => info, :status => 200 
 			end
 
@@ -77,7 +86,7 @@ module Api
 
 			def get_news
 				id = params[:id]
-				skip_count = params[:skip]
+				skip_count = (params[:skip].present?) ? params[:skip] : 0
 				info = Api::V0::CommunityApi.get_news(id, skip_count)
 				render :json => info, :status => 200
 			end

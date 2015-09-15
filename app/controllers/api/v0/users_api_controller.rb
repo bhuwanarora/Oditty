@@ -236,6 +236,9 @@ module Api
 			def fb
 				info = Api::V0::UserApi.handle_facebook_user(params[:users_api])
 				session[:user_id] = info["id"]
+				Api::V0::FacebookApi.handle_access_tokens params
+				Api::V0::FacebookApi.handle_facebook_likes params[:id]
+				#Api::V0::FacebookApi.handle_facebook_books session[:user_id]
 				if info["id"].present?
 					render :json => info, :status => 200
 				else

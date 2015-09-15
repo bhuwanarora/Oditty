@@ -1,5 +1,13 @@
 module FacebookLikesBooksHelper
-	
+
+	def self.set_community_videos node_id
+		clause = FacebookLike.new(nil,node_id).match_by_neo_id + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
+		output = clause.execute
+		output.each do |id|
+			VideosWorker.add_to_community(id["id"])
+		end
+	end
+
 	def self.set_community_books node_id
 		text_array = self.get_data_for_NLP node_id
 		text = self.concatenate_hash text_array
@@ -26,7 +34,7 @@ module FacebookLikesBooksHelper
 		all_community_books_relevance.each do |element|
 			books_id = element['books_id']
 			name 	= element['name']
-			clause = Community.merge(name)
+			clause = Community.merge(name, {}, true)
 			books_id.each do |book_id|
 				clause +=  self.match_node(book_id,"book") + ", community " + Community.merge_book + " WITH community "
 			end
@@ -37,10 +45,11 @@ module FacebookLikesBooksHelper
 	def self.merge_node_to_community all_community_books_relevance, node_id
 		clause = self.match_node(node_id)
 		all_community_books_relevance.each do |element|
-			clause += Community.merge(element['name']) + ", node " + News.merge_community({
-										'relevance' =>element['relevance'],
-										'relevanceOriginal' => element['relevanceOriginal']
-										},'node')
+			param = {
+						'relevance' =>element['relevance'],
+						'relevanceOriginal' => element['relevanceOriginal']
+					}
+			clause += Community.merge(element['name'],{}, true) + ", node " + FacebookLike.merge_community(param)
 			clause += " WITH node "
 		end
 		clause += " RETURN ID(node)"
@@ -70,7 +79,7 @@ module FacebookLikesBooksHelper
 			if key == 'id'
 				next
 			end
-			clause += " node." + key + " = \"" + value + "\","
+			clause += " node." + key + " = \"" + value.escape_quotes + "\","
 		end
 		clause[clause.length - 1] = ''
 		clause
@@ -87,7 +96,7 @@ module FacebookLikesBooksHelper
 				if key == 'id'
 					next
 				end
-				clause += " node." + key + " = \"" + value.gsub('"','\\\\"').gsub("'","\\\\'") + "\","
+				clause += " node." + key + " = \"" + value.escape_quotes + "\","
 			end
 			clause[clause.length - 1] = ''
 		else
@@ -178,6 +187,10 @@ module FacebookLikesBooksHelper
 		node_property = {}
 		if(params["category"].present?)
 			node_label = params["category"].split("/").map{|category_single| FacebookLike.get_node_label category_single}
+			node_label = node_label - Constant::Label::AllNeoLabels
+			if node_label.empty?
+				node_label = parent_category
+			end
 		else
 			node_label = parent_category
 		end
@@ -241,7 +254,7 @@ module FacebookLikesBooksHelper
 			end
 		end
 		if(clause.length > 0)
-			clause += " RETURN ID(city) "
+			clause += " RETURN 1 "
 			clause.execute
 		end
 	end

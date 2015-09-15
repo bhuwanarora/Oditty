@@ -12,6 +12,15 @@ class FacebookLikesBooksWorker
 		begin
 			node_id = FacebookLikesBooksHelper.set_node_property_recursive(params, nil, true)
 			FacebookLikesBooksHelper.set_community_books node_id
+			FacebookLikesBooksHelper.set_community_videos node_id
+			FacebookLikesHelper.model_as_community node_id
+			FacebookLike.new(nil, node_id).set_completed.execute
+			indexer_params =
+			{
+				:type => Constant::EntityLabel::Community,
+				:response => node_id
+			}
+			IndexerWorker.new.perform(indexer_params)
 		rescue Exception => e
 			puts e.to_s.red
 		end

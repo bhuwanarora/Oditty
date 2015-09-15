@@ -9,9 +9,8 @@ class User::Game < User
 	end
 
 	def self.score_board_info
-		User::Game.score_info + ", user.first_name AS name, user.thumb AS image_url "
+		User::Game.score_info + ", user.first_name AS name, user.thumb AS image_url, ID(user) AS id "
 	end
-
 
 	def self.match_top_rankers skip
 		User.match +
@@ -43,7 +42,7 @@ class User::Game < User
 		User::Game.return_group(Book.basic_info)
 	end
 
-	def self.match_judge_path path_length = 10
+	def self.match_judge_path path_length = 7
 		" MATCH path=(book)-[:NextJudge*" + path_length.to_s + "]->(last_book:Book) WITH path, user "
 	end
 

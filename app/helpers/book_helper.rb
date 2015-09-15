@@ -20,6 +20,32 @@ module BookHelper
 		Book.new(book_id).match + set_clause
 	end
 
+	def self.has_image_on_S3 book_id
+		clause = Book.new(book_id).match + " RETURN book.isbn AS isbn "
+		neo_output = clause.execute[0]
+		has_image = false
+		if neo_output["isbn"].present?
+			isbn_list = neo_output["isbn"].split(",").map{ |e| (e.strip)}
+			image_count = isbn_list.map{|isbn| BookHelper.check_S3_image(isbn)}.reduce(:+)
+			has_image = !(image_count.nil?) && image_count > 0
+		end
+		has_image
+	end
+
+	def self.check_S3_image isbn
+		urls = BookHelper.get_S3_image_urls isbn
+		data =  urls.map{|url| (Net::HTTP.get(URI.parse(url)) rescue nil)}
+		data.reject!{ |e| ((e.nil?) ||(e.length == 807 )) }
+		output = (data.present?) ? data.length : 0
+		output
+	end
+
+	def self.get_S3_image_urls isbn, versions = ["L"]
+		base_url = "http://rd-images.readersdoor.netdna-cdn.com/"
+		output = versions.map{|version| (base_url + isbn.to_s + "/" + version.to_s + ".jpg")}
+		output
+	end
+
 	def self.get_by_one_author book_name, author_name_list
 		replace_dictionary = {"@" => "", "."  => ""}
 		clause = " START books = node:node_auto_index('indexed_title: " + book_name.search_ready.gsub("(","").gsub(")","") + "') WITH books "
@@ -191,10 +217,9 @@ module BookHelper
 	end
 
 	AddAuthorIds = Proc.new do |params, *args|
-		init_clause = params[:init_clause]
-		clause  = init_clause
-		clause += Author.match_books
+		clause = Author.match_books
 		clause += " SET book.author_id = ID(author) "
+		clause += " RETURN MAX(ID(book)) AS id "
 		clause
 	end
 

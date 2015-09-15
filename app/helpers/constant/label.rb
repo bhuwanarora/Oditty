@@ -16,4 +16,9 @@ module Constant::Label
 	Genre 						= "GENRE"
 
 	HiddenCommunity				= "HiddenCommunity"
+
+
+	AllLabels = [TinyRead, SmallRead, NormalRead, LongRead, TinyReadRelation, SmallReadRelation, NormalReadRelation, LongReadRelation, Time, Year, Country, Author, Genre, HiddenCommunity]
+
+	AllNeoLabels = AllLabels + Constant::EntityLabel::AllLabels + Constant::NodeLabel::AllLabels
 end

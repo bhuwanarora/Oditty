@@ -390,6 +390,10 @@ class User < Neo
 		" SET user.facebook_likes_retrieval_time = " + Time.now.to_i.to_s + " "
 	end
 
+	def self.fb_like_retrieval_time_info
+		" ID(user) AS user_id, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
+	end
+
 	def create_like timestamp
 		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s + User.with_group("user", "likes", "facebook_like")
 	end
@@ -399,7 +403,7 @@ class User < Neo
 	end
 
 	def get_facebook_likes
-		match + match_facebook_likes + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
+		match + match_facebook_likes + FacebookLike.not_completed + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
 	end
 
 	def popular_rooms skip_count=0

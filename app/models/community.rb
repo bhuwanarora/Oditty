@@ -8,6 +8,10 @@ class Community < Neo
 		match + match_videos + Community.with_group("{#{Video.grouped_basic_info}} AS content", "labels(video) AS labels") + Community.return_group("content", "labels") + Community.limit(4) + " UNION ALL " + Community.match_books + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{Book.grouped_basic_info}} AS content", "labels(book) AS labels") + Community.return_group("content", "labels") + Community.limit(4) + " UNION ALL " + Community.match_news + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{News.grouped_basic_info}} AS content", "labels(news) AS labels") + Community.return_group("content", "labels") + Community.limit(4)
 	end
 
+	def remove_news news_id
+		match + " MATCH (community)<-[has_community:HasCommunity]-(news:News) WHERE ID(news)=" + news_id.to_s + " DELETE has_community"
+	end
+
 	def self.grouped_books_users
 		Community.optional_match_grouped_books + Community.optional_match_users + ", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " + User.collect_map({"users_info" => User.grouped_basic_info }) + " WITH users_info, books_info , community, "  + Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info "})
 	end
@@ -123,8 +127,12 @@ class Community < Neo
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
 
-	def self.merge community, url_list = {}
-		labels = NlpHelper.get_name_tags community
+	def self.merge community, url_list = {}, no_nlp = false
+		if !no_nlp
+			labels = NlpHelper.get_name_tags community
+		else
+			labels = []
+		end
 		clause = " MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) "\
 		" ON CREATE SET "\
 		" community.name = \"" + community + "\", "\

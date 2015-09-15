@@ -89,6 +89,24 @@ BooksBatchSize = 10
 		User.match + User::Game.match_initial_book_by_id + ", user MERGE (user)-[:LastBookJudged]->(book) "
 	end
 
+	def self.find_non_image_books_to_file filename = 'log/image_less_books.txt'
+		clause = GameHelper.match_books + "RETURN ID(book) AS id "
+		id_list = clause.execute
+		no_image_list = []
+		id_list.each do |id|
+			if !BookHelper.has_image_on_S3(id["id"])
+				no_image_list << id
+			end
+		end
+		GenericHelper.write_array_to_file(no_image_list, filename)
+	end
+
+	def self.match_books
+		" MATCH (book:Book) "\
+		" WHERE (book)-[:NextJudge]-() "\
+		" WITH DISTINCT book "
+	end
+
 	private
 
 	def self.clean_up_user

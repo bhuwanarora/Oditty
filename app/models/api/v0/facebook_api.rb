@@ -1,6 +1,23 @@
 module Api
 	module V0
 		class FacebookApi
+
+			def self.handle_facebook_likes fb_id
+				FacebookLikesWorker.perform_async(fb_id)
+			end
+
+			def self.handle_facebook_books fb_id, user_id
+				need_to_fetch = FacebookLike.need_to_fetch user_id
+				if need_to_fetch
+					id_likes = FacebookLike.new(fb_id, user_id).fetch
+					FacebookLike.new(nil, user_id).set_info
+				end
+			end
+
+			def self.handle_access_tokens params
+				User::FacebookUser.new(params).set_access_token_when_expired
+			end
+
 			def self.map params
 				name = params["name"]
 				author = params["written_by"]
