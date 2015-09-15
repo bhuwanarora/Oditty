@@ -113,7 +113,8 @@ module FacebookBooksHelper
 		if stop_time.nil?
 			params[:stop_time]=0
 		end
-		fields = ["books.reads", "books", "books.wants_to_read"]
+		#fields = ["books.reads", "books", "books.wants_to_read"]
+		fields = ["books.reads", "books.wants_to_read"]
 		fields.each do |field|
 			params[:url_field] = field
 			fb_book_ids += FacebookBooksHelper.fetch_books_iterative_internal params
