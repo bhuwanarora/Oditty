@@ -57,6 +57,12 @@ module GenericHelper
 		GenericHelper.optional_copy_edges relation_param, Constant::LabelRelationships::IncomingRel
 	end
 
+	def self.write_array_to_file array, filename
+		File.open(filename, "w") do |f|
+			array.each { |element| f.puts(element) }
+		end
+	end
+
 	private
 	def self.handle_each_edge_type params
 		edge_info 			= params[:edge_info]

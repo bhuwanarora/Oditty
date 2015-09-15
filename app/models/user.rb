@@ -17,6 +17,10 @@ class User < Neo
 		"MATCH (user:User) WITH user "
 	end
 
+	def get_fb_books skip
+		match + match_facebook_likes + FacebookLike.match_books + " WITH DISTINCT book, COLLECT(facebook_like.name) AS fb_like_page_title, " + Book.get_goodness_index + Book.order_by_goodness + User.skip(skip) + User.limit(Constant::Count::FacebookLikeBookCount) + User.return_group(Book.basic_info,"fb_like_page_title")
+	end
+
 	def self.link_basic_labels
 		" CREATE UNIQUE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
@@ -180,7 +184,7 @@ class User < Neo
 	end
 
 	def self.create_links_for_new
-		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories
+		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Game.new_user
 	end
 
 	def get_notifications
@@ -386,6 +390,10 @@ class User < Neo
 		" SET user.facebook_likes_retrieval_time = " + Time.now.to_i.to_s + " "
 	end
 
+	def self.fb_like_retrieval_time_info
+		" ID(user) AS user_id, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
+	end
+
 	def create_like timestamp
 		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s + User.with_group("user", "likes", "facebook_like")
 	end
@@ -395,7 +403,7 @@ class User < Neo
 	end
 
 	def get_facebook_likes
-		match + match_facebook_likes + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
+		match + match_facebook_likes + FacebookLike.not_completed + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
 	end
 
 	def popular_rooms skip_count=0
@@ -403,5 +411,6 @@ class User < Neo
 		" WITH user, community "\
 		" " + UsersCommunity.optional_match + ", COALESCE(community.view_count,0) AS view_count " +Community.order_by("view_count DESC, ID(community) DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status")
 	end
+
 
 end

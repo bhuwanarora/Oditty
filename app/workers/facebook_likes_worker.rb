@@ -2,9 +2,15 @@ class FacebookLikesWorker
 	include Sidekiq::Worker
 	sidekiq_options :queue => :facebook_likes
 
-	def perform params, user_id
-		FacebookLikesHelper.add_facebook_likes(params, user_id)
-		clause = User.new(user_id).match + User.set_facebook_likes_retrieval_time
-		clause.execute
+	def perform fb_id
+		id_likes = FacebookLikesHelper.fetch fb_id
+		id_likes.each do |like_id|
+			begin
+				params = FacebookLikesHelper.get_info(fb_id, like_id)
+				FacebookLikesBooksWorker.new.perform(params)
+			rescue Exception => e
+				puts e.to_s.red
+			end
+		end
 	end
 end
