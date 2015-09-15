@@ -129,6 +129,10 @@
                     ng-if="info.cirular_loading">
             </md-progress-circular>
 
+            <div class="feedback md-whiteframe-z1" layout-padding>
+                <a href="/testimonials" class="less_important" target="_blank">Share Feedback</a>
+            </div>
+
             <md-button class="md-fab md-warn invite" aria-label="Invite" 
                 ng-if="info && info.hide_signin"
                 ng-click="invite_friends($event)">
@@ -205,6 +209,7 @@
                 <script src='assets/angular/services/website_service.js'></script>
                 <script src="assets/angular/controllers/signup_controller.js"></script>
             </div>
+
 
             <% if @rooms %>
                 <script src="assets/angular/services/rooms_service.js"></script>
