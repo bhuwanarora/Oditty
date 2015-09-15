@@ -52,6 +52,7 @@ class FacebookBook < Neo
 		clause + " SET node.book_id = CASE WHEN node.book_id IS NOT NULL THEN ID(book) ELSE node.book_id END WITH book "
 	end
 
+
 	def self.get_relations id
 		FacebookBook.new(id).match + FacebookBook.where_not_book + " OPTIONAL MATCH (facebook_book)-[out]->(node) WITH facebook_book, COLLECT({ type: TYPE(out), node_id: ID(node)}) AS outgoing OPTIONAL MATCH (facebook_book)<-[in]-(node) WITH COLLECT({ type: TYPE(in), node_id: ID(node)}) AS incoming, outgoing RETURN outgoing, incoming "
 	end
@@ -63,23 +64,28 @@ class FacebookBook < Neo
 		facebook_talking_about_count = params["talking_about_count"] rescue 0
 		facebook_likes_count = params["likes"] rescue 0
 		author = params["written_by"]
-		author_search_index = author.search_ready
-
+		author_search_index = author.search_ready rescue ""
 		title = params["name"].strip
 		title_search_index = title.search_ready
 		clause = 
-		" SET facebook_book.facebook_book_title = \'" + title + "\' " +
+		" SET facebook_book.facebook_book_title = \'" + title.database_ready + "\' " +
 		" SET facebook_book.facebook_id = " + facebook_id.to_s + 
 		" SET facebook_book.facebook_likes = " + facebook_likes.to_s + 
 		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\"" +
 		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + 
 		" SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + 
 		" SET facebook_book.facebook_url = \"" + params["link"].to_s + "\"" + 
-		" SET facebook_book.author_name = \'" + author + "\' " +
-		" " + FacebookBook.set_book_property + " " +
-		" WITH facebook_book " +
-		" " + Author.merge_by_index(author_search_index) + ", facebook_book " +
-		" " + Book.merge_author('facebook_book') + " "
+		" " + FacebookBook.set_book_property + " "
+		if author.present?
+		 	clause += 
+			" SET facebook_book.author_name = \'" + author + "\' " +
+			" WITH facebook_book " +
+			" " + Author.merge_by_index(author_search_index) + ", facebook_book " +
+			" " + Book.merge_author('facebook_book') + " "
+		else
+			clause += " WITH facebook_book "
+		end
+		clause
 	end
 
 	def self.set_book_property

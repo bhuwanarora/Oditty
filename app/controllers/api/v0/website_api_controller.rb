@@ -110,13 +110,7 @@ module Api
 			end
 
 			def fb_books
-				user_id = session[:user_id]
-				if user_id
-					Api::V0::UserApi.add_books_from_fb(params, user_id)
-					render :json => {:message => "Success"}, :status => 200
-				else
-					render :json => {:message => "Session not been set"}, :status => 200
-				end
+				render :json => {:message => "Success"}, :status => 200
 			end
 
 			def fb_books_map
