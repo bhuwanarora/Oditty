@@ -187,6 +187,10 @@ module FacebookLikesBooksHelper
 		node_property = {}
 		if(params["category"].present?)
 			node_label = params["category"].split("/").map{|category_single| FacebookLike.get_node_label category_single}
+			node_label = node_label - Constant::Label::AllNeoLabels
+			if node_label.empty?
+				node_label = parent_category
+			end
 		else
 			node_label = parent_category
 		end
