@@ -58,6 +58,10 @@ class User::FacebookUser < User
 		match_user + User.new(nil).match_facebook_likes + FacebookLike.order_desc + FacebookLike.limit(1) + User::FacebookUser.return_group("likes.timestamp AS created_at",FacebookLike.basic_info, User.fb_like_retrieval_time_info)
 	end
 
+	def get_latest_book
+		match_user + " OPTIONAL " + ReadingJourney.match_facebook_book  + " WITH user, reading_journey, book " + ReadingJourney.order_desc + ReadingJourney.limit(1) + User::FacebookUser.return_group("reading_journey.publish_time AS created_at", User.fb_book_retrieval_time_info)
+	end
+
 	def set_access_token_when_expired
 		valid = RedisHelper::Facebook.is_access_token_valid @params
 		if !valid

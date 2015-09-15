@@ -13,6 +13,13 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def remove_news
+				id = params[:id]
+				news_id = params[:news_id]
+				info = Api::V0::CommunityApi.remove_news(id, news_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
 			def get_combined_details
 				id = params[:id]
 				info = Api::V0::CommunityApi.get_combined_details(id)
