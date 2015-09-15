@@ -14,6 +14,10 @@ homeApp.service('websiteService', ["$http", "$q", "$rootScope", "WebsiteUIConsta
         return _deferred_request('/api/v0/get_testimonials?skip='+skip, $q, $http);
     }
 
+    this.remove_news = function(news_id, community_id){
+        return _deferred_request('/api/v0/remove_news?news_id='+news_id+'&id='+community_id, $q, $http);
+    }
+
     this.extract_embed = function(url){
         return _deferred_request(url, $q, $http);
     }
