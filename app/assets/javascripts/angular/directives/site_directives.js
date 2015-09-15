@@ -504,7 +504,7 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location',  function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location){
+homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location', '$rootScope', function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location, $rootScope){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
@@ -545,6 +545,9 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
             }
 
             var _init = function(){
+                if(angular.isDefined($rootScope.user)){
+                    $scope.user = $rootScope.user;
+                }
                 $scope.communityFeed.expand = false;
             }
 
