@@ -18,6 +18,7 @@ ReadersDoor::Application.routes.draw do
       match 'get_rooms'                              => 'community_api#get_rooms',                        :via => [:get]
       match 'add_videos'                             => 'community_api#add_videos',                       :via => [:get]
       match 'community_combined_details'             => 'community_api#get_combined_details',             :via => [:get]
+      match 'remove_news'                            => 'community_api#remove_news',                       :via => [:get]
     end
   end
 end
