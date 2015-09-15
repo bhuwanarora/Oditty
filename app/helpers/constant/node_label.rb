@@ -20,4 +20,6 @@ module Constant::NodeLabel
 	Country			= "Country"
 	Street			= "Street"
 	Address			= "Address"
+
+	AllLabels = [FollowsNode, RecommendNode, EndorseNode, BorrowNode, StatusNode, BookmarkNode, RatingNode, BooklessCommunity, Category, Genre, City, Country, Street, Address ] + BookEraLabels
 end
