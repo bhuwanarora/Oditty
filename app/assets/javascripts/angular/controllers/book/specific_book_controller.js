@@ -71,7 +71,7 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
     }
 
     $scope.get_active_class = function(path){
-        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "book/timeline");
+        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "book/buyandreview");
         if(($location.path().substr(1, path.length+1) == path) || is_init){
             return "bold red_color";
         } else {
