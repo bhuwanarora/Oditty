@@ -89,6 +89,19 @@ module FacebookBooksHelper
 		new_fb_book_ids
 	end
 
+	def self.fetch_backlog_books
+		output = (User::FacebookUser.match + User::FacebookUser.return_group(User::FacebookUser.id_info)).execute
+		output.each do |fb_user|
+			user_id = fb_user["user_id"]
+			fb_id = fb_user["fb_id"].to_i
+			id_books = FacebookBooksHelper.fetch_books_iterative fb_id, user_id, 0
+			id_books.each do |book_id|
+				params_info = FacebookBooksHelper.get_info(fb_id, book_id)
+				Api::V0::FacebookApi.map(params_info)
+			end
+		end
+	end
+
 	def self.fetch_books_iterative user_fb_id, user_id, stop_time
 		fb_book_ids = []
 		params =
@@ -152,99 +165,4 @@ module FacebookBooksHelper
 	def self.get_next_books_url response
 		FacebookLikesHelper.get_next_likes_url response
 	end
-
-	def self.handle_progress_in_reading_journey
-		# ReadingJourney.create_progress
-	end
-
-# 	def self.test_
-# 		json_str = '{
-#   "data": [
-#     {
-#       "application": {
-#         "name": "Books", 
-#         "id": "174275722710475"
-#       }, 
-#       "comments": {
-#         "data": [
-#         ], 
-#         "can_comment": true, 
-#         "comment_order": "chronological", 
-#         "count": 0
-#       }, 
-#       "from": {
-#         "id": "620275488072075", 
-#         "name": "Prachi Jain"
-#       }, 
-#       "likes": {
-#         "data": [
-#         ], 
-#         "can_like": true, 
-#         "count": 0, 
-#         "user_likes": false
-#       }, 
-#       "no_feed_story": false, 
-#       "publish_time": "2014-11-21T20:17:59+0000", 
-#       "start_time": "2014-11-21T20:17:59+0000", 
-#       "type": "books.reads", 
-#       "data": {
-#         "book": {
-#           "id": "106488369388190", 
-#           "title": "Bhagavad-gita As It Is", 
-#           "type": "books.book", 
-#           "url": "https://www.facebook.com/BhagavadGeetaAsItIs"
-#         }
-#       }, 
-#       "id": "568748093224815"
-#     }, 
-#     {
-#       "application": {
-#         "name": "Books", 
-#         "id": "174275722710475"
-#       }, 
-#       "comments": {
-#         "data": [
-#         ], 
-#         "can_comment": true, 
-#         "comment_order": "chronological", 
-#         "count": 0
-#       }, 
-#       "from": {
-#         "id": "620275488072075", 
-#         "name": "Prachi Jain"
-#       }, 
-#       "likes": {
-#         "data": [
-#         ], 
-#         "can_like": true, 
-#         "count": 0, 
-#         "user_likes": false
-#       }, 
-#       "no_feed_story": false, 
-#       "publish_time": "2014-11-21T20:17:55+0000", 
-#       "start_time": "2014-11-21T20:17:55+0000", 
-#       "type": "books.reads", 
-#       "data": {
-#         "book": {
-#           "id": "171044192943170", 
-#           "title": "Siddhartha de Herman Hesse", 
-#           "type": "books.book", 
-#           "url": "https://www.facebook.com/pages/Siddhartha-de-Herman-Hesse/171044192943170"
-#         }
-#       }, 
-#       "id": "568748076558150"
-#     }
-#     ], 
-#   "paging": {
-#     "cursors": {
-#       "before": "NTY4NzQ4MDkzMjI0ODE1", 
-#       "after": "NDc1MTU4MzMyNTgzNzky"
-#     }, 
-#     "next": "https://graph.facebook.com/v2.3/620275488072075/books.reads?pretty=0&limit=25&after=NDc1MTU4MzMyNTgzNzky"
-#   }
-# }' 
-# 	params = JSON.parse(json_str)
-# 	self.handle_books(params,3565843)
-
-# 	end
 end
