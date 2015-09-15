@@ -28,6 +28,7 @@ ReadersDoor::Application.configure do
   # number of complex assets.
   config.assets.debug = true
   config.home = "http://127.0.0.1:3000/"
+  config.fb_graph_url = "https://graph.facebook.com/"
   config.image_service = "http://54.149.23.150"
   config.nlp_service = "http://52.11.182.15/"
   config.google_news_sources = "https://support.google.com/news/answer/40237?hl=en"

@@ -25,4 +25,5 @@ class Facebook < Neo
 		 	:link => "http://readersdoor.com"
 		)
 	end
+
 end
