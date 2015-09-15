@@ -35,7 +35,7 @@
             <a href="/author?q=2545810" class="bold" layout-padding>Dan Brown</a>
             <!-- <a href="/filters?g=384521" class="bold" layout-padding>Books: Biography</a> -->
         </section>
-        <div layout="row" layout-align="center center" layout-padding>
+        <div layout="row" layout-align="center center" layout-padding layout-wrap>
             <div layout-padding ng-if="info.hide_signin">
                 <a ng-click="show_todo_list($event)" 
                     ng-if="!todo.home.profile || !todo.home.filters || !todo.home.rooms || !todo.home.invite" 
@@ -45,6 +45,9 @@
             </div>
             <div layout-padding>
                 <a href="/filters" layout-padding class="custom_button" >Advanced Filter Books</a>
+            </div>
+            <div layout-padding>
+                <a layout-padding href="/quiz" class="custom_button">Quizzes</a>
             </div>
             <div layout-padding ng-if="!user.verified && info.hide_signin">
                 <i class="red_color material-icons">error_outline</i>
