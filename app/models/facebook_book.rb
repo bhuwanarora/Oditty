@@ -4,15 +4,33 @@ class FacebookBook < Neo
 	end
 
 	def self.basic_info
-		" book.title AS title, book.facebook_url AS facebook_url, book.facebook_id AS facebook_id "
+		" ID(facebook_book) AS id, facebook_book.title AS title, facebook_book.facebook_url AS facebook_url, facebook_book.facebook_id AS facebook_id "
 	end
 
 	def match
 		" MATCH (facebook_book :FacebookBook) WHERE facebook_book.facebook_id = " + @id.to_s + " WITH facebook_book "
 	end
 
+	def self.match_uncompleted
+		" MATCH (facebook_book :FacebookBook) "\
+		" WHERE NOT HAS(facebook_book.completed) "\
+		" WITH facebook_book "\
+	end
+
+	def self.get_uncompleted_info limit = 500
+		FacebookBook.match_uncompleted + ReadingJourney.match_facebook_book + FacebookBook.return_group(FacebookBook.basic_info, "user.fb_id AS user_fb_id, ID(user) AS user_id ") + FacebookBook.limit(limit)
+	end
+
 	def self.where_not_book
 		" WHERE NOT facebook_book :Book "
+	end
+
+	def self.set_completed
+		" SET facebook_book.completed=true "
+	end
+
+	def set_completed
+		match + FacebookBook.set_completed
 	end
 
 	def merge book
