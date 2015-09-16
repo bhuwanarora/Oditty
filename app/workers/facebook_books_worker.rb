@@ -46,7 +46,7 @@ class FacebookBooksWorker
 		 output = clause.execute
 		 output.each do |elem|
 		 	FacebookBooksHelper.set_bookmark(elem["type"], elem["user_id"], book_id, elem["publish_time"])
-		 	if elem["from_goodreads"] == 0
+		 	if elem[FacebookBooksHelper::TypeFromGoodReads] == 0
 		 		FacebookBooksHelper.set_bookmark(FacebookBooksHelper::TypeFromFacebook, elem["user_id"], book_id, elem["publish_time"])
 		 	end
 		 end

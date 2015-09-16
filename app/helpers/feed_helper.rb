@@ -29,7 +29,7 @@ module FeedHelper
 			clause = "MATCH (u) WHERE ID(u)="+user_id.to_s+" CREATE UNIQUE (u)-[:FeedNext{user_id:"+user_id.to_s+"}]->(u)"
 			clause.execute 
 		else
-			feed.sort_by!{|single_feed| single_feed["created_at"]}
+			feed.sort_by!{|single_feed| ((single_feed["created_at"].present?) ? single_feed["created_at"] : 0)}
 
 			clause = " MATCH (n1), (n2) WHERE ID(n1)="+user_id.to_s+" AND ID(n2)="+feed[0]["id"].to_s+" CREATE UNIQUE (n1)<-[:FeedNext{user_id:"+user_id.to_s+"}]-(n2) "
 			clause.execute
