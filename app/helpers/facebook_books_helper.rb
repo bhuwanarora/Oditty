@@ -173,6 +173,30 @@ module FacebookBooksHelper
 		id_list
 	end
 
+	def self.map_book_data
+		name = params["name"]
+		author = FacebookBooksHelper.get_author(params)
+		facebook_id = params["id"]
+		original_book_id = Book.get_by_unique_index("#{name.to_s.search_ready.strip}#{author.to_s.search_ready.strip}").execute[0]['book_id'] rescue ""
+		if original_book_id.present?
+			relations = FacebookBook.get_relations(facebook_id).execute[0]
+			(FacebookBook.new(facebook_id).handle_relations(original_book_id, relations) + Book.set_facebook_book(facebook_id) + " WITH book AS facebook_book " +  FacebookBook.new(facebook_id).map(params) + " RETURN ID(facebook_book) AS id ").execute 
+			bookmark_params = {"book_id" => original_book_id}
+		else
+			if author.present?
+				output = (FacebookBook.new(facebook_id).match + FacebookBook.where_not_book + FacebookBook.new(facebook_id).map(params) + FacebookBook.set_book_label + " RETURN ID(facebook_book) AS id ").execute
+				params_indexer = {:response => output[0]["id"], :type => "Book"}
+				IndexerWorker.new.perform(params_indexer)
+			else
+				output = (FacebookBook.new(facebook_id).match + FacebookBook.where_not_book + FacebookBook.new(facebook_id).map(params) + " RETURN ID(facebook_book) AS id ").execute
+			end
+			bookmark_params = {"book_id" => output[0]["id"]}
+		end
+		if author.present?
+			FacebookBooksWorker.new.perform(bookmark_params,nil, FacebookBooksWorker::WorkAddBooksToBookMark)
+		end
+	end
+
 	def self.get_info user_fb_id, facebook_like_id
 		FacebookLikesHelper.get_info user_fb_id, facebook_like_id
 	end
