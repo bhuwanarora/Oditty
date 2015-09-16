@@ -195,7 +195,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                     var time = time + "/12";
                 }
                 else{
-                    var time = time + "/"+ (12- month_index + 1);
+                    var time = time + "/"+ (12 - month_index);
                 }
                 // alert(time);
                 newsService.get_community_news(id, skip_count, time).then(function(data){
