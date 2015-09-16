@@ -94,7 +94,6 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         var mapped_route = route.substr(1, path.length+1);
         var is_init = (mapped_route == "") && (path == "room/home");
         var is_not_header = (route != "/room/books") && (route != "/room/videos") && (route != "/room/wiki") && (route != "/room/home");
-        debugger
         if(is_not_header){
             if(path == "room/home"){
                 return "bold red_color";
@@ -192,6 +191,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         }
         $scope.is_room = true;
         $scope.limit_count = 6;
+        $scope.info.active_time = 2015;
     }());
 
 }]);
