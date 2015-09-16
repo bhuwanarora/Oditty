@@ -1,13 +1,16 @@
 <div hide flex-md="15" show-md ></div>
-<div layout="column" layout-padding flex="60" flex-md="70" flex-sm="100">
-    <h3 layout-padding>
-        <div layout-padding>
-            News clippings related to {{active_tag.name}}
-        </div>
-    </h3>
-    <community-feed community-feed="::community_feed" flex
-        ng-repeat="community_feed in active_tag.news">
-    </community-feed>
+<div layout="row" layout-padding flex="60" flex-md="70" flex-sm="100" layout-align="space-between">
+    <div>
+        <h3 layout-padding>
+            <div layout-padding>
+                News clippings related to {{active_tag.name}}
+            </div>
+        </h3>
+        <community-feed community-feed="::community_feed" flex
+            ng-repeat="community_feed in active_tag.news">
+        </community-feed>
+    </div>
+    <time-travel info="info" active-tag="active_tag"></time-travel>
 </div>
 <div flex="40" layout="column" hide-md hide-sm>
 	<div layout-padding ng-if="(active_tag.videos && active_tag.videos.length > 0) || (active_tag.videos.length == 1 && active_tag.videos[0].title != null )">

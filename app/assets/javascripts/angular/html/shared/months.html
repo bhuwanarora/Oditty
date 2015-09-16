@@ -1,0 +1,6 @@
+<div layout-padding layout="column" >
+	<a ng-class="get_active_class('{{month}}')" 
+		ng-repeat="month in ::months"
+		ng-href="#/{{info.active_time}}/{{month}}" 
+		class="time less_important">{{month}}</a>
+</div>

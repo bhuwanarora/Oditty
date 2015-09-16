@@ -12,7 +12,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
                     $scope.active_tag.status = true;
                 }
                 $scope.refresh_data();
-                $scope.get_community_news();
+                // $scope.get_community_news();
             });
         }
     }
@@ -90,11 +90,25 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_active_class = function(path){
-        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/home");
-        if(($location.path().substr(1, path.length+1) == path) || is_init){
-            return "bold red_color";
-        } else {
-            return "grey_color";
+        var route = $location.path();
+        var mapped_route = route.substr(1, path.length+1);
+        var is_init = (mapped_route == "") && (path == "room/home");
+        var is_not_header = (route != "/room/books") && (route != "/room/videos") && (route != "/room/wiki") && (route != "/room/home");
+        debugger
+        if(is_not_header){
+            if(path == "room/home"){
+                return "bold red_color";
+            }
+            else{
+                return "grey_color";
+            }
+        }
+        else{
+            if((mapped_route == path) || is_init){
+                return "bold red_color";
+            } else {
+                return "grey_color";
+            }
         }
     }
 
@@ -136,30 +150,30 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_community_news = function(){
-        var is_news_tab = $location.path() != "/room/books" && $location.path() != "/room/videos" && $location.path() != "/room/wiki";
-        // if(angular.isUndefined($scope.active_tag)){
-        //     $scope.active_tag.news = {};
+        // var is_news_tab = $location.path() != "/room/books" && $location.path() != "/room/videos" && $location.path() != "/room/wiki";
+        // // if(angular.isUndefined($scope.active_tag)){
+        // //     $scope.active_tag.news = {};
+        // // }
+        // var id = $scope.active_tag.id;
+        // if(angular.isUndefined($scope.active_tag.news)){
+        //     $scope.active_tag.news = [];
         // }
-        var id = $scope.active_tag.id;
-        if(angular.isUndefined($scope.active_tag.news)){
-            $scope.active_tag.news = [];
-        }
-        if(is_news_tab){
-            var skip_count = $scope.active_tag.news.length;
-            if(!$scope.info.loading){
-                $scope.info.loading = true;
-                newsService.get_community_news(id, skip_count).then(function(data){
-                    if(data != null && data.length > 0){
-                        data = data[0];
-                        $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
-                    }
-                    $scope.info.loading = false;
-                });
-            }
-        }
+        // if(is_news_tab){
+        //     var skip_count = $scope.active_tag.news.length;
+        //     if(!$scope.info.loading){
+        //         $scope.info.loading = true;
+        //         alert($scope.info.active_time);
+        //         newsService.get_community_news(id, skip_count, $scope.info.active_time).then(function(data){
+        //             if(data != null && data.length > 0){
+        //                 data = data[0];
+        //                 $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
+        //             }
+        //             $scope.info.loading = false;
+        //         });
+        //     }
+        // }
+        sharedService.get_community_news($scope);
     }
-
-   
 
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
