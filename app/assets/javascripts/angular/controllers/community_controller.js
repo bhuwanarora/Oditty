@@ -90,8 +90,11 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_active_class = function(path){
-        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "room/home");
-        var is_not_header = (path != "room/books") || (path != "room/videos") || (path != "room/wiki") || (path != "room/home");
+        var route = $location.path();
+        var mapped_route = route.substr(1, path.length+1);
+        var is_init = (mapped_route == "") && (path == "room/home");
+        var is_not_header = (route != "/room/books") && (route != "/room/videos") && (route != "/room/wiki") && (route != "/room/home");
+        debugger
         if(is_not_header){
             if(path == "room/home"){
                 return "bold red_color";
@@ -101,7 +104,7 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
             }
         }
         else{
-            if(($location.path().substr(1, path.length+1) == path) || is_init){
+            if((mapped_route == path) || is_init){
                 return "bold red_color";
             } else {
                 return "grey_color";
