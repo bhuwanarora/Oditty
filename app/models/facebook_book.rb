@@ -58,14 +58,16 @@ class FacebookBook < Neo
 	end
 
 	def map params
-		facebook_id = params["id"]
-		facebook_likes = params["likes"] rescue 0
-		facebook_description = params["description"] rescue ""
-		facebook_talking_about_count = params["talking_about_count"] rescue 0
-		facebook_likes_count = params["likes"] rescue 0
-		author = params["written_by"]
-		author_search_index = author.search_ready rescue ""
-		title = params["name"].strip
+		facebook_id 					= params["id"]
+		facebook_likes 					= (params["likes"].present?) ? params["likes"] : 0
+		facebook_description 			= (params["description"].present?) ? (params["description"]) : ""
+		facebook_talking_about_count 	= (params["talking_about_count"].present?) ? params["talking_about_count"] : 0
+		facebook_likes_count 			= (params["likes"].present?) ? (params["likes"]) : 0
+		author 							= FacebookBooksHelper.get_author(params)
+		isbn							= (params["data"]["isbn"].strip rescue "")
+		isbn = ("\'" + isbn + "\'") if isbn.present?
+		author_search_index 			= author.search_ready rescue ""
+		title 							= ((params["name"].present?) ? params["name"].strip : params["title"].strip) rescue ""
 		title_search_index = title.search_ready
 		clause = 
 		" SET facebook_book.facebook_book_title = \'" + title.database_ready + "\' " +
@@ -74,8 +76,11 @@ class FacebookBook < Neo
 		" SET facebook_book.facebook_description = \"" + facebook_description.to_s.database_ready + "\"" +
 		" SET facebook_book.facebook_talking_about_count = " + facebook_talking_about_count.to_s + 
 		" SET facebook_book.facebook_likes_count = " + facebook_likes_count.to_s  + 
-		" SET facebook_book.facebook_url = \"" + params["link"].to_s + "\"" + 
-		" " + FacebookBook.set_book_property + " "
+		" SET facebook_book.facebook_url = \"" + params["link"].to_s + "\""
+		if isbn.present?
+			clause += FacebookBook.set_property("isbn", "facebook_book.isbn", isbn)
+		end
+		clause += FacebookBook.set_book_property
 		if author.present?
 		 	clause += 
 			" SET facebook_book.author_name = \'" + author + "\' " +
