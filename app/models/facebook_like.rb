@@ -1,14 +1,14 @@
-class FacebookLike < Neo
+class FacebookLike < CommunityInterface
 	def initialize app_id, neo_id = nil
 		@app_id = app_id
 		@neo_id = neo_id
 	end
 
-	def match
+	def match_by_app_id
 		" MATCH (facebook_like:FacebookLike) WHERE facebook_like.app_id = " + @app_id.to_s + " WITH facebook_like "
 	end
 
-	def match_by_neo_id
+	def match
 		" MATCH (facebook_like:FacebookLike) WHERE ID(facebook_like)=" + @neo_id.to_s + " WITH facebook_like "
 	end
 
@@ -26,30 +26,30 @@ class FacebookLike < Neo
 	end
 
 	def get_combined_details
-		match_by_neo_id +
+		match +
 		FacebookLike.match_community +
-		Community.new(nil).match_videos + ", community_relevance " +
+		Community.match_videos + ", community_relevance " +
 		FacebookLike.order_by_community_and('video_relevance') +
-		Community.with_group("{#{Video.grouped_basic_info}} AS content", "labels(video) AS labels") +
-		Community.return_group("content", "labels") +
-		Community.limit(4) +
+		FacebookLike.with_group("{#{Video.grouped_basic_info}} AS content", "labels(video) AS labels") +
+		FacebookLike.return_group("content", "labels") +
+		FacebookLike.limit(4) +
 		" UNION ALL " +
 
-		match_by_neo_id +
+		match +
 		FacebookLike.match_books +
 		" WITH DISTINCT book, community_relevance, " +
 		Book.get_goodness_index + FacebookLike.order_by_community_and('goodness_index') +
-		Community.with_group("{#{Book.grouped_basic_info}} AS content", "labels(book) AS labels") +
-		Community.return_group("content", "labels") +
-		Community.limit(4) +
+		FacebookLike.with_group("{#{Book.grouped_basic_info}} AS content", "labels(book) AS labels") +
+		FacebookLike.return_group("content", "labels") +
+		FacebookLike.limit(4) +
 		" UNION ALL " +
 
-		match_by_neo_id +
+		match +
 		FacebookLike.match_community + Community.match_news  + ", community_relevance " +
 		" WITH news, community, community_relevance " + FacebookLike.order_by_community_and('TOINT(news.created_at)') +" " +
-		Community.with_group("{#{News.grouped_basic_info}} AS content", "labels(news) AS labels") +
-		Community.return_group("content", "labels") +
-		Community.limit(4)
+		FacebookLike.with_group("{#{News.grouped_basic_info}} AS content", "labels(news) AS labels") +
+		FacebookLike.return_group("content", "labels") +
+		FacebookLike.limit(4)
 	end
 
 	def self.match_grouped_books
@@ -58,7 +58,7 @@ class FacebookLike < Neo
 	end
 
 	def get_info user_id
-		clause = match_by_neo_id +	FacebookLike.match_community + Community.match_news + ", facebook_like, community_relevance " +
+		clause = match + FacebookLike.match_community + Community.match_news + ", facebook_like, community_relevance " +
 		" WITH news, community_relevance, facebook_like AS community " + FacebookLike.order_by_community_and("news.timestamp") + " LIMIT 10 WITH community, " +
 		 UsersCommunity.collect_map("news" => News.grouped_basic_info) +
 		User.new(user_id).match +
@@ -74,17 +74,17 @@ class FacebookLike < Neo
 		" WITH facebook_like AS community, books_info " +
 		Community.optional_match_users +
 		", books_info WITH DISTINCT user, books_info, community WITH books_info , community, " +
-		User.collect_map({"users_info" => User.grouped_basic_info }) +
+		FacebookLike.collect_map({"users_info" => User.grouped_basic_info }) +
 		" WITH users_info, books_info , community, "  +
-		Community.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info "})
+		FacebookLike.collect_map({"most_important_tag" => Community.grouped_basic_info + ", books: books_info, users: users_info "})
 	end
 
 	def books_users_info 
-		match_by_neo_id + FacebookLike.match_community + FacebookLike.order_by_community_and("") + FacebookLike.grouped_books_users + Community.return_group("most_important_tag", Community.basic_info)
+		match + FacebookLike.match_community + FacebookLike.order_by_community_and("") + FacebookLike.grouped_books_users + Community.return_group("most_important_tag", Community.basic_info)
 	end
 
 	def get_books
-		match_by_neo_id + FacebookLike.match_books + " WITH DISTINCT book, community_relevance, " + Book.get_goodness_index + FacebookLike.order_by_community_and('goodness_index') + FacebookLike.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
+		match + FacebookLike.match_books + " WITH DISTINCT book, community_relevance, " + Book.get_goodness_index + FacebookLike.order_by_community_and('goodness_index') + FacebookLike.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
 	end
 
 	def self.order_by_community_and property
@@ -96,13 +96,13 @@ class FacebookLike < Neo
 	end
 
 	def get_news skip_count
-		match_by_neo_id + FacebookLike.match_community + Community.match_news  + ", community_relevance" +
+		match + FacebookLike.match_community + Community.match_news  + ", community_relevance" +
 		" WITH news, community, community_relevance " +
-		FacebookLike.order_by_community_and("TOINT(news.created_at)") + " SKIP " + skip_count.to_s + " LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+		FacebookLike.order_by_community_and("TOINT(news.created_at)") + " SKIP " + skip_count.to_s + " LIMIT 10 WITH community, " + UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
 
 	def get_videos
-		match_by_neo_id + FacebookLike.match_community + Community.new(nil).match_videos + ", community_relevance " + FacebookLike.order_by_community_and("video_relevance") + Community.return_group(Video.basic_info)
+		match + FacebookLike.match_community + Community.match_videos + ", community_relevance " + FacebookLike.order_by_community_and("video_relevance") + Community.return_group(Video.basic_info)
 	end
 
 	def self.match_community
@@ -150,7 +150,7 @@ class FacebookLike < Neo
 	end
 
 	def set_completed
-		 match_by_neo_id + " SET facebook_like.completed = true, facebook_like:Community "
+		 match + " SET facebook_like.completed = true, facebook_like:Community "
 	end
 
 	def self.order_desc
@@ -161,8 +161,8 @@ class FacebookLike < Neo
 		" facebook_like.app_id AS app_id, ID(facebook_like) AS id, facebook_like.name AS name "
 	end
 
-	def basic_info
-		match_by_neo_id + FacebookLike.return_group(FacebookLike.basic_info)
+	def get_basic_info
+		match + FacebookLike.return_group(FacebookLike.basic_info)
 	end
 
 	def self.not_completed
