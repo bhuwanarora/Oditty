@@ -1,7 +1,7 @@
 module FacebookLikesBooksHelper
 
 	def self.set_community_videos node_id
-		clause = FacebookLike.new(nil,node_id).match + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
+		clause = FacebookLike.new(node_id).match + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
 		output = clause.execute
 		output.each do |id|
 			VideosWorker.add_to_community(id["id"])

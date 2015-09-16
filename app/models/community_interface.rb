@@ -6,7 +6,7 @@ class CommunityInterface < Neo
 	
 	def self.get_combined_details id
 		community_clause = Community.new(id).get_combined_details
-		facebook_clause = FacebookLike.new(nil, id).get_combined_details
+		facebook_clause = FacebookLike.new(id).get_combined_details
 		clause = community_clause + " UNION ALL " + facebook_clause
 		clause.execute
 	end
@@ -33,7 +33,7 @@ class CommunityInterface < Neo
 	def self.get_detailed_info(id, user_id)
 		if user_id.present?
 			community_clause = UsersCommunity.new(user_id, id).get_info
-			facebook_clause = FacebookLike.new(nil, id).get_info(user_id)
+			facebook_clause = FacebookLike.new(id).get_info(user_id)
 			clause = community_clause + " UNION " + facebook_clause
 			output = clause.execute[0]
 		else
@@ -44,14 +44,14 @@ class CommunityInterface < Neo
 
 	def self.get_books id
 		community_clause = Community.new(id).get_books
-		facebook_clause = FacebookLike.new(nil, id).get_books
+		facebook_clause = FacebookLike.new(id).get_books
 		clause = community_clause + " UNION " + facebook_clause
 		clause
 	end
 
 	def self.get_news(id, skip_count, time)
 		community_clause = Community.new(id).get_news(skip_count, time)
-		facebook_clause = FacebookLike.new(nil, id).get_news(skip_count, time)
+		facebook_clause = FacebookLike.new(id).get_news(skip_count, time)
 		clause = community_clause + " UNION " + facebook_clause
 		output = clause.execute
 		output
@@ -60,7 +60,7 @@ class CommunityInterface < Neo
 
 	def self.get_videos(id)
 		community_clause = Community.new(id).get_videos
-		facebook_clause = FacebookLike.new(nil, id).get_videos
+		facebook_clause = FacebookLike.new(id).get_videos
 		clause = community_clause + " UNION " + facebook_clause
 		output = clause.execute
 		output
@@ -76,7 +76,7 @@ class CommunityInterface < Neo
 		clause.execute
 	end
 
-# common functions
+	# common functions
 	def get_news skip_count, time_string
 		if time_string.present?
 			get_old_news skip_count, time_string
