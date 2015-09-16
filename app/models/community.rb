@@ -1,4 +1,4 @@
-class Community < Neo
+class Community < CommunityInterface
 
 	def initialize id
 		@id = id
@@ -40,6 +40,10 @@ class Community < Neo
 	end
 
 	def match_videos
+		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
+	end
+
+	def self.match_videos
 		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
 	end
 

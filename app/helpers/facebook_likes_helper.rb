@@ -7,7 +7,7 @@ module FacebookLikesHelper
 
 
 	def self.model_as_community node_id
-		clause = FacebookLike.new(nil, node_id).match_by_neo_id +
+		clause = FacebookLike.new(nil, node_id).match +
 				" OPTIONAL " + FacebookLike.get_image_url +
 				" RETURN facebook_like.name AS name, image_url "
 		neo_output = clause.execute[0]
@@ -17,7 +17,7 @@ module FacebookLikesHelper
 			web_urls.merge!({:image => image_url})
 			VersionerWorker.new.perform(node_id, image_url, "community")
 		end
-		clause  = FacebookLike.new(nil, node_id).match_by_neo_id
+		clause  = FacebookLike.new(nil, node_id).match
 		clause += FacebookLikesHelper.set_community_properties(web_urls, neo_output["name"])
 		clause.execute
 	end
