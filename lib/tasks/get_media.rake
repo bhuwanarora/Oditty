@@ -27,8 +27,13 @@ namespace :get_media do
     end
 
     desc "Get facebook books"
-    task :fb_books => [:dependent, :tasks] do
+    task :fb_books => :environment do
         FacebookBooksHelper.fetch_backlog_books
+    end
+
+    desc "complete info of unfinished facebook books"
+    task :fb_books_info => :environment do
+        FacebookBooksHelper.fetch_backlog_books_info
     end
 
 end
