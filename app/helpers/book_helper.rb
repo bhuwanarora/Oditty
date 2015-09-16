@@ -11,6 +11,12 @@ module BookHelper
 		Book.new(id).match_communities.execute
 	end
 
+	def self.get_author id
+		clause = Book.new(id).match + Book.new(nil).match_author + Book.return_group("ID(author) AS author_id")
+		output = clause.execute[0]["author_id"] rescue nil
+		output
+	end
+
 	def self.set_author_list author_name_list,book_id
 		set_clause = "SET book.author_name_list = ["
 		author_name_list.each do |author_name|

@@ -51,7 +51,7 @@ module Api
 			end
 
 			def self.get_basic_community_info community_id
-				fb_like = FacebookLike.new(nil, community_id).basic_info.execute
+				fb_like = FacebookLike.new(nil, community_id).get_basic_info.execute
 				if fb_like.present?
 					clause = FacebookLike.new(nil,community_id).books_users_info
 				else

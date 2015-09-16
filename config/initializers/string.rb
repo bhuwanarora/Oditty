@@ -79,7 +79,7 @@ class String
     end
 
     def database_ready
-        self.gsub('"','\"').gsub("'","\'")
+        escape_quotes
     end
 
     def self.get_random stringlength = 6
