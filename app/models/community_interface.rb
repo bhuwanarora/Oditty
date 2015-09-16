@@ -49,13 +49,14 @@ class CommunityInterface < Neo
 		clause
 	end
 
-	def self.get_news(id, skip_count)
-		community_clause = Community.new(id).get_news(skip_count)
-		facebook_clause = FacebookLike.new(nil, id).get_news(skip_count)
+	def self.get_news(id, skip_count, time)
+		community_clause = Community.new(id).get_news(skip_count, time)
+		facebook_clause = FacebookLike.new(nil, id).get_news(skip_count, time)
 		clause = community_clause + " UNION " + facebook_clause
 		output = clause.execute
 		output
 	end
+
 
 	def self.get_videos(id)
 		community_clause = Community.new(id).get_videos
@@ -75,4 +76,22 @@ class CommunityInterface < Neo
 		clause.execute
 	end
 
+# common functions
+	def get_news skip_count, time_string
+		if time_string.present?
+			get_old_news skip_count, time_string
+		else
+			get_recent_news skip_count
+		end
+	end
+
+	def self.match_news_in_period time_string, with_elems = []
+		with_string = with_elems.map{|elem| (elem)}.join(", ")
+		with_string = ", " + with_string if with_string.present?
+		(year, month) = time_string.split("/")
+
+		Community.match_news + with_string + " WHERE "\
+		" (news)-[:TimeStamp]->(:TimePeriod)-[:FromDay]->(:Day)<-[:Has_day]-(:Month{month:" + month + "})<-[:Has_month]-(:Year{year:" + year + "}) "\
+		" WITH community, news "
+	end
 end

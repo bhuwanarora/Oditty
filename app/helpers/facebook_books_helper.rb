@@ -4,23 +4,38 @@ module FacebookBooksHelper
 	TypeWantsToRead		= "wants_to_read"
 	TypeReads			= "reads"
 
-	def self.handle_books params, user_id
+	def self.handle_page data, user_id
+		FacebookBooksHelper.handle_facebook_book_page data, user_id
+	end
+
+	def self.handle_book data, user_id
+		book = data["data"]["book"]
 		facebook_app_id  = Constant::Id::FbAppFacebookBookId
 		goodreads_app_id = Constant::Id::FbAppGoodreadsBookId
+		begin
+			if data["application"]["id"].to_s == facebook_app_id.to_s
+				book_id = FacebookBooksHelper.handle_facebook_book(data, user_id) 
+			elsif data["application"]["id"].to_s == goodreads_app_id.to_s
+				book_id = FacebookBooksHelper.handle_gr_book(data, user_id)
+			else
+				book_id = FacebookBooksHelper.handle_facebook_book(data, user_id)
+			end
+		rescue Exception => e
+			book_id = nil
+			puts "ERROR   #{e}    FOR     #{book.to_s}".red
+		end
+		book_id
+	end
+
+	def self.handle_books params, user_id
 		books = params["data"]
 		if books.present? 
 			for data in books
-				book = data["data"]["book"] 
-				begin
-					if data["application"]["id"].to_s == facebook_app_id.to_s
-						book_id = FacebookBooksHelper.handle_facebook_book(data, user_id) 
-					elsif data["application"]["id"].to_s == goodreads_app_id.to_s
-						book_id = FacebookBooksHelper.handle_gr_book(data, user_id)
-					else
-						book_id = FacebookBooksHelper.handle_facebook_book(data, user_id)
-					end
-				rescue Exception => e
-					puts "ERROR   #{e}    FOR     #{book.to_s}".red
+				book = data["data"]["book"] rescue nil
+				if book.nil?
+					FacebookBooksHelper.handle_page data, user_id
+				else
+					FacebookBooksHelper.handle_book data, user_id
 				end
 			end
 		end
@@ -46,6 +61,15 @@ module FacebookBooksHelper
 		book["type"] 	= data["type"]
 		facebook_id 	= book["id"]
 		(FacebookBook.new(facebook_id).merge(book) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group(Book.basic_info)).execute[0]['book_id']
+	end
+
+	def self.handle_facebook_book_page data, user_id
+		book 			= data
+		facebook_id 	= book["id"]
+		book["type"] 	= TypeReads
+		book["title"]	= book["name"]
+		book["url"]		= "https::/facebook.com/" + facebook_id.to_s
+		(FacebookBook.new(facebook_id).merge(book) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["created_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["created_time"]).to_i) + Book.return_group(Book.basic_info)).execute[0]['book_id']
 	end
 
 	def self.get_author params
@@ -112,17 +136,33 @@ module FacebookBooksHelper
 		new_fb_book_ids
 	end
 
+	def self.fetch_backlog_books_info
+		output = FacebookBook.get_uncompleted_info.execute
+		user_ids = []
+		output.each do |book|
+			params_info = FacebookBooksHelper.get_info(book['user_fb_id'], book['facebook_id'])
+			debugger
+			Api::V0::FacebookApi.map(params_info)
+			user_ids << book['user_id']
+		end
+		user_ids = user_ids.uniq
+		user_ids.each { |id| FeedHelper.create_user_feed(id) }
+	end
+
 	def self.fetch_backlog_books
 		output = (User::FacebookUser.match + User::FacebookUser.return_group(User::FacebookUser.id_info)).execute
+		user_ids = []
 		output.each do |fb_user|
 			user_id = fb_user["user_id"]
 			fb_id = fb_user["fb_id"].to_i
 			id_books = FacebookBooksHelper.fetch_books_iterative fb_id, user_id, 0
+			user_ids << user_id if id_books.present?
 			id_books.each do |book_id|
 				params_info = FacebookBooksHelper.get_info(fb_id, book_id)
 				Api::V0::FacebookApi.map(params_info)
 			end
 		end
+		user_ids.each { |id| FeedHelper.create_user_feed(id) }
 	end
 
 	def self.fetch_books_iterative user_fb_id, user_id, stop_time
@@ -136,13 +176,16 @@ module FacebookBooksHelper
 		if stop_time.nil?
 			params[:stop_time]=0
 		end
-		#fields = ["books.reads", "books", "books.wants_to_read"]
-		fields = ["books.reads", "books.wants_to_read"]
+		fields = ["books.reads", "books", "books.wants_to_read"]
 		fields.each do |field|
 			params[:url_field] = field
 			fb_book_ids += FacebookBooksHelper.fetch_books_iterative_internal params
 		end
 		fb_book_ids
+	end
+
+	def self.is_fb_page response
+		response["data"].length > 0 && response["data"][0]["data"].nil?
 	end
 
 	def self.fetch_books_iterative_internal params
@@ -161,19 +204,37 @@ module FacebookBooksHelper
 			id_list = []
 			while next_iteration && url.present?
 				response = JSON.parse(Net::HTTP.get(URI.parse(url)))
-				FacebookBooksHelper.handle_books response, user_id
-				new_books_count = FacebookBooksHelper.next_iteration_needed(response, stop_time)
-				next_iteration = (new_books_count == response["data"].length) && new_books_count > 0
-				if new_books_count > 0
-					id_list += response["data"].map{|book| (book["data"]["book"]["id"].to_i)}
-					url = FacebookBooksHelper.get_next_books_url response
-				end
+				(id_list_elem, url, next_iteration) = FacebookBooksHelper.handle_response(response, user_id, stop_time)
+				id_list += id_list_elem
 			end
 		end
 		id_list
 	end
 
-	def self.map_book_data
+	def self.handle_response response, user_id, stop_time
+		id_list = []
+		url = nil
+		next_iteration = false
+		FacebookBooksHelper.handle_books response, user_id
+		if FacebookBooksHelper.is_fb_page(response)
+			new_books_count = FacebookBooksHelper.next_iteration_needed(response, stop_time, 'created_time')
+			next_iteration = (new_books_count == response["data"].length) && new_books_count > 0
+			if new_books_count > 0
+				id_list = response["data"].map{|book| (book["id"].to_i)}
+				url = FacebookBooksHelper.get_next_books_url response
+			end
+		else
+			new_books_count = FacebookBooksHelper.next_iteration_needed(response, stop_time)
+			next_iteration = (new_books_count == response["data"].length) && new_books_count > 0
+			if new_books_count > 0
+				id_list = response["data"].map{|book| (book["data"]["book"]["id"].to_i)}
+				url = FacebookBooksHelper.get_next_books_url response
+			end
+		end
+		[id_list, url, next_iteration]
+	end
+
+	def self.map_book_data params
 		name = params["name"]
 		author = FacebookBooksHelper.get_author(params)
 		facebook_id = params["id"]
@@ -185,16 +246,23 @@ module FacebookBooksHelper
 		else
 			if author.present?
 				output = (FacebookBook.new(facebook_id).match + FacebookBook.where_not_book + FacebookBook.new(facebook_id).map(params) + FacebookBook.set_book_label + " RETURN ID(facebook_book) AS id ").execute
-				params_indexer = {:response => output[0]["id"], :type => "Book"}
-				IndexerWorker.new.perform(params_indexer)
+				if output.present?
+					params_indexer = {:response => output[0]["id"], :type => "Book"}
+					IndexerWorker.new.perform(params_indexer)
+				end
 			else
 				output = (FacebookBook.new(facebook_id).match + FacebookBook.where_not_book + FacebookBook.new(facebook_id).map(params) + " RETURN ID(facebook_book) AS id ").execute
 			end
-			bookmark_params = {"book_id" => output[0]["id"]}
+			if output.present?
+				bookmark_params = {"book_id" => output[0]["id"]}
+			else
+				bookmark_params = {}
+			end
 		end
-		if author.present?
+		if author.present? && bookmark_params.present?
 			FacebookBooksWorker.new.perform(bookmark_params,nil, FacebookBooksWorker::WorkAddBooksToBookMark)
 		end
+		FacebookBook.new(facebook_id).set_completed.execute
 	end
 
 	def self.get_info user_fb_id, facebook_like_id
@@ -206,8 +274,8 @@ module FacebookBooksHelper
 		clause.execute
 	end
 
-	def self.next_iteration_needed response, stop_time
-		FacebookLikesHelper.next_iteration_needed response, stop_time, "publish_time"
+	def self.next_iteration_needed response, stop_time, time_variable = 'publish_time'
+		FacebookLikesHelper.next_iteration_needed response, stop_time, time_variable
 	end
 
 	def self.get_next_books_url response

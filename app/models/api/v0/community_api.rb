@@ -38,8 +38,8 @@ module Api
 				CommunityInterface.get_books(id)
 			end
 
-			def self.get_news(id, skip_count)
-				CommunityInterface.get_news(id, skip_count)
+			def self.get_news(id, skip_count, time)
+				CommunityInterface.get_news(id, skip_count, time)
 			end
 
 			def self.get_videos(id)
