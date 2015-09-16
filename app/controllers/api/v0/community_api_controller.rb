@@ -87,7 +87,8 @@ module Api
 			def get_news
 				id = params[:id]
 				skip_count = (params[:skip].present?) ? params[:skip] : 0
-				info = Api::V0::CommunityApi.get_news(id, skip_count)
+				time = (params[:time].present?) ? params[:time] : ""
+				info = Api::V0::CommunityApi.get_news(id, skip_count, time)
 				render :json => info, :status => 200
 			end
 

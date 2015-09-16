@@ -95,8 +95,14 @@ class FacebookLike < CommunityInterface
 		output
 	end
 
-	def get_news skip_count
+	def get_recent_news skip_count
 		match + FacebookLike.match_community + Community.match_news  + ", community_relevance" +
+		" WITH news, community, community_relevance " +
+		FacebookLike.order_by_community_and("TOINT(news.created_at)") + " SKIP " + skip_count.to_s + " LIMIT 10 WITH community, " + UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+	end
+
+	def get_old_news skip_count, time
+		match + FacebookLike.match_community + FacebookLike.match_news_in_period(time, ['community_relevance'])  + ", community_relevance" +
 		" WITH news, community, community_relevance " +
 		FacebookLike.order_by_community_and("TOINT(news.created_at)") + " SKIP " + skip_count.to_s + " LIMIT 10 WITH community, " + UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
