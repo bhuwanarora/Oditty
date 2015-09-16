@@ -187,11 +187,15 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             var month_index = Months.indexOf($scope.info.active_month);
             if(!$scope.info.loading){
                 $scope.info.loading = true;
+                var time = $scope.info.active_time;
+                if(time == "recent"){
+                    time = 2015;
+                }
                 if(angular.isUndefined($scope.info.active_month)){
-                    var time = $scope.info.active_time + "/12";
+                    var time = time + "/12";
                 }
                 else{
-                    var time = $scope.info.active_time + "/"+ (month_index + 1);
+                    var time = time + "/"+ (12- month_index + 1);
                 }
                 // alert(time);
                 newsService.get_community_news(id, skip_count, time).then(function(data){
@@ -201,9 +205,9 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                     }
                     else{
                         if(month_index == 11){
-                            if($scope.info.active_time != "1998"){
-                                var year_index = Years.indexOf($scope.info.active_time);
-                                $scope.info.active_time = Years[year_index + 1];
+                            if(time != "1998"){
+                                var year_index = Years.indexOf(time);
+                                time = Years[year_index + 1];
                                 $scope.info.active_month = Months[0];
                             }
                         }
