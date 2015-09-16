@@ -16,7 +16,7 @@ module Api
 
 			def self.map params
 				name = params["name"]
-				author = params["written_by"]
+				author = FacebookBooksHelper.get_author(params)
 				facebook_id = params["id"]
 				original_book_id = Book.get_by_unique_index("#{name.to_s.search_ready.strip}#{author.to_s.search_ready.strip}").execute[0]['book_id'] rescue ""
 				if original_book_id.present?

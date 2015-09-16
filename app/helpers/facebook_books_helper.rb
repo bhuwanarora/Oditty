@@ -1,5 +1,6 @@
 module FacebookBooksHelper
-	TypeFromFacebook 	= "from_facebok"
+	TypeFromGoodReads	= "from_goodreads"
+	TypeFromFacebook 	= "from_facebook"
 	TypeWantsToRead		= "wants_to_read"
 	TypeReads			= "reads"
 
@@ -15,6 +16,8 @@ module FacebookBooksHelper
 						book_id = FacebookBooksHelper.handle_facebook_book(data, user_id) 
 					elsif data["application"]["id"].to_s == goodreads_app_id.to_s
 						book_id = FacebookBooksHelper.handle_gr_book(data, user_id)
+					else
+						book_id = FacebookBooksHelper.handle_facebook_book(data, user_id)
 					end
 				rescue Exception => e
 					puts "ERROR   #{e}    FOR     #{book.to_s}".red
@@ -24,11 +27,11 @@ module FacebookBooksHelper
 	end
 
 	def self.handle_gr_book data, user_id
-		book = data["data"]["book"] 
+		book = data["data"]["book"]
+		book["type"] = data["type"] 
 		goodreads_id = book["id"]
 		goodreads_title = book["title"]
 		progress = data["data"]["progress"]
-
 		reading_journey_info = (GoodreadsBook.merge_by_url(book) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group("COALESCE(recent_status.timestamp,0) AS timestamp, ID(reading_journey) AS id , ID(book) AS book_id")).execute[0]
 		book_id = reading_journey_info['book_id']
 		progress_link = ReadingJourney.create_progress(reading_journey_info, progress)
@@ -45,6 +48,18 @@ module FacebookBooksHelper
 		(FacebookBook.new(facebook_id).merge(book) + ReadingJourney.link_reading_journey(user_id) + ReadingJourney.set_publish_time(Time.parse(data["publish_time"]).to_i) + ReadingJourney.set_start_time(Time.parse(data["start_time"]).to_i) + Book.return_group(Book.basic_info)).execute[0]['book_id']
 	end
 
+	def self.get_author params
+		author = params["written_by"]
+		if author.nil?
+			#goodreads book
+			author = params["data"]["author"][0]["title"].strip rescue ""
+			if !author.present?
+				author = params["data"]["author"]["title"].strip rescue ""
+			end
+		end
+		author
+	end
+
 	def self.set_bookmark type, user_id, book_id, publish_time
 		case type 
 		when TypeWantsToRead
@@ -58,17 +73,25 @@ module FacebookBooksHelper
 
 	def self.handle_wants_to_reads user_id, book_id, publish_time
 		publish_time = Time.parse(publish_time).to_i.to_s rescue publish_time.to_s
-		(Bookmark::Type::IntendingToRead.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.created_at = " + publish_time + " RETURN ")).execute
+		clause = Bookmark::Type::IntendingToRead.new(user_id, book_id).facebook_book.add
+		clause = FacebookBooksHelper.replace_bookmark_created_time(publish_time, clause)
+		clause.execute
 	end
 
 	def self.handle_from_facebook user_id, book_id, publish_time
 		publish_time = Time.parse(publish_time).to_i.to_s rescue publish_time.to_s
-		(Bookmark::Type::FromFacebook.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.created_at = " + publish_time + " RETURN ")).execute
+		clause = Bookmark::Type::FromFacebook.new(user_id, book_id).facebook_book.add
+		clause = FacebookBooksHelper.replace_bookmark_created_time(publish_time, clause)
+		debugger
+		clause.execute
 	end
 
 	def self.handle_read user_id, book_id, publish_time
 		publish_time = Time.parse(publish_time).to_i.to_s rescue publish_time.to_s
-		(Bookmark::Type::Read.new(user_id, book_id).facebook_book.add.gsub("RETURN", "SET bookmark_node.created_at = " + publish_time + " RETURN ")).execute
+		clause = Bookmark::Type::Read.new(user_id, book_id).facebook_book.add
+		clause = FacebookBooksHelper.replace_bookmark_created_time(publish_time, clause)
+		debugger
+		clause.execute
 	end
 
 	def self.need_to_fetch latest_book_time, facebook_books_retrieval_time = 0
@@ -142,7 +165,7 @@ module FacebookBooksHelper
 				new_books_count = FacebookBooksHelper.next_iteration_needed(response, stop_time)
 				next_iteration = (new_books_count == response["data"].length) && new_books_count > 0
 				if new_books_count > 0
-					id_list += response["data"][0..(new_books_count - 1)].map{|book| (book["data"]["book"]["id"].to_i)}
+					id_list += response["data"].map{|book| (book["data"]["book"]["id"].to_i)}
 					url = FacebookBooksHelper.get_next_books_url response
 				end
 			end
@@ -165,5 +188,10 @@ module FacebookBooksHelper
 
 	def self.get_next_books_url response
 		FacebookLikesHelper.get_next_likes_url response
+	end
+
+	def self.replace_bookmark_created_time created_at, clause
+		output = clause.gsub(/SET bookmark_node.created_at = [0-9]*/, "SET bookmark_node.created_at = " + created_at.to_s + " ")
+		output
 	end
 end
