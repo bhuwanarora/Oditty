@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", "$location", "newsService", "Years", "Months", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService, $location, newsService, Years, Months){
 
     this.get_popular_books = function($scope, books){
         console.log("get_popular_books");
@@ -170,6 +170,50 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                     position: _getToastPosition()
                 });
             });
+        }
+    }
+
+    this.get_community_news = function($scope){
+        var is_news_tab = $location.path() != "/room/books" && $location.path() != "/room/videos" && $location.path() != "/room/wiki";
+        // if(angular.isUndefined($scope.active_tag)){
+        //     $scope.active_tag.news = {};
+        // }
+        var id = $scope.active_tag.id;
+        if(angular.isUndefined($scope.active_tag.news)){
+            $scope.active_tag.news = [];
+        }
+        if(is_news_tab){
+            var skip_count = $scope.active_tag.news.length;
+            if(!$scope.info.loading){
+                $scope.info.loading = true;
+                if(angular.isUndefined($scope.info.active_month)){
+                    var time = $scope.info.active_time + "/Dec";
+                }
+                else{
+                    var time = $scope.info.active_time + "/"+ $scope.info.active_month;
+                }
+                // alert(time);
+                newsService.get_community_news(id, skip_count, time).then(function(data){
+                    if(data != null && data.length > 0){
+                        data = data[0];
+                        $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
+                    }
+                    else{
+                        var month_index = Months.indexOf($scope.info.active_month);
+                        if(month_index == 11){
+                            if($scope.info.active_time != "1998"){
+                                var year_index = Years.indexOf($scope.info.active_time);
+                                $scope.info.active_time = Years[year_index + 1];
+                                $scope.info.active_month = Months[0];
+                            }
+                        }
+                        else{
+                            $scope.info.active_month = Months[month_index + 1];   
+                        }
+                    }
+                    $scope.info.loading = false;
+                });
+            }
         }
     }
 

@@ -1311,3 +1311,19 @@ md-autocomplete button{
     font-weight: bold;
     border-radius: 3px 3px 0px 0px;
 }
+
+.time{
+    border-left: 2px solid;
+    padding-left: 5px;
+    margin: 4px;
+    cursor: default;
+}
+
+.time:hover{
+	text-decoration: underline;
+}
+
+.active_time{
+	border-left: 4px solid !important;
+	font-weight: bold;
+}
