@@ -201,13 +201,13 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
 
             var _init = function(){
                  // && $rootScope.user.id == 4986324
-                if(angular.isDefined($rootScope.user)){
-                    $scope.show_more_suggestions();
-                }
-                else{
-                    $scope.rooms = _rooms();
-                    $scope.no_suggestions = true;
-                }
+                $scope.show_more_suggestions();
+                // if(angular.isDefined($rootScope.user)){
+                // }
+                // else{
+                //     $scope.rooms = _rooms();
+                //     $scope.no_suggestions = true;
+                // }
             }
 
             _init();
