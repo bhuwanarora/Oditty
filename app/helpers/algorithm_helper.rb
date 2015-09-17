@@ -32,4 +32,13 @@ module AlgorithmHelper
 		sum = array.sum
 		sum/len
 	end
+
+	def self.std_dev array
+		x_2 = array.map { |elem| elem*elem  }
+		exp_x_2 = AlgorithmHelper.mean(x_2)
+		exp_x = AlgorithmHelper.mean(array)
+		deviation = exp_x_2 - exp_x*exp_x
+		output = Math.sqrt(deviation)
+		output
+	end
 end
