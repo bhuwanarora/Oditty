@@ -2,10 +2,19 @@
     <div layout="column" layout-align="start start">
             <h1><a  layout="row" layout-align="center center" href="/rooms">
                     Rooms of Knowledge
+                    <md-tooltip>
+                        35000+ more Rooms are waiting to be explored...
+                    </md-tooltip>
                 </a>
             </h1>
-            <div class="site_description">Not everything which needs to be discovered is searchable. I want to read this life through a specific collection of News, Books and Videos on...</div>
-        <!-- <div class="primary round_corners less_important white_color" layout-padding>New</div> -->
+            <div class="site_description">
+                <div ng-if="no_suggestions">
+                    Not everything which needs to be discovered is searchable. I want to read this life through a specific collection of News, Books and Videos on...
+                </div>
+                <div ng-if="!no_suggestions">
+                    Not everything which needs to be discovered is searchable. Rooms I need to explore depending on my <b>Facebook Likes</b>...
+                </div>
+            </div>
     </div>
     <div layout-padding></div>
     <md-grid-list
@@ -13,20 +22,34 @@
         md-row-height="4:3" md-row-height-gt-md="1:1" md-row-height-md="1:1" md-row-height-sm="12:13"
         md-gutter="50px" md-gutter-gt-sm="10px" md-gutter-md="10px" md-gutter-sm="20px">
         <md-grid-tile ng-repeat="trend in rooms"
-                    md-rowspan="{{trend.row}}"
-                    md-colspan="{{trend.col}}"
+                    md-rowspan="{{trend.row || 3}}"
+                    md-colspan="{{trend.col || 3}}"
                     md-colspan-sm="2"
                     class="pointer">
             <a ng-href="/room?id={{trend.id}}" class="room_container">
                 <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
                 <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
                     <div class="less_important white_color trend_name">{{trend.name}}</div>
+                    <div layout="column" class="facebook_likes">
+                        <div layout="row" layout-padding>
+                            <div ng-repeat="like in trend.facebook_likes">
+                                <a ng-href="/room?id={{like.id}}">
+                                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
+                                        class="small_circle"/>
+                                    <md-tooltip>Because you like {{like.name}}</md-tooltip>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </md-grid-tile-footer>
             </a>
         </md-grid-tile>
     </md-grid-list>
-    <div layout-padding>
+    <div layout-padding ng-if="no_suggestions">
         <a href="/rooms" class="less_important site_color bold">35000+ more Rooms...</a>
+    </div>
+    <div layout-padding ng-if="!no_suggestions">
+        <a ng-click="show_more_suggestions()" class="less_important site_color bold">Show me more Suggestions...</a>
     </div>
 </div>
 <div ng-if="reduced" >
@@ -38,7 +61,17 @@
     <div class="feed_ticker">
         <div ng-repeat="trend in rooms" layout="row" layout-padding>
             <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="square" />
-            <div layout-align="center center" layout="row"><a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a></div>
+            <div layout="column">
+                <a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a>
+                <div layout="row" layout-padding class="less_important" layout-wrap>
+                    <span>Because you like </span>
+                    <span ng-repeat="like in trend.facebook_likes">
+                        <a ng-href="/room?id={{like.id}}" class="less_important">
+                            <span>{{like.name}}</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -92,4 +125,14 @@
     .room_container img{
         position: absolute;
     }
+
+    .facebook_likes{
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        align-items: baseline;
+    }
+
+
 </style>

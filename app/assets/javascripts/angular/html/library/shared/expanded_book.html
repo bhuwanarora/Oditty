@@ -2,7 +2,7 @@
     layout="row"
     ng-href="#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}" du-smooth-scroll offset="200" duration="800"
     ng-if="!book.expanded"
-    class="rd_book_container">
+    class="rd_book_container" style="width: 155px;">
     <div ng-include src="'/assets/angular/html/shared/partials/book_group_unclickable.html'" 
         ng-click="expand_book($index)"
         class="relative" 

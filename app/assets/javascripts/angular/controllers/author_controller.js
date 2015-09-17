@@ -56,37 +56,6 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
-    // $scope.next_block = function(index){
-    //     var length = $scope.author.books.length;
-    //     if(index == (length-1)){
-    //         index = -1;
-    //     }
-    //     index = index + 1;
-    //     $scope.scroll_to_element(index);
-    //     return index;
-    // }
-
-    // $scope.scroll_to_element = function(index){
-    //     var offset = 0;
-    //     var duration = 2000;
-    //     var id = $scope.author.books[index].id;
-    //     var someElement = angular.element(document.getElementById(id));
-    //     var easeInQuad = function(t){ 
-    //         return t*t;
-    //     };
-    //     scroller.scrollToElement(someElement, offset, duration);
-    // }
-
-    // $scope.previous_block = function(index){
-    //     var length = $scope.author.books.length;
-    //     if(index == 0){
-    //         index = length;
-    //     }
-    //     index = index - 1;
-    //     $scope.scroll_to_element(index);
-    //     return index;
-    // }
-
     $scope.scroll_wiki = function(){
 
     }
