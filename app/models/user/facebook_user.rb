@@ -55,7 +55,7 @@ class User::FacebookUser < User
 	end
 
 	def get_latest_like
-		match_user + User.new(nil).match_facebook_likes + FacebookLike.order_desc + FacebookLike.limit(1) + User::FacebookUser.return_group("likes.timestamp AS created_at",FacebookLike.basic_info, User.fb_like_retrieval_time_info)
+		match_user + " OPTIONAL " + User.new(nil).match_facebook_likes + FacebookLike.order_desc + FacebookLike.limit(1) + User::FacebookUser.return_group("likes.timestamp AS created_at",FacebookLike.basic_info, User.fb_like_retrieval_time_info)
 	end
 
 	def get_latest_book

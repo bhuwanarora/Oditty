@@ -50,9 +50,10 @@ module FacebookLikesHelper
 		clause = User::FacebookUser.new({'id' => user_fb_id}).get_latest_like
 		output = clause.execute[0]
 		user_id = output["user_id"]
-		need_to_fetch_likes = FacebookLikesHelper.need_to_fetch output["created_at"], output["facebook_likes_retrieval_time"]
+		stop_time = (output["created_at"].nil?) ? 0 : output["created_at"]
+		need_to_fetch_likes = FacebookLikesHelper.need_to_fetch stop_time, output["facebook_likes_retrieval_time"]
 		if need_to_fetch_likes
-			new_fb_like_ids = FacebookLikesHelper.fetch_likes_iterative(user_fb_id, user_id, output["created_at"])
+			new_fb_like_ids = FacebookLikesHelper.fetch_likes_iterative(user_fb_id, user_id, stop_time)
 			FacebookLikesHelper.set_facebook_likes_retrieval_time user_id
 		else
 			new_fb_like_ids = []
