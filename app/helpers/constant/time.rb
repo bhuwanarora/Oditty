@@ -3,6 +3,9 @@ module Constant::Time
 	Year 				= "year"
 	Month 				= "month"
 	Date 				= "date"
+	Hour 				= "hour"
+	Minute 				= "minute"
+	Second 				= "second"
 	Format_default 		= [Year, Month, Date]
 	
 	Months 				= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]

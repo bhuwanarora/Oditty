@@ -18,6 +18,21 @@ module NewsHelper
 		end
 	end
 
+	def self.add_news params
+		time = TimeHelper.unix_to_date(params[:created_at])
+		news_metadata =
+		{
+			"title" 			=> params[:title],
+			"news_link"			=> params[:news_link],
+			"image_url" 		=> params[:image_url],
+			"description" 		=> params[:description],
+			"literature_news" 	=> false,
+			"region"			=> nil
+		}
+		news_metadata.merge!(time)
+		CommunitiesHelper.create news_metadata
+	end
+
 	def self.fetch_news_sources
 		news_sources = []
 		google_news_edition_url = Rails.application.config.google_news_sources
