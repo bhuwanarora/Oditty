@@ -31,7 +31,7 @@ class CommunityInterface < Neo
 	end
 
 	def self.get_detailed_info(id, user_id)
-		if user_id.present?
+		if user_id.nil?
 			community_clause = UsersCommunity.new(user_id, id).get_info
 			facebook_clause = FacebookLike.new(id).get_info(user_id)
 			clause = community_clause + " UNION " + facebook_clause
@@ -83,6 +83,16 @@ class CommunityInterface < Neo
 		else
 			get_recent_news skip_count
 		end
+	end
+
+	def self.get_communities_from_fb_likes user_id, skip_count
+		fb_id = (User.new(user_id).match + User::FacebookUser.match + User::FacebookUser.return_group(User::FacebookUser.id_info)).execute[0]["fb_id"] rescue nil
+		if fb_id.nil?
+			output = []
+		else
+			output = User::FacebookUser.new({"id" => fb_id}).get_recommended_communities(skip_count).execute
+		end
+		output
 	end
 
 	def self.match_news_in_period time_string, with_elems = []
