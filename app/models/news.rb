@@ -123,6 +123,13 @@ class News < Neo
 		clause
 	end
 
+	def self.merge_community_with_google_rank google_rank, news = 'news'
+		clause = " MERGE (" + news + ")-[h:HasCommunity]->(community) "\
+		" ON CREATE SET h.google_rank =" + google_rank.to_s + " "\
+		" WITH "+ news + ", community "
+		clause
+	end
+
 	
 	def get_basic_info
 		match + News.return_group(News.basic_info)
