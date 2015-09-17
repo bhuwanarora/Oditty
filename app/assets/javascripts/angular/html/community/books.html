@@ -1,6 +1,6 @@
 <div layout="column">
-    <div layout-padding ng-if="(active_tag.books && active_tag.books.length > 0) || (active_tag.books.length == 1 && active_tag.books[0].title != null )">
-        <div layout="row" layout-wrap layout-padding ng-if="active_tag.books && active_tag.books.length > 0">
+    <div ng-if="(active_tag.books && active_tag.books.length > 0) || (active_tag.books.length == 1 && active_tag.books[0].title != null )">
+        <div layout="row" layout-wrap ng-if="active_tag.books && active_tag.books.length > 0">
             <section ng-repeat="book in active_tag.books | limitTo: limit_count" layout-margin ng-if="book.title != null">
                 <div class="rd_book_container" ng-include src="'/assets/angular/html/shared/partials/book_group.html'"></div>
             </section>    
