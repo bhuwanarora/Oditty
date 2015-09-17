@@ -205,6 +205,7 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
                 }
                 else{
                     $scope.rooms = _rooms();
+                    $scope.no_suggestions = true;
                 }
             }
 
