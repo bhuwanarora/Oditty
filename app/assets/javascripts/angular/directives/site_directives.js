@@ -163,16 +163,16 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             var _add_rooms = function(data){
                 angular.forEach(data, function(value){
                     if(value.score == 1){
-                        value.row = 4;
-                        value.col = 4;
+                        value.row = 6;
+                        value.col = 6;
                     }
                     else if(value.score == 2){
-                        value.row = 2;
-                        value.col = 4;
+                        value.row = 3;
+                        value.col = 3;
                     }
                     else{
-                        value.row = 2;
-                        value.row = 2;
+                        value.row = 3;
+                        value.row = 3;
                     }
                     this.push(value);
                 }, $scope.rooms);
@@ -200,11 +200,13 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             }
 
             var _init = function(){
-                if(angular.isDefined($rootScope.user) && $rootScope.user.id == 4986324){
+                 // && $rootScope.user.id == 4986324
+                if(angular.isDefined($rootScope.user)){
                     $scope.show_more_suggestions();
                 }
                 else{
                     $scope.rooms = _rooms();
+                    $scope.no_suggestions = true;
                 }
             }
 
