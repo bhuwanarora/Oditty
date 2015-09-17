@@ -27,6 +27,163 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.room_suggestions = function(){
+        var data = [
+            {
+                "name" : "Social Psychology",
+                "id": 4998086,
+                "score": 3,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Comic Book Superhero",
+                "id": 5017968,
+                "score": 2,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Political Philosophy",
+                "id": 4972796,
+                "score": 3,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Sports",
+                "id": 5024590,
+                "score": 1,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Brain",
+                "id": 4988942,
+                "score": 2,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Religion",
+                "id": 5023062,
+                "score": 3,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Technology",
+                "id": 5021552,
+                "score": 1,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Health",
+                "id": 5020478,
+                "score": 3,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Blanching(Cooking)",
+                "id": 5107299,
+                "score": 2,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            },
+            {
+                "name" : "Kumaon Literary Festival",
+                "id": 5408842,
+                "score": 2,
+                "facebook_likes": [
+                    {
+                        "name" : "Social Psychology",
+                        "id": 4998086
+                    },
+                    {
+                        "name" : "Comic Book Superhero",
+                        "id": 5017968
+                    }
+                ]
+            }
+        ];
+
+        return data;
+    }
+
     this.get_community_news = function(){
         var data = [
                 {

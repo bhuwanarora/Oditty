@@ -1,12 +1,5 @@
 homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'ShareOptions', '$routeParams', '$mdBottomSheet', function($scope, $rootScope, $timeout, ShareOptions, $routeParams, $mdBottomSheet){
 
-    var _init = (function(){
-        $scope.share_options = ShareOptions;
-        $scope.data = {
-            selectedIndex : 0     
-        };
-    }());
-
     $scope.show_level1_options = function(option, index, event){
         $scope.first_option = option;
         delete $scope.second_option;
@@ -55,5 +48,12 @@ homeApp.controller('optionsController', ["$scope", "$rootScope", "$timeout", 'Sh
     $scope.previous = function() {
         $scope.data.selectedIndex = Math.max($scope.data.selectedIndex - 1, 0);
     };
+
+    var _init = (function(){
+        $scope.share_options = ShareOptions;
+        $scope.data = {
+            selectedIndex : 0     
+        };
+    }());
 
 }]);

@@ -4,12 +4,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         event.stopPropagation();
     }
 
-    // $scope.stopPropagation = function(){
-    //     if($scope.constant.show_book){
-    //         // $scope.constant = {"show_book": true};
-    //     }
-    // }
-
     $scope.invite_friends = function(event){
         $mdDialog.show({
             templateUrl: 'assets/angular/html/shared/invite.html',
@@ -155,17 +149,6 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
     }
 
     var _handle_facebook_data = function(){
-        // var _fetch_books = function(){
-        //     Facebook.api('me/books', function(response){
-        //         websiteService.handle_facebook_books(response);
-        //     });
-        //     Facebook.api('me/books.reads', function(response){
-        //         websiteService.handle_facebook_books(response);
-        //     });
-        //     Facebook.api('me/books.wants_to_read', function(response){
-        //         websiteService.handle_facebook_books(response);
-        //     });
-        // }
 
         var _fetch_picture = function(){
             Facebook.api('me/picture?redirect=false&type=large', function(response){
@@ -175,85 +158,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
             });
         }
 
-        // var _fetch_likes = function(){
-        //     Facebook.api('me/likes', function(response){
-        //         websiteService.handle_facebook_likes(response);
-        //     });
-        // }
-
-        // var _fetch_likes_from_database = function(){
-        //     userService.get_facebook_likes().then(function(data){
-        //         $scope.facebook_likes = data;
-        //         if(data != null && data.length >0){
-        //             angular.forEach(data, function(value){
-        //                 var app_id = value.app_id;
-        //                 _fetch_like_info(app_id);
-        //             });
-        //         }
-        //     });
-        // }
-
-        // var _fetch_book_info = function(app_id){
-        //     Facebook.api(
-        //         "/"+app_id,
-        //         function (response) {
-        //             if(response && !response.error){
-        //                 websiteService.map_facebook_books(response);
-        //             }
-        //         }
-        //     );
-        // }
-
-        // var _fetch_books_from_database = function(){
-        //     userService.get_social_books().then(function(data){
-        //         $scope.social_books = data;
-        //         if(data != null && data.length >0){
-        //             angular.forEach(data, function(value){
-        //                 var app_id = value.app_id;
-        //                 _fetch_book_info(app_id);
-        //             });
-        //         }
-        //     });
-        // }
-
-        // var _fetch_like_info = function(app_id){
-        //     Facebook.api(
-        //         "/"+app_id,
-        //         function (response) {
-        //             if (response && !response.error){
-        //                 websiteService.set_like_info(response);
-        //             }
-        //         }
-        //     );
-        // }
-        
         $scope.$on('Facebook:statusChange', function(ev, data){
-            // var time = (new Date().getTime())/1000;
-            // if(angular.isDefined($rootScope.user.facebook_books_retrieval_time)){
-            //     var books_retrieval_time_difference = (time-$rootScope.user.facebook_books_retrieval_time)/(3600*24*31);
-            //     if(books_retrieval_time_difference > 1){
-            //         _fetch_books();
-            //     }
-            //     else{
-            //         _fetch_books_from_database();
-            //     }
-            // }
-            // else{
-            //     _fetch_books();
-            // }
-
-            // if(angular.isDefined($rootScope.user.facebook_likes_retrieval_time)){
-            //     var likes_retrieval_time_difference = (time-$rootScope.user.facebook_likes_retrieval_time)/(3600*24*31);
-            //     if(likes_retrieval_time_difference > 1){
-            //         _fetch_likes();
-            //     }
-            //     else{
-            //         _fetch_likes_from_database();
-            //     }
-            // }
-            // else{
-            //     _fetch_likes();
-            // }
             _fetch_picture();
         });
     }

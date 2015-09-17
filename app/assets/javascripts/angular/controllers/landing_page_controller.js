@@ -41,7 +41,6 @@ app.controller('MainCtrl', ["$scope", "scroller", "$document", "$timeout", "Webs
 	}
 
 	$scope.search_animate = function(){
-		debugger
 		var text = ["H", "i", "t", "c", "h", "h", "i", "k", "e"];
 		if($scope.text_index < text.length){
 			$scope.current_text = $scope.current_text + text[$scope.text_index];

@@ -10,6 +10,10 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         return user_id;
     }
 
+    this.room_suggestions = function(skip){
+        return _deferred_request('/api/v0/room_suggestions?skip='+skip, $q, $http);
+    }
+
     this.update_todo_key = function(type){
         var params = {"type": type};
         return _deferred_post_request('/api/v0/set_todos', params, $q, $http, todo_service_url);

@@ -199,16 +199,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
     }
       
     $scope._is_logged_in = function(){
-        // var _handle_push_notifications = function(){
-        //     websiteService.get_personal_notifications().then(function(data){
-        //         $rootScope.user.push_notifications = [];
-        //         angular.forEach(data, function(value){
-        //             var json = angular.extend({"id": value[1]}, value[0]["data"]);
-        //             this.push(json);
-        //         }, $rootScope.user.push_notifications);
-        //     });
-        // }
-
         websiteService.get_user().then(function(data){
             if(data["logged_in"]){
                 $rootScope.user.logged = true;
@@ -217,22 +207,16 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                     angular.extend($rootScope.user, data);
                 });
                 $scope._init_user();
-                // _handle_push_notifications();     
             }
         });
     }
 
     var _init = (function(){
-        // _bind_auth_listeners();
         $rootScope.user = {'books': {'bookmarked':[], 'read': []},
                 'authors': {'bookmarked': [], 'follow': []},
                 'readers': {'follow': []},
                 'logged': false};
         
-
-        // $rootScope.user.logged = true;
-        // setCookie("logged", true, 31);
-        // setCookie("logged", 4986324, 31);
     }());
 
 }]);
