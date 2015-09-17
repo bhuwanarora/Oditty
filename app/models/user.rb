@@ -406,6 +406,10 @@ class User < Neo
 		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
 	end
 
+	def self.match_facebook_likes
+		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
+	end
+
 	def get_facebook_likes
 		match + match_facebook_likes + FacebookLike.not_completed + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
 	end

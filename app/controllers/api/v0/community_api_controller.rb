@@ -92,6 +92,17 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_communities_from_fb_likes
+				user_id = session[:user_id]
+				skip_count = (params[:skip].nil?) ? 0 : params[:skip]
+				if user_id.nil?
+					info = {:message => 'You are not logged in. Please login again !'}
+				else
+					info = Api::V0::CommunityApi.get_communities_from_fb_likes(user_id, skip_count)
+				end
+				render :json => info, :status => 200
+			end
+
 			def get_videos
 				id = params[:id]
 				info = RedisHelper::Community.get_videos({:id => id})
