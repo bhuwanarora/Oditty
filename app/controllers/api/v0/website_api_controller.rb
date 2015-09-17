@@ -201,11 +201,6 @@ module Api
 				render :json => info, :status => 200
 			end
 
-			def add_news
-				Api::V0::NewsApi.add_news params
-				render :json => {:message => "Success"}, :status => 200
-			end
-
             private
             def neo_init
                 @neo = Neography::Rest.new

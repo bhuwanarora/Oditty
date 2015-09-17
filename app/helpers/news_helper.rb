@@ -23,8 +23,8 @@ module NewsHelper
 		news_metadata =
 		{
 			"title" 			=> params[:title],
-			"news_link"			=> params[:news_link],
-			"image_url" 		=> params[:image_url],
+			"news_link"			=> URI.decode(params[:news_link]),
+			"image_url" 		=> URI.decode(params[:image_url]),
 			"description" 		=> params[:description],
 			"literature_news" 	=> false,
 			"region"			=> nil
