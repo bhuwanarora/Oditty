@@ -38,11 +38,26 @@ module TimeHelper
 	end
 
 	def self.today
-		date = Time.now.to_s.split(" ")[0].split("-")
 		output = {
-			Constant::Time::Year  => date[0].to_i,
-			Constant::Time::Month => date[1].to_i,
-			Constant::Time::Date  => date[2].to_i
+			Constant::Time::Year  	=> Time.now.year,
+			Constant::Time::Month 	=> Time.now.month,
+			Constant::Time::Date  	=> Time.now.day,
+			Constant::Time::Hour  	=> Time.now.hour,
+			Constant::Time::Minute 	=> Time.now.min,
+			Constant::Time::Second 	=> Time.now.sec
+		}
+		output
+	end
+
+	def self.unix_to_date unix_time
+		time = DateTime.strptime(unix_time.to_s, '%s')
+		output = {
+			Constant::Time::Year  	=> time.year,
+			Constant::Time::Month 	=> time.month,
+			Constant::Time::Date  	=> time.day,
+			Constant::Time::Hour  	=> time.hour,
+			Constant::Time::Minute 	=> time.min,
+			Constant::Time::Second 	=> time.sec
 		}
 		output
 	end

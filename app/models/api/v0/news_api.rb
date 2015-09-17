@@ -6,6 +6,10 @@ module Api
 				
 			end
 
+			def self.add_news(params)
+				NewsHelper.add_news params
+			end
+
 		end
 	end
 end
