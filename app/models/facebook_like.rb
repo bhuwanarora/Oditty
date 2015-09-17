@@ -1,5 +1,5 @@
 class FacebookLike < CommunityInterface
-	def initialize app_id, neo_id = nil
+	def initialize neo_id, app_id = nil
 		@app_id = app_id
 		@neo_id = neo_id
 	end

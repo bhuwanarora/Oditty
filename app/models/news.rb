@@ -52,11 +52,12 @@ class News < Neo
 	end
 
 	def self.create news_metadata
-		News.merge(news_metadata) + News.match_timestamp  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
+		News.merge(news_metadata) + News.match_timestamp(news_metadata)  + News.merge_region(news_metadata) + News.return_init + " ID(news) as news_id "
 	end
 
-	def self.match_timestamp
-		" MATCH (year:Year{year:#{Time.now.year}})-[:Has_month]->(month:Month{month:#{Time.now.month}})-[:Has_day]->(day:Day{day:#{Time.now.day}}) MERGE (time:TimePeriod{quarter:\"#{(Time.now.hour / 6) * 6}-#{((Time.now.hour / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
+	def self.match_timestamp news_metadata = {}
+		time = News.get_time news_metadata
+		" MATCH (year:Year{year:#{time[Constant::Time::Year]}})-[:Has_month]->(month:Month{month:#{time[Constant::Time::Month]}})-[:Has_day]->(day:Day{day:#{time[Constant::Time::Date]}}) MERGE (time:TimePeriod{quarter:\"#{(time[Constant::Time::Hour] / 6) * 6}-#{((time[Constant::Time::Hour] / 6)+1) * 6}\"})-[:FromDay]->(day) MERGE (news)-[:TimeStamp]->(time) WITH news "
 	end
 
 	def self.match
@@ -191,5 +192,21 @@ class News < Neo
 
 	def self.match_popular_news_from_last_week
 		News.match + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 1 WITH news "
+	end
+
+	private
+	def self.get_time news_metadata
+		year = (news_metadata[Constant::Time::Year].present?) ? news_metadata[Constant::Time::Year] : Time.now.year
+		month = (news_metadata[Constant::Time::Month].present?) ? news_metadata[Constant::Time::Month] : Time.now.month
+		day = (news_metadata[Constant::Time::Date].present?) ? news_metadata[Constant::Time::Date] : Time.now.day
+		hour = (news_metadata[Constant::Time::Hour].present?) ? news_metadata[Constant::Time::Hour] : Time.now.hour
+		time =
+		{
+			Constant::Time::Year 	=> year,
+			Constant::Time::Month 	=> month,
+			Constant::Time::Date	=> day,
+			Constant::Time::Hour 	=> hour
+		}
+		time
 	end
 end
