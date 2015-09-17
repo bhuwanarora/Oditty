@@ -7,7 +7,7 @@ module Api
 			end
 
 			def self.add_news(params)
-				NewsHelper.add_news params
+				NewsWorker.perform_async(params)
 			end
 
 		end
