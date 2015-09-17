@@ -829,7 +829,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/bookmark.html',
-    "<div class=\"md-whiteframe-z1 blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves($event)\" ng-if=\"custom\"><i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><div class=\"pointer\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves($event)\"><span>Add to Shelf</span> <i class=\"material-icons\" ng-hide=\"shelves_loading\" ng-if=\"count\">bookmark</i><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\" ng-show=\"shelves_loading\"></md-progress-circular><span ng-hide=\"shelves_loading\" ng-if=\"count\">{{count || 0}}</span></div>"
+    "<div class=\"md-whiteframe-z1 blue_circle pointer\" layout=\"row\" layout-align=\"center center\" layout-padding ng-click=\"show_shelves($event)\" ng-if=\"custom\"><i class=\"material-icons\" ng-hide=\"shelves_loading\">bookmark</i><md-tooltip md-direction=\"right\" md-visible=\"demo.showTooltip\">Bookmark</md-tooltip></div><div class=\"pointer less_important bold\" layout-padding ng-if=\"!custom\" ng-click=\"show_shelves($event)\"><span>Add to Shelf</span> <i class=\"material-icons\" ng-hide=\"shelves_loading\" ng-if=\"count\">bookmark</i><md-progress-circular class=\"md-accent md-hue-1\" md-mode=\"indeterminate\" ng-show=\"shelves_loading\"></md-progress-circular><span ng-hide=\"shelves_loading\" ng-if=\"count\">{{count || 0}}</span></div>"
   );
 
 
