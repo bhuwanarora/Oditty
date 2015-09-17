@@ -333,4 +333,5 @@ module CommunitiesHelper
 		id_list = clause.execute.map{|elem| elem['id']}
 		id_list.each{|community_id| CommunitiesHelper.handle_bookless_community(community_id)}
 	end
+
 end
