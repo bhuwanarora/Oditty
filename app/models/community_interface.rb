@@ -121,7 +121,7 @@ class CommunityInterface < Neo
 	end
 
 	def self.add_states_to_community neo_output
-		std_dev_min_value = 5
+		std_dev_min_value = 5.to_f
 		scores = neo_output.map { |community| community["importance"]  }
 		mean_value = AlgorithmHelper.mean(scores)
 		std_dev = [AlgorithmHelper.std_dev(scores), std_dev_min_value].max
