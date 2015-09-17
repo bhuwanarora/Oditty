@@ -49,6 +49,10 @@ module Api
 			def self.get_rooms user_id, skip_count
 				CommunityInterface.get_rooms(user_id, skip_count)
 			end
+
+			def self.get_communities_from_fb_likes user_id, skip_count
+				CommunityInterface.get_communities_from_fb_likes user_id, skip_count
+			end
 		end
 	end
 end

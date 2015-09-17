@@ -164,7 +164,11 @@ class FacebookLike < CommunityInterface
 	end
 
 	def self.basic_info
-		" facebook_like.app_id AS app_id, ID(facebook_like) AS id, facebook_like.name AS name "
+		" facebook_like.app_id AS app_id, ID(facebook_like) AS id, facebook_like.name AS name, facebook_like.facebook_url AS facebook_url "
+	end
+
+	def self.grouped_basic_info
+		" app_id:facebook_like.app_id, id:ID(facebook_like), name:facebook_like.name, facebook_url:facebook_like.facebook_url "
 	end
 
 	def get_basic_info
