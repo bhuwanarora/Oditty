@@ -200,7 +200,12 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             }
 
             var _init = function(){
-                $scope.show_more_suggestions();
+                if(angular.isDefined($rootScope.user) && $rootScope.user.id == 4986324){
+                    $scope.show_more_suggestions();
+                }
+                else{
+                    $scope.rooms = _rooms();
+                }
             }
 
             _init();
