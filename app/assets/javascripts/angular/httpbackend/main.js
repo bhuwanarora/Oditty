@@ -10,6 +10,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET(/api\/v0\/room_suggestions\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.room_suggestions();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET('/api/v0/get_user_score').respond(function(method, url, data) {
         var data = ServerDataModel.get_user_score();
         return [200, data, {}];

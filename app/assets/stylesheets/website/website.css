@@ -438,6 +438,14 @@ md-toast.md-default-theme{
     height: 60px;
 }
 
+.small_circle{
+    width: 30px;
+    border-radius: 50%;
+    height: 30px;   
+    border: 2px solid white;
+    margin-right: 4px;
+}
+
 .big_square{
     height: 120px;
     border-radius: 2px;
@@ -599,4 +607,18 @@ h3 a:hover{
     width: 100%;
     overflow: hidden;
     position: relative;
+}
+
+md-tooltip{
+    color: black;
+    background-color: white !important;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 1px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+md-tooltip div{
+    background-color: white !important;
 }

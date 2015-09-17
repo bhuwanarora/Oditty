@@ -7,6 +7,12 @@
         <meta charset="Content-Type: text/html; charset=UTF-8">
         <meta name="msvalidate.01" content="1D211762713A4D6C7111AE922F0FA0BD" />
         <meta name="viewport" content="width=device-width">
+        
+        <meta name="twitter:site" content="@Odittyme">
+        <meta name="twitter:title" content="Oditty: News, Books, and Video">
+        <meta name="twitter:description" content="Oditty.me, My Smart and Social Knowledge Discovery Platform for News, Books, and Videos">
+        <meta name="twitter:image" content="https://fbcdn-sphotos-b-a.akamaihd.net/hphotos-ak-xpf1/v/t1.0-9/10999443_470788299758712_5554808311498390246_n.png?oh=5e0d331b375ed742cee3217b42fa2368&oe=56478548&__gda__=1446352162_2be4a71ebe3e0833076ffc7ea5ac40e8">
+
         <meta property="og:url" content="http://www.oditty.me" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Oditty: News, Books, and Videos" />
@@ -113,9 +119,6 @@
                         <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                     <% else %>
                         <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
-                    <% end %>
-                    <% if @news || @blog || @shelves || @search || @customise || @publishers || @book %>
-                        
                     <% end %>
                 </div>
                 <div id="yield" class="<% if @home || @signup %> yield <% end %>">
@@ -342,12 +345,11 @@
                   "name" : "Singularity Technologies Pvt. Ltd.",
                   "url" : "http://www.oditty.me",
                   "sameAs" : [ 
-                    "https://www.facebook.com/oditty.me",
-                    "https://twitter.com/odittyme",
-                    "https://plus.google.com/u/1/b/115163206469709809913",
-                    "https://www.linkedin.com/company/3707592",
-                    "http://magazine.oditty.me",
-                    "http://blog.oditty.me"
+                        "https://www.facebook.com/oditty.me",
+                        "https://twitter.com/odittyme",
+                        "https://plus.google.com/u/1/b/115163206469709809913",
+                        "https://www.linkedin.com/company/3707592",
+                        "http://magazine.oditty.me"
                     ] 
                 }
             </script>

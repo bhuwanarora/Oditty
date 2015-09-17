@@ -112,16 +112,6 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.show_book_dialog = function(book, event){
-    //     $rootScope.active_book = book;
-    //     $rootScope.active_book.show_info_only = true;
-    //     $mdDialog.show({
-    //         templateUrl: '/assets/angular/html/news/book.html',
-    //         scope: $scope,
-    //         preserveScope: true,
-    //         clickOutsideToClose: true,
-    //         targetEvent: event
-    //     });
-    //     event.stopPropagation();
         sharedService.show_book_dialog($rootScope, $scope, book, event);
     }
 
@@ -149,28 +139,6 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
     }
 
     $scope.get_community_news = function(){
-        // var is_news_tab = $location.path() != "/room/books" && $location.path() != "/room/videos" && $location.path() != "/room/wiki";
-        // // if(angular.isUndefined($scope.active_tag)){
-        // //     $scope.active_tag.news = {};
-        // // }
-        // var id = $scope.active_tag.id;
-        // if(angular.isUndefined($scope.active_tag.news)){
-        //     $scope.active_tag.news = [];
-        // }
-        // if(is_news_tab){
-        //     var skip_count = $scope.active_tag.news.length;
-        //     if(!$scope.info.loading){
-        //         $scope.info.loading = true;
-        //         alert($scope.info.active_time);
-        //         newsService.get_community_news(id, skip_count, $scope.info.active_time).then(function(data){
-        //             if(data != null && data.length > 0){
-        //                 data = data[0];
-        //                 $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
-        //             }
-        //             $scope.info.loading = false;
-        //         });
-        //     }
-        // }
         sharedService.get_community_news($scope);
     }
 

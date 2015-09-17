@@ -6,7 +6,7 @@ homeApp.directive('testimonials', ["websiteService", "$timeout", function(websit
     };
 }]);
 
-homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
+homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootScope, userService){
     return {
         restrict: 'E',
         scope: {'reduced': '='},
@@ -31,12 +31,6 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "col": 2,
                         "row": 2
                     },
-                    // {
-                    //     "name" : "Art History",
-                    //     "id": 4977592,
-                    // "col": 2,
-                    // "row": 2
-                    // },
                     {
                         "name" : "Sports",
                         "id": 5024590,
@@ -156,7 +150,7 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                         "id": 5035970,
                         "col": 2,
                         "row": 2
-                    },
+                    }
 
                 ];
                 return rooms;
@@ -166,8 +160,47 @@ homeApp.directive('browseRooms', ["$rootScope", function($rootScope){
                 window.location.href = "/room?p="+id;
             }
 
+            var _add_rooms = function(data){
+                angular.forEach(data, function(value){
+                    if(value.score == 1){
+                        value.row = 4;
+                        value.col = 4;
+                    }
+                    else if(value.score == 2){
+                        value.row = 2;
+                        value.col = 4;
+                    }
+                    else{
+                        value.row = 2;
+                        value.row = 2;
+                    }
+                    this.push(value);
+                }, $scope.rooms);
+            }
+
+            $scope.show_more_suggestions = function(){
+                if(angular.isUndefined($scope.rooms)){
+                    $scope.rooms = [];
+                }
+                var skip = $scope.rooms.length;
+                userService.room_suggestions(skip).then(function(data){
+                    if(data.length == 0){
+                        if($scope.rooms.length == 0){
+                            $scope.rooms = _rooms();
+                            $scope.no_suggestions = true;
+                        }
+                        else{
+                            _add_rooms(data);
+                        }
+                    }
+                    else{
+                        _add_rooms(data);
+                    }
+                });
+            }
+
             var _init = function(){
-                $scope.rooms = _rooms();
+                $scope.show_more_suggestions();
             }
 
             _init();
