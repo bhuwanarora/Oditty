@@ -19,6 +19,7 @@ module NewsHelper
 	end
 
 	def self.add_news params
+		params = params.symbolize_keys
 		time = TimeHelper.unix_to_date(params[:created_at])
 		news_metadata =
 		{
@@ -34,7 +35,8 @@ module NewsHelper
 		news_metadata.merge!(time)
 		news_id = News.create(news_metadata).execute[0]["news_id"]
 		clause = News.new(news_id).match + Community.new(community_id).match + ", news " + News.merge_community_with_google_rank(google_rank) + " RETURN 1 "
-		clause.execute
+		output = clause.execute
+		puts output.to_s
 	end
 
 	def self.fetch_news_sources
