@@ -38,7 +38,8 @@ class User::FacebookUser < User
 
 	def get_recommended_communities skip
 		match_user + User.match_facebook_likes + FacebookLike.match_community +
-		" WITH community, SUM(community_relevance) AS score," + User::FacebookUser.collect_map({"facebook_likes" => FacebookLike.grouped_basic_info}) + " ORDER BY score DESC " + User::FacebookUser.skip(skip) + User::FacebookUser.limit(12) + User::FacebookUser.return_group(Community.basic_info,'score','facebook_likes')
+		" WHERE LENGTH(SPLIT(community.name, \' \')) > 1 " +
+		" WITH community, SUM(community_relevance) AS score," + User::FacebookUser.collect_map({"facebook_likes" => (FacebookLike.grouped_basic_info + ", score:community_relevance")}) + " ORDER BY score DESC " + User::FacebookUser.skip(skip) + User::FacebookUser.limit(12) + User::FacebookUser.return_group(Community.basic_info,'score','facebook_likes')
 	end
 
 	def self.parse_token_response response

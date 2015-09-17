@@ -19,7 +19,7 @@ ReadersDoor::Application.routes.draw do
       match 'add_videos'                             => 'community_api#add_videos',                       :via => [:get]
       match 'community_combined_details'             => 'community_api#get_combined_details',             :via => [:get]
       match 'remove_news'                            => 'community_api#remove_news',                       :via => [:get]
-      match 'communities_recommendation'             => 'community_api#get_communities_from_fb_likes',
+      match 'room_suggestions'             => 'community_api#get_communities_from_fb_likes',
                               :via => [:get]
     end
   end

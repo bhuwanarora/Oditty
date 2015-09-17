@@ -92,6 +92,8 @@ class CommunityInterface < Neo
 		else
 			output = User::FacebookUser.new({"id" => fb_id}).get_recommended_communities(skip_count).execute
 		end
+		output = CommunityInterface.format_communitites_from_fb(output)
+		output = output.shuffle
 		output
 	end
 
@@ -103,5 +105,37 @@ class CommunityInterface < Neo
 		Community.match_news + with_string + " WHERE "\
 		" (news)-[:TimeStamp]->(:TimePeriod)-[:FromDay]->(:Day)<-[:Has_day]-(:Month{month:" + month + "})<-[:Has_month]-(:Year{year:" + year + "}) "\
 		" WITH community, news "
+	end
+
+	private
+	def self.format_communitites_from_fb neo_output
+		facebook_like_count = 5
+		neo_output.each do |community|
+			fb_likes = community["facebook_likes"]
+			fb_likes.sort_by! { |elem| -1*elem["score"] }
+			community["facebook_likes"] = fb_likes[0..(facebook_like_count - 1)]
+			community["importance"] = community["score"]
+		end
+		output = CommunityInterface.add_states_to_community(neo_output)
+		output
+	end
+
+	def self.add_states_to_community neo_output
+		std_dev_min_value = 5
+		scores = neo_output.map { |community| community["importance"]  }
+		mean_value = AlgorithmHelper.mean(scores)
+		std_dev = [AlgorithmHelper.std_dev(scores), std_dev_min_value].max
+		point_one = mean_value + std_dev
+		point_two = mean_value + std_dev*2
+		neo_output.each do |community|
+			if community["importance"] < point_one
+				community["score"] = 3
+			elsif community["importance"] > point_one && community["importance"] < point_two
+				community["score"] = 2
+			else
+				community["score"] = 1
+			end
+		end
+		neo_output
 	end
 end
