@@ -196,6 +196,7 @@
             <script src="assets/angular/services/author_service.js"></script>
             <script src="assets/angular/services/shelf_service.js"></script>
             <script src="assets/angular/services/infinity_service.js"></script>
+            <script src="assets/angular/services/news_service.js"></script>
             <script src="assets/angular/services/shared_service.js"></script>
             <script src="assets/angular/services/network_service.js"></script>
             <script src="assets/angular/controllers/app_controller.js"></script>
@@ -225,7 +226,7 @@
 
             <% if @rooms %>
                 <script src="assets/angular/services/rooms_service.js"></script>
-                <script src="assets/angular/services/news_service.js"></script>
+                
                 <script src="assets/angular/controllers/rooms_controller.js"></script>
             <% elsif @ads %>
                 <script src="assets/angular/controllers/ads_controller.js"></script>
@@ -235,23 +236,24 @@
             <% elsif @authors %>
                 <script src="assets/angular/controllers/authors_controller.js"></script>
             <% elsif @news_group %>
-                <script src="assets/angular/services/news_service.js"></script>
+                
                 <script src="assets/angular/directives/home_directives.js"></script>
                 <script src="assets/angular/controllers/home/feed_controller.js"></script>
             <% elsif @publishers %>
                 <script src='assets/angular/services/publishers_service.js'></script>
                 <script src='assets/angular/controllers/publishers_controller.js'></script>
             <% elsif @personalised_suggestions %>
-                <script src="assets/angular/services/news_service.js"></script>
+                
                 <script src="assets/angular/controllers/personalised_controller.js"></script>
             <% elsif @network %>
                 <script src="assets/angular/controllers/network_controller.js"></script>
             <% elsif @news %>
                 <script src="assets/angular/directives/news_directives.js"></script>
-                <script src="assets/angular/services/news_service.js"></script>
+                
                 <script src="assets/angular/controllers/news_controller.js"></script>
             <% elsif @room %>
-                <script src="assets/angular/services/news_service.js"></script>
+                
+                <script src="assets/angular/directives/community_directives.js"></script>
                 <script src="assets/angular/controllers/community/video_controller.js"></script>
                 <script src="assets/angular/controllers/community_controller.js"></script>
             <% elsif @customise %>
@@ -274,7 +276,7 @@
                 <script src="assets/angular/controllers/author_controller.js"></script>
             <% elsif @profile %>
                 <script src="assets/angular/services/room_service.js"></script>
-                <script src="assets/angular/services/news_service.js"></script>
+                
                 <script src="assets/angular/directives/profile_directives.js"></script>
                 <script src="assets/angular/controllers/customise/genres_controller.js"></script>
                 <script src="assets/angular/controllers/network_controller.js"></script>

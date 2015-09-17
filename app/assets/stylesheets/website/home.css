@@ -74,6 +74,7 @@
 
 .rd_book_container{
 	position: relative;
+	width: 171px;
 	background-color: white;
 }
 
@@ -1310,4 +1311,20 @@ md-autocomplete button{
     border: 1px solid #C3C3C3;
     font-weight: bold;
     border-radius: 3px 3px 0px 0px;
+}
+
+.time{
+    border-left: 2px solid;
+    padding-left: 5px;
+    margin: 4px;
+    cursor: default;
+}
+
+.time:hover{
+	text-decoration: underline;
+}
+
+.active_time{
+	border-left: 4px solid !important;
+	font-weight: bold;
 }

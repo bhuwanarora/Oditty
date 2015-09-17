@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", "$location", "newsService", "Years", "Months", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService, $location, newsService, Years, Months){
 
     this.get_popular_books = function($scope, books){
         console.log("get_popular_books");
@@ -170,6 +170,54 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                     position: _getToastPosition()
                 });
             });
+        }
+    }
+
+    this.get_community_news = function($scope){
+        var is_news_tab = $location.path() != "/room/books" && $location.path() != "/room/videos" && $location.path() != "/room/wiki";
+        // if(angular.isUndefined($scope.active_tag)){
+        //     $scope.active_tag.news = {};
+        // }
+        var id = $scope.active_tag.id;
+        if(angular.isUndefined($scope.active_tag.news)){
+            $scope.active_tag.news = [];
+        }
+        if(is_news_tab){
+            var skip_count = $scope.active_tag.news.length;
+            var month_index = Months.indexOf($scope.info.active_month);
+            if(!$scope.info.loading){
+                $scope.info.loading = true;
+                var time = $scope.info.active_time;
+                if(time == "recent"){
+                    time = 2015;
+                }
+                if(angular.isUndefined($scope.info.active_month)){
+                    var time = time + "/12";
+                }
+                else{
+                    var time = time + "/"+ (12 - month_index);
+                }
+                // alert(time);
+                newsService.get_community_news(id, skip_count, time).then(function(data){
+                    if(data != null && data.length > 0){
+                        data = data[0];
+                        $scope.active_tag.news = $scope.active_tag.news.concat(data.news);
+                    }
+                    else{
+                        if(month_index == 11){
+                            if(time != "1998"){
+                                var year_index = Years.indexOf(time);
+                                time = Years[year_index + 1];
+                                $scope.info.active_month = Months[0];
+                            }
+                        }
+                        else{
+                            $scope.info.active_month = Months[month_index + 1];   
+                        }
+                    }
+                    $scope.info.loading = false;
+                });
+            }
         }
     }
 

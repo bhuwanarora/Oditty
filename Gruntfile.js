@@ -154,6 +154,7 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/services/shelf_service.js",
                     "app/assets/javascripts/min/angular/services/infinity_service.js",
                     "app/assets/javascripts/min/angular/services/network_service.js",
+                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/services/shared_service.js"
                 ],
 
@@ -257,13 +258,11 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/rooms_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/services/rooms_service.js",
                     "app/assets/javascripts/min/angular/controllers/rooms_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/news_group_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/directives/home_directives.js",
                     "app/assets/javascripts/min/angular/controllers/home/feed_controller.js"
                 ],
@@ -278,7 +277,6 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/personalised_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/controllers/personalised_controller.js"
                 ],
 
@@ -297,12 +295,11 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/news_group.min.js":[
                     "app/assets/javascripts/min/angular/directives/news_directives.js",
-                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/controllers/news_controller.js"
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/community_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/news_service.js",
+                    "app/assets/javascripts/min/angular/directives/community_directives.js",
                     "app/assets/javascripts/min/angular/controllers/community/video_controller.js",
                     "app/assets/javascripts/min/angular/controllers/community_controller.js"
                 ],
@@ -346,7 +343,6 @@ module.exports = function(grunt) {
                 ],
 
                 "app/assets/javascripts/min/angular/controllers/profile_group.min.js":[
-                    "app/assets/javascripts/min/angular/services/news_service.js",
                     "app/assets/javascripts/min/angular/services/room_service.js",
                     "app/assets/javascripts/min/angular/directives/profile_directives.js",
                     "app/assets/javascripts/min/angular/controllers/customise/genres_controller.js",
