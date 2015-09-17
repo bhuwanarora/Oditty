@@ -19,18 +19,24 @@ module NewsHelper
 	end
 
 	def self.add_news params
+		params = params.symbolize_keys
 		time = TimeHelper.unix_to_date(params[:created_at])
 		news_metadata =
 		{
 			"title" 			=> params[:title],
 			"news_link"			=> URI.decode(params[:news_link]),
-			"image_url" 		=> URI.decode(params[:image_url]),
-			"description" 		=> params[:description],
+			"image_url" 		=> "",
+			"description" 		=> "",
 			"literature_news" 	=> false,
 			"region"			=> nil
 		}
+		google_rank = params[:rank]
+		community_id = params[:id]
 		news_metadata.merge!(time)
-		CommunitiesHelper.create news_metadata
+		news_id = News.create(news_metadata).execute[0]["news_id"]
+		clause = News.new(news_id).match + Community.new(community_id).match + ", news " + News.merge_community_with_google_rank(google_rank) + " RETURN 1 "
+		output = clause.execute
+		puts output.to_s
 	end
 
 	def self.fetch_news_sources

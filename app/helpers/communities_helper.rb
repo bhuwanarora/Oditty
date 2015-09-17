@@ -1,4 +1,11 @@
 module CommunitiesHelper
+	def self.set_up_redis label, key
+		GenericHelper.set_up_redis label, key
+	end
+
+	def self.update_redis key, value
+		GenericHelper.update_redis key, value
+	end
 
 	def self.handle_one_community community
 		c_name = community['value']
@@ -332,6 +339,44 @@ module CommunitiesHelper
 			" RETURN ID(community) AS id "
 		id_list = clause.execute.map{|elem| elem['id']}
 		id_list.each{|community_id| CommunitiesHelper.handle_bookless_community(community_id)}
+	end
+
+	SetImageToS3 = Proc.new do |params, *args|
+		clause = params[:init_clause]
+		clause += " RETURN ID(community) AS id, community.image_url AS image_url "
+		output = clause.execute
+		CommunitiesHelper.handle_images(output)
+		max_id = output.map{|elem| elem["id"]}.max
+		max_id
+	end
+
+	def self.handle_images neo_output
+		neo_output.each do |community|
+			image_url = CommunitiesHelper.get_S3_image_url(community["id"])[0]
+			response = Net::HTTP.get(URI.parse(image_url))
+			if response.length < 1000
+				debugger
+				VersionerWorker.new.perform(community["id"], community["image_url"], Constant::EntityLabel::Community)
+			end
+		end
+	end
+
+	def self.get_S3_image_url id
+		versions = ["O", "M", "S", "RS"]
+		prefix = "http://rd-images.readersdoor.netdna-cdn.com/" + id.to_s
+		image_urls = versions.map { |elem| (prefix + "/" + elem + ".png") }
+		image_urls
+	end
+
+	def self.add_images_to_S3
+		params = {
+			:class 			=> CommunitiesHelper,
+			:label 			=> 'Community',
+			:function 		=> CommunitiesHelper::SetImageToS3,
+			:function_name 	=> 'SetImageToS3',
+			:step_size 		=> 500
+		}
+		GraphHelper.iterative_entity_operations params
 	end
 
 end
