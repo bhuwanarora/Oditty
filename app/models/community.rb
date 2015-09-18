@@ -31,6 +31,14 @@ class Community < CommunityInterface
 		" MATCH (community:Community) WITH community "
 	end
 
+	def set_image image_url
+		match + Community.set_image(image_url)
+	end
+
+	def self.set_image image_url
+		" SET community.image_url=\'" + image_url + "\' "
+	end
+
 	def get_old_news skip_count, time_string
 		match + Community.match_news_in_period(time_string)  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
