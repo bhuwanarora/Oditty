@@ -91,6 +91,53 @@ module RedisHelper::Author
 		info
 	end
 
+	def self.delete_popular params
+		key = RedisHelper::Author.get_key_popular params[:id]
+		$redis.del key
+	end
+
+	def self.set_popular params
+		key = RedisHelper::Author.get_key_popular params[:id]
+		$redis.set(key,params[:info].to_json)
+		$redis.expire(key, RedisHelper::MonthExpiry)
+	end
+
+	def self.get_popular params
+		key = RedisHelper::Author.get_key_popular params[:id]
+		info = $redis.get(key)
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
+		info
+	end
+
+	def self.delete_interviewed params
+		key = RedisHelper::Author.get_key_interviewed params[:id]
+		$redis.del key
+	end
+
+	def self.set_interviewed params
+		key = RedisHelper::Author.get_key_interviewed params[:id]
+		$redis.set(key,params[:info].to_json)
+		$redis.expire(key, RedisHelper::MonthExpiry)
+	end
+
+	def self.get_interviewed params
+		key = RedisHelper::Author.get_key_interviewed params[:id]
+		info = $redis.get(key)
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
+		info
+	end
+
+	def self.clear_skip
+		key = RedisHelper::Author.get_key_popular ""
+		RedisHelper.clear(key)
+		key = RedisHelper::Author.get_key_interviewed ""
+		RedisHelper.clear(key)
+	end
+
 	private
 	def self.get_key_basic_info id
 		'BAI' + id.to_s
@@ -100,8 +147,16 @@ module RedisHelper::Author
 		"GID" + id.to_s
 	end
 
+	def self.get_key_interviewed skip_count
+		"author/I" + skip_count.to_s
+	end
+
 	def self.get_key_author_books id, user_id, skip_count
 		"author/AB" + id.to_s + ":" + user_id.to_s + ":" + skip_count.to_s
+	end
+
+	def self.get_key_popular skip_count
+		"author/P" + skip_count.to_s
 	end
 
 	def self.get_key_details id, user_id

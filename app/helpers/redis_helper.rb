@@ -57,6 +57,7 @@ module RedisHelper
 
 	def self.update_author id
 		RedisHelper.clear id
+		RedisHelper::Author.clear_skip
 	end
 
 	def self.update_community id
