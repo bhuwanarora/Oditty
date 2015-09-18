@@ -358,7 +358,7 @@ module CommunitiesHelper
 				puts community["id"]
 				image = Community::CommunityImage.new(community["name"]).get_image
 				puts "new image:'#{image}' for id:#{community['id']}"
-				Community.new(community["id"]).set_image(image)
+				Community.new(community["id"]).set_image(image).execute
 				VersionerWorker.new.perform(community["id"], image, Constant::EntityLabel::Community)
 			end
 		end
