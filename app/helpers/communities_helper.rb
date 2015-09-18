@@ -355,7 +355,7 @@ module CommunitiesHelper
 			image_url = CommunitiesHelper.get_S3_image_url(community["id"])[0]
 			response = Net::HTTP.get(URI.parse(image_url))
 			if response.length < 1000
-				debugger
+				puts community["id"]
 				VersionerWorker.new.perform(community["id"], community["image_url"], Constant::EntityLabel::Community)
 			end
 		end
