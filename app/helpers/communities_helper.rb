@@ -347,7 +347,7 @@ module CommunitiesHelper
 		output = clause.execute
 		CommunitiesHelper.handle_images(output)
 		max_id = output.map{|elem| elem["id"]}.max
-		max_id
+		[{ "id" => max_id}]
 	end
 
 	def self.handle_images neo_output
