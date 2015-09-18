@@ -15,7 +15,8 @@ class VersionerWorker
 			when "community"
 				url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{id}&&bucket=#{Rails.application.config.community_bucket}&&url=#{CGI.escape(url)}"	
 			end
-			JSON.parse(Net::HTTP.get(URI.parse(url)))
+			output = JSON.parse(Net::HTTP.get(URI.parse(url)))
+			puts output.to_s.green
 		end
 	end
 end
