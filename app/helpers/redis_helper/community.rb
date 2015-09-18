@@ -146,7 +146,7 @@ module RedisHelper::Community
 		key = RedisHelper::Community.get_key_communities_from_fb_likes params[:id], params[:skip]
 		info = $redis.get(key)
 		if !info.nil?
-			info = JSON.parse(info) rescue []
+			info = JSON.parse(info) rescue nil #nil ensures that it will always check database.
 		end
 		info
 	end
