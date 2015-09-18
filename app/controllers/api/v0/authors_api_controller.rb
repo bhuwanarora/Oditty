@@ -19,7 +19,18 @@ module Api
 				user_id = session[:user_id]
 				skip_count = params[:skip].to_i
 				if skip_count.present? && (skip_count != 0)
-					info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count
+					redis_params =
+					{
+						:id => author_id,
+						:user_id => user_id,
+						:skip_count => skip_count
+					}
+					info = RedisHelper::Author.get_author_books redis_params
+					if info.nil?
+						info = Api::V0::AuthorApi.get_author_books author_id, user_id, skip_count
+						redis_params[:info] = info
+						RedisHelper::Author.set_author_books redis_params
+					end
 				else
 					redis_params =
 					{
@@ -53,7 +64,16 @@ module Api
 			end
 
 			def details
-				info = AuthorApi.get_author_details_for_book params[:book_id]
+				info = RedisHelper::Author.get_details_for_book(params[:book_id])
+				if info.nil?
+					info = AuthorApi.get_author_details_for_book params[:book_id]
+					redis_params =
+					{
+						:id => params[:book_id],
+						:info => info
+					}
+					RedisHelper::Author.set_details_for_book(redis_params)
+				end
 				render :json => info, :status => 200
 			end
 

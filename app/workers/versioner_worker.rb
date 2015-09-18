@@ -22,7 +22,7 @@ class VersionerWorker
 			rescue Exception => e
 				message = VersionerWorker.message(id, url, type)
 				filename = VersionerWorker.log_file_name
-				Elogger.log_info(message, log_file_name)
+				ELogger.log_info(message, log_file_name)
 				puts e.to_s.red
 			end
 		end
