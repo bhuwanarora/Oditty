@@ -131,6 +131,26 @@ module RedisHelper::Community
 		info
 	end
 
+	def self.delete_communities_from_fb_likes params
+		key = RedisHelper::Community.get_key_communities_from_fb_likes params[:id], params[:skip]
+		$redis.del key
+	end
+
+	def self.set_communities_from_fb_likes params
+		key = RedisHelper::Community.get_key_communities_from_fb_likes params[:id], params[:skip]
+		$redis.set(key,params[:info].to_json)
+		$redis.expire(key, RedisHelper::WeekExpiry)
+	end
+
+	def self.get_communities_from_fb_likes params
+		key = RedisHelper::Community.get_key_communities_from_fb_likes params[:id], params[:skip]
+		info = $redis.get(key)
+		if !info.nil?
+			info = JSON.parse(info) rescue []
+		end
+		info
+	end
+
 	def self.increment_view_count params
 		redis_info = RedisHelper::Community.get_basic_info params
 		if redis_info.present?
@@ -144,6 +164,11 @@ module RedisHelper::Community
 	end
 
 	private
+
+	def self.get_key_communities_from_fb_likes id, skip_count
+		"com/CFFL" + id.to_s + skip_count.to_s
+	end
+
 	def self.get_key_basic_info id
 		"BCI" + id.to_s
 	end

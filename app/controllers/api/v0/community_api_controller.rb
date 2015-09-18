@@ -94,11 +94,21 @@ module Api
 
 			def get_communities_from_fb_likes
 				user_id = session[:user_id]
-				skip_count = (params[:skip].nil?) ? 0 : params[:skip]
+				skip_count = params[:skip].to_i
 				if user_id.nil?
 					info = {:message => 'You are not logged in. Please login again !'}
 				else
-					info = Api::V0::CommunityApi.get_communities_from_fb_likes(user_id, skip_count)
+					params_redis =
+					{
+						:id => user_id,
+						:skip => skip_count
+					}
+					info = RedisHelper::Community.get_communities_from_fb_likes params_redis
+					if info.nil?
+						info = Api::V0::CommunityApi.get_communities_from_fb_likes(user_id, skip_count)
+						params_redis[:info] = info
+						RedisHelper::Community.set_communities_from_fb_likes params_redis
+					end
 				end
 				render :json => info, :status => 200
 			end
