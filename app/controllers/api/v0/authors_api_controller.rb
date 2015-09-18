@@ -117,7 +117,7 @@ module Api
 			end
 
 			def get_authors_interviewed
-				skip = params[:skip]
+				skip = params[:skip].to_i
 				redis_params = {:id => skip}
 				info = RedisHelper::Author.get_interviewed(redis_params)
 				if info.nil?
