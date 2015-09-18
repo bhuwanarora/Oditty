@@ -131,6 +131,13 @@ module RedisHelper::Author
 		info
 	end
 
+	def self.clear_skip
+		key = RedisHelper::Author.get_key_popular ""
+		RedisHelper.clear(key)
+		key = RedisHelper::Author.get_key_interviewed ""
+		RedisHelper.clear(key)
+	end
+
 	private
 	def self.get_key_basic_info id
 		'BAI' + id.to_s
