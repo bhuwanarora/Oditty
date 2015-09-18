@@ -20,8 +20,19 @@ class VersionerWorker
 				output = JSON.parse(Net::HTTP.get(URI.parse(url)))
 				puts output.to_s.green
 			rescue Exception => e
-				puts e.to_s.red				
+				message = VersionerWorker.message(id, url, type)
+				filename = VersionerWorker.log_file_name
+				Elogger.log_info(message, log_file_name)
+				puts e.to_s.red
 			end
 		end
+	end
+
+	def self.log_file_name
+		"versioner_failed_tasks"
+	end
+
+	def self.message id, url, type
+		" id:" + id.to_s + "url:" + url.to_s + " type:" + type.to_s + " "
 	end
 end
