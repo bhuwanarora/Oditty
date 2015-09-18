@@ -59,7 +59,13 @@ module Api
 
 			def get_popular_authors
 				skip_count = params[:skip_count] || 0
-				authors =  Api::V0::AuthorApi.get_active_authors(skip_count).execute
+				redis_params = {:id => skip_count }
+				authors = RedisHelper::Author.get_popular(redis_params)
+				if authors.nil?
+					authors =  Api::V0::AuthorApi.get_active_authors(skip_count).execute
+					redis_params[:info] = authors
+					RedisHelper::Author.set_popular(redis_params)
+				end
 				render :json => authors, :status => 200
 			end
 
@@ -112,7 +118,13 @@ module Api
 
 			def get_authors_interviewed
 				skip = params[:skip]
-				info = Api::V0::AuthorApi.get_interviewed(skip)
+				redis_params = {:id => skip}
+				info = RedisHelper::Author.get_interviewed(redis_params)
+				if info.nil?
+					info = Api::V0::AuthorApi.get_interviewed(skip)
+					redis_params[:info] = info
+					RedisHelper::Author.set_interviewed(redis_params)
+				end
 				render :json => info, :status => 200			
 			end
 		end
