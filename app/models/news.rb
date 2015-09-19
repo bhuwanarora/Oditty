@@ -202,7 +202,7 @@ class News < Neo
 	end
 
 	def self.match_popular_news_from_last_week
-		News.match + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 1 WITH news "
+		News.match + " WHERE ("+Time.now.to_i.to_s+" - TOINT(news.created_at))/86400 < 1 WITH news "
 	end
 
 	private
