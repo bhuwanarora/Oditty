@@ -75,8 +75,12 @@ class News < Neo
 	def self.set_metadata news_metadata
 		clause = ""
 		news_metadata.each do |key, value|
-			unless key == "news_link" || key == "available" || key == "region" 
-				clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" " 
+			unless key == "news_link" || key == "available" || key == "region"
+				if value.is_a? String
+					clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" "
+				else
+					clause += " SET news." + key + " = " + value.to_s + " "
+				end
 			end
 		end
 		clause + News.set_indexed_title(news_metadata["title"]) + News.set_search_index(news_metadata["title"])
