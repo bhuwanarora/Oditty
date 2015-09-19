@@ -28,7 +28,8 @@ module NewsHelper
 			"image_url" 		=> "",
 			"description" 		=> "",
 			"literature_news" 	=> false,
-			"region"			=> nil
+			"region"			=> nil,
+			"created_at"		=> params[:created_at]
 		}
 		google_rank = params[:rank]
 		community_id = params[:id]
