@@ -29,7 +29,7 @@ module NewsHelper
 			"description" 		=> "",
 			"literature_news" 	=> false,
 			"region"			=> nil,
-			"created_at"		=> params[:created_at]
+			"created_at"		=> params[:created_at].to_i
 		}
 		google_rank = params[:rank]
 		community_id = params[:id]
