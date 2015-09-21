@@ -208,24 +208,28 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             }
 
             $scope.show_more_suggestions = function(){
-                if(angular.isUndefined($scope.rooms)){
-                    $scope.rooms = [];
-                }
-                var skip = $scope.rooms.length;
-                userService.room_suggestions(skip).then(function(data){
-                    if(data.length <= 1){
-                        if($scope.rooms.length <= 1){
-                            $scope.rooms = _rooms();
-                            $scope.no_suggestions = true;
+                if(!$scope.rooms_loading){
+                    $scope.rooms_loading = true;
+                    if(angular.isUndefined($scope.rooms)){
+                        $scope.rooms = [];
+                    }
+                    var skip = $scope.rooms.length;
+                    userService.room_suggestions(skip).then(function(data){
+                        $scope.rooms_loading = false;
+                        if(data.length <= 1){
+                            if($scope.rooms.length <= 1){
+                                $scope.rooms = _rooms();
+                                $scope.no_suggestions = true;
+                            }
+                            else{
+                                _add_rooms(data);
+                            }
                         }
                         else{
                             _add_rooms(data);
                         }
-                    }
-                    else{
-                        _add_rooms(data);
-                    }
-                });
+                    });
+                }
             }
 
             var _init = function(){
