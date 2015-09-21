@@ -161,8 +161,8 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         deleteCookie("redirect_url");
         setCookie("redirect_url", $location.$$absUrl);
 
-        // Facebook.api('/me', function(response){
-        FB.login(function(response){
+        Facebook.api('/me', function(response){
+        // FB.login(function(response){
             if(angular.isUndefined($rootScope.user)){
                 $rootScope.user = {};
             }
