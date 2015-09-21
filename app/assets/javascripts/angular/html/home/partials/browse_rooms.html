@@ -31,7 +31,7 @@
                                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
                                         onerror="this.src='https://oditty.me/assets/rooms.png'"
                                         class="small_circle"/>
-                                    <md-tooltip>Because you like&nbsp;{{like.name}}</md-tooltip>
+                                    <md-tooltip>Because you like &nbsp;{{like.name}}</md-tooltip>
                                 </a>
                             </div>
                         </div>
@@ -43,8 +43,11 @@
     <div layout-padding ng-if="no_suggestions">
         <a href="/rooms" class="less_important site_color bold">35000+ more Rooms...</a>
     </div>
-    <div layout-padding ng-if="!no_suggestions">
+    <div layout-padding ng-if="!no_suggestions" ng-hide="rooms_loading">
         <a ng-click="show_more_suggestions()" class="less_important site_color bold">Show me more Suggestions...</a>
+    </div>
+    <div ng-if="rooms_loading">
+        Loading...
     </div>
 </div>
 <div ng-if="reduced" >
@@ -53,17 +56,17 @@
             <div>Rooms Suggestions</div>
         </a></h3>
     </div>
-    <div class="feed_ticker">
+    <div class="feed_ticker" check-scroll-bottom="show_more_suggestions()">
         <div ng-repeat="trend in rooms" layout="row" layout-padding>
             <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="square" 
                 onerror="this.src='https://oditty.me/assets/rooms.png'"/>
             <div layout="column">
                 <a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a>
                 <div layout="row" layout-padding class="less_important" layout-wrap>
-                    <span>Because you like </span>
+                    <span>Because you like&nbsp;</span>
                     <span ng-repeat="like in trend.facebook_likes">
                         <a ng-href="/room?id={{like.id}}" class="less_important">
-                            <span>{{like.name}}</span>
+                            <span>{{like.name}}&nbsp;</span>
                         </a>
                     </span>
                 </div>

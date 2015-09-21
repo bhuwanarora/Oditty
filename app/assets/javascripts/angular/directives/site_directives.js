@@ -7,18 +7,16 @@ homeApp.directive('userCommunities', ["$rootScope", "userService", function($roo
             var _init = function(){
                 $scope.rooms = [];
                 if(angular.isUndefined($scope.userId) || ($scope.userId == null)){
-                    if(angular.isDefined($rootScope.user.id)){
+                    if(angular.isDefined($rootScope.user) && angular.isDefined($rootScope.user.id)){
                         $scope.userId = $rootScope.user.id;
                     }
                 }
-                if(angular.isDefined($scope.userId)){
-                    userService.get_communities($scope.userId).then(function(data){
-                        angular.forEach(data, function(room){
-                            var json = angular.extend(room, {"status": 1});
-                            this.push(json);
-                        }, $scope.rooms);
-                    });
-                }
+                userService.get_communities($scope.userId).then(function(data){
+                    angular.forEach(data, function(room){
+                        var json = angular.extend(room, {"status": 1});
+                        this.push(json);
+                    }, $scope.rooms);
+                });
             }
 
             _init();
@@ -208,24 +206,28 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             }
 
             $scope.show_more_suggestions = function(){
-                if(angular.isUndefined($scope.rooms)){
-                    $scope.rooms = [];
-                }
-                var skip = $scope.rooms.length;
-                userService.room_suggestions(skip).then(function(data){
-                    if(data.length <= 1){
-                        if($scope.rooms.length <= 1){
-                            $scope.rooms = _rooms();
-                            $scope.no_suggestions = true;
+                if(!$scope.rooms_loading){
+                    $scope.rooms_loading = true;
+                    if(angular.isUndefined($scope.rooms)){
+                        $scope.rooms = [];
+                    }
+                    var skip = $scope.rooms.length;
+                    userService.room_suggestions(skip).then(function(data){
+                        $scope.rooms_loading = false;
+                        if(data.length <= 1){
+                            if($scope.rooms.length <= 1){
+                                $scope.rooms = _rooms();
+                                $scope.no_suggestions = true;
+                            }
+                            else{
+                                _add_rooms(data);
+                            }
                         }
                         else{
                             _add_rooms(data);
                         }
-                    }
-                    else{
-                        _add_rooms(data);
-                    }
-                });
+                    });
+                }
             }
 
             var _init = function(){
@@ -241,65 +243,6 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             _init();
         }],
         templateUrl: '/assets/angular/html/home/partials/browse_rooms.html'
-    };
-}]);
-
-homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", "$mdSidenav", function($rootScope, userService, $timeout, $mdSidenav){
-    return {
-        restrict: 'E',
-        scope: {"global": "=", "info": "="},
-        controller: ["$scope", function($scope){
-            $scope.get_feed = function(){
-                if(!$scope.info.feed_loading){
-                    $scope.info.feed_loading = true;
-                    if(angular.isDefined($scope.social_feed)){
-                        var skip = $scope.social_feed.length;
-                    }
-                    else{
-                        var skip = 0;
-                        $scope.social_feed = [];
-                    }
-                    if(angular.isDefined($scope.global) && $scope.global){
-                        userService.get_global_feed(skip).then(function(data){
-                            $scope.info.feed_loading = false;
-                            $scope.social_feed = $scope.social_feed.concat(data);
-                        });
-                    }
-                    else{
-                        userService.get_social_feed(skip).then(function(data){
-                            $scope.info.feed_loading = false;
-                            $scope.social_feed = $scope.social_feed.concat(data);
-                        });
-                    }
-                }
-            }
-
-            var _unauthenticated_user = function(){
-                return ((getCookie("logged") == "") || (getCookie("logged") == null));
-            }
-
-            $scope.handle_feed = function(){
-                if(_unauthenticated_user()){
-                    $mdSidenav('signup').toggle();
-                }
-                else{
-                    $scope.get_feed();
-                }
-            }
-
-            var _init = function(){
-                var room_timeout = $timeout(function(){
-                    $scope.handle_feed();
-                }, 100);
-
-                $scope.$on('destroy', function(){
-                    $timeout.cancel(room_timeout);
-                });
-            }
-
-            _init();
-        }],
-        templateUrl: '/assets/angular/html/home/partials/social_feed.html'
     };
 }]);
 
