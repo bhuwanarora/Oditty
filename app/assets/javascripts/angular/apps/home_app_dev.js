@@ -148,7 +148,7 @@ homeApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, 
 homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
-        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("communities") < 0) && ($location.$$absUrl.indexOf("home") < 0) && ($location.$$absUrl.indexOf("room") < 0) && ($location.$$absUrl.indexOf("news") < 0) && ($location.$$absUrl.indexOf("news_group") < 0) && ($location.$$absUrl.indexOf("filters") < 0) && ($location.$$absUrl.indexOf("games") < 0) && ($location.$$absUrl.indexOf("publisher") < 0) && ($location.$$absUrl.indexOf("search") < 0) && ($location.$$absUrl.indexOf("profile") < 0) && ($location.$$absUrl.indexOf("quiz") < 0) && ($location.$$absUrl.indexOf("journey") < 0) && ($location.$$absUrl.split("/")[3] != "");
+        var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("communities") < 0) && ($location.$$absUrl.indexOf("home") < 0) && ($location.$$absUrl.indexOf("room") < 0) && ($location.$$absUrl.indexOf("news") < 0) && ($location.$$absUrl.indexOf("news_group") < 0) && ($location.$$absUrl.indexOf("filters") < 0) && ($location.$$absUrl.indexOf("games") < 0) && ($location.$$absUrl.indexOf("publisher") < 0) && ($location.$$absUrl.indexOf("search") < 0) && ($location.$$absUrl.indexOf("profile") < 0) && ($location.$$absUrl.indexOf("quiz") < 0) && ($location.$$absUrl.indexOf("spaces") < 0) && ($location.$$absUrl.indexOf("journey") < 0) && ($location.$$absUrl.split("/")[3] != "");
         var personal_profile = $location.$$absUrl.split("/")[3] == "profile";
         if(closed_urls || personal_profile){
             // $cookieStore.put('redirect_url', $location.$$absUrl);
@@ -186,11 +186,11 @@ homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", fun
         }
         _handle_todo_update();
     }
-    else if(window.location.pathname == "/rooms"){
+    else if(window.location.pathname == "/browse"){
         var _handle_todo_update = function(){
             var todo = getCookie("todo");
             if(todo){
-                $scope.todo = JSON.parse(todo);
+                todo = JSON.parse(todo);
                 if(!$scope.todo.home.rooms){
                     deleteCookie("continue_to");
                     setCookie("continue_to", $location.absUrl());
@@ -200,7 +200,7 @@ homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", fun
         }
         _handle_todo_update();
     }
-    else if(window.location.pathname == "/filters"){
+    else if(window.location.pathname == "/books"){
         var _handle_todo_update = function(){
             var todo = getCookie("todo");
             if(todo){

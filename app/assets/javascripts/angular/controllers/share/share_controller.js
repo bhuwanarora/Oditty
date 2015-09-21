@@ -130,89 +130,98 @@ homeApp.controller('shareController', ["$scope", "$rootScope", "$timeout", 'Shar
         }
     }
 
+    var _unauthenticated_user = function(){
+        return ((getCookie("logged") == "") || (getCookie("logged") == null));
+    }
+
     $scope.post_status = function(){
-        $scope.posting = true;
-        $scope.info.share_loading = true;
-        var status = {};
-
-        if($scope.reading_status_selected && $scope.selected_book){
-            $scope.info.wrapper_status = "";
-            $scope.info.status = $scope.info.status || "";
-            if(!$scope.active_emotion){
-                $scope.info.status = $scope.info.status + " "+ $scope.reading_options[$scope.active_id].status;
-                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
-            }
-            else{
-                $scope.info.status = $scope.info.status + " Feeling "+ $scope.active_emotion.name + " " + $scope.reading_options[$scope.active_id].emotion_status;
-                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
-            }
-
-            $scope.info.status = $scope.info.status + " " + $scope.selected_book.title + " by " + $scope.selected_book.author_name;
-
-            $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.selected_book.title+" </span><span class='less_important'>by "+$scope.selected_book.author_name+"</span>";
-
-            if($scope.info.current_page){
-                $scope.info.status = $scope.info.status + " on page " + $scope.info.current_page;
-                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span> on page <b>"+$scope.info.current_page+"</b></span>";
-            }
-
-            if($scope.info.page_count){
-                $scope.info.status = $scope.info.status + "/"+ $scope.info.page_count;
-                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><b>/{{info.page_count}}</b>.</span>";
-            }
-        }
-
-        if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
-            status = angular.extend(status, {"feelings": $scope.info.feelings});
-        }
-        if(angular.isDefined($scope.info.reading_status_value)){
-            status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
-        }
-        if(angular.isDefined($scope.info.book)){
-            status = angular.extend(status, {"book_id": ($scope.info.book.id || $scope.info.book.book_id)});
-        }
-        if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
-            status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});
-        }
-        if(angular.isDefined($scope.info.mentioned_authors_ids) && ($scope.info.mentioned_authors_ids.length > 0)){
-            status = angular.extend(status, {"mentioned_authors_ids": $scope.info.mentioned_authors_ids});
-        }
-        if(angular.isDefined($scope.info.hash_tags) && ($scope.info.hash_tags.length > 0)){
-            status = angular.extend(status, {"hash_tags": $scope.info.hash_tags});
-        }
-        if(angular.isDefined($scope.info.status) && ($scope.info.status.length > 0)){
-            status = angular.extend(status, {"content": $scope.info.status});
-        }
-        if(angular.isDefined($scope.info.wrapper_status) && ($scope.info.wrapper_status.length > 0)){
-            status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
-        }
-        if(angular.isDefined($scope.info.book_exchange_status)){
-            status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status});
-        }
-        if(angular.isDefined($scope.info.page_count)){
-            status = angular.extend(status, {"total_page_count": $scope.info.page_count});
-        }
-        if(angular.isDefined($scope.info.current_page)){
-            status = angular.extend(status, {"current_page": $scope.info.current_page});
-        }
-
-        if(Object.keys(status).length != 0){
-            statusService.post_status(status).then(function(){
-                $scope.posting = false;
-                $scope.info.share_loading = false;
-                window.location.reload();
-            });
-            $scope.info.status = "";
-            $scope.info.wrapper_status = "";
-            $scope.type_icon_pressed = {"margin-right": "60vw"};
-            $timeout(function(){
-                $scope.type_icon_pressed = {"margin-right": "0px"};
-            }, 100);
-            $scope.make_status_inactive();
+        if(_unauthenticated_user()){
+            $mdSidenav('signup').toggle();
         }
         else{
             $scope.posting = true;
             $scope.info.share_loading = true;
+            var status = {};
+
+            if($scope.reading_status_selected && $scope.selected_book){
+                $scope.info.wrapper_status = "";
+                $scope.info.status = $scope.info.status || "";
+                if(!$scope.active_emotion){
+                    $scope.info.status = $scope.info.status + " "+ $scope.reading_options[$scope.active_id].status;
+                    $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><span class='custom_title light_title'><span>"+$scope.reading_options[$scope.active_id].status+"</span></span>"
+                }
+                else{
+                    $scope.info.status = $scope.info.status + " Feeling "+ $scope.active_emotion.name + " " + $scope.reading_options[$scope.active_id].emotion_status;
+                    $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='custom_title light_title'><span>Feeling "+$scope.active_emotion.name+"  </span><span>"+$scope.reading_options[$scope.active_id].emotion_status+"</span></span>";
+                }
+
+                $scope.info.status = $scope.info.status + " " + $scope.selected_book.title + " by " + $scope.selected_book.author_name;
+
+                $scope.info.wrapper_status = $scope.info.wrapper_status + "<span class='big_title bold_light_title'>"+$scope.selected_book.title+" </span><span class='less_important'>by "+$scope.selected_book.author_name+"</span>";
+
+                if($scope.info.current_page){
+                    $scope.info.status = $scope.info.status + " on page " + $scope.info.current_page;
+                    $scope.info.wrapper_status = $scope.info.wrapper_status + "<span> on page <b>"+$scope.info.current_page+"</b></span>";
+                }
+
+                if($scope.info.page_count){
+                    $scope.info.status = $scope.info.status + "/"+ $scope.info.page_count;
+                    $scope.info.wrapper_status = $scope.info.wrapper_status + "<span><b>/{{info.page_count}}</b>.</span>";
+                }
+            }
+
+            if(angular.isDefined($scope.info.feelings) && ($scope.info.feelings.length > 0)){
+                status = angular.extend(status, {"feelings": $scope.info.feelings});
+            }
+            if(angular.isDefined($scope.info.reading_status_value)){
+                status = angular.extend(status, {"reading_status_value": $scope.info.reading_status_value});
+            }
+            if(angular.isDefined($scope.info.book)){
+                status = angular.extend(status, {"book_id": ($scope.info.book.id || $scope.info.book.book_id)});
+            }
+            if(angular.isDefined($scope.info.mentioned_users_ids) && ($scope.info.mentioned_users_ids.length > 0)){
+                status = angular.extend(status, {"mentioned_users_ids": $scope.info.mentioned_users_ids});
+            }
+            if(angular.isDefined($scope.info.mentioned_authors_ids) && ($scope.info.mentioned_authors_ids.length > 0)){
+                status = angular.extend(status, {"mentioned_authors_ids": $scope.info.mentioned_authors_ids});
+            }
+            if(angular.isDefined($scope.info.hash_tags) && ($scope.info.hash_tags.length > 0)){
+                status = angular.extend(status, {"hash_tags": $scope.info.hash_tags});
+            }
+            if(angular.isDefined($scope.info.status) && ($scope.info.status.length > 0)){
+                status = angular.extend(status, {"content": $scope.info.status});
+            }
+            if(angular.isDefined($scope.info.wrapper_status) && ($scope.info.wrapper_status.length > 0)){
+                status = angular.extend(status, {"wrapper_content": $scope.info.wrapper_status});
+            }
+            if(angular.isDefined($scope.info.book_exchange_status)){
+                status = angular.extend(status, {"book_exchange_status": $scope.info.book_exchange_status});
+            }
+            if(angular.isDefined($scope.info.page_count)){
+                status = angular.extend(status, {"total_page_count": $scope.info.page_count});
+            }
+            if(angular.isDefined($scope.info.current_page)){
+                status = angular.extend(status, {"current_page": $scope.info.current_page});
+            }
+
+            if(Object.keys(status).length != 0){
+                statusService.post_status(status).then(function(){
+                    $scope.posting = false;
+                    $scope.info.share_loading = false;
+                    window.location.reload();
+                });
+                $scope.info.status = "";
+                $scope.info.wrapper_status = "";
+                $scope.type_icon_pressed = {"margin-right": "60vw"};
+                $timeout(function(){
+                    $scope.type_icon_pressed = {"margin-right": "0px"};
+                }, 100);
+                $scope.make_status_inactive();
+            }
+            else{
+                $scope.posting = true;
+                $scope.info.share_loading = true;
+            }
         }
     }
 

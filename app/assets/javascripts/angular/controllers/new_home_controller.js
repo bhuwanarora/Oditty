@@ -17,10 +17,10 @@ homeApp.controller('newHomeController', ["$scope", "$timeout", 'SearchUIConstant
         }
 
         if(filters != ""){
-            window.location.href = "/filters?"+filters;
+            window.location.href = "/books?"+filters;
         }
         else{
-            window.location.href = "/filters";
+            window.location.href = "/books";
         }
     }
 

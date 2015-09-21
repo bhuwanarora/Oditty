@@ -23,11 +23,22 @@ class WebsiteController < ApplicationController
 		render :json => {:message => "Success"}, :status => 200
 	end
 
+	def products
+		@products = true
+		@title = "Aiming to assimilate All Human Knowledge | Oditty Products"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "Aiming to assimilate All Human Knowledge | Oditty Products", "description" => "Aiming to assimilate All Human Knowledge", "description" => "My Smart and Social Knowledge Discovery Platform for News, Books, and Videos", "image_url" => "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/12036689_488803224623886_4162488278945721496_n.jpg?oh=34ec62c9bb7ec5d56df5f5163fee6959&oe=566A6C86&__gda__=1453697292_192dd1a4bea6148336fa02317b722422"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
+	end
+
 	def journey
 		@journey = true
 		@title = "Our Journey So Far | Oditty"
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			@info = {"title" => "Our Journey So Far | Oditty", "description" => "My Smart and Social Knowledge Discovery Platform for News, Books, and Videos", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/journey.png"}
+			@info = {"title" => "Our Journey So Far | Oditty", "description" => "My Smart and Social Knowledge Discovery Platform for News, Books, and Videos", "image_url" => "https://oditty.me/assets/journey.png"}
 			render :layout => "social"
 		else
 			render :layout => "material"
@@ -43,7 +54,7 @@ class WebsiteController < ApplicationController
 		@games = true
 		@title = "Judge a Book by its cover | Games on Oditty"
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
-			@info = {"title" => "Judge a Book by its cover #Addictive #PlayNow", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/games.png"}
+			@info = {"title" => "Judge a Book by its cover #Addictive #PlayNow", "meta_type" => "Game", "image_url" => "https://oditty.me/assets/gamescover.png"}
 			render :layout => "social"
 		else
 			render :layout => "material"
@@ -58,8 +69,13 @@ class WebsiteController < ApplicationController
 
 	def testimonials
 		@testimonials = true
-		@title = "Testimonials on Oditty"
-		render :layout => "material"
+		@title = "Share your feedback | Oditty Feedbacks"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "Share your feedback | Oditty Feedbacks", "image_url" => "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/12036689_488803224623886_4162488278945721496_n.jpg?oh=34ec62c9bb7ec5d56df5f5163fee6959&oe=566A6C86&__gda__=1453697292_192dd1a4bea6148336fa02317b722422", "description" => "Share your feedback | Oditty Feedbacks"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
 	end
 
 	def email_subscription
@@ -86,8 +102,20 @@ class WebsiteController < ApplicationController
 
 	def quiz
 		@quiz = true
+		@title = "Discover yourself through Oditty Quizzes"
 		if BotDetector.detect request.env['HTTP_USER_AGENT']
 			@info = {"title" => "Discover yourself through Oditty Quizzes", "meta_type" => "Quiz", "image_url" => "http://oditty.me/assets/quiz.png", "description" => "Quizzes are for fun. #OdittyQuizzes"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
+	end
+
+	def spaces
+		@spaces = true
+		@title = "Feed from my social circle | Oditty Spaces"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "Feed from my social circle | Oditty Spaces", "description" => "Spaces are your social feed.",  "image_url" => "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/12036689_488803224623886_4162488278945721496_n.jpg?oh=34ec62c9bb7ec5d56df5f5163fee6959&oe=566A6C86&__gda__=1453697292_192dd1a4bea6148336fa02317b722422"}
 			render :layout => "social"
 		else
 			render :layout => "material"
@@ -120,7 +148,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :home, :layout => "material"
+		render :products, :layout => "material"
 	end
 
 	def privacy
@@ -137,10 +165,17 @@ class WebsiteController < ApplicationController
 
 
 	def news_feed_rooms
-		session[:news_day_skip_count] = 0
-		session[:news_skip_count] = 0
-		@news_group = true
-		render :layout => "material"	
+		@title = "Stay Updated with News in Rooms I care about | Oditty News"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "Stay Updated with News in Rooms I care about | Oditty News", "description" => "Aiming to assimilate All Human Knowledge", "description" => "My Smart and Social Knowledge Discovery Platform for News, Books, and Videos", "image_url" => "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/12036689_488803224623886_4162488278945721496_n.jpg?oh=34ec62c9bb7ec5d56df5f5163fee6959&oe=566A6C86&__gda__=1453697292_192dd1a4bea6148336fa02317b722422"}
+			render :layout => "social"
+		else
+			session[:news_day_skip_count] = 0
+			session[:news_skip_count] = 0
+			@news_group = true
+			render :layout => "material"	
+		end
+		
 	end
 
 	### WEBSITE NEW 
@@ -148,8 +183,8 @@ class WebsiteController < ApplicationController
 		news_feed_rooms
 	end
 
-	def rooms
-		@rooms = true
+	def browse
+		@browse = true
 		@title = "Rooms of Knowledge, Oditty | #OditRooms"
 		render :layout => "material"
 	end
@@ -170,14 +205,20 @@ class WebsiteController < ApplicationController
 		end
 	end
 
-	def filters
-		@title = "Filter through Books, Oditty"
-		@filters = true
-		render :layout => "material"
+	def books
+		@books = true
+		@title = "Filter books depending on your taste | Oditty Books"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "Filter books depending on your taste | Oditty Books", "description" => "Aiming to assimilate All Human Knowledge", "description" => "My Smart and Social Knowledge Discovery Platform for News, Books, and Videos", "image_url" => "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/12036689_488803224623886_4162488278945721496_n.jpg?oh=34ec62c9bb7ec5d56df5f5163fee6959&oe=566A6C86&__gda__=1453697292_192dd1a4bea6148336fa02317b722422"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
 	end
 
 	def search
 		@search = true
+		@title = "Oditty Search"
 		render :layout => "material"
 	end
 
@@ -313,6 +354,17 @@ class WebsiteController < ApplicationController
 	def home
 		@home = true
 		render :layout => "material"
+	end
+
+	def rooms
+		@rooms = true
+		@title = "News, Videos and Books on a particular topic | Oditty Rooms"
+		if BotDetector.detect request.env['HTTP_USER_AGENT']
+			@info = {"title" => "News, Videos and Books on a particular topic | Oditty Rooms", "description" => "Aiming to assimilate All Human Knowledge", "description" => "My Smart and Social Knowledge Discovery Platform for News, Books, and Videos", "image_url" => "https://fbcdn-sphotos-g-a.akamaihd.net/hphotos-ak-xft1/v/t1.0-9/12036689_488803224623886_4162488278945721496_n.jpg?oh=34ec62c9bb7ec5d56df5f5163fee6959&oe=566A6C86&__gda__=1453697292_192dd1a4bea6148336fa02317b722422"}
+			render :layout => "social"
+		else
+			render :layout => "material"
+		end
 	end
 
 	# def home

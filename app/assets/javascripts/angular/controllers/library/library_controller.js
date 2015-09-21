@@ -44,7 +44,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
 
     $scope.expand_book = function(index){
         if(window.innerWidth > 1100){
-            var row_count = 5;
+            var row_count = 6;
         }
         else if(window.innerWidth > 900){
             var row_count = 4;
