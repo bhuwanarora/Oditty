@@ -248,7 +248,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/home/main.html',
-    "<div layout=\"row\"><div flex=\"5\" flex-md=\"5\" hide-sm></div><div flex=\"90\" flex-md=\"90\" flex-sm=\"100\" layout=\"row\" layout-align=\"space-between\" layout-sm=\"column\"><div flex=\"35\" flex-md=\"25\" hide-sm><div class=\"white\"><browse-rooms reduced=\"true\"></browse-rooms><br><h3>Rooms Joined</h3><user-communities layout=\"row\" reduced=\"true\" layout-wrap layout-align=\"center start\"></user-communities><br><trending></trending></div></div><div flex=\"10\" flex-md=\"5\" hide-sm></div><div flex=\"55\" flex-md=\"70\" flex-sm=\"100\"><div ng-repeat=\"news_feed in feed track by $index\" layout-margin><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></div><div flex=\"5\" flex-md=\"5\" hide-sm></div></div>"
+    "<div layout=\"row\"><div flex=\"5\" flex-md=\"5\" hide-sm></div><div flex=\"90\" flex-md=\"90\" flex-sm=\"100\" layout=\"row\" layout-align=\"space-between\" layout-sm=\"column\"><div flex=\"35\" flex-md=\"25\" hide-sm><div class=\"white\"><browse-rooms reduced=\"true\"></browse-rooms><br><div ng-hide=\"!info.hide_signin\"><h3>Rooms Joined</h3><user-communities layout=\"row\" reduced=\"true\" layout-wrap layout-align=\"center start\"></user-communities></div><br><trending></trending></div></div><div flex=\"10\" flex-md=\"5\" hide-sm></div><div flex=\"55\" flex-md=\"70\" flex-sm=\"100\"><div ng-repeat=\"news_feed in feed track by $index\" layout-margin><div ng-include src=\"'/assets/angular/html/home/partials/feed_type.html'\"></div></div></div></div><div flex=\"5\" flex-md=\"5\" hide-sm></div></div>"
   );
 
 
