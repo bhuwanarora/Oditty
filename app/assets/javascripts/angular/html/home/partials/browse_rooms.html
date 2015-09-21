@@ -43,8 +43,11 @@
     <div layout-padding ng-if="no_suggestions">
         <a href="/rooms" class="less_important site_color bold">35000+ more Rooms...</a>
     </div>
-    <div layout-padding ng-if="!no_suggestions">
+    <div layout-padding ng-if="!no_suggestions" ng-hide="rooms_loading">
         <a ng-click="show_more_suggestions()" class="less_important site_color bold">Show me more Suggestions...</a>
+    </div>
+    <div ng-if="rooms_loading">
+        Loading...
     </div>
 </div>
 <div ng-if="reduced" >
