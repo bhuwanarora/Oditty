@@ -3,16 +3,16 @@
 		<img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png" />
 	</div>
 	<br/>
-	<div layout-padding>
-		<a ng-bind-html="room.name" class="big_title" ng-href="/room?id={{room.id}}"></a>
+	<div layout-padding class="room_content">
+		<a ng-bind-html="room.name" ng-href="/room?id={{room.id}}"></a>
 		<div class="less_important">{{room.view_count}} Views</div>
-		<a ng-href="/room?id={{room.id}}">
+		<a ng-href="/room?id={{room.id}}" class="action_button">
 			<md-button ng-if="room.status"  class="md-button-clear">
 				View
 			</md-button>
 		</a>
 		<br/>
-		<md-button ng-click="join_room(room)" ng-if="!room.status" class="md-button-clear md-raised">
+		<md-button ng-click="join_room(room)" ng-if="!room.status" class="md-button-clear md-raised action_button">
 			Join
 		</md-button>
 	</div>

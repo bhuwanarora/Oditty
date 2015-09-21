@@ -160,7 +160,9 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
     $scope.me = function() {
         deleteCookie("redirect_url");
         setCookie("redirect_url", $location.$$absUrl);
-        Facebook.api('/me', function(response){
+
+        // Facebook.api('/me', function(response){
+        FB.login(function(response){
             if(angular.isUndefined($rootScope.user)){
                 $rootScope.user = {};
             }
@@ -176,7 +178,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                     $rootScope.user = angular.extend($rootScope.user, response);
                 });
             }
-        });
+        }, {scope: 'email,user_likes,user_location,user_actions.books,user_friends,public_profile,user_birthday'});
     };
 
     var _redirect_user = function(){
@@ -216,9 +218,9 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                 'authors': {'bookmarked': [], 'follow': []},
                 'readers': {'follow': []},
                 'logged': false};
-        $rootScope.user.logged = true;
-        setCookie("logged", true, 31);
-        setCookie("logged", 4986324, 31);
+        // $rootScope.user.logged = true;
+        // setCookie("logged", true, 31);
+        // setCookie("logged", 4986324, 31);
         
     }());
 

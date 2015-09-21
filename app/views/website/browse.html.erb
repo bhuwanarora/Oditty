@@ -1,0 +1,29 @@
+<div  ng-include src="'/assets/angular/html/todo/link.html'" 
+    ng-if="!todo.rooms.join || !todo.rooms.visit"></div>
+<div layout="row" layout-wrap class="feed_margin">
+    <div flex="5" hide-sm flex-md="10"></div>
+    <div flex="90" flex-sm="100" flex-md="80" layout="row" layout-align="center"
+        layout-wrap ng-include src="'/assets/angular/html/rooms/show.html'">
+    </div>
+    <div flex="5" hide-sm flex-md="10"></div>
+</div>
+<style>
+   .room_image_wrapper{
+        position: relative;
+        width: 265px;
+        height: 265px;
+        overflow: hidden;
+   }
+
+   .room_image_wrapper img{
+        position: absolute;
+        min-height: 265px;
+        min-width: 265px;
+        width: 100%;
+   }
+
+   .room_container{
+      width: 265px;
+   }
+    
+</style>
