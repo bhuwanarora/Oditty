@@ -33,6 +33,6 @@ class VersionerWorker
 	end
 
 	def self.message id, url, type
-		" id:" + id.to_s + "url:" + url.to_s + " type:" + type.to_s + " "
+		" id:" + id.to_s + " url:" + url.to_s + " type:" + type.to_s + " "
 	end
 end
