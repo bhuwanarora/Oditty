@@ -7,7 +7,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
 
     $scope.handle_personalised_redirect = function(event){
     	if($scope.info.hide_signin){
-    		window.location.href = "/personalised_suggestions";
+    		window.location.href = "https://oditty.me/personalised_suggestions";
     	}
     	else{
     		$scope.show_signin_options(event);
@@ -16,7 +16,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
 
     $scope.handle_news_redirect = function(event){
     	if($scope.info.hide_signin){
-    		window.location.href = "/rooms";
+    		window.location.href = "https://rooms.oditty.me/";
     	}
     	else{
     		$scope.show_signin_options(event);
@@ -25,7 +25,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
 
     $scope.handle_infinity_redirect = function(event){
     	if($scope.info.hide_signin){
-    		window.location.href = "/books";
+    		window.location.href = "https://books.oditty.me/";
     	}
     	else{
     		$scope.show_signin_options(event);
