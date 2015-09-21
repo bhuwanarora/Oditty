@@ -51,8 +51,9 @@ class CommunityInterface < Neo
 
 	def self.get_news(id, skip_count, time)
 		community_clause = Community.new(id).get_news(skip_count, time)
-		facebook_clause = FacebookLike.new(id).get_news(skip_count, time)
-		clause = community_clause + " UNION " + facebook_clause
+		#facebook_clause = FacebookLike.new(id).get_news(skip_count, time)
+		#clause = community_clause + " UNION " + facebook_clause
+		clause = community_clause
 		output = clause.execute
 		output
 	end
@@ -60,8 +61,9 @@ class CommunityInterface < Neo
 
 	def self.get_videos(id)
 		community_clause = Community.new(id).get_videos
-		facebook_clause = FacebookLike.new(id).get_videos
-		clause = community_clause + " UNION " + facebook_clause
+		#facebook_clause = FacebookLike.new(id).get_videos
+		#clause = community_clause + " UNION " + facebook_clause
+		clause = community_clause
 		output = clause.execute
 		output
 	end
