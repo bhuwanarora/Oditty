@@ -1,7 +1,14 @@
 require 'resque/server'
 require "sidekiq/web"
 ReadersDoor::Application.routes.draw do
-  root :to => "website#home"
+  get '/' => "website#books", :constraints           => {subdomain:'books'}
+  get '/' => "website#testimonials", :constraints      => {subdomain: 'feedback'}
+  get '/' => "website#rooms", :constraints             => {subdomain: 'rooms'}
+  get '/' => "website#search", :constraints            => {subdomain: 'search'}
+  get '/' => "website#news_group", :constraints        => {subdomain: 'news'}
+  get '/' => "website#authors", :constraints           => {subdomain: 'authors'}
+  get '/' => "website#quiz", :constraints              => {subdomain: 'quizzes'}
+  get '/' => "website#home"
 
   resources :facebooks
 
