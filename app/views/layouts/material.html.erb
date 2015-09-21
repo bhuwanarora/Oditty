@@ -126,7 +126,7 @@
             <% elsif @book %>
                 <div ng-controller="specificBookController" class="white super_div_container">
             <% elsif @customise %>
-                <md-content ng-controller="customiseController" class="white super_div_container" flex="100">
+                <md-content ng-controller="customiseController" class="white super_div_container" id="homeScreen">
             <% elsif @publishers %>
                 <md-content ng-controller="publishersController" class="super_container">
             <% elsif @journey %>
@@ -139,8 +139,8 @@
                 <md-content class="super_container">
             <% end %>
             <div flex>
-                <div class="<% unless @rooms || @signup || @search || @news_group || @authors || @books || @quiz || @spaces || @products || @games %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% end %>">
-                    <% if @products || @rooms || @signup || @search || @news_group || @authors || @books || @quiz || @spaces || @games%>
+                <div class="<% unless @rooms || @signup || @search || @news_group || @authors || @books || @quiz || @spaces || @products || @games || @customise %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% end %>">
+                    <% if @products || @rooms || @signup || @search || @news_group || @authors || @books || @quiz || @spaces || @games || @customise%>
                         <% if @search %>
                             <div ng-if="!search_ready" ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
                             <div ng-if="search_ready" ng-include src="'/assets/angular/html/shared/header.html'"></div>
