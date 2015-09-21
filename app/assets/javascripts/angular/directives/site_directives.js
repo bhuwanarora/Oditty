@@ -214,7 +214,7 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
                 var skip = $scope.rooms.length;
                 userService.room_suggestions(skip).then(function(data){
                     if((data.length == 0) || (data.length == 1)){
-                        if($scope.rooms.length == 0){
+                        if($scope.rooms.length <= 1){
                             $scope.rooms = _rooms();
                             $scope.no_suggestions = true;
                         }
