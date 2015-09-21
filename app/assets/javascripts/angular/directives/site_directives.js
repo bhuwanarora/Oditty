@@ -11,14 +11,12 @@ homeApp.directive('userCommunities', ["$rootScope", "userService", function($roo
                         $scope.userId = $rootScope.user.id;
                     }
                 }
-                if(angular.isDefined($scope.userId)){
-                    userService.get_communities($scope.userId).then(function(data){
-                        angular.forEach(data, function(room){
-                            var json = angular.extend(room, {"status": 1});
-                            this.push(json);
-                        }, $scope.rooms);
-                    });
-                }
+                userService.get_communities($scope.userId).then(function(data){
+                    angular.forEach(data, function(room){
+                        var json = angular.extend(room, {"status": 1});
+                        this.push(json);
+                    }, $scope.rooms);
+                });
             }
 
             _init();
