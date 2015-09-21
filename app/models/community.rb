@@ -36,7 +36,7 @@ class Community < CommunityInterface
 	end
 
 	def self.set_image image_url
-		" SET community.image_url=\'" + image_url + "\' "
+		" SET community.image_url=\'" + image_url.escape_quotes + "\' "
 	end
 
 	def get_old_news skip_count, time_string
