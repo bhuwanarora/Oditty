@@ -76,10 +76,10 @@ class News < Neo
 		clause = ""
 		news_metadata.each do |key, value|
 			unless key == "news_link" || key == "available" || key == "region"
-				if value.is_a? String
-					clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" "
-				else
+				if (value.is_a? Integer) || (value.is_a? Float)
 					clause += " SET news." + key + " = " + value.to_s + " "
+				else
+					clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" "
 				end
 			end
 		end
