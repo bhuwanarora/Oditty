@@ -1,3 +1,32 @@
+homeApp.directive('userCommunities', ["$rootScope", "userService", function($rootScope, userService){
+    return {
+        restrict: 'E',
+        scope : {userId: '=', reduced: '='},
+        controller: ["$scope", function($scope){
+
+            var _init = function(){
+                $scope.rooms = [];
+                if(angular.isUndefined($scope.userId) || ($scope.userId == null)){
+                    if(angular.isDefined($rootScope.user.id)){
+                        $scope.userId = $rootScope.user.id;
+                    }
+                }
+                if(angular.isDefined($scope.userId)){
+                    userService.get_communities($scope.userId).then(function(data){
+                        angular.forEach(data, function(room){
+                            var json = angular.extend(room, {"status": 1});
+                            this.push(json);
+                        }, $scope.rooms);
+                    });
+                }
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/rooms/show.html'
+    };
+}]);
+
 homeApp.directive('testimonials', ["websiteService", "$timeout", function(websiteService, $timeout){
     return {
         restrict: 'E',

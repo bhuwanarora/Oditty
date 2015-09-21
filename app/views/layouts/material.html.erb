@@ -26,26 +26,28 @@
                     <%= @title %>
                 <% end %>
         </title>
-        <% if @rooms || @signup%>
-            <link rel="icon" type="image/jpg" href="assets/rooms.png">
+        <% if @rooms%>
+            <link rel="icon" type="image/jpg" href="assets/rooms.png"/>
         <% elsif @authors %>
-            <link rel="icon" type="image/jpg" href="assets/authors.png">
+            <link rel="icon" type="image/jpg" href="assets/authors.png"/>
         <% elsif @games %>
-            <link rel="icon" type="image/jpg" href="assets/games.png">
+            <link rel="icon" type="image/jpg" href="assets/games.png"/>
         <% elsif @testimonials %>
-            <link rel="icon" type="image/jpg" href="assets/feedback.png">
+            <link rel="icon" type="image/jpg" href="assets/feedback.png"/>
         <% elsif @news_group%>
-            <link rel="icon" type="image/jpg" href="assets/news.png">
+            <link rel="icon" type="image/jpg" href="assets/news.png"/>
+        <% elsif @quiz%>
+            <link rel="icon" type="image/jpg" href="assets/quizzes.png"/>
         <% elsif @books %>
-            <link rel="icon" type="image/jpg" href="assets/books.png">
+            <link rel="icon" type="image/jpg" href="assets/books.png"/>
         <% elsif @search %>
-            <link rel="icon" type="image/jpg" href="assets/search.png">
+            <link rel="icon" type="image/jpg" href="assets/search.png"/>
         <% elsif @products %>
-            <link rel="icon" type="image/jpg" href="assets/products.png">
+            <link rel="icon" type="image/jpg" href="assets/products.png"/>
         <% elsif @spaces %>
-            <link rel="icon" type="image/jpg" href="assets/spaces.png">
+            <link rel="icon" type="image/jpg" href="assets/spaces.png"/>
         <% else %>
-            <link rel="icon" type="image/png" href="assets/favicon.png">
+            <link rel="icon" type="image/png" href="assets/favicon.png"/>
         <% end %>
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

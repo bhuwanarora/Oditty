@@ -203,7 +203,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         else if(window.location.pathname == "/news_group"){
             $scope.info.pr_news = true;
         }
-        else if(window.location.pathname == "/quizzes"){
+        else if(window.location.pathname == "/quiz"){
             $scope.info.pr_quizzes = true;
         }
         else if(window.location.pathname == "/games"){

@@ -1,1 +1,40 @@
-<div ng-repeat="room in rooms" ng-include src="'/assets/angular/html/rooms/room.html'" layout-margin></div>
+<div  ng-class="{'reduced_rooms': reduced}" layout="row" layout-wrap>
+	<div ng-repeat="room in rooms"
+		ng-include src="'/assets/angular/html/rooms/room.html'" 
+		layout-margin></div>
+</div>
+<style>
+	.reduced_rooms .room_image_wrapper{
+		width: 80px;
+		height: 80px;
+	}
+
+	.reduced_rooms .action_button,
+	.reduced_rooms .less_important{
+		display: none;
+	}
+
+	.reduced_rooms .room_content{
+        position: absolute;
+	    left: 0px;
+	    top: 0px;
+	    background-color: rgba(0, 0, 0, 0.43);
+	    width: 64px;
+	    height: 64px;
+	    word-wrap: break-word;
+	    border-radius: 3px;
+	}
+
+	.reduced_rooms .room_container img,
+	.reduced_rooms .room_container{
+		width: 80px;
+		border-radius: 3px;
+	}
+
+	.reduced_rooms a{
+		color: white;
+		font-size: 0.8em;
+	}
+
+
+</style>

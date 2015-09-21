@@ -1,8 +1,8 @@
 <div>
 	<div ng-repeat="feed in social_feed" layout="row">
 		<div layout-padding>
-			<img ng-src="{{feed.data.user.thumb || '/assets/author_profile.jpg'}}" class="square"
-				onerror="this.src='/assets/author_profile.jpg'"/>
+			<img ng-src="{{feed.data.user.thumb || '/assets/user_profile.jpg'}}" class="square"
+				onerror="this.src='/assets/user_profile.jpg'"/>
 		</div>
 		<div layout="column" layout-padding flex>
 			<div class="less_important">{{feed.created_at | timestamp | date:'dd MMM'}}</div>
@@ -32,7 +32,8 @@
 			<div ng-if="feed.label == 'EndorseNode'">
 				<div><a ng-href="/profile?id={{feed.data.user.id}}">{{::feed.data.user.name}}</a>&nbsp;endorsed&nbsp;<a ng-href="/book?id={{feed.data.book.id}}">{{::feed.data.book.title}}</a>&nbsp;by&nbsp;<a ng-href="/author?q={{::feed.data.author.id}}">{{::feed.data.author.name}}</a>.</div>
 			</div>
-			
+			<div layout-padding></div>
+			<div layout-padding></div>
 		</div>
 	</div>	
 </div>
