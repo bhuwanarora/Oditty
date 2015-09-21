@@ -154,7 +154,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
             if (response.status == LoginConstants.FacebookLoginStatusCheck) {
                 $scope.me();
             }
-        }, {scope: 'email'});
+        }, {scope: 'email,user_likes,user_location,user_actions.books,user_friends,public_profile,user_birthday'});
     };
    
     $scope.me = function() {
@@ -184,7 +184,7 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                     $rootScope.user = angular.extend($rootScope.user, response);
                 });
             }
-        }, {scope: 'email,user_likes,user_location,user_actions.books,user_friends,public_profile,user_birthday'});
+        });
     };
 
     var _redirect_user = function(){
