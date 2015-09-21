@@ -1,15 +1,14 @@
 require 'resque/server'
 require "sidekiq/web"
 ReadersDoor::Application.routes.draw do
-  root :to => "website#home", :constraints              => {domain:'staging.oditty.me'}
-  #root :to => "website#search", :constraints            => DomainConstraint.new('search.staging.oditty.me')
-  root :to => "website#filters", :constraints           => {domain:'books.staging.oditty.me'}
-  # root :to => "website#testimonials", :constraints      => DomainConstraint.new('feedback.oditty.me')
-  # root :to => "website#rooms", :constraints             => DomainConstraint.new('rooms.oditty.me')
-  # root :to => "website#search", :constraints            => DomainConstraint.new('search.oditty.me')
-  # root :to => "website#news_group", :constraints        => DomainConstraint.new('news.oditty.me')
-  # root :to => "website#authors", :constraints           => DomainConstraint.new('authors.oditty.me')
-  # root :to => "website#quiz", :constraints              => DomainConstraint.new('quizzes.oditty.me')
+  get '/' => "website#books", :constraints           => {subdomain:'books'}
+  get '/' => "website#testimonials", :constraints      => {subdomain: 'feedback'}
+  get '/' => "website#rooms", :constraints             => {subdomain: 'rooms'}
+  get '/' => "website#search", :constraints            => {subdomain: 'search'}
+  get '/' => "website#news_group", :constraints        => {subdomain: 'news'}
+  get '/' => "website#authors", :constraints           => {subdomain: 'authors'}
+  get '/' => "website#quiz", :constraints              => {subdomain: 'quizzes'}
+  get '/' => "website#home"
 
   resources :facebooks
 
