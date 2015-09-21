@@ -214,17 +214,23 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
                     var skip = $scope.rooms.length;
                     userService.room_suggestions(skip).then(function(data){
                         $scope.rooms_loading = false;
-                        if(data.length <= 1){
-                            if($scope.rooms.length <= 1){
-                                $scope.rooms = _rooms();
-                                $scope.no_suggestions = true;
+                        if(angular.isDefined(data.message)){
+                            $scope.rooms = _rooms();
+                            $scope.no_suggestions = true;
+                        }
+                        else{
+                            if(data.length == 0){
+                                if($scope.rooms.length == 0){
+                                    $scope.rooms = _rooms();
+                                    $scope.no_suggestions = true;
+                                }
+                                else{
+                                    _add_rooms(data);
+                                }
                             }
                             else{
                                 _add_rooms(data);
                             }
-                        }
-                        else{
-                            _add_rooms(data);
                         }
                     });
                 }
