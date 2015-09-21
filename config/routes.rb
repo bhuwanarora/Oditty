@@ -1,7 +1,7 @@
 require 'resque/server'
 require "sidekiq/web"
 ReadersDoor::Application.routes.draw do
-  root :to => "website#rooms"
+  root :to => "website#products"
 
   resources :facebooks
 
