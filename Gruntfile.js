@@ -352,6 +352,10 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/search_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/search_page_controller.js"
+                ],
+
+                "app/assets/javascripts/min/angular/controllers/spaces_group.min.js":[
+                    "app/assets/javascripts/min/angular/controllers/spaces_controller.js"
                 ]
             },
           },
