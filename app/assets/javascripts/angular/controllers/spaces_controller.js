@@ -1,4 +1,4 @@
-homeApp.controller('spacesController', ["$rootScope", "userService", "$timeout", "$mdSidenav", function($rootScope, userService, $timeout, $mdSidenav){
+homeApp.controller('spacesController', ["$scope", "$rootScope", "userService", "$timeout", "$mdSidenav", function($rootScope, userService, $timeout, $mdSidenav, $scope){
     $scope.get_feed = function(){
         if(!$scope.info.feed_loading){
             $scope.info.feed_loading = true;
