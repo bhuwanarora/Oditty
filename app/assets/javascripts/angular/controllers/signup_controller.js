@@ -161,24 +161,30 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
         deleteCookie("redirect_url");
         setCookie("redirect_url", $location.$$absUrl);
 
-        Facebook.api('/me', function(response){
-        // FB.login(function(response){
-            if(angular.isUndefined($rootScope.user)){
-                $rootScope.user = {};
-            }
-            if(angular.isDefined(FB)){
-                FB.getLoginStatus(function(fbresponse) {
-                   var token = fbresponse.authResponse.accessToken;
-                    response = angular.extend(response, {"auth_response": token});
-                    websiteService.handle_facebook_user(response).then(function(data){
-                        $rootScope.user = angular.extend($rootScope.user, data);
-                        $scope._init_user();
-                        _redirect_user();
-                    });
-                    $rootScope.user = angular.extend($rootScope.user, response);
-                });
-            }
+
+        FB.login(function(response) {
+            // handle the response
         }, {scope: 'email,user_likes,user_location,user_actions.books,user_friends,public_profile,user_birthday'});
+
+
+        // Facebook.api('/me', function(response){
+        // // FB.login(function(response){
+        //     if(angular.isUndefined($rootScope.user)){
+        //         $rootScope.user = {};
+        //     }
+        //     if(angular.isDefined(FB)){
+        //         FB.getLoginStatus(function(fbresponse) {
+        //            var token = fbresponse.authResponse.accessToken;
+        //             response = angular.extend(response, {"auth_response": token});
+        //             websiteService.handle_facebook_user(response).then(function(data){
+        //                 $rootScope.user = angular.extend($rootScope.user, data);
+        //                 $scope._init_user();
+        //                 _redirect_user();
+        //             });
+        //             $rootScope.user = angular.extend($rootScope.user, response);
+        //         });
+        //     }
+        // }, {scope: 'email,user_likes,user_location,user_actions.books,user_friends,public_profile,user_birthday'});
     };
 
     var _redirect_user = function(){
