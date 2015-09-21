@@ -26,7 +26,28 @@
                     <%= @title %>
                 <% end %>
         </title>
-        <link rel="icon" type="image/png" href="assets/favicon.png">
+        <% if @rooms || @signup%>
+            <link rel="icon" type="image/jpg" href="assets/rooms.png">
+        <% elsif @authors %>
+            <link rel="icon" type="image/jpg" href="assets/authors.png">
+        <% elsif @games %>
+            <link rel="icon" type="image/jpg" href="assets/games.png">
+        <% elsif @testimonials %>
+            <link rel="icon" type="image/jpg" href="assets/feedback.png">
+        <% elsif @news_group%>
+            <link rel="icon" type="image/jpg" href="assets/news.png">
+        <% elsif @books %>
+            <link rel="icon" type="image/jpg" href="assets/books.png">
+        <% elsif @search %>
+            <link rel="icon" type="image/jpg" href="assets/search.png">
+        <% elsif @products %>
+            <link rel="icon" type="image/jpg" href="assets/products.png">
+        <% elsif @spaces %>
+            <link rel="icon" type="image/jpg" href="assets/spaces.png">
+        <% else %>
+            <link rel="icon" type="image/png" href="assets/favicon.png">
+        <% end %>
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script>document.write('<base href="' + document.location + '" />');</script>
         <% if Rails.env.development? %>
@@ -50,21 +71,21 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @journey || @search || @filters || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group %>white<% end %>" 
+        class="<% if @journey || @search || @books || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group || @products %>white<% end %>" 
         id="<% unless @book %>parent<% end %>"
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
         <div layout="column" layout-fill>
-            <% if @home || @signup%>
+            <% if @rooms || @signup%>
                 <md-content class="white super_container" flex ng-controller="newHomeController" id="homeScreen">
             <% elsif @ads%>
                 <md-content class="white super_container" flex ng-controller="adsController">
             <% elsif @authors %>
                 <md-content class="white super_container" flex ng-controller="authorsController" 
-                    check-scroll-bottom="get_authors_interviewed()">
+                    check-scroll-bottom="get_authors_interviewed()" id="homeScreen">
             <% elsif @games %>
-                <md-content class="white super_container" flex ng-controller="gamesController">
+                <md-content class="white super_container" flex ng-controller="gamesController" id="homeScreen">
             <% elsif @testimonials %>
                 <md-content class="white super_container" flex ng-controller="testimonialsController" 
                     check-scroll-bottom="get_testimonials()">
@@ -75,22 +96,21 @@
                     class="super_container">
             <% elsif @news %>
                 <md-content layout="column" ng-controller="newsController" id="news" class="white super_container">
-            <% elsif @rooms %>
+            <% elsif @browse %>
                 <md-content layout="column" ng-controller="roomsController" class="super_container" 
                     check-scroll-bottom="get_rooms()">
             <% elsif @news_group && !@blogs %>
-                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="home" 
-                    class="white super_container">
+                <md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()" id="homeScreen" class="white super_container">
             <% elsif @blogs && @news_group %>
                 <md-content layout="row" layout-wrap ng-controller="feedController" 
                     check-scroll-bottom="get_blog_feed()" id="home" class="super_container">
             <% elsif @room %>
                 <md-content ng-controller="communityController" id="community" class="white super_container"
                     check-scroll-bottom="get_community_news()">
-            <% elsif @filters %>
+            <% elsif @books %>
                 <md-content ng-controller="libraryController" 
                     du-scroll-container check-scroll-bottom="get_popular_books()"
-                    id="infinity_page" class="white super_container">
+                    id="homeScreen" class="white super_container">
             <% elsif @shelves %>
                 <md-content ng-controller="roomController" class="super_container full_height white">
             <% elsif @author %>
@@ -99,8 +119,7 @@
             <% elsif @profile %>
                 <md-content ng-controller="profileController" check-scroll-bottom="get_feed()" class="white super_container">
             <% elsif @search %>
-                <md-content layout="row" layout-wrap ng-controller="searchPageController" 
-                    class="super_container white"
+                <md-content class="white super_container" flex ng-controller="searchPageController" id="homeScreen" 
                     check-scroll-bottom="show_all_results()">
             <% elsif @book %>
                 <div ng-controller="specificBookController" class="white super_div_container">
@@ -110,19 +129,35 @@
                 <md-content ng-controller="publishersController" class="super_container">
             <% elsif @journey %>
                 <md-content class="super_container white">
+            <% elsif @quiz || @products %>
+                <md-content class="super_container white" id="homeScreen" >
+            <% elsif @spaces %>
+                <md-content class="super_container white" id="homeScreen" check-scroll-bottom="get_feed()">
             <% else %>
                 <md-content class="super_container">
             <% end %>
             <div flex>
-                <div class="<% unless @home|| @signup %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% end %>">
-                    <% if @home || @signup%>
-                        <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                <div class="<% unless @rooms || @signup || @search || @news_group || @authors || @books || @quiz || @spaces || @products || @games %>header<% else %>home_header<% end %> <% if @shelves %>yellow<% end %>">
+                    <% if @products || @rooms || @signup || @search || @news_group || @authors || @books || @quiz || @spaces || @games%>
+                        <% if @search %>
+                            <div ng-if="!search_ready" ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                            <div ng-if="search_ready" ng-include src="'/assets/angular/html/shared/header.html'"></div>
+                        <% else %>
+                            <div ng-include src="'/assets/angular/html/shared/home_header.html'"></div>
+                        <% end %>
                     <% else %>
                         <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
                     <% end %>
                 </div>
-                <div id="yield" class="<% if @home || @signup %> yield <% end %>">
+                <div id="yield" class="<% if @rooms || @signup %> yield <% end %>">
                     <%= yield %>
+                </div>
+                <div layout-align="center center" ng-include="'assets/angular/html/shared/partials/social_links.html'"></div>
+                <div class="small_title white" layout="column" layout-align="center center">
+                    <div class="less_important" layout-padding>Discovering me through News, Books and Videos.</div>
+                    <div class="less_important" layout-padding>© Singularity Technologies Pvt. Ltd.</div>
+                    <div layout-padding></div>
+                    <div layout-padding></div>
                 </div>
             </div>
             <% if @book %>
@@ -139,14 +174,14 @@
                     ng-if="info.cirular_loading">
             </md-progress-circular>
 
-            <div class="feedback md-whiteframe-z1" layout-padding>
+           <!--  <div class="feedback md-whiteframe-z1" layout-padding>
                 <a href="/testimonials" class="less_important" target="_blank">
                     <i class="material-icons">feedback</i>
                     <md-tooltip>
                         Share Feedback
                     </md-tooltip>
                 </a>
-            </div>
+            </div> -->
 
             <md-button class="md-fab md-warn invite" aria-label="Invite" 
                 ng-if="info && info.hide_signin"
@@ -227,7 +262,7 @@
             </div>
 
 
-            <% if @rooms %>
+            <% if @browse %>
                 <script src="assets/angular/services/rooms_service.js"></script>
                 
                 <script src="assets/angular/controllers/rooms_controller.js"></script>
@@ -265,9 +300,9 @@
                 <script src="assets/angular/controllers/customise/genres_controller.js"></script>
                 <script src="assets/angular/controllers/customise/books_controller.js"></script>
                 <script src="assets/angular/controllers/customise/authors_controller.js"></script>
-            <% elsif @home || @signup%>
+            <% elsif @rooms || @signup%>
                 <script src="assets/angular/controllers/new_home_controller.js"></script>
-            <% elsif @filters  %>
+            <% elsif @books  %>
                 <script src="assets/angular/controllers/library/library_controller.js"></script>
                 <script src="assets/angular/controllers/library/filters_controller.js"></script>
             <% elsif @shelves %>
@@ -295,7 +330,7 @@
             <div ng-if="info && !info.hide_signin">
                 <script src="assets/min/angular/controllers/signin_group.min.js"></script>
             </div>
-            <% if @rooms %>
+            <% if @browse %>
                 <script src="assets/min/angular/controllers/rooms_group.min.js"></script>
             <% elsif @authors %>
                 <script src="assets/min/angular/controllers/authors_group.min.js"></script>
@@ -317,9 +352,9 @@
                 <script src="assets/min/angular/controllers/customise_group.min.js"></script>
             <% elsif @book %>
                 <script src="assets/min/angular/controllers/book_group.min.js"></script>
-            <% elsif @home || @signup%>
+            <% elsif @rooms || @signup%>
                 <script src="assets/min/angular/controllers/new_home_group.min.js"></script>
-            <% elsif @filters %>
+            <% elsif @books %>
                 <script src="assets/min/angular/controllers/infinity_group.min.js"></script>
             <% elsif @shelves %>
                 <script src="assets/min/angular/controllers/room_group.min.js"></script>

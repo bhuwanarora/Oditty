@@ -1,6 +1,31 @@
 <div layout-padding></div>
 <section layout="row" layout-wrap>
-    <div flex="20" hide-sm layout="row" layout-align="start center">
+    <div flex="20" layout="row" layout-align="start center">
+        <div layout-padding></div>
+        <md-button ng-click="toggleLeft($event)">
+            <md-icon style="color: #1876B8;" md-font-set="material-icons" 
+                ng-if="info.pr_spaces">strikethrough_s</md-icon>
+            <md-icon style="color: #3E52B7;" md-font-set="material-icons" 
+                ng-if="info.pr_rooms">group_work</md-icon>
+            <md-icon style="color: #88C151;" md-font-set="material-icons" 
+                ng-if="info.pr_news">today</md-icon>
+            <md-icon style="color: #E9453B;" md-font-set="material-icons" 
+                ng-if="info.pr_books">local_library</md-icon>
+            <md-icon style="color: #FAA929;" md-font-set="material-icons" 
+                ng-if="info.pr_authors">mode_edit</md-icon>
+            <md-icon style="color: #FAA82A;" md-font-set="material-icons" 
+                ng-if="info.pr_search">search</md-icon>
+            <md-icon style="color: #A825F8;" md-font-set="material-icons" 
+                ng-if="info.pr_games">games</md-icon>
+            <md-icon style="color: #269BED;" md-font-set="material-icons" 
+                ng-if="info.pr_quizzes">receipt</md-icon>
+            <md-icon style="color: #CBD847;" md-font-set="material-icons" 
+                ng-if="info.pr_feedback">feedback</md-icon>
+            <md-icon style="color: #E92A6C;" md-font-set="material-icons" 
+                ng-if="info.pr_products">local_parking</md-icon>
+            <md-icon md-font-set="material-icons" 
+                ng-if="!info.pr_spaces && !info.pr_products && !info.pr_feedback && !info.pr_quizzes && !info.pr_games && !info.pr_search && !info.pr_authors && !info.pr_books && !info.pr_news && !info.pr_rooms">apps</md-icon>
+        </md-button>
     </div>
     <div flex="40" flex-md="45" 
          ng-controller="searchController"
@@ -10,16 +35,16 @@
          layout-align="start center" 
          layout-align-sm="start center">
     </div>
-    <div layout="row" layout-align="center center" flex="10" flex-md="5" flex-sm="30" 
+    <div layout="row" layout-align="center center" flex="10" flex-md="5" flex-sm="20" 
          ng-if="info.mobile_search"></div>
 
-    <div flex="30" flex-sm="60" layout="row" layout-align="end center" ng-if="info.hide_signin"
+    <div flex="30" flex-sm="50" layout="row" layout-align="end center" ng-if="info.hide_signin"
          ng-include src="'/assets/angular/html/shared/right_nav_options.html'"></div>
     <div layout="row" layout-align="center center" 
          ng-hide="info.mobile_search" layout-fill layout-padding 
          hide-md hide-lg ng-if="info.hide_signin"
          ng-include src="'/assets/angular/html/shared/mobile_search.html'"></div>
-    <div flex="30" flex-sm="60" layout="row" layout-padding layout-align="end center" 
+    <div flex="30" flex-sm="50" layout="row" layout-padding layout-align="end center" 
         ng-if="!info.hide_signin" ng-include src="'/assets/angular/html/shared/sign_in.html'">
     </div>
 </section>

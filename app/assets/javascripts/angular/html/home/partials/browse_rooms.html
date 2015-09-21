@@ -1,20 +1,13 @@
 <div ng-if="!reduced" id="browseRooms">
     <div layout="column" layout-align="start start">
-            <h1><a  layout="row" layout-align="center center" href="/rooms">
-                    Rooms of Knowledge
-                    <md-tooltip>
-                        35000+ more Rooms are waiting to be explored...
-                    </md-tooltip>
-                </a>
-            </h1>
-            <div class="site_description">
-                <div ng-if="no_suggestions">
-                    Not everything which needs to be discovered is searchable. I want to read this life through a specific collection of News, Books and Videos on...
-                </div>
-                <div ng-if="!no_suggestions">
-                    Not everything which needs to be discovered is searchable. Rooms I need to explore depending on my <b>Facebook Likes</b>...
-                </div>
+        <div class="site_description">
+            <div ng-if="no_suggestions">
+                Not everything which needs to be discovered is searchable. I want to read this life through a specific collection of News, Books and Videos on...
             </div>
+            <div ng-if="!no_suggestions">
+                Not everything which needs to be discovered is searchable. Rooms I need to explore depending on my <b>Facebook Likes</b>...
+            </div>
+        </div>
     </div>
     <div layout-padding></div>
     <md-grid-list

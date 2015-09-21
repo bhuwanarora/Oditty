@@ -187,9 +187,39 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.key = key;
     }
 
+    $scope.handle_icons = function(){
+        if(window.location.pathname == "/spaces"){
+            $scope.info.pr_spaces = true;
+        }
+        else if(window.location.pathname == "/books"){
+            $scope.info.pr_books = true;
+        }
+        else if(window.location.pathname == "/authors"){
+            $scope.info.pr_authors = true;
+        }
+        else if(window.location.pathname == "/products"){
+            $scope.info.pr_products = true;
+        }
+        else if(window.location.pathname == "/news_group"){
+            $scope.info.pr_news = true;
+        }
+        else if(window.location.pathname == "/quizzes"){
+            $scope.info.pr_quizzes = true;
+        }
+        else if(window.location.pathname == "/games"){
+            $scope.info.pr_games = true;
+        }
+        else if(window.location.pathname == "/search"){
+            $scope.info.pr_search = true;
+        }
+        else if(window.location.pathname == "/rooms"){
+            $scope.info.pr_rooms = true;
+        }
+    }
+
     var _init = (function(){
         $scope.visible_search_bar = true;
-        $scope.info = {};
+        $scope.info = {"search_ready": false};
         $scope.info.show_share = false;
         var url = $location.absUrl();
 
@@ -211,7 +241,7 @@ homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdD
         $scope.data = {"selectedIndex" : 0};
         // deleteCookie("todo");
         $scope.key = 3;    
-
+        $scope.handle_icons();
     }());
 
 }]);

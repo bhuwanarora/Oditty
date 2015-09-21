@@ -200,13 +200,13 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
             }
 
             var _init = function(){
-                if(angular.isDefined($rootScope.user) && $rootScope.user.id == 4986324){
-                    $scope.show_more_suggestions();
-                }
-                else{
-                    $scope.rooms = _rooms();
-                    $scope.no_suggestions = true;
-                }
+                $scope.show_more_suggestions();
+                // if(angular.isDefined($rootScope.user)){
+                // }
+                // else{
+                //     $scope.rooms = _rooms();
+                //     $scope.no_suggestions = true;
+                // }
             }
 
             _init();
@@ -215,7 +215,7 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
     };
 }]);
 
-homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", "$mdSidenav", function($rootScope, userService, $timeout, $mdSidenav){
     return {
         restrict: 'E',
         scope: {"global": "=", "info": "="},
@@ -245,10 +245,24 @@ homeApp.directive('socialFeed', ["$rootScope", "userService", "$timeout", functi
                 }
             }
 
+            var _unauthenticated_user = function(){
+                return ((getCookie("logged") == "") || (getCookie("logged") == null));
+            }
+
+            $scope.handle_feed = function(){
+                if(_unauthenticated_user()){
+                    $mdSidenav('signup').toggle();
+                }
+                else{
+                    $scope.get_feed();
+                }
+            }
+
             var _init = function(){
                 var room_timeout = $timeout(function(){
-                    $scope.get_feed();
+                    $scope.handle_feed();
                 }, 100);
+
                 $scope.$on('destroy', function(){
                     $timeout.cancel(room_timeout);
                 });
