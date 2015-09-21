@@ -96,5 +96,5 @@ ReadersDoor::Application.configure do
     'full_control.css'
   ]
 
-  config.search_service_url = "http://search.oditty.me"
+  config.search_service_url = "http://searchservice.oditty.me"
 end

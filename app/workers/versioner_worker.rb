@@ -15,7 +15,24 @@ class VersionerWorker
 			when "community"
 				url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{id}&&bucket=#{Rails.application.config.community_bucket}&&url=#{CGI.escape(url)}"	
 			end
-			JSON.parse(Net::HTTP.get(URI.parse(url)))
+			puts url.to_s
+			begin
+				output = JSON.parse(Net::HTTP.get(URI.parse(url)))
+				puts output.to_s.green
+			rescue Exception => e
+				message = VersionerWorker.message(id, url, type)
+				filename = VersionerWorker.log_file_name
+				ELogger.log_info(message, filename)
+				puts e.to_s.red
+			end
 		end
+	end
+
+	def self.log_file_name
+		"versioner_failed_tasks"
+	end
+
+	def self.message id, url, type
+		" id:" + id.to_s + "url:" + url.to_s + " type:" + type.to_s + " "
 	end
 end

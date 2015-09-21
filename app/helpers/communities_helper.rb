@@ -343,11 +343,11 @@ module CommunitiesHelper
 
 	SetImageToS3 = Proc.new do |params, *args|
 		clause = params[:init_clause]
-		clause += " RETURN ID(community) AS id, community.image_url AS image_url "
+		clause += " RETURN ID(community) AS id, community.name AS name, community.image_url AS image_url "
 		output = clause.execute
 		CommunitiesHelper.handle_images(output)
 		max_id = output.map{|elem| elem["id"]}.max
-		max_id
+		[{ "id" => max_id}]
 	end
 
 	def self.handle_images neo_output
@@ -355,8 +355,11 @@ module CommunitiesHelper
 			image_url = CommunitiesHelper.get_S3_image_url(community["id"])[0]
 			response = Net::HTTP.get(URI.parse(image_url))
 			if response.length < 1000
-				debugger
-				VersionerWorker.new.perform(community["id"], community["image_url"], Constant::EntityLabel::Community)
+				puts community["id"]
+				image = Community::CommunityImage.new(community["name"]).get_image
+				puts "new image:'#{image}' for id:#{community['id']}"
+				Community.new(community["id"]).set_image(image).execute
+				VersionerWorker.new.perform(community["id"], image, Constant::EntityLabel::Community)
 			end
 		end
 	end

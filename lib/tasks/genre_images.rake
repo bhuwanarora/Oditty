@@ -15,7 +15,7 @@ namespace :images do
   desc "set community images"
   task :set_community_image_version => :environment do
     include ImagesHelper
-    CommunititesHelper.add_images_to_S3
+    CommunitiesHelper.add_images_to_S3
   end  
 
   desc "set user images"

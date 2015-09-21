@@ -28,7 +28,8 @@ module NewsHelper
 			"image_url" 		=> "",
 			"description" 		=> "",
 			"literature_news" 	=> false,
-			"region"			=> nil
+			"region"			=> nil,
+			"created_at"		=> params[:created_at].to_i
 		}
 		google_rank = params[:rank]
 		community_id = params[:id]
@@ -171,5 +172,37 @@ module NewsHelper
 		consumer_thread.join
 	end
 
+	def self.correct_news_date
+		start_time 	= 1442448000 #17 Sept
+		end_time 	= 1442659196 #19 Sept
+		clause = NewsHelper.get_news_between_time start_time, end_time
+		output = clause.execute
+		while output.present? && !start_time.nil?
+			start_time = NewsHelper.set_correct_news_date output
+			clause = NewsHelper.get_news_between_time start_time, end_time
+			output = clause.execute
+		end
+	end
 
+	private
+
+	def self.get_news_between_time start_time, end_time
+		clause = " MATCH (news:News) "\
+			" WHERE TOINT(news.created_at) > " + start_time.to_s + " AND "\
+			" TOINT(news.created_at) < " + end_time.to_s + " "\
+			" RETURN ID(news) AS id, news.year AS year, news.month AS month, news.date AS date, TOINT(news.created_at) AS created_at "\
+			" ORDER BY created_at LIMIT 500 "
+	end
+
+	def self.set_correct_news_date neo_output
+		max_created_at = neo_output.map{|news| (news["created_at"])}.max rescue nil
+		neo_output.each do |news|
+			if news["year"] && news["month"] && news["date"]
+				created_at = DateTime.new(news["year"].to_i, news["month"].to_i, news["date"].to_i).strftime('%s')
+				clause = News.new(news["id"]).match + " SET news.created_at=" + created_at
+				clause.execute
+			end
+		end
+		max_created_at
+	end
 end

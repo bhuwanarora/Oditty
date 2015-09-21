@@ -92,8 +92,10 @@ class CommunityInterface < Neo
 		else
 			output = User::FacebookUser.new({"id" => fb_id}).get_recommended_communities(skip_count).execute
 		end
-		output = CommunityInterface.format_communitites_from_fb(output)
-		output = output.shuffle
+		if output.present?
+			output = CommunityInterface.format_communitites_from_fb(output)
+			output = output.shuffle
+		end
 		output
 	end
 

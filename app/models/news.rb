@@ -75,8 +75,12 @@ class News < Neo
 	def self.set_metadata news_metadata
 		clause = ""
 		news_metadata.each do |key, value|
-			unless key == "news_link" || key == "available" || key == "region" 
-				clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" " 
+			unless key == "news_link" || key == "available" || key == "region"
+				if (value.is_a? Integer) || (value.is_a? Float)
+					clause += " SET news." + key + " = " + value.to_s + " "
+				else
+					clause += " SET news." + key + " = \"" + value.to_s.database_ready + "\" "
+				end
 			end
 		end
 		clause + News.set_indexed_title(news_metadata["title"]) + News.set_search_index(news_metadata["title"])
@@ -198,7 +202,7 @@ class News < Neo
 	end
 
 	def self.match_popular_news_from_last_week
-		News.match + " WHERE ("+Time.now.to_i.to_s+" - news.created_at)/86400 < 1 WITH news "
+		News.match + " WHERE ("+Time.now.to_i.to_s+" - TOINT(news.created_at))/86400 < 1 WITH news "
 	end
 
 	private
