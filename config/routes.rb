@@ -1,7 +1,15 @@
 require 'resque/server'
 require "sidekiq/web"
 ReadersDoor::Application.routes.draw do
-  root :to => "website#home"
+  root :to => "website#home", :constraints              => DomainConstraint.new('staging.oditty.me')
+  root :to => "website#search", :constraints            => DomainConstraint.new('search.staging.oditty.me')
+  root :to => "website#filters", :constraints           => DomainConstraint.new('books.staging.oditty.me')
+  root :to => "website#testimonials", :constraints      => DomainConstraint.new('feedback.oditty.me')
+  root :to => "website#rooms", :constraints             => DomainConstraint.new('rooms.oditty.me')
+  root :to => "website#search", :constraints            => DomainConstraint.new('search.oditty.me')
+  root :to => "website#news_group", :constraints        => DomainConstraint.new('news.oditty.me')
+  root :to => "website#authors", :constraints           => DomainConstraint.new('authors.oditty.me')
+  root :to => "website#quiz", :constraints              => DomainConstraint.new('quizzes.oditty.me')
 
   resources :facebooks
 
