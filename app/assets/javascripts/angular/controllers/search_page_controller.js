@@ -1,26 +1,32 @@
 homeApp.controller('searchPageController', ["$scope", "searchService", "$location", "ColorConstants", "sharedService", "$rootScope", function($scope, searchService, $location, ColorConstants, sharedService, $rootScope){
 
     $scope.show_all_results = function(search_text, type){
-        if(angular.isUndefined($scope.info.loading) || !$scope.info.loading){
-            var search_text = search_text || $scope.active_q;
-            var type = type || $scope.active_type;
-            $scope.info.loading = true;
-            if(angular.isUndefined($scope.all_results)){
-                $scope.all_results = [];
+        if($scope.search_ready){
+            if(angular.isUndefined($scope.info.loading) || !$scope.info.loading){
+                var search_text = search_text || $scope.active_q;
+                var type = type || $scope.active_type;
+                $scope.info.loading = true;
+                if(angular.isUndefined($scope.all_results)){
+                    $scope.all_results = [];
+                }
+                var params = {"type": type,  "q": search_text, "skip": $scope.all_results.length, "count": 10};
+                searchService.raw(params).then(function(data){
+                    angular.forEach(data, function(value){
+                        if(value.labels.indexOf("Book") >= 0){
+                            var random_int = Math.floor(Math.random() * ColorConstants.value.length);
+                            value = angular.extend(value, {"color": ColorConstants.value[random_int]});
+                        }
+                        this.push(value);
+                    }, $scope.all_results)
+                    $scope.info.loading = false;
+                });
             }
-            var params = {"type": type,  "q": search_text, "skip": $scope.all_results.length, "count": 10};
-            searchService.raw(params).then(function(data){
-                angular.forEach(data, function(value){
-                    if(value.labels.indexOf("Book") >= 0){
-                        var random_int = Math.floor(Math.random() * ColorConstants.value.length);
-                        value = angular.extend(value, {"color": ColorConstants.value[random_int]});
-                    }
-                    this.push(value);
-                }, $scope.all_results)
-                $scope.info.loading = false;
-            });
         }
     }
+
+    // $scope.query_search = function(){
+    //     $scope.search_ready = true;
+    // }
 
     $scope.show_book_dialog = function(book, event){
         sharedService.show_book_dialog($rootScope, $scope, book, event);
@@ -58,6 +64,7 @@ homeApp.controller('searchPageController', ["$scope", "searchService", "$locatio
         if(angular.isDefined(url_parser) && (url_parser != null) && is_search){
             var q = _get_parameter_by_name("q");
             var type = _get_parameter_by_name("type");
+            $scope.search_ready = true;
             $scope.active_q = q;
             $scope.active_type = type;
             $scope.show_all_results();

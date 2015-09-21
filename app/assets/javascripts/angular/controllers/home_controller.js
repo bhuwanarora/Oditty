@@ -25,7 +25,7 @@ homeApp.controller('homeController', ["$scope", "$mdSidenav", function($scope, $
 
     $scope.handle_infinity_redirect = function(event){
     	if($scope.info.hide_signin){
-    		window.location.href = "/filters";
+    		window.location.href = "/books";
     	}
     	else{
     		$scope.show_signin_options(event);

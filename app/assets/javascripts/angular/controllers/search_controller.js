@@ -101,5 +101,6 @@ homeApp.controller('searchController', ["$scope", "searchService", "$location", 
         console.log("searchController");
         $scope.info.mobile_search = true;
         $scope.info.search_results = [];
+        $scope.info.search_ready = true;
     }());
 }]);
