@@ -5,10 +5,12 @@
         	<div class="white">
                 <browse-rooms reduced="true"></browse-rooms>
                 <br/>
-                <h3>Rooms Joined</h3>
-                 <user-communities layout="row" reduced="true"
-                    layout-wrap layout-align="center start">
-                 </user-communities>
+                <div ng-hide="!info.hide_signin">
+                    <h3>Rooms Joined</h3>
+                     <user-communities layout="row" reduced="true"
+                        layout-wrap layout-align="center start">
+                     </user-communities>
+                </div>
                 <br/>
                 <trending></trending>
         	</div>
