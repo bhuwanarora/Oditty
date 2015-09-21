@@ -20,7 +20,8 @@
                     md-colspan-sm="2"
                     class="pointer">
             <a ng-href="/room?id={{trend.id}}" class="room_container">
-                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
+                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" 
+                    onerror="this.src='https://oditty.me/assets/rooms.png'"/>
                 <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
                     <div class="less_important white_color trend_name">{{trend.name}}</div>
                     <div layout="column" class="facebook_likes">
@@ -28,8 +29,9 @@
                             <div ng-repeat="like in trend.facebook_likes">
                                 <a ng-href="/room?id={{like.id}}">
                                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
+                                        onerror="this.src='https://oditty.me/assets/rooms.png'"
                                         class="small_circle"/>
-                                    <md-tooltip>Because you like {{like.name}}</md-tooltip>
+                                    <md-tooltip>Because you like&nbsp;{{like.name}}</md-tooltip>
                                 </a>
                             </div>
                         </div>
@@ -53,7 +55,8 @@
     </div>
     <div class="feed_ticker">
         <div ng-repeat="trend in rooms" layout="row" layout-padding>
-            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="square" />
+            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/S.png" class="square" 
+                onerror="this.src='https://oditty.me/assets/rooms.png'"/>
             <div layout="column">
                 <a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a>
                 <div layout="row" layout-padding class="less_important" layout-wrap>
