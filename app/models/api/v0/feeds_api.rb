@@ -14,7 +14,11 @@ module Api
 				trends
 			end
 
-			def self.get_news user_id, skip_count
+			def self.get_news skip_count, day_skip_count, region
+				News.get_feed(skip_count, day_skip_count, region)
+			end
+
+			def self.get_personalized_news user_id, skip_count
 				User.new(user_id).get_news(skip_count)
 			end
 
