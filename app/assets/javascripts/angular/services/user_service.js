@@ -149,9 +149,9 @@ homeApp.service('userService', ["$http", "$q", "$rootScope", "WebsiteUIConstants
         } 
     }
 
-    this.get_feed = function(id){
-        if(angular.isDefined(id)){
-            return _deferred_request('/api/v0/feed_news?id='+id, $q, $http);
+    this.get_feed = function(skip){
+        if(angular.isDefined(skip)){
+            return _deferred_request('/api/v0/feed_news?skip='+skip, $q, $http);
         }
         else{
             return _deferred_request('/api/v0/feed_news', $q, $http);

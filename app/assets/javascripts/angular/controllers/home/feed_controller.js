@@ -23,7 +23,11 @@ homeApp.controller('feedController', ["$scope", "$rootScope", 'userService', '$m
         if(!$scope.info.loading){
             $scope.info.loading = true;
             var region_id = $scope.info.active_region;
-            userService.get_feed(region_id).then(function(data){
+            if(angular.isUndefined($scope.feed)){
+                $scope.feed = []; 
+            }
+            var skip = $scope.feed.length;
+            userService.get_feed(skip).then(function(data){
                 $scope.info.loading = false;
                 angular.forEach(data, function(value){
                     var json = {'label': 'news'};
