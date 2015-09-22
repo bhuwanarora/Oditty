@@ -17,10 +17,12 @@ module Api
 
 			def get_news
 				user_id = session[:user_id]
+				info = []
 				if user_id
 					skip_count = params[:skip].to_i
 					info = FeedsApi.get_personalized_news(user_id, skip_count).execute
-				else
+				end
+				if !user_id || info.empty?
 					region = params[:id]
 					puts "0 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
 					session[:news_skip_count] ||= 0
