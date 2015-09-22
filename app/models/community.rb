@@ -91,6 +91,10 @@ class Community < CommunityInterface
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
+	def self.match_recent_news skip_count
+		Community.match_news + Community.order_by(" TOINT(news.created_at) DESC ") + Community.skip(skip_count)
+	end
+
 	def get_books
 		match + Community.match_books + Book.order_desc + Community.limit(Constant::Count::CommunityBooks.to_s) + Neo.return_init + Book.basic_info
 	end
