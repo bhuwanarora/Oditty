@@ -9,6 +9,13 @@ class UsersNews < Neo
 		" MATCH (news:News), (user:User) WHERE ID(news)="+@news.to_s+" AND ID(user)="+@user_id.to_s+ " WITH user, news "
 	end
 
+	def self.get_news skip_count
+		UsersCommunity.match + Community.match_recent_news(skip_count) +
+		" WITH DISTINCT news LIMIT 30 " +
+		" WITH news " + News.order_view_desc +
+		UsersNews.return_group(News.basic_info) + UsersNews.limit(10)
+	end
+
 	# def self.optional_match_rating
 	# 	" OPTIONAL MATCH (user)-[:RatingAction]->(rating_node:RatingNode)-[:Rate]->(book) "
 	# end

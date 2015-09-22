@@ -17,29 +17,8 @@ module Api
 
 			def get_news
 				user_id = session[:user_id]
-				region = params[:id]
-				puts "0 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-				session[:news_skip_count] ||= 0
-				session[:news_day_skip_count] ||= 0
-				puts "1 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-
-				if(!(region.nil? || session[:region] == region))
-					session[:news_skip_count] = 0
-					session[:news_day_skip_count] = 0
-					session[:region] = region
-				end
-				puts "2 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-				
-				info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region).execute
-				
-				if info.blank?
-					session[:news_day_skip_count] += 1
-					session[:news_skip_count] = 0
-					info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region).execute
-				end
-				puts "3 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-				session[:news_skip_count] += info.length
-				puts "4 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
+				skip_count = params[:skip].to_i
+				info = Api::V0::FeedsApi.get_news(user_id, skip_count).execute
 				render :json => info, :status => 200
 			end
 
