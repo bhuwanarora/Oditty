@@ -20,7 +20,9 @@
             md-colspan-sm="1"
             class="pointer">
         <a ng-href="/room?id={{trend.id}}">
-            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" />
+            <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" 
+                onerror="this.src='https://oditty.me/assets/rooms.png'"
+                class="trends" />
             <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
             	<div class="less_important white_color">{{trend.name}}</div>
             	<div class="less_important white_color">{{trend.view_count}} Views</div>
