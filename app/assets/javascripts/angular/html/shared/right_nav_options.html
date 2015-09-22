@@ -3,13 +3,13 @@
 
 <div layout="row" layout-align="center center">
     <div layout="column" layout-padding>
-        <a href="/profile" ng-if="info.mobile_search" hide-sm><div ng-bind-html="user.first_name"></div></a>
+        <a href="https://oditty.me/profile" ng-if="info.mobile_search" hide-sm><div ng-bind-html="user.first_name"></div></a>
         <div layout-align="space-between" layout="row">
             <div></div>
             <a ng-click="logout()" class="less_important">Logout</a>
         </div>
     </div>
-    <a href="/profile" ng-if="info.mobile_search">
+    <a href="https://oditty.me/profile" ng-if="info.mobile_search">
         <div class="profile_link" layout="row" layout-align="center center">
             <img ng-src="{{user.image_url}}" ng-if="user.image_url" class="circular">
             <i class="material-icons md-48" ng-if="!user.image_url">account_circle</i>
