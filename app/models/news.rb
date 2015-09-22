@@ -172,6 +172,10 @@ class News < Neo
 		" ORDER BY TOINT(news.created_at) DESC "
 	end
 
+	def self.order_view_desc
+		" ORDER BY TOINT(TOINT(news.created_at)/" + (6*Constant::Time::OneHour).to_s + ") DESC , TOINT(news.view_count) DESC, TOINT(news.created_at) DESC "
+	end
+
 	def self.match_region region
 		if region
 			clause = " MATCH (news)-[:FromRegion]->(region:Region) WHERE ID(region) = " + region.to_s + " WITH news, region "
