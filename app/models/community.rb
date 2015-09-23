@@ -91,8 +91,10 @@ class Community < CommunityInterface
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
 	end
 
-	def self.match_recent_news skip_count
-		Community.match_news + Community.order_by(" TOINT(news.created_at) DESC ") + Community.skip(skip_count)
+	def self.match_recent_news skip_count, with_group = []
+		with_string = with_group.map{|elem| (" " + elem)}.join(", ")
+		with_string = ( "," + with_string ) if with_string.present?
+		Community.match_news + with_string + Community.order_by(" TOINT(news.created_at) DESC ") + Community.skip(skip_count)
 	end
 
 	def get_books
