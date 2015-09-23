@@ -38,7 +38,6 @@ module CommunitiesHelper
 			if response.is_json? 
 				response = JSON.parse(response)			
 				communities = CommunitiesHelper.handle_communities response
-				debugger
 				skip = 10000
 				timer = communities.length * skip -1
 				for i in 0..timer do
@@ -53,7 +52,6 @@ module CommunitiesHelper
 						end
 					end
 				end			
-				debugger
 				unless communities_books.blank?
 					news_id = News.create(news_metadata).execute[0]["news_id"]
 					news_metadata["news_id"] = news_id
