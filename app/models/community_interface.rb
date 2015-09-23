@@ -34,8 +34,8 @@ class CommunityInterface < Neo
 		if user_id.nil?
 			output = Api::V0::CommunityApi.get_news(id, 0)[0]
 		else
-			community_clause = UsersCommunity.new(user_id, id).get_info
-			facebook_clause = FacebookLike.new(id).get_info(user_id)
+			community_clause = UsersCommunity.new(user_id, id).get_detailed_info
+			facebook_clause = FacebookLike.new(id).get_detailed_info(user_id)
 			clause = community_clause + " UNION " + facebook_clause
 			output = clause.execute[0]
 		end
