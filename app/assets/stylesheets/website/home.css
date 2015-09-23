@@ -712,8 +712,8 @@ and (max-width : 800px){
 	.rd_book_container,
 	.rd_slider_wrapper,
 	.rd_book_shadow{
-		width: 100px;
-		min-width: 100px;
+		width: 157px;
+		min-width: 157px;
 	}
 
 	.rd_book_container{
@@ -725,7 +725,7 @@ and (max-width : 800px){
 	.rd_slider_wrapper,
 	.rd_book_shadow,
 	.read_review{
-	  	height: 160px;
+	  	height: 210px;
 	}
 }
 

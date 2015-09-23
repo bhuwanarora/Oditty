@@ -58,31 +58,32 @@
             </a>
         </div>
         <div layout-padding></div>
-        <div class="light_grey md-whiteframe-z1 z_index_1 full_width" layout="row" layout-align="space-between center" flex>
+        <div class="light_grey md-whiteframe-z1 z_index_1 full_width" 
+            layout="row" layout-align="space-between center" flex>
             <div layout-padding></div>
-            <div layout="row">
-                <a ng-href="#room/home" ng-click="update_room_news_visit()"
+            <div layout="row" flex-sm>
+                <a flex-sm ng-href="#room/home" ng-click="update_room_news_visit()"
                     ng-class="get_active_class('room/home')" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">home</i></div>
             	        <div hide-sm>home</div>
             	    </div>
                 </a>
-                <a ng-href="#room/books" 
+                <a flex-sm ng-href="#room/books" 
                     ng-class="get_active_class('room/books')" layout-padding>
                     <div layout="column" layout-align="center center">
                         <div><i class="material-icons">library_books</i></div>
                         <div hide-sm>Books</div>
                     </div>
                 </a>
-                <a ng-href="#room/videos" 
+                <a flex-sm ng-href="#room/videos" 
                     ng-class="get_active_class('room/videos')" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">video_library</i></div>
             	        <div hide-sm>Videos</div>
             	    </div>
                 </a>
-                <a ng-href="#room/wiki" 
+                <a flex-sm ng-href="#room/wiki" 
                     ng-class="get_active_class('room/wiki')" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">toys</i></div>
@@ -92,7 +93,7 @@
             </div>
             <div  ng-include src="'/assets/angular/html/todo/link.html'" 
                 ng-if="!todo.room.news || !todo.room.rating"></div>
-            <div ng-if="user && (user.id == 4986324)">
+            <div ng-if="user && (user.id == 4986324)" hide-sm>
                 <md-button ng-click="add_videos()">
                     <md-icon md-font-set="material-icons">cloud_upload</md-icon>
                     <md-tooltip>Upload Videos</md-tooltip>
