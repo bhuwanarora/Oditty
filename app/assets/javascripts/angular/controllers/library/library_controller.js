@@ -50,7 +50,7 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
             var row_count = 4;
         }
         else{
-            var row_count = 3;
+            var row_count = 2;
         }
         var _scroll_and_expand = function(index){
             var book = {
