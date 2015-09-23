@@ -12,16 +12,14 @@ module CommunitiesHelper
 		c_books = CommunitiesHelper.fetch_books_database_net(c_name)
 		book_name,authors = (c_books[c_name]).transpose
 		output = {}
-		if CommunitiesHelper.has_required_book_count(book_name)	
-			output[:book] = c_books
-			output[:relevance] = {'relevance' => community['relevance'],
-						'relevanceOriginal' => community['relevanceOriginal']}
-			community_google_content = GoogleSearchHelper.search_multiple_types(c_name, 
-				[GoogleSearchHelper::SearchTypes[:video]])
-			c_videos = community_google_content[GoogleSearchHelper::SearchTypes[:video]]
-			if c_videos.present?
-				output[:video] = c_videos
-			end
+		output[:book] = c_books
+		output[:relevance] = {'relevance' => community['relevance'],
+					'relevanceOriginal' => community['relevanceOriginal']}
+		community_google_content = GoogleSearchHelper.search_multiple_types(c_name, 
+			[GoogleSearchHelper::SearchTypes[:video]])
+		c_videos = community_google_content[GoogleSearchHelper::SearchTypes[:video]]
+		if c_videos.present?
+			output[:video] = c_videos
 		end
 		output		
 	end
@@ -168,17 +166,19 @@ module CommunitiesHelper
 		batch_size_cypher = 4
 		communities_books.each do |community_books,relevance|
 			community_books.each do |community, books_authors|
-				books,authors = books_authors.transpose
 				clause =  News.new(news_metadata["news_id"]).match + Community.merge(community, communities_web_urls[community]) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)
 	        	clause_temp = clause
-				books.each_with_index do |book,i|
-					authorlist_string = authors[i].sort.join('').search_ready						
-					unique_indices = authors[i].map{|author| (book.search_ready + author.search_ready)}
-					clause_temp += Book.search_by_unique_indices(unique_indices) + " , community " + Community.merge_book + " WITH community "
-					if((i+1)%batch_size_cypher == 0)
-						clause_temp += News.return_init + Community.basic_info
-						clause_temp.execute
-						clause_temp = clause
+				if books_authors.present?
+					books,authors = books_authors.transpose
+					books.each_with_index do |book,i|
+						authorlist_string = authors[i].sort.join('').search_ready						
+						unique_indices = authors[i].map{|author| (book.search_ready + author.search_ready)}
+						clause_temp += Book.search_by_unique_indices(unique_indices) + " , community " + Community.merge_book + " WITH community "
+						if((i+1)%batch_size_cypher == 0)
+							clause_temp += News.return_init + Community.basic_info
+							clause_temp.execute
+							clause_temp = clause
+						end
 					end
 				end
 				if(clause_temp.length > clause.length)
