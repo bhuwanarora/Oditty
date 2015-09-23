@@ -581,9 +581,10 @@ h1{
 }
 
 .important_title, h3{
-    font: 300 20px Roboto,arial,sans-serif;
+    font: 300 20px Roboto,arial,sans-serif !important;
     color: #898989;
     margin: 0px;
+    line-height: 24px !important;
 }
 
 h3 a{
