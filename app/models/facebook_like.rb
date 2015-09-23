@@ -57,6 +57,15 @@ class FacebookLike < CommunityInterface
 		FacebookLike.order_by_community_and("") + " WITH community, facebook_like, " + Book.collect_map({"books_info" => Book.grouped_basic_info})
 	end
 
+	def get_detailed_info user_id
+		clause = match + FacebookLike.match_community +
+		" WITH facebook_like AS community " +
+		User.new(user_id).match + ", community " +
+		UsersCommunity.optional_match  +
+		UsersCommunity.set_view_count +
+		Community.return_group(UsersCommunity.basic_info, Community.basic_info)
+	end
+
 	def get_info user_id
 		clause = match + FacebookLike.match_community + Community.match_news + ", facebook_like, community_relevance " +
 		" WITH news, community_relevance, facebook_like AS community " + FacebookLike.order_by_community_and("news.timestamp") + " LIMIT 10 WITH community, " +
