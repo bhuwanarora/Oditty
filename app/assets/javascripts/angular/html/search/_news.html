@@ -1,5 +1,5 @@
 <div layout-padding>
-    <h2><a ng-href="/news?id={{::result.id}}">{{::result.title}}</a></h2>
+    <h3><a ng-href="/news?id={{::result.id}}">{{::result.title}}</a></h3>
     <div class="less_important">News, {{result.created_at | timestamp | date:'dd MMM'}}</div>
-    <div ng-bind-html="::result.description"></div>
+    <div ng-bind-html="::result.description" class="description_card"></div>
 </div>
