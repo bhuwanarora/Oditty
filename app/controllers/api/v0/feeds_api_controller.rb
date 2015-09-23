@@ -22,7 +22,7 @@ module Api
 					skip_count = params[:skip].to_i
 					info = Api::V0::FeedsApi.get_personalized_news(user_id, skip_count)
 					community_follow_count = info[0]["community_follow_count"] rescue 0
-					info = [info[0]["news"]] rescue []
+					info = info[0]["news"] rescue []
 				end
 				if !user_id || community_follow_count == 0
 					region = params[:id]
