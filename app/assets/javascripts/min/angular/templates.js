@@ -689,7 +689,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_author.html',
-    "<section layout=\"row\"><div flex=\"20\" flex-md=\"30\" flex-sm=\"35\" layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{result.id | author_thumb}}\" class=\"large_circular\" onerror=\"this.src=&quot;/assets/author_profile.jpg&quot;\"></div><div flex=\"80\" flex-md=\"70\" flex-sm=\"65\" layout=\"column\" layout-wrap class=\"side_padding\"><div class=\"author_title\"><a ng-href=\"/author?id={{::result.id}}\">{{::result.name}}</a></div><div class=\"less_important\">Author</div><div class=\"author_description\">{{::result.description}}</div></div></section><style>.author_title{font-size:1.2em;font-family:sans-serif}.author_description{margin-top:10px;font-size:.9em}</style>"
+    "<section layout=\"row\"><div layout=\"row\" layout-align=\"start start\"><img ng-src=\"{{result.id | author_thumb}}\" class=\"square\" onerror=\"this.src=&quot;/assets/author_profile.jpg&quot;\"></div><div layout=\"column\" layout-wrap class=\"side_padding\"><h3><a ng-href=\"/author?id={{::result.id}}\">{{::result.name}}</a></h3><div class=\"less_important\">Author</div><div class=\"description_card\">{{::result.description}}</div></div></section>"
   );
 
 
@@ -704,7 +704,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_community.html',
-    "<section layout=\"row\"><img ng-src=\"{{::result.image_url}}\" class=\"square\"><div layout-wrap class=\"side_padding\"><h2><a ng-href=\"/room?id={{::result.id}}\">{{::result.name}}</a></h2><div class=\"less_important\">Room</div></div></section>"
+    "<section layout=\"row\"><img ng-src=\"{{::result.image_url}}\" class=\"square\"><div layout-wrap class=\"side_padding\"><h3><a ng-href=\"https://oditty.me/room?id={{::result.id}}\">{{::result.name}}</a></h3><div class=\"less_important\">Room</div></div></section>"
   );
 
 
@@ -714,7 +714,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_news.html',
-    "<div layout-padding><h2><a ng-href=\"/news?id={{::result.id}}\">{{::result.title}}</a></h2><div class=\"less_important\">News, {{result.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"::result.description\"></div></div>"
+    "<div layout-padding><h3><a ng-href=\"/news?id={{::result.id}}\">{{::result.title}}</a></h3><div class=\"less_important\">News, {{result.created_at | timestamp | date:'dd MMM'}}</div><div ng-bind-html=\"::result.description\" class=\"description_card\"></div></div>"
   );
 
 
@@ -729,12 +729,12 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/search/_user.html',
-    "<div layout-padding><h2><a ng-href=\"/profile?id={{::result.id}}\">{{::result.first_name}} {{::result.last_name}}</a></h2><div class=\"less_important\">User</div></div>"
+    "<div layout-padding><h3><a ng-href=\"/profile?id={{::result.id}}\">{{::result.first_name}} {{::result.last_name}}</a></h3><div class=\"less_important\">User</div></div>"
   );
 
 
   $templateCache.put('/assets/angular/html/search/results.html',
-    "<section><div class=\"light_grey md-whiteframe-z1\" layout=\"row\" id=\"pageHeader\" layout-padding><a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}\">Top Results</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Community\">Rooms</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=News\">News</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Book\">Books</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Author\">Authors</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Person\">People</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Blog\">Blog</a></div><section layout=\"row\" class=\"feed_margin\" layout-sm=\"column\"><div flex=\"25\" flex-sm=\"100\"></div><div flex=\"50\" flex-sm=\"100\" layout=\"column\" ng-include src=\"'/assets/angular/html/search/show.html'\"></div><div flex=\"25\" hide-sm></div></section></section>"
+    "<section><div class=\"light_grey md-whiteframe-z1\" layout=\"row\" id=\"pageHeader\" layout-padding layout-wrap><a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}\">All</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Community\">Rooms</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=News\">News</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Book\">Books</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Author\">Authors</a> <a layout-padding class=\"grey_color\" ng-href=\"/search?q={{display_results_for}}&type=Person\">People</a></div><section layout=\"row\" class=\"feed_margin\" layout-sm=\"column\"><div flex=\"50\" flex-sm=\"100\" flex-md=\"100\" layout=\"column\" ng-include src=\"'/assets/angular/html/search/show.html'\"></div><div flex=\"25\" hide-md hide-sm></div><div flex=\"25\" hide-md hide-sm></div></section></section>"
   );
 
 
@@ -949,7 +949,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/shared/partials/book_info.html',
-    "<md-list-item class=\"social_content md-3-line\" layout=\"row\" layout-padding ng-show=\"!book_loading\" ng-if=\"book.title || book.name\"><div><section class=\"md-whiteframe-z1 rd_book_image_cover\"><div ng-include src=\"'/assets/angular/html/shared/partials/book_thumb.html'\"></div></section></div><div class=\"md-list-item-text\"><div layout-padding><div class=\"book_title\"><a ng-href=\"/book?q={{::book.id}}\">{{book.title || book.name}}</a></div><div class=\"less_important\">By <a ng-href=\"/author?id={{::book.author_id}}\">{{book.author_name}}</a></div></div><div class=\"book_description\" layout-padding>{{book.description | reduced_summary}}</div></div></md-list-item><style>.book_title{font-size:1.2em;font-family:sans-serif}.book_description{margin-top:10px;font-size:.9em}</style>"
+    "<md-list-item class=\"social_content md-3-line\" layout=\"row\" layout-padding ng-show=\"!book_loading\" ng-if=\"book.title || book.name\"><div class=\"md-list-item-text\"><div layout-padding><h3><a ng-href=\"https://oditty.me/book?q={{::book.id}}\">{{book.title || book.name}}</a></h3><div class=\"less_important\">By <a ng-href=\"https://oditty.me/author?id={{::book.author_id}}\">{{book.author_name}}</a></div></div><div class=\"description_card\" layout-padding>{{book.description | reduced_summary}}</div></div></md-list-item>"
   );
 
 
