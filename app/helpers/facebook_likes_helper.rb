@@ -151,7 +151,7 @@ private
 			@facebook_like = FacebookLike.new(nil, app_id)
 			@facebook_like.merge_info(category, created_time, name).execute
 			@user = User.new(user_id)
-			clause = @user.match + @facebook_like.match + ", user " + @user.create_like(created_time) + " RETURN ID(user)"
+			clause = @user.match + @facebook_like.match_by_app_id + ", user " + @user.create_like(created_time) + " RETURN ID(user)"
 			clause.execute
 		end
 	end
