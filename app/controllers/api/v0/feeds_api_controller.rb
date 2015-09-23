@@ -20,9 +20,11 @@ module Api
 				info = []
 				if user_id
 					skip_count = params[:skip].to_i
-					info = FeedsApi.get_personalized_news(user_id, skip_count).execute
+					info = Api::V0::FeedsApi.get_personalized_news(user_id, skip_count)
+					community_follow_count = info[0]["community_follow_count"] rescue 0
+					info = info[0]["news"] rescue []
 				end
-				if !user_id || info.empty?
+				if !user_id || community_follow_count == 0
 					region = params[:id]
 					puts "0 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
 					session[:news_skip_count] ||= 0

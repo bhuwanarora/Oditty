@@ -335,6 +335,10 @@ class User < Neo
 		" OPTIONAL " + User.get_visited_books
 	end
 
+	def get_community_follow_count
+		match + UsersCommunity.match + User.return_group('COUNT(DISTINCT community) AS community_follow_count')
+	end
+
 	def self.get_visited_books_label
 		Bookmark::Type::Visited.match_label("book", "Book") + " WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
 	end
