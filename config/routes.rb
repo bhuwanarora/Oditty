@@ -11,6 +11,7 @@ ReadersDoor::Application.routes.draw do
   get '/' => "website#quiz", :constraints               => {subdomain: 'quizzes'}
   get '/' => "website#testimonials", :constraints       => {subdomain: 'feedback'}
   get '/' => "website#home"
+  root :to => "website#rooms"
 
   resources :facebooks
 
