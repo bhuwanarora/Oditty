@@ -126,11 +126,12 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             }
             var url = element.getAttribute('data-url');
             var id = element.getAttribute('data-id');
+            var header = url.toCamel();
             if(angular.isUndefined(id) || (id == null) || (id == 'null')){
-                var container = {"id": id, "url": url, "full_url": url};
+                var container = {"id": id, "url": url, "full_url": url, "header": header};
             }
             else{
-                var container = {"id": id, "url": url, "full_url": url+"?id="+id};
+                var container = {"id": id, "url": url, "full_url": url+"?id="+id, "header": header};
             }
             $rootScope.containers.push(container);
             return false;   
