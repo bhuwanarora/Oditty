@@ -130,7 +130,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                 var container = {"id": id, "url": url, "full_url": url};
             }
             else{
-                var container = {"id": id, "url": url, "full_url": url+"/?id="+id};
+                var container = {"id": id, "url": url, "full_url": url+"?id="+id};
             }
             $rootScope.containers.push(container);
             return false;   

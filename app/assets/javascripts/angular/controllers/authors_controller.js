@@ -13,6 +13,10 @@ homeApp.controller('authorsController', ["$scope", 'authorService', 'sharedServi
 		}
 	}
 
+	$scope.handle_scroll_bottom = function(){
+		$scope.get_authors_interviewed();
+	}
+
 	$scope.render_page = function(event){
         sharedService.render_page(event);
     }
