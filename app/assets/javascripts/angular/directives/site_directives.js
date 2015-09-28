@@ -654,7 +654,7 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                     });
                 }
                 if(angular.isDefined($rootScope.containers)){
-                    var container = {"url": "read_news"}
+                    var container = {"url": "read_news", "data": $scope.communityFeed};
                     $rootScope.containers.push(container);
                 }
                 else{
