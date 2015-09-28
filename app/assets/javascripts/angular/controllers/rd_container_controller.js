@@ -1,4 +1,4 @@
-homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootScope', '$document', 'sharedService', function(websiteService, $scope, $rootScope, $document, sharedService){
+homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootScope', '$document', 'sharedService', '$timeout', function(websiteService, $scope, $rootScope, $document, sharedService, $timeout){
 
 	$scope.render_page = function(event){
         sharedService.render_page(event);
@@ -9,14 +9,23 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
     }
 
 	$scope.remove_container = function(index){
-		$rootScope.containers.splice(index, 1);
+        var containers = $rootScope.containers;
+		containers.splice(index, 1);
+        delete $rootScope.containers;
+        $rootScope.containers = [];
+        $timeout(function(){
+            angular.forEach(containers, function(value){
+                this.push(value);
+            }, $rootScope.containers);
+        }, 100);
 	}
 
 	var _init = (function(){
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-			var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
+			// var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
+      var container = {"url": "author", "id": 2343423, "full_url": "author", "header": "Author"}
 			$rootScope.containers.push(container);
 		}
 		_add_groups();

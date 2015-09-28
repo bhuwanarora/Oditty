@@ -1,5 +1,5 @@
-<div hide flex-md="15" show-md ></div>
-<div layout="row" layout-padding flex="60" flex-md="70" flex-sm="100" layout-align="space-between">
+<div hide flex-md="15" show-md  ng-if="!pages">></div>
+<div layout="row" layout-padding flex layout-align="space-between">
     <div>
         <h3 layout-padding>
             <div layout-padding>
@@ -12,7 +12,7 @@
     </div>
     <time-travel info="info" active-tag="active_tag"></time-travel>
 </div>
-<div flex="40" layout="column" hide-md hide-sm>
+<div flex="40" layout="column" hide-md hide-sm ng-if="!pages">
 	<div layout-padding ng-if="(active_tag.videos && active_tag.videos.length > 0) || (active_tag.videos.length == 1 && active_tag.videos[0].title != null )">
         <a ng-href="#room/videos"><h3 layout-padding>Videos related to {{active_tag.name}}</h3></a>
     </div>
@@ -24,4 +24,4 @@
     </div>
 	<div ng-include src="'/assets/angular/html/community/books.html'" class="md-whiteframe-z1 room_content_container"></div>
 </div>
-<div hide flex-md="15" show-md ></div>
+<div hide flex-md="15" show-md  ng-if="!pages">></div>

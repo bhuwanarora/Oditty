@@ -51,7 +51,7 @@
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
         <div layout="column" layout-fill>
-            <md-content class="white super_container" flex ng-controller="rdContainerController" id="homeScreen">
+            <div class="white browse_container" du-scroll-container flex ng-controller="rdContainerController" id="homeScreen">
                 <div flex>
                     <div class="header">
                         <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
@@ -61,7 +61,7 @@
                     </div>
                     <div layout-padding></div>
                 </div>
-            </md-content>
+            </div>
             
             <md-progress-linear class="md-primary loader"
                                 ng-if="info.loading && !info.show_share"
@@ -81,8 +81,9 @@
             </div> -->
 
             <div du-scroll-container="homeScreen">
-                <a href="#homeContainer">
-                    <md-button class="md-fab white homeContainer" aria-label="homeContainer" 
+                <a href="#MainhomeContainer" du-smooth-scroll duration="1000">
+                    <md-button class="md-fab white homeContainerFab" 
+                        aria-label="homeContainer" 
                         ng-click="goto_home($event)">
                         <md-icon md-font-set="material-icons grey_color">keyboard_arrow_left</md-icon>
                     </md-button>
