@@ -1,6 +1,6 @@
 <div layout="row" layout-wrap layout-align="center center">
      <div layout-margin>
-	     <a ng-click="render_page('rooms')" target="_blank" layout="column" layout-align="center center">
+	     <a ng-click="render_page($event)" data-url="rooms" target="_blank" layout="column" layout-align="center center">
 		     <md-button class="product_icon md-whiteframe-z1" style="background-color: #3E52B7;">
 		     	<md-icon class="white_color" md-font-set="material-icons">group_work</md-icon>
 <!-- 						     	<md-tooltip>Rooms: Connecting News, Videos and Books on a topic.</md-tooltip> -->
@@ -9,7 +9,7 @@
 	     </a>
      </div>
      <div layout-margin>
-	     <a ng-click="render_page('news')" target="_blank" layout="column" layout-align="center center">
+	     <a ng-click="render_page($event)" data-url="news_group" target="_blank" layout="column" layout-align="center center">
 		     <md-button class="product_icon md-whiteframe-z1" style="background-color: #88C151;">
 		     	<md-icon class="white_color" md-font-set="material-icons">today</md-icon>
 		     	<!-- <md-tooltip>News: Stay Updated with News in Rooms I care about</md-tooltip> -->
@@ -18,7 +18,7 @@
 	     </a>
      </div>
      <div layout-margin>
-	     <a ng-click="render_page('spaces')" target="_blank" layout="column" layout-align="center center">
+	     <a ng-click="render_page($event)" data-url="spaces" target="_blank" layout="column" layout-align="center center">
 		     <md-button class="product_icon md-whiteframe-z1" style="background-color: #1876B8;">
 		     	<md-icon class="white_color" md-font-set="material-icons">strikethrough_s</md-icon>
 		     	<!-- <md-tooltip>Spaces: Feed from my social circle.</md-tooltip> -->
@@ -27,7 +27,7 @@
 	     </a>
      </div>
      <div layout-margin>
-	     <a ng-click="render_page('books')" target="_blank" layout="column" layout-align="center center">
+	     <a ng-click="render_page($event)" data-url="books" target="_blank" layout="column" layout-align="center center">
 		     <md-button class="product_icon md-whiteframe-z1" style="background-color: #E9453B;">
 		     	<md-icon class="white_color" md-font-set="material-icons">local_library</md-icon>
 		     	<!-- <md-tooltip>Books: Filter books depending on your taste</md-tooltip> -->
@@ -36,7 +36,7 @@
 	     </a>
      </div>
      <div layout-margin>
-	     <a ng-click="render_page('authors')" target="_blank" layout="column" layout-align="center center">
+	     <a ng-click="render_page($event)" data-url="authors" target="_blank" layout="column" layout-align="center center">
 		     <md-button class="product_icon md-whiteframe-z1" style="background-color: #FAA929;">
 		     	<md-icon class="white_color" md-font-set="material-icons">mode_edit</md-icon>
 		     	<!-- <md-tooltip>Authors: Tell us how you want to see this product</md-tooltip> -->
