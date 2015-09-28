@@ -4,24 +4,27 @@
         <img ng-src="{{profile_user.image_url || '/assets/user_profile.jpg'}}"  class="profile_wrapper"
             onerror="this.src='https://oditty.me/assets/rooms.png'">
     </div>
-    <section flex="10" flex-md="5" hide-sm></section>
-    <section layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" class="yellow md-whiteframe-z1">
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
+    <section layout="column" layout-wrap flex class="yellow md-whiteframe-z1">
         <div layout-padding></div>
         <div layout-padding></div>
         <div layout="column" layout-align="center center" class="z_index_1">
             <img ng-src="{{profile_user.image_url || '/assets/user_profile.jpg'}}" 
                 class="profile_pic" onerror="this.src='https://oditty.me/assets/rooms.png'"/>
             <div layout="row"  layout-align="center center">
-                <h2><a ng-href="/profile?id={{::profile_user.id}}" class="white_color">
-                    <div layout="column" layout-wrap layout-align="start start">
-                        <div layout="row" layout-padding>
-                            <div ng-bind="::profile_user.first_name"></div>
-                            <div>&nbsp;</div>
-                            <div ng-bind="::profile_user.last_name"></div>
+                <h2><a ng-href="/profile?id={{::profile_user.id}}" class="white_color no_anchor"
+                        data-id="{{::profile_user.id}}" data-url="profile" ng-click="render_page($event)">
+                        <div layout="column" layout-wrap layout-align="start start" class="no_anchor" 
+                            data-id="{{::profile_user.id}}" data-url="profile">
+                            <div layout="row" layout-padding  class="no_anchor" 
+                                data-id="{{::profile_user.id}}" data-url="profile">
+                                {{::profile_user.first_name}}&nbsp;{{::profile_user.last_name}}
+                            </div>
                         </div>
-                    </div>
-                </a></h2>
-                <a href="/customise" class="white_color" ng-if="info.my_profile">
+                    </a>
+                </h2>
+                <a href="/customise" class="white_color" ng-if="info.my_profile"
+                    ng-if="!pages">
                     <span class="material-icons">edit</span>
                 </a>
             </div>
@@ -37,7 +40,7 @@
                 <div ng-if="profile_user.status">Following</div>
             </md-button>
             <div layout-padding></div>
-            <div class="light_grey full_width no_overflow md-whiteframe-z3" id="pageHeader"
+            <div class="light_grey full_width horizontal_scroll md-whiteframe-z3" id="pageHeader"
                 layout="row" layout-align="center center" >
                 <a href="#/profile/feed" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/feed')">
@@ -122,7 +125,7 @@
         </div>
 
     </section>
-    <section flex="10" flex-md="5" hide-sm></section>
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
 </div>
 
 <style>

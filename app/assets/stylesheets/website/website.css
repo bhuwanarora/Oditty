@@ -623,3 +623,7 @@ md-tooltip{
 md-tooltip div{
     background-color: white !important;
 }
+
+.horizontal_scroll{
+    overflow-x: scroll;
+}

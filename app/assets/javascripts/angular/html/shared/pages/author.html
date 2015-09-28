@@ -1,14 +1,14 @@
 <div ng-include src="'/assets/angular/html/author/header.html'"></div>
 
 <div layout="row" class="feed_margin">
-    <section flex="10" flex-md="5" hide-sm></section>
-    <section flex="80" flex-md="90" layout="row" flex-sm="100">
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
+    <section flex layout="row">
         <div ng-view flex="70" flex-sm="100"></div>
         <div layout-padding flex="30" hide-sm
             ng-include src="'/assets/angular/html/author/more_info.html'">
         </div>
     </section>
-    <section flex="10" flex-md="5" hide-sm></section>
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
 </div>
 <style>
     .author_thumb{

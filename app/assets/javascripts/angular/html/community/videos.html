@@ -1,3 +1,3 @@
-<div ng-include src="'/assets/angular/html/community/video_container.html'" flex="60" flex-md="70" flex-sm="100"></div>
+<div ng-include src="'/assets/angular/html/community/video_container.html'" flex></div>
 <div ng-if="::active_tag.description" ng-bind-html="::active_tag.description" class="description_card" 
-    flex="40" layout-padding flex-md="30" hide-sm></div>
+    flex="40" layout-padding flex-md="30" hide-sm  ng-if="!pages">></div>
