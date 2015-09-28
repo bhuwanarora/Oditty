@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", "$location", "newsService", "Years", "Months", "websiteService", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService, $location, newsService, Years, Months, websiteService){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", "$location", "newsService", "Years", "Months", "websiteService", "$document", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService, $location, newsService, Years, Months, websiteService, $document){
 
     this.get_popular_books = function($scope, books){
         console.log("get_popular_books");
@@ -134,6 +134,9 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                 var container = {"id": id, "url": url, "full_url": url+"?id="+id, "header": header};
             }
             $rootScope.containers.push(container);
+            var container = angular.element(document.getElementById('browseScreen'));
+            var length = $rootScope.containers.length;
+            container.scrollLeft(length*600, 1000);
             return false;   
         }
     }
