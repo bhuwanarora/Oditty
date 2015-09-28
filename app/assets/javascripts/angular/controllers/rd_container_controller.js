@@ -1,9 +1,12 @@
-homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootScope', '$document', function(websiteService, $scope, $rootScope, $document){
+homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootScope', '$document', 'sharedService', function(websiteService, $scope, $rootScope, $document, sharedService){
 
-	$scope.render_page = function(url){
-		var container = {"url": url};
-		$rootScope.containers.push(container);
+	$scope.render_page = function(event){
+        sharedService.render_page(event);
 	}
+
+    $scope.goto_page = function(container){
+        window.open(container.full_url, '_blank').focus();
+    }
 
 	$scope.remove_container = function(index){
 		$rootScope.containers.splice(index, 1);
@@ -13,7 +16,7 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-			var container = {"url": "news"};
+			var container = {"url": "news_group", "full_url": "news_group"};
 			$rootScope.containers.push(container);
 		}
 		_add_groups();

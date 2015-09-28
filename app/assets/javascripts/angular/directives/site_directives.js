@@ -74,7 +74,7 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                 else if(url == "authors"){
                     $scope.content_url = '/assets/angular/html/pages/authors.html.erb';
                 }
-                else if(url == "news"){
+                else if(url == "news_group"){
                     $scope.content_url = '/assets/angular/html/pages/news.html.erb';
                 }
                 else if(url == "book"){

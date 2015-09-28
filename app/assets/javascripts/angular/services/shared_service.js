@@ -125,8 +125,13 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                 var element = element.parentElement;
             }
             var url = element.getAttribute('data-url');
-            var id = element.getAttribute('data-id')
-            var container = {"id": id, "url": url};
+            var id = element.getAttribute('data-id');
+            if(angular.isUndefined(id)){
+                var container = {"id": id, "url": url, "full_url": url};
+            }
+            else{
+                var container = {"id": id, "url": url, "full_url": url+"/?id="+id};
+            }
             $rootScope.containers.push(container);
             return false;   
         }
