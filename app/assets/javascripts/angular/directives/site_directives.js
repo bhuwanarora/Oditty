@@ -1,8 +1,12 @@
-homeApp.directive('userCommunities', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('userCommunities', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return {
         restrict: 'E',
-        scope : {userId: '=', reduced: '='},
+        scope : {userId: '=', reduced: '=', wrapped: '='},
         controller: ["$scope", function($scope){
+
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
 
             var _init = function(){
                 $scope.rooms = [];

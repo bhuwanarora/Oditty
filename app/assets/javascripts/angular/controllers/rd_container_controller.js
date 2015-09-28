@@ -16,7 +16,7 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-			var container = {"url": "news_group", "full_url": "news_group"};
+			var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
 			$rootScope.containers.push(container);
 		}
 		_add_groups();
@@ -44,4 +44,8 @@ document.onclick = function(e){
         e.preventDefault();
         return false; // prevent default action and stop event propagation  
     }
+};
+
+String.prototype.toCamel = function(){
+    return this.replace(/(\_[a-z])/g, function($1){return $1.toUpperCase().replace('_','');});
 };
