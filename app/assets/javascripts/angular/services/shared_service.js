@@ -118,7 +118,6 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.render_page = function(event){
-        debugger
         if(angular.isDefined($rootScope.containers)){
             var element = event.target;
             var content = String(element.textContent).replace(/^\s+|\s+$/g, '');
@@ -127,7 +126,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             }
             var url = element.getAttribute('data-url');
             var id = element.getAttribute('data-id');
-            if(angular.isUndefined(id) && (id == null)){
+            if(angular.isUndefined(id) || (id == null) || (id == 'null')){
                 var container = {"id": id, "url": url, "full_url": url};
             }
             else{
