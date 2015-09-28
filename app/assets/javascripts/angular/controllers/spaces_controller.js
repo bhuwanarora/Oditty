@@ -1,4 +1,4 @@
-homeApp.controller('spacesController', ["$scope", "$rootScope", "userService", "$timeout", "$mdSidenav", function($scope, $rootScope, userService, $timeout, $mdSidenav){
+homeApp.controller('spacesController', ["$scope", "$rootScope", "userService", "$timeout", "$mdSidenav", "sharedService", function($scope, $rootScope, userService, $timeout, $mdSidenav, sharedService){
     $scope.get_feed = function(){
         if(!$scope.info.feed_loading){
             $scope.info.feed_loading = true;
@@ -22,6 +22,10 @@ homeApp.controller('spacesController', ["$scope", "$rootScope", "userService", "
                 });
             }
         }
+    }
+
+    $scope.render_page = function(event){
+        sharedService.render_page(event);
     }
 
     var _unauthenticated_user = function(){

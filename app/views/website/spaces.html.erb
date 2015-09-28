@@ -13,14 +13,7 @@
     <section flex="10" flex-md="5" hide-sm></section>
     <section flex="80" flex-md="90" layout="row" flex-sm="100">
         <div flex="60" flex-sm="100" flex-md="100">
-            <div ng-include src="'/assets/angular/html/share/status_options.html'"
-                ng-if="!hide_follow_links" flex="100" flex-sm="100"
-                ng-controller="shareController"
-                class="animate-slow" layout="row"
-                layout-margin>
-            </div>
-            <div layout-padding></div>
-            <div ng-include src="'/assets/angular/html/home/partials/social_feed.html'"></div>
+            <div ng-include src="'/assets/angular/html/shared/pages/spaces.html'" ></div>
         </div>
         <div flex="40" hide-md hide-sm>
             <suggest-friends></suggest-friends>

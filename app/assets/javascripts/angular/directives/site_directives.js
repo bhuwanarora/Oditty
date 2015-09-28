@@ -25,6 +25,90 @@ homeApp.directive('userCommunities', ["$rootScope", "userService", function($roo
     };
 }]);
 
+homeApp.directive('rdContent', ["websiteService", "$timeout", function(websiteService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+            }
+
+            $scope.get_url = function(){
+                return '/assets/angular/html/pages/products.html.erb';
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/rd_content.html'
+    };
+}]);
+
+homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(websiteService, $rootScope){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+
+            var _init = function(){
+                console.log("rdMainContent");
+                var container = $rootScope.containers[$scope.$index];
+                var url = container.url;
+                var id = container.id;
+                if(angular.isDefined(id)){
+                    setCookie("id", id);
+                }
+
+                if(url == "room"){
+                    $scope.content_url = '/assets/angular/html/pages/room.html.erb';
+                }
+                else if(url == "rooms"){
+                    $scope.content_url = '/assets/angular/html/pages/rooms.html.erb';
+                }
+                else if(url == "products"){
+                    $scope.content_url = '/assets/angular/html/pages/products.html.erb';                
+                }
+                else if(url == "spaces"){
+                    $scope.content_url = '/assets/angular/html/pages/spaces.html.erb';                
+                }
+                else if(url == "books"){
+                    $scope.content_url = '/assets/angular/html/pages/books.html.erb';
+                }
+                else if(url == "authors"){
+                    $scope.content_url = '/assets/angular/html/pages/authors.html.erb';
+                }
+                else if(url == "news"){
+                    $scope.content_url = '/assets/angular/html/pages/news.html.erb';
+                }
+                else if(url == "book"){
+                    $scope.content_url = '/assets/angular/html/pages/book.html.erb';
+                }
+                else if(url == "profile"){
+                    $scope.content_url = '/assets/angular/html/pages/profile.html.erb';
+                }
+                else if(url.contains("author")){
+                    if(url == "author"){
+
+                    }
+                    else if(url == "author#books"){
+
+                    }
+                    else if(url == "author#interview"){
+
+                    }
+                    else if(url == "author#wiki"){
+
+                    }
+                    $scope.content_url = '/assets/angular/html/pages/author.html.erb';
+                }
+                else if(url == "read_news"){
+                    $scope.content_url = '/assets/angular/html/pages/read_news.html.erb';   
+                }
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/rd_main_content.html'
+    };
+}]);
+
 homeApp.directive('testimonials', ["websiteService", "$timeout", function(websiteService, $timeout){
     return {
         restrict: 'E',
@@ -33,7 +117,7 @@ homeApp.directive('testimonials', ["websiteService", "$timeout", function(websit
     };
 }]);
 
-homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('browseRooms', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return {
         restrict: 'E',
         scope: {'reduced': '='},
@@ -181,6 +265,10 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
 
                 ];
                 return rooms;
+            }
+
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
             }
 
             $scope.goto_room = function(id){
@@ -556,7 +644,6 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
             }
 
             $scope.show_news = function(event){
-                var url = $scope.communityFeed.news_url || $scope.communityFeed.url;
                 url ="https://api.embed.ly/1/extract?key=0038e86d5e754f8d9a0c3823e338563d&url="+url+"&format=json";
                 $scope.cirular_loading = true;
                 if(angular.isUndefined($scope.communityFeed.data)){
@@ -565,13 +652,20 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                         $scope.communityFeed.data = data;
                     });
                 }
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/iframe.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    clickOutsideToClose: true,
-                    targetEvent: event
-                });
+                if(angular.isDefined($rootScope.containers)){
+                    var container = {"url": "read_news"}
+                    $rootScope.containers.push(container);
+                }
+                else{
+                    var url = $scope.communityFeed.news_url || $scope.communityFeed.url;
+                    $mdDialog.show({
+                        templateUrl: '/assets/angular/html/news/iframe.html',
+                        scope: $scope,
+                        preserveScope: true,
+                        clickOutsideToClose: true,
+                        targetEvent: event
+                    });
+                }
                 event.stopPropagation();
             }
 

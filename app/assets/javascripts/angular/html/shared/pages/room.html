@@ -1,0 +1,44 @@
+<div ng-include src="'/assets/angular/html/community/header.html'" 
+	layout="row" 
+	id="pageHeader" class="relative"></div>
+<div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
+<section layout="row" class="feed_margin">
+	<div flex="10" flex-md="5" hide-sm></div>
+	<div layout="row" layout-md="row" layout-sm="column"
+	    flex="80" flex-md="90" flex-sm="100" ng-view>
+	    
+    </div>
+	<!-- <div layout="row" layout-md="column" layout-sm="column"
+	    flex="80" flex-md="80" flex-sm="100">
+	    <div ng-include src="'/assets/angular/html/community/left_panel.html'" 
+	    	layout-padding flex="25" flex-sm="100" flex-md="100" ></div>
+	    <div flex="55" flex-sm="100" flex-md="100" layout="column" ng-view>
+	    </div>
+	    <div flex="20" hide-sm hide-md ng-include src="'/assets/angular/html/community/right_panel.html'">
+	    </div>
+	</div> -->
+	<div flex="10" flex-md="5" hide-sm></div>
+</section>
+<style>
+	.users{
+		bottom: 0px;
+		left: 0px;
+		position: absolute;
+	}
+
+	.max_full_width{
+		max-width: 100%;
+		max-height: 70vh;
+	}
+
+	.room_content_container{
+		max-height: 400px;
+		overflow-y: scroll;
+	}
+
+	#pageHeader{
+		position: relative;
+	    overflow: hidden;
+	}
+	
+</style>

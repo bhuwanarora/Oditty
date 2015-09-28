@@ -66,7 +66,7 @@ ReadersDoor::Application.routes.draw do
   get "logout"                   => "users#logout",            :as => "logout_user"
   get "add_tag_to_subcategory"   => "tags#map",                :as => "add_tag_to_subcategory"
   get "remove_tag_from_subcategory" => "tags#unmap",           :as => "remove_tag_from_subcategory"
-  get "test"                     => "users#test",              :as => "test"
+  # get "test"                     => "users#test",              :as => "test"
   get "activate"                 => "users#activate",          :as => "activate"
   
 
@@ -84,6 +84,7 @@ ReadersDoor::Application.routes.draw do
   get "book_count"               => "books#count",                    :as => "get_book_count"
   # root :to => "website#coming_soon"
   # get 'dev'                       => "recommendations#index",         :as => "dev"
+  get 'test'                      => "website#test",                  :as => "test"
   get 'home'                      => "website#home",                  :as => "home"
   get 'products'                      => "website#products",                  :as => "products"
   get 'new_home'                      => "website#new_home",          :as => "new_home"
@@ -168,6 +169,7 @@ ReadersDoor::Application.routes.draw do
   get "odit_rooms"                   => "odit#rooms",            :as => "odit_rooms"
   get "odit_profile"                   => "odit#profile",            :as => "odit_profile"
   get "utilities"                       => "website#utilities",          :as => "utilities"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes"
 

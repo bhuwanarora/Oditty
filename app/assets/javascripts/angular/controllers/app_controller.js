@@ -1,7 +1,12 @@
-homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', '$mdBottomSheet', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService, $mdBottomSheet){
+homeApp.controller('appController', ["$scope", "$rootScope", "$mdSidenav", '$mdDialog', 'shelfService', 'userService', '$cookieStore', '$timeout', '$location', 'feedService', '$filter', 'Facebook', 'websiteService', '$mdBottomSheet', '$document', function($scope, $rootScope, $mdSidenav, $mdDialog, shelfService, userService, $cookieStore, $timeout, $location, feedService, $filter, Facebook, websiteService, $mdBottomSheet, $document){
 
     $scope.stop_propagation = function(event){
         event.stopPropagation();
+    }
+
+    $scope.goto_home = function(event){
+        var element = angular.element(document.getElementById("homeContainer"));
+        $document.scrollToElement(element, 0, 1000);
     }
 
     $scope.invite_friends = function(event){
