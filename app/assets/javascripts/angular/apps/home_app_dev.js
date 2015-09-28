@@ -145,7 +145,7 @@ homeApp.config(["FacebookProvider", "facebookAppId", function(FacebookProvider, 
   }
 ]);
 
-homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", function($rootScope, $location, $cookieStore, $cookies, $http){
+homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", "$route", function($rootScope, $location, $cookieStore, $cookies, $http, $route){
     var unauthenticated_user = getCookie("logged") == "";
     if(unauthenticated_user){
         var closed_urls = ($location.$$absUrl.indexOf("signup") < 0) && ($location.$$absUrl.indexOf("book") < 0) && ($location.$$absUrl.indexOf("author") < 0) && ($location.$$absUrl.indexOf("communities") < 0) && ($location.$$absUrl.indexOf("home") < 0) && ($location.$$absUrl.indexOf("room") < 0) && ($location.$$absUrl.indexOf("news") < 0) && ($location.$$absUrl.indexOf("news_group") < 0) && ($location.$$absUrl.indexOf("filters") < 0) && ($location.$$absUrl.indexOf("games") < 0) && ($location.$$absUrl.indexOf("publisher") < 0) && ($location.$$absUrl.indexOf("search") < 0) && ($location.$$absUrl.indexOf("profile") < 0) && ($location.$$absUrl.indexOf("quiz") < 0) && ($location.$$absUrl.indexOf("spaces") < 0) && ($location.$$absUrl.indexOf("journey") < 0) && ($location.$$absUrl.split("/")[3] != "");
@@ -157,7 +157,7 @@ homeApp.run(["$rootScope", "$location", "$cookieStore", "$cookies", "$http", fun
         }
 	}
 
-
+    $route.reload();
     if(window.location.pathname == "/room"){
         var _handle_todo_update = function(){
             var todo = getCookie("todo");

@@ -40,7 +40,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		var history = $location.path() == "/profile/history";
 		var rooms = $location.path() == "/profile/rooms";
 		var is_feed = !followers && !following && !books && !news && !history && !rooms && !history;
-
 		if(!$scope.info.loading && is_feed){
 			var personal_feed = [];
 			var id = $scope.active_user_id;
