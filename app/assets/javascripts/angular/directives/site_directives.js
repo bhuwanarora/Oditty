@@ -57,6 +57,7 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                 var url = container.url;
                 var id = container.id;
                 if(angular.isDefined(id)){
+                    deleteCookie("id");
                     setCookie("id", id);
                 }
 

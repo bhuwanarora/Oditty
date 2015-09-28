@@ -202,7 +202,8 @@ md-content{
 	margin-top: 72px !important;
 }
 
-#homeScreen{
+#homeScreen,
+#browseScreen{
     margin-top: 0px !important;
     max-height: 100vh !important;
 }
