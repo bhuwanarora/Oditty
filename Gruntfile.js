@@ -317,10 +317,6 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/customise/authors_controller.js"
                 ],
 
-                "app/assets/javascripts/min/angular/controllers/book_group.min.js":[
-                    
-                ],
-
                 "app/assets/javascripts/min/angular/controllers/new_home_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/new_home_controller.js"
                 ],
@@ -356,7 +352,24 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/spaces_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/spaces_controller.js"
-                ]
+                ],
+
+                "app/assets/javascripts/min/angular/controllers/all_group.min.js":[
+                    "app/assets/javascripts/min/angular/controllers/rd_container_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/rooms_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/authors_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/news_group_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/network_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/news_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/community_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/new_home_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/infinity_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/room_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/author_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/profile_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/search_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/spaces_group.min.js"
+                ],
             },
           },
         },
