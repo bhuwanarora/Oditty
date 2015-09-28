@@ -1,14 +1,20 @@
-<div  ng-class="{'reduced_rooms feed_ticker': reduced}" layout="row" layout-wrap>
+<div  ng-class="{'reduced_rooms feed_ticker': reduced, 'room_wrapped': wrapped}" layout="row" layout-wrap>
 	<div ng-repeat="room in rooms"
 		ng-include src="'/assets/angular/html/rooms/room.html'" 
 		layout-margin></div>
 </div>
 <style>
+	.room_wrapped .room_image_wrapper{
+		max-height: 150px;
+		overflow: hidden;
+	}
+
 	.reduced_rooms .room_image_wrapper{
 		width: 80px;
 		height: 80px;
 	}
 
+	.room_image_wrapper .action_button,
 	.reduced_rooms .action_button,
 	.reduced_rooms .less_important{
 		display: none;
