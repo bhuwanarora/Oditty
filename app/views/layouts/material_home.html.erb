@@ -51,7 +51,7 @@
         ng-click="close_popups()"
         msd-wheel="close_popups('wheel')">
         <div layout="column" layout-fill>
-            <div class="white browse_container" du-scroll-container flex ng-controller="rdContainerController" id="homeScreen">
+            <div class="white browse_container" du-scroll-container flex ng-controller="rdContainerController" id="browseScreen">
                 <div flex>
                     <div class="header">
                         <div ng-include src="'/assets/angular/html/shared/header.html'"></div>
@@ -80,7 +80,7 @@
                 </a>
             </div> -->
 
-            <div du-scroll-container="homeScreen">
+            <div du-scroll-container="browseScreen">
                 <a href="#MainhomeContainer" du-smooth-scroll duration="1000">
                     <md-button class="md-fab white homeContainerFab" 
                         aria-label="homeContainer" 

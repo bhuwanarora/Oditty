@@ -22,7 +22,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/author/followers.html',
-    "<div layout=\"row\" layout-wrap><md-list layout=\"row\" layout-wrap><a ng-repeat=\"user in author.users\" ng-href=\"/profile?q={{::user.id}}\" ng-if=\"user.id\" layout-margin layout=\"row\" layout-align=\"center center\"><img class=\"circular\" ng-src=\"{{user.image_url || '/assets/user_profile.jpg'}}\" alt=\"{{::user.first_name}} {{::user.last_name}}\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"><div class=\"less_important\" layout-padding>{{::user.first_name}} {{::user.last_name}}</div></a></md-list></div>"
+    "<div layout=\"row\" layout-wrap><md-list layout=\"row\" layout-wrap><img class=\"circular\" ng-src=\"{{user.image_url || '/assets/user_profile.jpg'}}\" alt=\"{{::user.first_name}} {{::user.last_name}}\" onerror=\"this.src=&quot;/assets/user_profile.jpg&quot;\"> <a ng-repeat=\"user in author.users\" ng-href=\"/profile?q={{::user.id}}\" ng-if=\"user.id\" layout-margin data-id=\"{{::user.id}}\" data-url=\"profile\" ng-click=\"render_page($event)\" class=\"less_important no_anchor\" layout=\"row\" layout-align=\"center center\">{{::user.first_name}}&nbsp;{{::user.last_name}}</a></md-list></div>"
   );
 
 

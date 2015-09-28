@@ -217,7 +217,12 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
     var _handle_id_from_url = function(url_parser){
     	var user_is_me = false;
-        $scope.active_user_id = url_parser[2];
+        var id = url_parser[2];
+        _handle_id_from_cookie(id);
+    }
+
+    var _handle_id_from_cookie = function(id){
+    	$scope.active_user_id = id;
         if(angular.isDefined($rootScope.user)){
         	_handle_profile_data();
         }
@@ -288,11 +293,17 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
+        var id_in_cookie = getCookie("id");
         if(angular.isDefined(url_parser) && url_parser != null){
         	_handle_id_from_url(url_parser);
         }
         else{
-        	_handle_me();
+        	if(id_in_cookie){
+        		_handle_id_from_cookie(id_in_cookie);
+        	}
+        	else{
+        		_handle_me();
+        	}
         }
        _get_feed();
        $scope.is_profile = true;
