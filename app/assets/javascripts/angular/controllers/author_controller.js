@@ -22,6 +22,11 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
     }
 
+    $scope.render_page = function(event){
+        debugger
+        sharedService.render_page(event);
+    }
+
     $scope.show_todo_list = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/todo/author.html',

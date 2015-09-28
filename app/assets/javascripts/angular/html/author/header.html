@@ -6,8 +6,8 @@
         <img ng-src="{{author.id | author_thumb}}"  class="profile_wrapper"
             onerror="this.src='/assets/author_profile.jpg'"/>
     </div>
-    <section flex="10" flex-md="5" hide-sm></section>
-    <div layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
+    <div layout="column" layout-wrap flex 
         class="md-whiteframe-z1 relative">
         <div layout-padding></div>
         <div layout-padding></div>
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <section flex="10" flex-md="5" hide-sm></section>
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
 </div>
 <style>
     .balloons{

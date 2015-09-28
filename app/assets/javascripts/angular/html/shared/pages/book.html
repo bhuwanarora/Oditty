@@ -37,10 +37,10 @@
 
 <section layout="row" layout-wrap class="feed_margin">
 	<div flex="5" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_left_panel.html'" 
-		ng-if="!book.show_info_only"></div>
-	<div flex="85" flex-sm="100" flex-md="90" layout="column" ng-view></div>
+		ng-if="!book.show_info_only && !pages"></div>
+	<div flex layout="column" ng-view></div>
     <div flex="10" hide-sm flex-md="5" ng-include src="'/assets/angular/html/book/_right_panel.html'" 
-    	ng-if="!book.show_info_only"></div>
+    	ng-if="!book.show_info_only && !pages"></div>
 </section>
 <style>
 	#viewerCanvas{

@@ -1,12 +1,14 @@
 <div layout="row">
-    <div flex="75" layout="row" layout-md="column" layout-sm="column" flex-sm="100">
-        <div flex="30" layout-padding flex-md="100" flex-sm="100">
+    <div flex layout="row" layout-md="column" layout-sm="column">
+        <div flex="30" layout-padding flex-md="100" flex-sm="100"  ng-if="!pages">
             <div class="white round_corners">
                 <div layout="column" layout-md="row" layout-sm="column">
                     <div flex-md="30" flex-sm="100">
                         <div layout="column" layout-padding hide-md>
-                            <h2><a ng-href="/book?q={{book.id || book.book_id}}" class="bold">{{::book.title}}</a></h2>
-                            <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
+                            <h2><a ng-href="/book?q={{book.id || book.book_id}}" class="bold"
+                                data-url="book" data-id="{{book.id || book.book_id}}" ng-click="render_page($event)">{{::book.title}}</a></h2>
+                            <a ng-href="/author?q={{::book.author_id}}"
+                                data-url="author" data-id="{{book.author_id}}" ng-click="render_page($event)">{{::book.author_name}}</a>
                         </div>
                         <div class="relative">
                             <img ng-src="{{book.isbn | medium_thumb}}" 
@@ -18,8 +20,10 @@
                         layout-md="column" class="description_card" 
                         layout-padding>
                         <div layout="column" layout-padding show-md hide>
-                            <h2><a ng-href="/book?q={{book.id || book.book_id}}">{{::book.title}}</a></h2>
-                            <a ng-href="/author?q={{::book.author_id}}">{{::book.author_name}}</a>
+                            <h2><a data-url="book" data-id="{{book.id || book.book_id}}" ng-click="render_page($event)"
+                                ng-href="/book?q={{book.id || book.book_id}}">{{::book.title}}</a></h2>
+                            <a ng-href="/author?q={{::book.author_id}}"
+                                data-url="author" data-id="{{book.author_id}}" ng-click="render_page($event)">{{::book.author_name}}</a>
                         </div>
                         <div>
                             {{book.description | reduced_summary}}&nbsp;<a href="#book/preview">Read more</a>
@@ -29,7 +33,7 @@
             </div>
             <suggest-friends class="white" ></suggest-friends>
         </div>
-        <div flex="70" layout="column" flex-md="100" layout-padding flex-sm="100">
+        <div flex layout="column" layout-padding>
             
             <div ng-include src="'/assets/angular/html/share/status_options.html'"
                 ng-if="!hide_follow_links" flex="50" flex-sm="100"
@@ -43,7 +47,8 @@
                             onerror="this.src='/assets/user_profile.jpg'">
                         <div layout="column" layout-padding>
                             <div>
-                                <a ng-href="/profile?q={{feed.user.id}}">
+                                <a ng-href="/profile?q={{feed.user.id}}"
+                                     data-url="profile" data-id="{{feed.user.id}}" ng-click="render_page($event)">
                                     <span>{{::feed.user.first_name}}</span>
                                     <span>{{::feed.user.last_name}}</span>
                                 </a>
@@ -68,7 +73,7 @@
 
         </div>
     </div>
-    <div flex="25" layout="column" hide-sm>
+    <div flex="25" layout="column" hide-sm ng-if="!pages">
         <div ng-include src="'/assets/angular/html/shared/partials/rating_block.html'"
             class="md-whiteframe-z1 white" ng-if="book.goodness_index"></div>
         <!-- <div layout-padding class="md-whiteframe-z1 white">
