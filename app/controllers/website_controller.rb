@@ -351,6 +351,10 @@ class WebsiteController < ApplicationController
 		end
 	end
 
+	def test
+		render :layout => "material_home"
+	end
+
 	def home
 		@products = true
 		render :products, :layout => "material"

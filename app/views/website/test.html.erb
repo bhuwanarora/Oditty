@@ -1,0 +1,18 @@
+<div layout="row" layout-fill class="feed_margin">
+    <rd-content url="url" style="padding-left: 10px;" id="homeContainer"></rd-content>
+    <rd-main-content ng-repeat="container in containers track by $index" 
+    	id="container{{$index}}"
+    	style="padding-left: 10px;">
+	</rd-main-content>
+    <div layout-padding></div>
+    <div layout-padding></div>
+    <div layout-padding></div>
+</div>
+
+<style>
+	.homeContainer{
+		position: fixed;
+		right: 20px;
+	    bottom: 90px;
+}
+</style>

@@ -27,6 +27,11 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.render_page = function(){
+        var data = "";
+        return data;
+    }
+
     this.room_suggestions = function(){
         var data = [
             {

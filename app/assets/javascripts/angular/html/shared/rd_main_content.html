@@ -1,0 +1,43 @@
+<div class="md-whiteframe-z3 rd_main_container_wrapper">
+	<div class="main_container_bar" layout="row" layout-align="space-between">
+		<div></div>
+		<div layout="row" layout-align="center center">
+			<md-button ng-click="remove_container($index)">
+				<md-icon md-font-set="material-icons white_color">close</md-icon>
+			</md-button>
+		</div>
+	</div>
+	<md-content class="rd_main_container white" layout-padding>
+	    <div ng-include src="::content_url"></div>
+	</md-content>
+</div>
+<style>
+    .rd_main_container{
+        padding-top: 50px;
+        background-color: white;
+        z-index: 6;
+        height: 65vh;
+        overflow-y: scroll;
+        position: relative;
+    }
+
+    .main_container_bar{
+        height: 40px;
+        background-color: #333;
+        z-index: 9999999999;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+
+    .container_bar,
+    .rd_main_container{
+	    min-width: 500px;
+        max-width: 100vw;
+        width: 50vw;
+    }
+
+    .rd_main_container_wrapper,
+    .rd_main_container{
+    	border-radius: 3px;
+    }
+</style>
