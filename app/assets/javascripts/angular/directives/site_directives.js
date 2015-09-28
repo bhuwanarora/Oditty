@@ -647,6 +647,7 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                 url ="https://api.embed.ly/1/extract?key=0038e86d5e754f8d9a0c3823e338563d&url="+url+"&format=json";
                 $scope.cirular_loading = true;
                 if(angular.isUndefined($scope.communityFeed.data)){
+                    var url = $scope.communityFeed.news_url || $scope.communityFeed.url;
                     websiteService.extract_embed(url).then(function(data){
                         $scope.cirular_loading = false;
                         $scope.communityFeed.data = data;
@@ -657,7 +658,6 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                     $rootScope.containers.push(container);
                 }
                 else{
-                    var url = $scope.communityFeed.news_url || $scope.communityFeed.url;
                     $mdDialog.show({
                         templateUrl: '/assets/angular/html/news/iframe.html',
                         scope: $scope,

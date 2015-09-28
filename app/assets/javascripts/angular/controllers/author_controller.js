@@ -155,7 +155,6 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         else{
             var id = getCookie("id");
         }
-
         if(angular.isUndefined($scope.info)){
             $scope.info = {};
         }
