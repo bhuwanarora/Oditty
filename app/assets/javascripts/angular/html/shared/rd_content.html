@@ -1,0 +1,25 @@
+<md-content class="rd_container md-whiteframe-z3 white">
+    <div class="container_bar"></div>
+    <div ng-include src="get_url()"></div>
+</md-content>
+<style>
+    .rd_container{
+        padding-top: 50px;
+        background-color: white;
+        z-index: 6;
+        width: 350px;
+        height: 70vh;
+        overflow-y: scroll;
+        position: relative;
+        border-radius: 3px;
+    }
+
+    .container_bar{
+        top: 0px;
+        height: 40px;
+        position: absolute;
+        background-color: #333;
+        z-index: 9999999999;
+        width: 100%;
+    }
+</style>

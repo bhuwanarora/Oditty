@@ -148,7 +148,14 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
 
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
-        var id = regex.exec($location.absUrl())[2];
+        var url_parsed = regex.exec($location.absUrl());
+        if(url_parsed != null){
+            var id = url_parsed[2];
+        }
+        else{
+            var id = getCookie("id");
+        }
+
         if(angular.isUndefined($scope.info)){
             $scope.info = {};
         }

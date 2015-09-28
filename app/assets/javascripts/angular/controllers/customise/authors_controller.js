@@ -1,4 +1,4 @@
-homeApp.controller('authorsController', ["$scope", "$rootScope", "$timeout", 'userService', function($scope, $rootScope, $timeout, userService){
+homeApp.controller('customiseAuthorsController', ["$scope", "$rootScope", "$timeout", 'userService', function($scope, $rootScope, $timeout, userService){
 
      $scope.edit_authors_read = function(){
         $scope.goto_info_card();

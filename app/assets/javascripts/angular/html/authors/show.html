@@ -6,14 +6,15 @@
 				onerror="this.src='/assets/author_profile.jpg'" layout-padding/>
 		</div>
 		<div flex layout-padding layout="column" flex-md="70" flex-sm="70">
-			<div><a ng-href="/author?id={{author.id}}" class="big_title" ng-bind-html="author.name"></a></div>
+			<div><a ng-click="render_page($event)" data-url="author" data-id="author.id" ng-href="/author?id={{author.id}}" class="big_title" ng-bind-html="author.name"></a></div>
 			<div class="less_important" ng-bind-html="author.overview | reduced_summary"></div>
 		</div>
 	</div>
 	<div layout="row">
-	<a layout-padding class="less_important" ng-href="/author?id={{author.id}}#books">Books</a>
-	<a layout-padding class="less_important" ng-href="/author?id={{author.id}}#interview">Interview</a>
-	<a class="less_important" ng-href="{{author.wiki_url}}" ng-if="author.wiki_url" target="_blank" layout-padding>Wiki</a>
+	<a ng-click="render_page($event)" data-url="author#books" data-id="author.id" layout-padding class="less_important" ng-		href="/author?id={{author.id}}#books">Books</a>
+	<a ng-click="render_page($event)" data-url="author#interview" data-id="author.id" layout-padding class="less_important" 	ng-href="/author?id={{author.id}}#interview">Interview</a>
+	<a ng-click="render_page($event)" data-url="author#wiki" data-id="author.id" class="less_important" 
+		ng-href="{{author.wiki_url}}" ng-if="author.wiki_url" layout-padding>Wiki</a>
 	</div>
 	<md-divider></md-divider>
 </div>

@@ -17,20 +17,21 @@
         <md-grid-tile ng-repeat="trend in rooms"
                     md-rowspan="{{trend.row || 3}}"
                     md-colspan="{{trend.col || 3}}"
-                    md-colspan-sm="2"
-                    class="pointer">
+                    md-colspan-sm="2">
             <a ng-href="/room?id={{trend.id}}" class="room_container">
-                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends" 
+                <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{trend.id}}/M.png" class="trends no_anchor" 
                     onerror="this.src='https://oditty.me/assets/rooms.png'"/>
-                <md-grid-tile-footer layout="row" layout-padding class="animate-fast">
-                    <div class="less_important white_color trend_name">{{trend.name}}</div>
+                <md-grid-tile-footer layout="row" layout-padding class="animate-fast" ng-href="/room?id={{trend.id}}">
+                    <div class="less_important white_color trend_name no_anchor"
+                        data-url="room" data-id="trend.id" ng-click="render_page($event)">{{trend.name}}</div>
                     <div layout="column" class="facebook_likes">
                         <div layout="row" layout-padding>
                             <div ng-repeat="like in trend.facebook_likes">
-                                <a ng-href="/room?id={{like.id}}">
+                                <a ng-href="/room?id={{like.id}}" 
+                                    data-url="room" data-id="like.id" ng-click="render_page($event)">
                                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
                                         onerror="this.src='https://oditty.me/assets/rooms.png'"
-                                        class="small_circle"/>
+                                        class="small_circle no_anchor"/>
                                     <md-tooltip>Because you like &nbsp;{{like.name}}</md-tooltip>
                                 </a>
                             </div>
@@ -90,8 +91,9 @@
         font-weight: 600;
     }
 
-    #browseRooms md-grid-tile-footer:hover{
-        background-color: rgba(0, 0, 0, 0.7);
+    #browseRooms md-grid-tile-footer figcaption .trend_name:hover{
+        color: white !important;
+        font-weight: bold;
     }
 
     #browseRooms md-grid-tile-footer figcaption{

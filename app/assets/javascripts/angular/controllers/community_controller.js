@@ -146,8 +146,12 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parsed = regex.exec($location.absUrl());
         if(url_parsed != null){
-            // $scope.info.loading = true;
             var id = url_parsed[2];
+        }
+        else{
+            var id = getCookie("id");
+        }
+        if(angular.isDefined(id)){
             $scope.active_tag = {"id": id};
             $scope.get_detailed_community_info();
         }

@@ -5,13 +5,18 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
-    $httpBackend.whenGET('/api/v0/feed_news').respond(function(method, url, data) {
-        var data = ServerDataModel.get_feed_news();
+    $httpBackend.whenGET(/api\/v0\/render_page\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.render_page();
         return [200, data, {}];
     });
 
     $httpBackend.whenGET(/api\/v0\/room_suggestions\?.*/).respond(function(method, url, data) {
         var data = ServerDataModel.room_suggestions();
+        return [200, data, {}];
+    });
+
+    $httpBackend.whenGET(/api\/v0\/feed_news\?.*/).respond(function(method, url, data) {
+        var data = ServerDataModel.get_feed_news();
         return [200, data, {}];
     });
 
