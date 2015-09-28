@@ -23,12 +23,12 @@
                     onerror="this.src='https://oditty.me/assets/rooms.png'"/>
                 <md-grid-tile-footer layout="row" layout-padding class="animate-fast" ng-href="/room?id={{trend.id}}">
                     <div class="less_important white_color trend_name no_anchor"
-                        data-url="room" data-id="trend.id" ng-click="render_page($event)">{{trend.name}}</div>
+                        data-url="room" data-id="{{trend.id}}" ng-click="render_page($event)">{{trend.name}}</div>
                     <div layout="column" class="facebook_likes">
                         <div layout="row" layout-padding>
                             <div ng-repeat="like in trend.facebook_likes">
                                 <a ng-href="/room?id={{like.id}}" 
-                                    data-url="room" data-id="like.id" ng-click="render_page($event)">
+                                    data-url="room" data-id="{{like.id}}" ng-click="render_page($event)">
                                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
                                         onerror="this.src='https://oditty.me/assets/rooms.png'"
                                         class="small_circle no_anchor"/>
