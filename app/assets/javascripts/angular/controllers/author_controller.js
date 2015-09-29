@@ -157,7 +157,9 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
             var id = url_parsed[2];
         }
         else{
-            var id = getCookie("id");
+            if($rootScope.pages){
+                var id = getCookie("id");
+            }
         }
         if(angular.isUndefined($scope.info)){
             $scope.info = {};
