@@ -52,6 +52,7 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
         controller: ["$scope", function($scope){
 
             var _init = function(){
+                debugger
                 console.log("rdMainContent");
                 var container = $rootScope.containers[$scope.$index];
                 var url = container.url;
@@ -661,6 +662,9 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                 if(angular.isDefined($rootScope.containers)){
                     var container = {"url": "read_news", "data": $scope.communityFeed};
                     $rootScope.containers.push(container);
+                    var container = angular.element(document.getElementById('browseScreen'));
+                    var length = $rootScope.containers.length;
+                    container.scrollLeft(length*600, 1000);
                 }
                 else{
                     $mdDialog.show({
