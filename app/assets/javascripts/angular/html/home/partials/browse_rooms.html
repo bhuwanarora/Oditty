@@ -26,7 +26,7 @@
                         data-url="room" data-id="{{trend.id}}" ng-click="render_page($event)">{{trend.name}}</div>
                     <div layout="column" class="facebook_likes">
                         <div layout="row" layout-padding>
-                            <div ng-repeat="like in trend.facebook_likes">
+                            <div ng-repeat="like in trend.facebook_likes | limitTo: 3">
                                 <a ng-href="/room?id={{like.id}}" 
                                     data-url="room" data-id="{{like.id}}" ng-click="render_page($event)">
                                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
@@ -66,7 +66,7 @@
                 <a layout-padding ng-href="/room?id={{trend.id}}" class="less_important">{{trend.name}}</a>
                 <div layout="row" layout-padding class="less_important" layout-wrap>
                     <span>Because you like&nbsp;</span>
-                    <span ng-repeat="like in trend.facebook_likes | limitTo: 3">
+                    <span ng-repeat="like in trend.facebook_likes">
                         <a ng-href="/room?id={{like.id}}" class="less_important">
                             <span>{{like.name}}&nbsp;</span>
                         </a>
