@@ -1,3 +1,4 @@
-<div ng-controller="libraryController">
-	<div ng-include src="'/assets/angular/html/shared/pages/books.html'" ></div>	
-</div>
+<md-content ng-controller="libraryController" check-scroll-bottom="get_popular_books()"
+	class="rd_main_container white" style="padding: 20px;" id="homeScreen">
+	<div ng-include src="'/assets/angular/html/shared/pages/books.html'" layout-padding></div>	
+</md-content>

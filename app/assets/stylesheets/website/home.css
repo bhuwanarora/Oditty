@@ -1337,3 +1337,12 @@ md-autocomplete button{
     border: 5px solid #E5E5E5;
     z-index: 1;
 }
+
+.loading_toggle{
+	position: fixed;
+	left: 10px;
+	bottom: 10px;
+	background-color: white;
+	border-radius: 3px;
+	z-index: 99999;
+}
