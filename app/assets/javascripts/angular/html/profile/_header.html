@@ -42,7 +42,7 @@
             <div layout-padding></div>
             <div class="light_grey full_width horizontal_scroll md-whiteframe-z3" id="pageHeader"
                 layout="row" layout-align="center center" >
-                <a href="#/profile/feed" layout-padding class="no_underline">
+                <a ui-sref="profile/feed" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/feed')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#/profile/rooms" layout-padding class="no_underline">
+                <a ui-sref="profile/rooms" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/rooms')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#/profile/books" layout-padding class="no_underline">
+                <a ui-sref="profile/books" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/books')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#/profile/news" layout-padding class="no_underline">
+                <a ui-sref="profile/news" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/news')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#/profile/followers" layout-padding class="no_underline">
+                <a ui-sref="profile/followers" layout-padding class="no_underline">
                      <div class="nav_links" ng-class="get_active_class('profile/followers')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -98,7 +98,7 @@
                     </div>
                 </a>
                 
-                 <a href="#/profile/followings" layout-padding class="no_underline">
+                 <a ui-sref="profile/followings" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/followings')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </a>
-                 <a href="#/profile/history" layout-padding class="no_underline">
+                 <a ui-sref="profile/history" layout-padding class="no_underline">
                     <div class="nav_links" ng-class="get_active_class('profile/history')">
                         <div layout="column" layout-align="center center">
                             <div show-sm>
@@ -144,14 +144,6 @@
     .profile_header h5,
     .md-subheader:not(.md-sticky-no-effect).md-sticky-clone h5{
         margin: 5px 0px;
-    }
-
-    .profile_pic{
-        border-radius: 50%;
-        width: 200px;
-        height: 200px;
-        border: 5px solid #E5E5E5;
-        z-index: 1;
     }
 
     .profile_header .nav_links,

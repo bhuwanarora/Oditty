@@ -23,7 +23,6 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
     }
 
     $scope.render_page = function(event){
-        debugger
         sharedService.render_page(event);
     }
 

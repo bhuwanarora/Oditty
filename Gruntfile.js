@@ -217,14 +217,16 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
                     'app/assets/javascripts/min/lib/angular_scroll.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_filters.min.js',
-                    "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js"
+                    "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js",
+                    "app/assets/javascripts/min/angular/vendors/angular-ui-router.min.js"
                 ],
 
                 'app/assets/javascripts/min/angular/apps.js': [
                     "app/assets/javascripts/min/angular/apps/home_app.js",
                     "app/assets/javascripts/min/angular/apps/filters_app.js",
                     "app/assets/javascripts/min/angular/constants/production.js",
-                    "app/assets/javascripts/min/angular/apps/app_constants.js"
+                    "app/assets/javascripts/min/angular/apps/app_constants.js",
+                    "app/assets/javascripts/min/angular/config/states.js"
                 ],
 
                 'app/assets/javascripts/min/angular/landing_page.min.js': [

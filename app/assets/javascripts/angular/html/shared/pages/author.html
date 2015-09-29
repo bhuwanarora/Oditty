@@ -3,7 +3,7 @@
 <div layout="row" class="feed_margin">
     <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
     <section flex layout="row">
-        <div ng-view flex="70" flex-sm="100"></div>
+        <div ui-view="author" flex="70" flex-sm="100"></div>
         <div layout-padding flex="30" hide-sm
             ng-include src="'/assets/angular/html/author/more_info.html'">
         </div>

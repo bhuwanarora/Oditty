@@ -62,28 +62,28 @@
             layout="row" layout-align="space-between center" flex>
             <div layout-padding></div>
             <div layout="row" flex-sm>
-                <a flex-sm ng-href="#room/home" ng-click="update_room_news_visit()"
+                <a flex-sm ui-sref="home" ng-click="update_room_news_visit()"
                     ng-class="get_active_class('room/home')" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">home</i></div>
             	        <div hide-sm>home</div>
             	    </div>
                 </a>
-                <a flex-sm ng-href="#room/books" 
+                <a flex-sm ui-sref="books" 
                     ng-class="get_active_class('room/books')" layout-padding>
                     <div layout="column" layout-align="center center">
                         <div><i class="material-icons">library_books</i></div>
                         <div hide-sm>Books</div>
                     </div>
                 </a>
-                <a flex-sm ng-href="#room/videos" 
+                <a flex-sm ui-sref="videos" 
                     ng-class="get_active_class('room/videos')" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">video_library</i></div>
             	        <div hide-sm>Videos</div>
             	    </div>
                 </a>
-                <a flex-sm ng-href="#room/wiki" 
+                <a flex-sm ui-sref="wiki" 
                     ng-class="get_active_class('room/wiki')" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">toys</i></div>
@@ -103,11 +103,3 @@
     </div>
 </div>
 <div flex="10" flex-md="5" hide-sm></div>
-    
-<style>
-    .profile_pic{
-        width: 150px !important;
-        border: 5px solid white;
-    }
-
-</style>

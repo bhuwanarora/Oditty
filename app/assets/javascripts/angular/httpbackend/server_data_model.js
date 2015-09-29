@@ -467,8 +467,8 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
                 "news": false
             },
             "rooms": {
-                "join": false,
-                "visit": false
+                "join": true,
+                "visit": true
             },
             "book": {
                 "recommend": false,

@@ -269,8 +269,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
        	});
     }
 
-	
-
 	var _profile_progress = function(){
 		var todo = getCookie("todo");
         if(todo){
@@ -284,7 +282,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	}
         });
         $scope.profile_progress = Math.round(100*(count/15));
-
 	}
 
 	var _init = (function(){
@@ -307,7 +304,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         }
        _get_feed();
        $scope.is_profile = true;
-
 
     }());
 }]);

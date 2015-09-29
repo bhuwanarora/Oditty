@@ -3,11 +3,11 @@
 	id="pageHeader" class="relative"></div>
 <div ng-include src="'/assets/angular/html/shared/partials/user_list.html'" ></div>
 <section layout="row" class="feed_margin">
-	<div flex="10" flex-md="5" hide-sm  ng-if="!pages">></div>
+	<div flex="10" flex-md="5" hide-sm  ng-if="!pages"></div>
 	<div layout="row" layout-md="row" layout-sm="column"
-	    flex ng-view>
+	    flex ui-view="room">
     </div>
-	<div flex="10" flex-md="5" hide-sm  ng-if="!pages">></div>
+	<div flex="10" flex-md="5" hide-sm  ng-if="!pages"></div>
 </section>
 <style>
 	.users{

@@ -1329,3 +1329,11 @@ md-autocomplete button{
 	border-left: 4px solid !important;
 	font-weight: bold;
 }
+
+.profile_pic{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border: 5px solid #E5E5E5;
+    z-index: 1;
+}
