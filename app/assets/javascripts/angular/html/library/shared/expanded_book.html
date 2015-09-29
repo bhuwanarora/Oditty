@@ -1,7 +1,6 @@
-<div layout-align="start start"
-    layout="row"
-    ng-href="#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}" du-smooth-scroll offset="200" duration="800"
-    ng-if="!book.expanded"
+<div layout-align="start start" layout="row"
+    ng-href="#bookContainer{{book.id || book.book_id}}{{expanded_index != $index ? 'true': ''}}" 
+    du-smooth-scroll offset="200" duration="800" ng-if="!book.expanded"
     class="rd_book_container" style="width: 155px;">
     <div ng-include src="'/assets/angular/html/shared/partials/book_group_unclickable.html'" 
         ng-click="expand_book($index)"
@@ -15,11 +14,8 @@
         <div  ng-include src="'/assets/angular/html/shared/partials/book_group_unclickable.html'" class="relative" ></div>
     </md-button>
 </div>
-<div layout-align="start start"
-    layout="row"
+<div layout-align="start start" layout="row"
     id="bookContainer{{book.id || book.book_id}}"
-    ng-if="book.expanded"
-    class="book_container background animate-fast">
-    <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'" >
-    </div>
+    ng-if="book.expanded" class="book_container background animate-fast">
+    <div ng-include src="'/assets/angular/html/shared/partials/book_container.html'"></div>
 </div>

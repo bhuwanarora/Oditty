@@ -62,45 +62,9 @@
                     <div layout-padding></div>
                 </div>
             </div>
-            
-            <md-progress-linear class="md-primary loader"
-                                ng-if="info.loading && !info.show_share"
-                                md-mode="indeterminate">
-            </md-progress-linear>
-            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
-                    ng-if="info.cirular_loading">
-            </md-progress-circular>
-
-           <!--  <div class="feedback md-whiteframe-z1" layout-padding>
-                <a href="/testimonials" class="less_important" target="_blank">
-                    <i class="material-icons">feedback</i>
-                    <md-tooltip>
-                        Share Feedback
-                    </md-tooltip>
-                </a>
-            </div> -->
-
-            <div du-scroll-container="browseScreen">
-                <a href="#MainhomeContainer" du-smooth-scroll duration="1000">
-                    <md-button class="md-fab white homeContainerFab" 
-                        aria-label="homeContainer" 
-                        ng-click="goto_home($event)">
-                        <md-icon md-font-set="material-icons grey_color">keyboard_arrow_left</md-icon>
-                    </md-button>
-                </a>
-            </div>
-            <md-button class="md-fab md-warn invite" aria-label="Invite" 
-                ng-if="info && info.hide_signin"
-                ng-click="invite_friends($event)">
-                <md-icon md-font-set="material-icons">person_add</md-icon>
-            </md-button>
-
-            <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
-            <div ng-include src="'/assets/angular/html/shared/notifications.html'" 
-                class="right_panel_container"></div>
+            <div ng-include src="'/assets/angular/html/shared/partials/extras.html'" ></div>
             <div ng-include src="'/assets/angular/html/share/show.html'"></div>
-            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
-            <!-- <div ng-include src="'/assets/angular/html/shared/apps.html'" ></div> -->
+
         </div>
          <% if Rails.env.development? || Rails.env.staging? %>
             <script src='assets/min/angular/vendors/angular.min.js'></script>

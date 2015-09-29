@@ -52,7 +52,6 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
         controller: ["$scope", function($scope){
 
             var _init = function(){
-                debugger
                 console.log("rdMainContent");
                 var container = $rootScope.containers[$scope.$index];
                 var url = container.url;
@@ -62,7 +61,9 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                     setCookie("id", id);
                 }
 
+                $scope.show_md_content = true;
                 if(url == "room"){
+                    $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/room.html.erb';
                 }
                 else if(url == "rooms"){
@@ -70,23 +71,27 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                 }
                 else if(url == "products"){
                     $scope.content_url = '/assets/angular/html/pages/products.html.erb';                
+                    $scope.custom_style = {"width": '500px'};
                 }
                 else if(url == "spaces"){
-                    $scope.content_url = '/assets/angular/html/pages/spaces.html.erb';                
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/spaces.html.erb';
+                    $scope.custom_style = {"width": '500px'};
                 }
                 else if(url == "books"){
+                    $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/books.html.erb';
                 }
-                else if(url == "authors"){
-                    $scope.content_url = '/assets/angular/html/pages/authors.html.erb';
-                }
                 else if(url == "news_group"){
+                    $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/news.html.erb';
+                    $scope.custom_style = {"width": '500px'};
                 }
                 else if(url == "book"){
                     $scope.content_url = '/assets/angular/html/pages/book.html.erb';
                 }
                 else if(url == "profile"){
+                    $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/profile.html.erb';
                 }
                 else if(url.contains("author")){
@@ -105,7 +110,8 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                     $scope.content_url = '/assets/angular/html/pages/author.html.erb';
                 }
                 else if(url == "read_news"){
-                    $scope.content_url = '/assets/angular/html/pages/read_news.html.erb';   
+                    $scope.content_url = '/assets/angular/html/pages/read_news.html.erb';
+                    $scope.custom_style = {"width": '500px'};   
                 }
             }
 
