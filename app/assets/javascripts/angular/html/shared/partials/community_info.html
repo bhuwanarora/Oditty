@@ -1,8 +1,12 @@
 <div class="follow_content" layout="row" ng-if="community">
     <img ng-src="{{::community.image_url}}" class="square">
     <div layout-padding>
-        <a ng-href="/room?id={{::community.id}}">
-            <h2><div class="bold">{{::community.name}}</div></h2>
+        <a ng-href="/room?id={{::community.id}}" data-id="{{::community.id}}" data-url="room" 
+            class="no_anchor" 
+            data-header="{{::community.name}}"
+            ng-click="render_page($event)">
+            <h2 class="bold no_anchor" data-id="{{::community.id}}" data-url="room"
+                data-header="{{::community.name}}">{{::community.name}}</h2>
         </a>
         <div class="less_important" ng-if="community.view_count && community.view_count != 0">
             <span>{{::community.view_count}} </span>

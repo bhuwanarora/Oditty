@@ -1,10 +1,14 @@
 <div layout="row" layout-wrap>
     <md-list layout="row" layout-wrap>
         <a ng-repeat="user in author.users" ng-href="/profile?q={{::user.id}}" ng-if="user.id" layout-margin
+        	data-header="{{::user.first_name}}&nbsp;{{::user.last_name}}" data-id="{{::user.id}}" data-url="profile" ng-click="render_page($event)" class="less_important no_anchor" 
             layout="row" layout-align="center center">
-            <img class="circular" ng-src="{{user.image_url || '/assets/user_profile.jpg'}}"  
-            	alt="{{::user.first_name}} {{::user.last_name}}" onerror="this.src='/assets/user_profile.jpg'"/>
-            <div class="less_important" layout-padding>{{::user.first_name}} {{::user.last_name}}</div>
+        	<img class="circular no_anchor" ng-src="{{user.image_url || '/assets/user_profile.jpg'}}"  
+        		data-id="{{::user.id}}" data-url="profile" data-header="{{::user.first_name}}&nbsp;{{::user.last_name}}"
+        		alt="{{::user.first_name}} {{::user.last_name}}" onerror="this.src='/assets/user_profile.jpg'"/>
+            <div data-id="{{::user.id}}" data-url="profile" class="no_anchor" data-header="{{::user.first_name}}&nbsp;{{::user.last_name}}">
+            	{{::user.first_name}}&nbsp;{{::user.last_name}}
+            </div>
         </a>
     </md-list>
 </div>

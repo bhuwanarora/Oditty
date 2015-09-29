@@ -217,14 +217,16 @@ module.exports = function(grunt) {
                     'app/assets/javascripts/min/angular/vendors/angular-sanitize.min.js',
                     'app/assets/javascripts/min/lib/angular_scroll.min.js',
                     'app/assets/javascripts/min/angular/vendors/angular_filters.min.js',
-                    "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js"
+                    "app/assets/javascripts/min/angular/vendors/angular-parallax.min.js",
+                    "app/assets/javascripts/min/angular/vendors/angular-ui-router.min.js"
                 ],
 
                 'app/assets/javascripts/min/angular/apps.js': [
                     "app/assets/javascripts/min/angular/apps/home_app.js",
                     "app/assets/javascripts/min/angular/apps/filters_app.js",
                     "app/assets/javascripts/min/angular/constants/production.js",
-                    "app/assets/javascripts/min/angular/apps/app_constants.js"
+                    "app/assets/javascripts/min/angular/apps/app_constants.js",
+                    "app/assets/javascripts/min/angular/config/states.js"
                 ],
 
                 'app/assets/javascripts/min/angular/landing_page.min.js': [
@@ -317,10 +319,6 @@ module.exports = function(grunt) {
                     "app/assets/javascripts/min/angular/controllers/customise/authors_controller.js"
                 ],
 
-                "app/assets/javascripts/min/angular/controllers/book_group.min.js":[
-                    
-                ],
-
                 "app/assets/javascripts/min/angular/controllers/new_home_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/new_home_controller.js"
                 ],
@@ -356,7 +354,24 @@ module.exports = function(grunt) {
 
                 "app/assets/javascripts/min/angular/controllers/spaces_group.min.js":[
                     "app/assets/javascripts/min/angular/controllers/spaces_controller.js"
-                ]
+                ],
+
+                "app/assets/javascripts/min/angular/controllers/all_group.min.js":[
+                    "app/assets/javascripts/min/angular/controllers/rd_container_controller.js",
+                    "app/assets/javascripts/min/angular/controllers/rooms_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/authors_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/news_group_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/network_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/news_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/community_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/new_home_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/infinity_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/room_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/author_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/profile_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/search_group.min.js",
+                    "app/assets/javascripts/min/angular/controllers/spaces_group.min.js"
+                ],
             },
           },
         },

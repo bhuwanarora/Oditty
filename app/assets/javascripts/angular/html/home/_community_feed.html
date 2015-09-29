@@ -1,36 +1,36 @@
 <div ng-class="{'dark_grey': communityFeed.expand}">
     <md-card class="community" ng-class="{'no_shadow': !communityFeed.expand}"
         ng-if="communityFeed.title && communityFeed.title != '' && communityFeed.title != null">
-        <!-- <div class="vote" layout-padding>
-            <i class="material-icons">arrow_drop_up</i>
-            <div ng-bind-html="communityFeed.votes"></div>
-        </div> -->
         <div layout="row" class="communities" ng-if="communityFeed.communities">
             <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
                 layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
                 <a layout="column" layout-align="center center" ng-href="/room?id={{::community.id}}" 
-                    class="animate-fast vertical_expansion" 
+                    class="animate-fast vertical_expansion no_anchor" data-header="{{::community.name}}"
+                    data-id="{{::community.id}}" data-url="room" ng-click="render_page($event)"
                     ng-if="!communityFeed.expand">
-                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="square" alt="   {{::community.name}}" />
+                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" 
+                        data-header="{{::community.name}}"
+                        class="no_anchor square" alt="{{::community.name}}" 
+                        data-id="{{::community.id}}" data-url="room"/>
                     <md-tooltip>
                         {{::community.name}}
                     </md-tooltip>
                 </a>
                 <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
-                    class="animate-fast vertical_expansion"
+                    class="animate-fast vertical_expansion no_anchor"
+                    data-id="{{::community.id}}" data-url="room" ng-click="render_page($event)"
+                     data-header="{{::community.name}}"
                     ng-if="communityFeed.expand">
                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" 
-                        class="circular" alt="{{::community.name}}" />
+                        class="circular no_anchor" alt="{{::community.name}}" 
+                        data-header="{{::community.name}}"  
+                        data-id="{{::community.id}}" data-url="room"/>
                     <md-tooltip>{{::community.name}}</md-tooltip>
                 </a>
             </div>
         </div>
         <div class="content">
-            <h2>
-                <a target="_blank" ng-click="show_news($event)"
-                    ng-bind-html="::communityFeed.title">
-                </a>
-            </h2>
+            <h2><a target="_blank" ng-click="show_news($event)" ng-bind-html="::communityFeed.title"></a></h2>
             <div class="less_important">News, {{communityFeed.created_at | timestamp | date:'dd MMM yyyy'}}</div><br/>
         </div>
         <div class="description_card">
@@ -40,9 +40,9 @@
                          ng-src="{{::communityFeed.image_url}}"
                          ng-if="communityFeed.image_url"/>
                 </div>
-                <a class="less_important" ng-href="{{::communityFeed.url}}"  target="_blank">
+                <!-- <a class="less_important" ng-href="{{::communityFeed.url}}"  target="_blank">
                     {{::communityFeed.url}}
-                </a>
+                </a> -->
             </div>
             <div ng-bind-html="::communityFeed.description" class="wrap" layout-padding
                 ng-if="communityFeed.description">

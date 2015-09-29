@@ -62,29 +62,29 @@
             layout="row" layout-align="space-between center" flex>
             <div layout-padding></div>
             <div layout="row" flex-sm>
-                <a flex-sm ng-href="#room/home" ng-click="update_room_news_visit()"
-                    ng-class="get_active_class('room/home')" layout-padding>
+                <a flex-sm ui-sref="home" ng-click="update_room_news_visit()"
+                    ui-sref-active="bold red_color" class="grey_color" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">home</i></div>
             	        <div hide-sm>home</div>
             	    </div>
                 </a>
-                <a flex-sm ng-href="#room/books" 
-                    ng-class="get_active_class('room/books')" layout-padding>
+                <a flex-sm ui-sref="books" 
+                    ui-sref-active="bold red_color" class="grey_color" layout-padding>
                     <div layout="column" layout-align="center center">
                         <div><i class="material-icons">library_books</i></div>
                         <div hide-sm>Books</div>
                     </div>
                 </a>
-                <a flex-sm ng-href="#room/videos" 
-                    ng-class="get_active_class('room/videos')" layout-padding>
+                <a flex-sm ui-sref="videos" 
+                    ui-sref-active="bold red_color" class="grey_color" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">video_library</i></div>
             	        <div hide-sm>Videos</div>
             	    </div>
                 </a>
-                <a flex-sm ng-href="#room/wiki" 
-                    ng-class="get_active_class('room/wiki')" layout-padding>
+                <a flex-sm ui-sref="wiki" 
+                    ui-sref-active="bold red_color" class="grey_color" layout-padding>
                    	<div layout="column" layout-align="center center">
             	       	<div><i class="material-icons">toys</i></div>
             	        <div hide-sm>Wiki</div>
@@ -103,11 +103,3 @@
     </div>
 </div>
 <div flex="10" flex-md="5" hide-sm></div>
-    
-<style>
-    .profile_pic{
-        width: 150px !important;
-        border: 5px solid white;
-    }
-
-</style>

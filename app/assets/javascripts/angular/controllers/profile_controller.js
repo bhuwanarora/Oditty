@@ -40,7 +40,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 		var history = $location.path() == "/profile/history";
 		var rooms = $location.path() == "/profile/rooms";
 		var is_feed = !followers && !following && !books && !news && !history && !rooms && !history;
-
 		if(!$scope.info.loading && is_feed){
 			var personal_feed = [];
 			var id = $scope.active_user_id;
@@ -218,7 +217,12 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
     var _handle_id_from_url = function(url_parser){
     	var user_is_me = false;
-        $scope.active_user_id = url_parser[2];
+        var id = url_parser[2];
+        _handle_id_from_cookie(id);
+    }
+
+    var _handle_id_from_cookie = function(id){
+    	$scope.active_user_id = id;
         if(angular.isDefined($rootScope.user)){
         	_handle_profile_data();
         }
@@ -265,8 +269,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
        	});
     }
 
-	
-
 	var _profile_progress = function(){
 		var todo = getCookie("todo");
         if(todo){
@@ -280,7 +282,6 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	}
         });
         $scope.profile_progress = Math.round(100*(count/15));
-
 	}
 
 	var _init = (function(){
@@ -289,15 +290,25 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
 
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
         var url_parser = regex.exec($location.absUrl());
+        var id_in_cookie = getCookie("id");
         if(angular.isDefined(url_parser) && url_parser != null){
         	_handle_id_from_url(url_parser);
         }
         else{
-        	_handle_me();
+        	if($rootScope.pages){
+	        	if(id_in_cookie && (id_in_cookie != null) && (id_in_cookie != 'null')){
+	        		_handle_id_from_cookie(id_in_cookie);
+	        	}
+	        	else{
+	        		_handle_me();
+	        	}
+        	}
+        	else{
+        		_handle_me();
+        	}
         }
        _get_feed();
        $scope.is_profile = true;
-
 
     }());
 }]);

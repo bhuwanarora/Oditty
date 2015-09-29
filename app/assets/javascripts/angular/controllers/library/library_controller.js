@@ -25,6 +25,10 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
         });
     }
 
+    $scope.render_page = function(event){
+        sharedService.render_page(event);
+    }
+
     $scope.show_bottom_filters = function(event){
         $mdBottomSheet.show({
             templateUrl: '/assets/angular/html/library/bottom_sheet_filters.html',
@@ -43,14 +47,27 @@ homeApp.controller('libraryController', ["$scope", "$rootScope", "$timeout", 'We
     }
 
     $scope.expand_book = function(index){
-        if(window.innerWidth > 1100){
-            var row_count = 6;
-        }
-        else if(window.innerWidth > 900){
-            var row_count = 4;
+        if($rootScope.pages){
+            if(window.innerWidth > 1100){
+                var row_count = 3;
+            }
+            else if(window.innerWidth > 900){
+                var row_count = 3;
+            }
+            else{
+                var row_count = 2;
+            }
         }
         else{
-            var row_count = 2;
+            if(window.innerWidth > 1100){
+                var row_count = 6;
+            }
+            else if(window.innerWidth > 900){
+                var row_count = 4;
+            }
+            else{
+                var row_count = 2;
+            }
         }
         var _scroll_and_expand = function(index){
             var book = {

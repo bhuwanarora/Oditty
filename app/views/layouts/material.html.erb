@@ -167,38 +167,11 @@
             <% else %>
                 </md-content>
             <% end %>
-            
-            <md-progress-linear class="md-primary loader"
-                                ng-if="info.loading && !info.show_share"
-                                md-mode="indeterminate">
-            </md-progress-linear>
-            <md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
-                    ng-if="info.cirular_loading">
-            </md-progress-circular>
-
-           <!--  <div class="feedback md-whiteframe-z1" layout-padding>
-                <a href="/testimonials" class="less_important" target="_blank">
-                    <i class="material-icons">feedback</i>
-                    <md-tooltip>
-                        Share Feedback
-                    </md-tooltip>
-                </a>
-            </div> -->
-
-            <md-button class="md-fab md-warn invite" aria-label="Invite" 
-                ng-if="info && info.hide_signin"
-                ng-click="invite_friends($event)">
-                <md-icon md-font-set="material-icons">person_add</md-icon>
-            </md-button>
-
-            <div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
-            <div ng-include src="'/assets/angular/html/shared/notifications.html'" 
-                class="right_panel_container"></div>
+            <div ng-include src="'/assets/angular/html/shared/partials/extras.html'" ></div>
             <% unless @profile %>
                 <div ng-include src="'/assets/angular/html/share/show.html'"></div>
             <% end %>
-            <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
-            <!-- <div ng-include src="'/assets/angular/html/shared/apps.html'" ></div> -->
+
         </div>
          <% if Rails.env.development? || Rails.env.staging? %>
             <script src='assets/min/angular/vendors/angular.min.js'></script>
@@ -219,6 +192,7 @@
             <script src="assets/angular/vendors/angular-parallax.min.js"></script>
             <script src="assets/angular/vendors/angular_sticky.js"></script>
             <script src="assets/angular/vendors/angular_mocks.min.js"></script>
+            <script src="assets/angular/vendors/angular-ui-router.min.js"></script>
             <script src="assets/angular/apps/filters_app.js"></script>
             <script src="assets/angular/apps/app_constants.js"></script>
             <% if Rails.env.staging? %>
@@ -230,6 +204,7 @@
                 <script src="assets/angular/httpbackend/server_data_model.js"></script>
                 <script src="assets/angular/httpbackend/main.js"></script>
             <% end %>
+            <script src="assets/angular/config/states.js"></script>
             <script src="assets/angular/services/user_service.js"></script>
             <script src="assets/angular/services/genre_service.js"></script>
             <script src="assets/angular/services/book_service.js"></script>

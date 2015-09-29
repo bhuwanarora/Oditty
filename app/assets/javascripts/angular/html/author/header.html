@@ -6,8 +6,8 @@
         <img ng-src="{{author.id | author_thumb}}"  class="profile_wrapper"
             onerror="this.src='/assets/author_profile.jpg'"/>
     </div>
-    <section flex="10" flex-md="5" hide-sm></section>
-    <div layout="column" layout-wrap flex="80" flex-md="90" flex-sm="100" 
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
+    <div layout="column" layout-wrap flex 
         class="md-whiteframe-z1 relative">
         <div layout-padding></div>
         <div layout-padding></div>
@@ -21,36 +21,36 @@
             <div class="light_grey" layout-align="space-between center" layout="row" id="pageHeader">
                 <div layout-padding></div>
                 <div layout="row" flex-sm>
-                    <a flex-sm ng-href="#books" layout-padding 
-                        ng-class="get_active_class('books')">
+                    <a flex-sm ui-sref="author/books" layout-padding
+                         ui-sref-active="bold red_color" class="grey_color">
                         <div layout="column" layout-align="center center">
                             <div><i class="material-icons">library_books</i></div>
                             <div hide-sm>Books</div>
                         </div>
                     </a>
-                    <a flex-sm ng-href="#feed" layout-padding 
-                        ng-class="get_active_class('feed')">
+                    <a flex-sm ui-sref="author/feed" layout-padding 
+                         ui-sref-active="bold red_color" class="grey_color">
                         <div layout="column" layout-align="center center">
                             <div><i class="material-icons">home</i></div>
                             <div hide-sm>Feed</div>
                         </div>
                     </a>
-                    <a flex-sm ng-href="#interview" layout-padding 
-                        ng-class="get_active_class('interview')">
+                    <a flex-sm ui-sref="author/interview" layout-padding 
+                         ui-sref-active="bold red_color" class="grey_color">
                         <div layout="column" layout-align="center center">
                             <div><i class="material-icons">speaker_notes</i></div>
                             <div hide-sm>Interview</div>
                         </div>
                     </a>
-                    <a flex-sm ng-href="#wiki" layout-padding 
-                        ng-class="get_active_class('wiki')">
+                    <a flex-sm ui-sref="author/wiki" layout-padding 
+                         ui-sref-active="bold red_color" class="grey_color">
                         <div layout="column" layout-align="center center">
                             <div><i class="material-icons">toys</i></div>
                             <div hide-sm>Wiki</div>
                         </div>
                     </a>
-                    <a flex-sm ng-href="#followers" layout-padding 
-                        ng-class="get_active_class('followers')">
+                    <a flex-sm ui-sref="author/followers" layout-padding 
+                         ui-sref-active="bold red_color" class="grey_color">
                         <div layout="column" layout-align="center center">
                             <div><i class="material-icons">people_outline</i></div>
                             <div hide-sm>Followers</div>
@@ -65,7 +65,7 @@
             </div>
         </div>
     </div>
-    <section flex="10" flex-md="5" hide-sm></section>
+    <section flex="10" flex-md="5" hide-sm ng-if="!pages"></section>
 </div>
 <style>
     .balloons{
@@ -89,14 +89,6 @@
 
     .author_profile_header h5{
         margin: 5px 0px;
-    }
-
-    .profile_pic{
-        border-radius: 50%;
-        width: 200px;
-        height: 200px;
-        border: 5px solid #E5E5E5;
-        z-index: 1;
     }
 
     .author_profile_header .nav_links{

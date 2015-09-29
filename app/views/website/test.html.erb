@@ -1,0 +1,45 @@
+<div layout="row" layout-fill class="feed_margin">
+    <rd-content url="url" style="padding-left: 10px; display: inline-table;" id="MainhomeContainer"></rd-content>
+    <div ng-repeat="container in containers track by $index" id="container{{$index}}" 
+        ng-if="container.url"
+        style="padding-left: 10px; display: inline-table;">
+        <rd-main-content></rd-main-content>
+	</div>
+    <div layout-padding></div>
+    <div layout-padding></div>
+    <div layout-padding></div>
+</div>
+
+<style>
+	.homeContainerFab{
+		position: fixed;
+		right: 20px;
+	    bottom: 90px;
+    }
+
+    .browse_container{
+        max-height: 92vh !important;
+        overflow-x: scroll;
+        outline: none !important;
+        margin-top: 72px !important;
+    }
+
+   #browseAllRooms .room_image_wrapper{
+        position: relative;
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+   }
+
+   #browseAllRooms .room_image_wrapper img{
+        position: absolute;
+        min-height: 180px;
+        min-width: 180px;
+        width: 100%;
+   }
+
+   #browseAllRooms .room_container{
+      width: 180px;
+   }
+    
+</style>

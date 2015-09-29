@@ -7,10 +7,16 @@
             </div>
         </div>
         <div ng-repeat="user in feed.users" ng-if="user.first_name">
-            <a ng-href="/profile?id={{user.id}}"><img ng-src="{{user.image_url || '/assets/user_profile.jpg'}}" class="circular" onerror="this.src='/assets/user_profile.jpg'"></a>
+            <a ng-href="/profile?id={{user.id}}" class="no_anchor" 
+                data-header="{{::user.first_name}}&nbsp;{{::user.last_name}}"
+                data-id="{{::user.id}}" data-url="profile" ng-click="render_page($event)">
+                <img ng-src="{{user.image_url || '/assets/user_profile.jpg'}}" class="circular no_anchor" 
+                    data-id="{{::user.id}}" data-url="profile"
+                    data-header="{{::user.first_name}}&nbsp;{{::user.last_name}}"
+                    onerror="this.src='/assets/user_profile.jpg'"></a>
             &nbsp;
             <md-tooltip md-direction="top">
-                {{::user.first_name}} {{::user.last_name}}
+                {{::user.first_name}}&nbsp;{{::user.last_name}}
             </md-tooltip>
         </div>
         <div ng-if="feed.follow_count > 4">

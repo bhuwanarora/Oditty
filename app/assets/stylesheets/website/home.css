@@ -202,9 +202,14 @@ md-content{
 	margin-top: 72px !important;
 }
 
-#homeScreen{
+#homeScreen,
+#browseScreen{
     margin-top: 0px !important;
     max-height: 100vh !important;
+}
+
+#browseScreen{
+	overflow-y: hidden;
 }
 
 .burger{
@@ -1327,4 +1332,21 @@ md-autocomplete button{
 .active_time{
 	border-left: 4px solid !important;
 	font-weight: bold;
+}
+
+.profile_pic{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border: 5px solid #E5E5E5;
+    z-index: 1;
+}
+
+.loading_toggle{
+	position: fixed;
+	left: 10px;
+	bottom: 10px;
+	background-color: white;
+	border-radius: 3px;
+	z-index: 99999;
 }

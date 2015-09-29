@@ -1,0 +1,14 @@
+<h1 ng-bind-html="container.data.title"></h1>
+<div ng-if="container.data.data">
+	<div class="news_description_card description_card" layout-padding ng-bind-html="container.data.data.content"></div>
+	<div class="less_important" layout-padding 
+		ng-bind-html="container.data.data.published | timestamp | date:'h:mm a, dd MMM'"></div>
+</div>
+<div ng-if="!container.data.data" layout-padding class="less_important">
+	Loading...
+</div>
+<style>
+	.news_description_card img{
+		display: none;
+	}
+</style>

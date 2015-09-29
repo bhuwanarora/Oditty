@@ -1,8 +1,12 @@
-homeApp.directive('userCommunities', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('userCommunities', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return {
         restrict: 'E',
-        scope : {userId: '=', reduced: '='},
+        scope : {userId: '=', reduced: '=', wrapped: '='},
         controller: ["$scope", function($scope){
+
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
 
             var _init = function(){
                 $scope.rooms = [];
@@ -25,6 +29,129 @@ homeApp.directive('userCommunities', ["$rootScope", "userService", function($roo
     };
 }]);
 
+homeApp.directive('rdContent', ["websiteService", "$timeout", function(websiteService, $timeout){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+            var _init = function(){
+            }
+
+            $scope.get_url = function(){
+                return '/assets/angular/html/pages/products.html.erb';
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/rd_content.html'
+    };
+}]);
+
+homeApp.directive('rdMainContent', ["websiteService", "$rootScope", "$sce", function(websiteService, $rootScope, $sce){
+    return {
+        restrict: 'E',
+        controller: ["$scope", function($scope){
+
+            var _init = function(){
+                console.log("rdMainContent");
+                var container = $rootScope.containers[$scope.$index];
+                var url = container.url;
+                var id = container.id;
+                if(angular.isDefined(id)){
+                    deleteCookie("id");
+                    setCookie("id", id);
+                }
+
+                $scope.show_md_content = true;
+                if(url == "room"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/room.html.erb';
+                }
+                else if(url == "rooms"){
+                    $scope.content_url = '/assets/angular/html/pages/rooms.html.erb';
+                }
+                else if(url == "products"){
+                    $scope.content_url = '/assets/angular/html/pages/products.html.erb';                
+                    $scope.custom_style = {"width": '500px'};
+                }
+                else if(url == "spaces"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/spaces.html.erb';
+                    $scope.custom_style = {"width": '500px'};
+                }
+                else if(url == "books"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/books.html.erb';
+                }
+                else if(url == "news_group"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/news.html.erb';
+                    $scope.custom_style = {"width": '500px'};
+                }
+                else if(url == "book"){
+                    $scope.content_url = '/assets/angular/html/pages/book.html.erb';
+                }
+                else if(url == "profile"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/profile.html.erb';
+                }
+                else if(url == "browse"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/browse.html.erb';
+                }
+                else if(url.contains("author")){
+                    if(url == "author"){
+
+                    }
+                    else if(url == "author#books"){
+
+                    }
+                    else if(url == "author#interview"){
+
+                    }
+                    else if(url == "author#wiki"){
+
+                    }
+                    $scope.content_url = '/assets/angular/html/pages/author.html.erb';
+                }
+                else if(url == "read_news"){
+                    $scope.content_url = '/assets/angular/html/pages/read_news.html.erb';
+                    $scope.custom_style = {"width": '500px'};   
+                }
+                else if(url == "watch_video"){
+                    container.id = $sce.trustAsResourceUrl(container.id+"&autoplay=1");
+                    $scope.content_url = '/assets/angular/html/pages/watch_video.html.erb';
+                    $scope.custom_style = {"width": '500px'};
+
+                    //  var tag = document.createElement('script');
+
+                    // tag.src = "http://www.youtube.com/iframe_api";
+                    // var firstScriptTag = document.getElementsByTagName('script')[0];
+                    // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    // var player;
+                    // var _onYouTubeIframeAPIReady = function(){
+                    //     player = new YT.Player('ytplayer', {
+                    //         events: {
+                    //             'onReady': _onPlayerReady
+                    //         }
+                    //     });
+                    // }
+
+                    // var _onPlayerReady = function(event){
+                    //     player.mute();
+                    //     player.playVideo();
+                    // }
+
+                    // _onYouTubeIframeAPIReady();
+                }
+            }
+
+            _init();
+        }],
+        templateUrl: '/assets/angular/html/shared/rd_main_content.html'
+    };
+}]);
+
 homeApp.directive('testimonials', ["websiteService", "$timeout", function(websiteService, $timeout){
     return {
         restrict: 'E',
@@ -33,7 +160,7 @@ homeApp.directive('testimonials', ["websiteService", "$timeout", function(websit
     };
 }]);
 
-homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('browseRooms', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return {
         restrict: 'E',
         scope: {'reduced': '='},
@@ -183,6 +310,10 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", function($rootSco
                 return rooms;
             }
 
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
+
             $scope.goto_room = function(id){
                 window.location.href = "/room?p="+id;
             }
@@ -320,7 +451,7 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
 }]);
 
 
-homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", "sharedService", function($rootScope, userService, $timeout, sharedService){
     return {
         restrict: 'E',
         controller: ["$scope", function($scope){
@@ -340,6 +471,10 @@ homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", fu
             $scope.remove_suggestion = function(friend){
                 var index = $scope.suggest_friends.indexOf(friend);
                 $scope.suggest_friends.splice(index, 1);
+            }
+
+            $scope.render_page = function($event){
+                sharedService.render_page(event);
             }
 
             $scope.follow_user = function(id){
@@ -535,13 +670,17 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location', '$rootScope', function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location, $rootScope){
+homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location', '$rootScope', 'sharedService', function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location, $rootScope, sharedService){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
         controller: ["$scope", function($scope){
             $scope.toggle_expand = function(){
                 $scope.communityFeed.expand = !$scope.communityFeed.expand;
+            }
+
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
             }
 
             $scope.remove_news = function(){
@@ -565,13 +704,22 @@ homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', 
                         $scope.communityFeed.data = data;
                     });
                 }
-                $mdDialog.show({
-                    templateUrl: '/assets/angular/html/news/iframe.html',
-                    scope: $scope,
-                    preserveScope: true,
-                    clickOutsideToClose: true,
-                    targetEvent: event
-                });
+                if(angular.isDefined($rootScope.containers)){
+                    var container = {"url": "read_news", "data": $scope.communityFeed};
+                    $rootScope.containers.push(container);
+                    var container = angular.element(document.getElementById('browseScreen'));
+                    var length = $rootScope.containers.length;
+                    container.scrollLeft(length*600, 1000);
+                }
+                else{
+                    $mdDialog.show({
+                        templateUrl: '/assets/angular/html/news/iframe.html',
+                        scope: $scope,
+                        preserveScope: true,
+                        clickOutsideToClose: true,
+                        targetEvent: event
+                    });
+                }
                 event.stopPropagation();
             }
 

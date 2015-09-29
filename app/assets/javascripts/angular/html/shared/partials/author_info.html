@@ -2,8 +2,11 @@
     <img ng-src="{{author.id | author_thumb}}" class="circular"
     	 onerror="this.src='/assets/author_profile.jpg'">
     <div layout-padding>
-        <a ng-href="/author?id={{::author.id}}">
-            <h2 class="bold">{{::author.name}}</h2>
+        <a ng-href="/author?id={{::author.id}}" data-id="{{::author.id}}" data-url="author" 
+            data-header="{{::author.name}}"
+            ng-click="render_page($event)" class="no_anchor">
+            <h2 class="bold no_anchor" data-id="{{::author.id}}" data-header="{{::author.name}}" 
+                data-url="author" >{{::author.name}}</h2>
         </a>
         <div class="less_important" ng-if="author.location">
             <span>{{::author.location}} </span>

@@ -1,4 +1,4 @@
-homeApp.controller('authorsController', ["$scope", 'authorService', function($scope, authorService){
+homeApp.controller('authorsController', ["$scope", 'authorService', 'sharedService', function($scope, authorService, sharedService){
 	$scope.get_authors_interviewed = function(){
 		if(!$scope.info.loading){
 			$scope.info.loading = true;
@@ -12,6 +12,14 @@ homeApp.controller('authorsController', ["$scope", 'authorService', function($sc
 			});
 		}
 	}
+
+	$scope.handle_scroll_bottom = function(){
+		$scope.get_authors_interviewed();
+	}
+
+	$scope.render_page = function(event){
+        sharedService.render_page(event);
+    }
 
 	var _init = (function(){
 		$scope.get_authors_interviewed();

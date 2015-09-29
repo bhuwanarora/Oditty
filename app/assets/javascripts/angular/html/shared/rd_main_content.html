@@ -1,0 +1,49 @@
+<div class="md-whiteframe-z3 rd_main_container_wrapper">
+	<div class="main_container_bar" layout="row" layout-align="space-between center" 
+        ng-class="{'green': container.url == 'news_group', 'red': container.url == 'books', 'violet': container.url == 'spaces', 'dark_blue': container.url == 'rooms'}">
+		<div class="white_color capitalize" ng-bind-html="container.header | reduced_label" layout-padding></div>
+		<div layout="row" layout-align="center center">
+            <md-button ng-click="goto_page(container)">
+                <md-icon md-font-set="material-icons white_color">call_made</md-icon>
+            </md-button>
+			<md-button ng-click="remove_container($index)">
+				<md-icon md-font-set="material-icons white_color">close</md-icon>
+			</md-button>
+		</div>
+	</div>
+	<md-content class="rd_main_container white" layout-padding ng-if="show_md_content" ng-style="custom_style">
+	    <div ng-include src="::content_url"></div>
+	</md-content>
+    <div ng-if="!show_md_content" ng-include src="::content_url"></div>
+</div>
+<style>
+    .rd_main_container{
+        padding-top: 50px;
+        background-color: white;
+        z-index: 6;
+        height: 65vh;
+        overflow-y: scroll;
+        position: relative;
+    }
+
+    .main_container_bar{
+        height: 40px;
+        background-color: #333;
+        z-index: 9999999999;
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+
+    .container_bar,
+    .rd_main_container{
+	    min-width: 500px;
+        max-width: 100vw;
+        width: 50vw;
+        overflow-x: hidden;
+    }
+
+    .rd_main_container_wrapper,
+    .rd_main_container{
+    	border-radius: 3px;
+    }
+</style>

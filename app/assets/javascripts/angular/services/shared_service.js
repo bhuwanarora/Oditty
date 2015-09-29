@@ -1,4 +1,4 @@
-homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", "$location", "newsService", "Years", "Months", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService, $location, newsService, Years, Months){
+homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$location", "bookService", "shelfService", "$mdToast", "infinityService", "userService", "$location", "newsService", "Years", "Months", "websiteService", "$document", function ($timeout, $rootScope, ColorConstants, $location, bookService, shelfService, $mdToast, infinityService, userService, $location, newsService, Years, Months, websiteService, $document){
 
     this.get_popular_books = function($scope, books){
         console.log("get_popular_books");
@@ -115,6 +115,34 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             $scope.info.fetching_books = false;
             $scope.info.loading = false;
         });
+    }
+
+    this.render_page = function(event){
+        if(angular.isDefined($rootScope.containers)){
+            var element = event.target;
+            var content = String(element.textContent).replace(/^\s+|\s+$/g, '');
+            if(content == "Go to Book"){
+                var element = element.parentElement;
+            }
+            var url = element.getAttribute('data-url');
+            var id = element.getAttribute('data-id');
+            var header = element.getAttribute('data-header');
+            if(!header || header == null || angular.isUndefined(header)){
+                header = url.toCamel();
+            }
+            if(angular.isUndefined(id) || (id == null) || (id == 'null')){
+                var container = {"id": id, "url": url, "full_url": url, "header": header};
+            }
+            else{
+                var container = {"id": id, "url": url, "full_url": url+"?id="+id, "header": header};
+            }
+            $rootScope.containers.push(container);
+            var container = angular.element(document.getElementById('browseScreen'));
+            var length = $rootScope.containers.length;
+            container.scrollLeft(length*600, 1000);
+            $location.path(null);
+            return false;
+        }
     }
 
     this.toggle_bookmark = function(label, data, bookmark_object, scope){

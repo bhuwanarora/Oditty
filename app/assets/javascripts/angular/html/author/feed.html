@@ -9,18 +9,17 @@
                     <div class="less_important">
                         {{::book.published_year}}
                     </div>
-                    <h2>Published <a ng-href="/book?id={{book.id || book.book_id}}" class="bold">
-                        {{::book.title}}
-                    </a></h2>
+                    <div>Published <a ng-href="/book?id={{book.id || book.book_id}}" class="bold"
+                         data-url="book" data-id="{{book.id || book.book_id}}" data-header="{{::book.title}}" ng-click="render_page($event)">{{::book.title}}</a></div>
                 </div>
             </md-list-item>
         </div>
         <md-divider></md-divider>
     </div>
-    <div layout-padding>
-        <md-button class="md-button-clear md-warn" ng-click="show_more_books()" ng-hide="hide_show_more">
+    <div layout-padding flex>
+        <a ng-click="show_more_books()" ng-hide="hide_show_more">
             Show More
-        </md-button>
+        </a>
     </div>
     <div layout-padding></div>
 </md-list>

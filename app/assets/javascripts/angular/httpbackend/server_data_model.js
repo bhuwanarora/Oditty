@@ -27,6 +27,11 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.render_page = function(){
+        var data = "";
+        return data;
+    }
+
     this.room_suggestions = function(){
         var data = [
             {
@@ -462,8 +467,8 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
                 "news": false
             },
             "rooms": {
-                "join": false,
-                "visit": false
+                "join": true,
+                "visit": true
             },
             "book": {
                 "recommend": false,

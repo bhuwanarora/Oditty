@@ -1,8 +1,15 @@
 <div ng-include src="'/assets/angular/html/shared/partials/rating_info_button.html'" class="book_rating"></div>
-<a ng-href="/book?id={{book.id || book.book_id}}">
+<a ng-href="/book?id={{book.id || book.book_id}}"
+    data-header="{{book.title}}"
+	data-url="book" data-id="{{book.id || book.book_id}}" ng-click="render_page($event)">
     <md-button aria-label="show_book_dialog"
-        class="md-whiteframe-z1 clear rd_book_container" >
-        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" layout-padding></div>
+        data-header="{{book.title}}"
+    	data-url="book" data-id="{{book.id || book.book_id}}" 
+        class="md-whiteframe-z1 clear rd_book_container no_anchor" >
+        <div ng-include src="'/assets/angular/html/shared/partials/book_thumb.html'" 
+            data-header="{{book.title}}"
+        	data-url="book" data-id="{{book.id || book.book_id}}" 
+        	class="no_anchor" layout-padding></div>
     </md-button>
 </a>
 <div class="bookmark">

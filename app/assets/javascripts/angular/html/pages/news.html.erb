@@ -1,0 +1,6 @@
+<md-content ng-controller="feedController" check-scroll-bottom="get_community_feed()"
+	class="rd_main_container white" layout-padding ng-style="custom_style">
+	<div ng-repeat="news_feed in feed track by $index" layout-margin>
+	    <div ng-include src="'/assets/angular/html/home/partials/feed_type.html'" ></div>
+	</div>
+</md-content>

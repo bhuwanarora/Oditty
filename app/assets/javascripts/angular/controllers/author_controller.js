@@ -22,6 +22,10 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
     }
 
+    $scope.render_page = function(event){
+        sharedService.render_page(event);
+    }
+
     $scope.show_todo_list = function(event){
         $mdBottomSheet.show({
             templateUrl: 'assets/angular/html/todo/author.html',
@@ -137,18 +141,26 @@ homeApp.controller('authorController', ["$scope", "$location", "$mdSidenav", 'au
         }
     }
 
-    $scope.get_active_class = function(path){
-        var is_init = $location.path().substr(1, path.length+1) == "" && (path == "books");
-        if(($location.path().substr(1, path.length+1) == path) || is_init){
-            return "bold red_color";
-        } else {
-            return "grey_color";
-        }
-    }
+    // $scope.get_active_class = function(path){
+    //     var is_init = $location.path().substr(1, path.length+1) == "" && (path == "books");
+    //     if(($location.path().substr(1, path.length+1) == path) || is_init){
+    //         return "bold red_color";
+    //     } else {
+    //         return "grey_color";
+    //     }
+    // }
 
     var _init = (function(){
         var regex = /[?&]([^=#]+)=([^&#]*)/g;
-        var id = regex.exec($location.absUrl())[2];
+        var url_parsed = regex.exec($location.absUrl());
+        if(url_parsed != null){
+            var id = url_parsed[2];
+        }
+        else{
+            if($rootScope.pages){
+                var id = getCookie("id");
+            }
+        }
         if(angular.isUndefined($scope.info)){
             $scope.info = {};
         }

@@ -1,0 +1,46 @@
+<md-progress-linear class="md-primary loader"
+                    ng-if="info.loading && !info.show_share"
+                    md-mode="indeterminate">
+</md-progress-linear>
+<md-progress-circular class="md-accent md-hue-1" md-mode="indeterminate" 
+        ng-if="info.cirular_loading">
+</md-progress-circular>
+
+<div class="feedback md-whiteframe-z1" layout-padding>
+    <a href="/testimonials" class="less_important" target="_blank">
+        <i class="material-icons">feedback</i>
+        <md-tooltip>
+            Share Feedback
+        </md-tooltip>
+    </a>
+</div>
+
+<div du-scroll-container="browseScreen">
+    <a href="#MainhomeContainer" du-smooth-scroll duration="1000">
+        <md-button class="md-fab white homeContainerFab" 
+            aria-label="homeContainer" 
+            ng-click="goto_home($event)">
+            <md-icon md-font-set="material-icons grey_color">keyboard_arrow_left</md-icon>
+        </md-button>
+    </a>
+</div>
+<md-button class="md-fab md-warn invite" aria-label="Invite" 
+    ng-if="info && info.hide_signin"
+    ng-click="invite_friends($event)">
+    <md-icon md-font-set="material-icons">person_add</md-icon>
+</md-button>
+<div ng-if="info.loading" layout-padding class="loading_toggle md-whiteframe-z3" 
+    layout="row" layout-align="center center">
+    <div class="less_important" layout-padding>Loading...</div>
+    <md-button ng-click="info.loading = false;">
+        <md-icon md-font-set="material-icons">close</md-icon>
+    </md-button>
+</div>
+
+<div ng-include src="'/assets/angular/html/shared/left_panel.html'" class="left_panel_container"></div>
+<div ng-include src="'/assets/angular/html/shared/notifications.html'" 
+    class="right_panel_container"></div>
+<div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
+<div ng-if="!info.hide_signin">
+    <div ng-include="'assets/angular/html/home/partials/login_options.html'"></div>
+</div>

@@ -1,0 +1,70 @@
+<div layout="row" layout-wrap layout-align="center center">
+     <div layout-margin>
+	     <a ng-click="render_page($event)" data-url="rooms"
+	     	 target="_blank" layout="column" layout-align="center center">
+		     <md-button data-url="rooms" class="product_icon md-whiteframe-z1" style="background-color: #3E52B7;">
+		     	<md-icon class="white_color" data-url="rooms" md-font-set="material-icons">group_work</md-icon>
+<!-- 						     	<md-tooltip>Rooms: Connecting News, Videos and Books on a topic.</md-tooltip> -->
+		     </md-button>
+		     <div layout-padding data-url="rooms" class="less_important">Rooms</div>
+	     </a>
+     </div>
+     <div layout-margin>
+	     <a ng-click="render_page($event)" data-url="news_group"
+	     	 target="_blank" layout="column" layout-align="center center">
+		     <md-button data-url="news_group" class="product_icon md-whiteframe-z1" style="background-color: #88C151;">
+		     	<md-icon class="white_color" data-url="news_group" md-font-set="material-icons">today</md-icon>
+		     	<!-- <md-tooltip>News: Stay Updated with News in Rooms I care about</md-tooltip> -->
+		     </md-button>
+		     <div layout-padding data-url="news_group" class="less_important">News</div>
+	     </a>
+     </div>
+     <div layout-margin>
+	     <a ng-click="render_page($event)" data-url="spaces"
+	     	 target="_blank" layout="column" layout-align="center center">
+		     <md-button data-url="spaces" class="product_icon md-whiteframe-z1" style="background-color: #1876B8;">
+		     	<md-icon class="white_color" data-url="spaces" md-font-set="material-icons">strikethrough_s</md-icon>
+		     	<!-- <md-tooltip>Spaces: Feed from my social circle.</md-tooltip> -->
+		     </md-button>
+		     <div layout-padding data-url="spaces" class="less_important">Spaces</div>
+	     </a>
+     </div>
+     <div layout-margin>
+	     <a ng-click="render_page($event)" data-url="books"
+	     	 target="_blank" layout="column" layout-align="center center">
+		     <md-button data-url="books" class="product_icon md-whiteframe-z1" style="background-color: #E9453B;">
+		     	<md-icon class="white_color" data-url="books" md-font-set="material-icons">local_library</md-icon>
+		     	<!-- <md-tooltip>Books: Filter books depending on your taste</md-tooltip> -->
+		     </md-button>
+		     <div layout-padding data-url="books" class="less_important">Books</div>
+	     </a>
+     </div>
+    
+    
+ </div>
+ <div layout-padding></div>
+ <div layout-padding></div>
+ <div layout-padding></div>
+ <div layout-padding></div>
+ <div layout-padding></div>
+<user-communities layout="row" wrapped="true"
+    layout-wrap layout-align="center start">
+ </user-communities>
+</div>
+<style>
+	 #homeFilters{
+        min-height: 70vh;
+    }
+
+    .product_icon{
+        line-height: 40px !important;
+	    font-size: 40px;
+	    text-align: center !important;
+	    color: white !important;
+	    padding: 0px 25px 20px 10px;
+    }
+
+    .product_icon .material-icons{
+    	font-size: 40px;
+    }
+</style>

@@ -89,6 +89,11 @@ homeApp.controller('specificBookController', ["$scope", "$rootScope", "$timeout"
         if(url_parsed != null){
             var id = url_parsed[2];
         }
+        else{
+            if($rootScope.pages){
+                var id = getCookie("id");
+            }
+        }
         if(angular.isDefined($rootScope.active_book)){
             if(angular.isDefined($rootScope.active_book.id)){
                 var book_id = $rootScope.active_book.id;
