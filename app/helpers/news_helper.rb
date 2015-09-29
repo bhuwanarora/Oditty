@@ -157,11 +157,21 @@ module NewsHelper
 		SubscriptionMailer.news_subscription(params).deliver
 	end
 
+	def self.clear_user_session
+		while true
+			sleep(15*Constant::Time::OneMin)
+			RedisHelper::Session.clear
+			puts "Redis Session flushed (for news)"
+		end
+	end
+
 	def self.insert_news
 		NewsSources.init_news_queue
+		redis_flush_thread = Thread.new{ NewsHelper.clear_user_session}
 		producer_thread  = Thread.new{ NewsSources.producer_thread }
 		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
 		consumer_thread.join
+		redis_flush_thread.join
 	end
 
 	def self.insert_old_lit_news
