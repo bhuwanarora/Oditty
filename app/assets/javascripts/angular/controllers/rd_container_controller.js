@@ -9,14 +9,9 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
     }
 
 	$scope.remove_container = function(index){
-        var containers = $rootScope.containers;
-		containers.splice(index, 1);
-        delete $rootScope.containers;
-        $rootScope.containers = [];
+        delete $rootScope.containers[index];
         $timeout(function(){
-            angular.forEach(containers, function(value){
-                this.push(value);
-            }, $rootScope.containers);
+            $rootScope.containers.splice(index, 1);
         }, 100);
 	}
 
@@ -24,8 +19,8 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-			var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
-      // var container = {"url": "author", "id": 2343423, "full_url": "author", "header": "Author"}
+			var container = {"url": "spaces", "full_url": "spaces", "header": "Spaces"};
+            // var container = {"url": "author", "id": 2343423, "full_url": "author", "header": "Author"}
 			$rootScope.containers.push(container);
 		}
 		_add_groups();

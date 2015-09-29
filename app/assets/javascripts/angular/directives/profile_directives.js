@@ -1,8 +1,11 @@
-homeApp.directive('friendInfo', ["$rootScope", "userService", function($rootScope, userService){
+homeApp.directive('friendInfo', ["$rootScope", "userService", "sharedService", function($rootScope, userService, sharedService){
     return {
         restrict: 'E',
         scope : {friend: '=', info: '='},
         controller: ["$scope", function($scope){
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
            
             var _init = function(){
                 if(angular.isDefined($scope.friend)){
@@ -18,11 +21,14 @@ homeApp.directive('friendInfo', ["$rootScope", "userService", function($rootScop
     };
 }]);
 
-homeApp.directive('authorInfo', ["$rootScope", "authorService", 'ColorConstants', '$mdDialog', function($rootScope, authorService, ColorConstants, $mdDialog){
+homeApp.directive('authorInfo', ["$rootScope", "authorService", 'ColorConstants', 'sharedService', function($rootScope, authorService, ColorConstants, sharedService){
     return {
         restrict: 'E',
         scope : {author: '=', info: '='},
         controller: ["$scope", function($scope){
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
            
             var _init = function(){
                 if(angular.isDefined($scope.author)){
@@ -43,6 +49,10 @@ homeApp.directive('communityInfo', ["$rootScope", "newsService", 'ColorConstants
         restrict: 'E',
         scope : {community: '=', info: '='},
         controller: ["$scope", function($scope){
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
+            
             $scope.show_book_dialog = function(book, event){
                 sharedService.show_book_dialog($rootScope, $scope, book, event);
             }
@@ -151,6 +161,32 @@ homeApp.directive('articles', ["$rootScope", "roomService", "userService", funct
                     $scope.visited_articles = $scope.visited_articles.concat(data);
                     $scope.shelf_loading = false;
                 });
+            }
+
+            $scope.show_news = function(article, event){
+                var url = article.news_url || article.url;
+                url ="https://api.embed.ly/1/extract?key=0038e86d5e754f8d9a0c3823e338563d&url="+url+"&format=json";
+                $scope.cirular_loading = true;
+                if(angular.isUndefined(article.data)){
+                    websiteService.extract_embed(url).then(function(data){
+                        $scope.cirular_loading = false;
+                        article.data = data;
+                    });
+                }
+                if(angular.isDefined($rootScope.containers)){
+                    var container = {"url": "read_news", "data": article};
+                    $rootScope.containers.push(container);
+                }
+                else{
+                    $mdDialog.show({
+                        templateUrl: '/assets/angular/html/news/iframe.html',
+                        scope: $scope,
+                        preserveScope: true,
+                        clickOutsideToClose: true,
+                        targetEvent: event
+                    });
+                }
+                event.stopPropagation();
             }
 
             var _get_random_init = function(min, max){
