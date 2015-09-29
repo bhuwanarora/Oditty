@@ -1,10 +1,12 @@
 <div layout="column">
 	<h2><a class="bold no_anchor" 
 		data-id="{{::book.id}}" data-url="book"
+		data-header="{{::book.title}}"
 		ng-click="render_page($event)"
 		ng-href="/book?q={{::book.id}}" ng-bind-html="::book.title" ng-if="book.title"></a></h2>
 	<div class="less_important" ng-if="book.author_name">
 		By <a ng-href="/author?q={{::book.author_id}}" data-id="{{::book.author_id}}" data-url="author" 
+			data-header="{{::book.author_name}}"
 			ng-click="render_page($event)"
 			ng-bind-html="::book.author_name"></a>
 	</div>

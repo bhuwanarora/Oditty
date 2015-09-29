@@ -3,10 +3,12 @@
             layout="column">
         <md-content class="overview_container">
             <div layout="column">
-                <h2><a data-url="book" data-id="{{book.id || book.book_id}}" ng-click="render_page($event)"
+                <h2><a data-url="book" data-id="{{book.id || book.book_id}}" data-header="{{::book.title}}"
+                    ng-click="render_page($event)"
                     ng-href="/book?q={{book.id || book.book_id}}">{{::book.title}}</a></h2>
                 <a ng-href="/author?q={{::book.author_id}}"
-                    data-url="author" data-id="{{book.author_id}}" ng-click="render_page($event)">{{::book.author_name}}</a>
+                    data-url="author" data-id="{{book.author_id}}" data-header="{{::book.author_name}}"
+                    ng-click="render_page($event)">{{::book.author_name}}</a>
             </div>
             <br/>
             <div class="summary">

@@ -5,11 +5,13 @@
             <div ng-repeat="community in communityFeed.communities | limitTo: 4" 
                 layout-align="start start" layout-padding layout-wrap layout="row" class="community_circle">
                 <a layout="column" layout-align="center center" ng-href="/room?id={{::community.id}}" 
-                    class="animate-fast vertical_expansion no_anchor" 
+                    class="animate-fast vertical_expansion no_anchor" data-header="{{::community.name}}"
                     data-id="{{::community.id}}" data-url="room" ng-click="render_page($event)"
                     ng-if="!communityFeed.expand">
-                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" class="no_anchor square" alt="   {{::community.name}}" 
-                    data-id="{{::community.id}}" data-url="room"/>
+                    <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" 
+                        data-header="{{::community.name}}"
+                        class="no_anchor square" alt="{{::community.name}}" 
+                        data-id="{{::community.id}}" data-url="room"/>
                     <md-tooltip>
                         {{::community.name}}
                     </md-tooltip>
@@ -17,9 +19,11 @@
                 <a layout="row" layout-align="start" ng-href="/room?id={{community.id}}" 
                     class="animate-fast vertical_expansion no_anchor"
                     data-id="{{::community.id}}" data-url="room" ng-click="render_page($event)"
+                     data-header="{{::community.name}}"
                     ng-if="communityFeed.expand">
                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{community.id}}/S.png" 
                         class="circular no_anchor" alt="{{::community.name}}" 
+                        data-header="{{::community.name}}"  
                         data-id="{{::community.id}}" data-url="room"/>
                     <md-tooltip>{{::community.name}}</md-tooltip>
                 </a>

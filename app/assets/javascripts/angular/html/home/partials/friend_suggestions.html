@@ -7,12 +7,15 @@
 			layout="row" layout-align="space-between" flex class="description_card">
 			<div>
 				<a ng-href="/profile?id={{friend.id}}" layout="row" 
+					data-header="{{friend.first_name}}&nbsp;{{friend.last_name}}"
 					data-id="{{friend.id}}" data-url="profile" class="no_anchor" ng-click="render_page($event)">
 					<img class="circular no_anchor" ng-src="{{friend.image_url || '/assets/user_profile.jpg'}}"
 						data-id="{{friend.id}}" data-url="profile"
+						data-header="{{friend.first_name}}&nbsp;{{friend.last_name}}"
 						onerror="this.src='/assets/user_profile.jpg'"/>
 					<div class="less_important bold no_anchor" layout-padding
-						data-id="{{friend.id}}" data-url="profile">{{friend.first_name}} {{friend.last_name}}</div>
+						data-header="{{friend.first_name}}&nbsp;{{friend.last_name}}"
+						data-id="{{friend.id}}" data-url="profile">{{friend.first_name}}&nbsp;{{friend.last_name}}</div>
 				</a>
 			</div>
 			<div layout="row" layout-align="center center">

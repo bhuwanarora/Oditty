@@ -6,9 +6,11 @@
                     <div flex-md="30" flex-sm="100">
                         <div layout="column" layout-padding hide-md>
                             <h2><a ng-href="/book?q={{book.id || book.book_id}}" class="bold"
-                                data-url="book" data-id="{{book.id || book.book_id}}" ng-click="render_page($event)">{{::book.title}}</a></h2>
+                                data-url="book" data-id="{{book.id || book.book_id}}" data-header="{{::book.title}}"
+                                ng-click="render_page($event)">{{::book.title}}</a></h2>
                             <a ng-href="/author?q={{::book.author_id}}"
-                                data-url="author" data-id="{{book.author_id}}" ng-click="render_page($event)">{{::book.author_name}}</a>
+                                data-url="author" data-id="{{book.author_id}}" data-header="{{::book.author_name}}"
+                                ng-click="render_page($event)">{{::book.author_name}}</a>
                         </div>
                         <div class="relative">
                             <img ng-src="{{book.isbn | medium_thumb}}" 
@@ -20,9 +22,11 @@
                         layout-md="column" class="description_card" 
                         layout-padding>
                         <div layout="column" layout-padding show-md hide>
-                            <h2><a data-url="book" data-id="{{book.id || book.book_id}}" ng-click="render_page($event)"
+                            <h2><a data-url="book" data-id="{{book.id || book.book_id}}" 
+                                data-header="{{::book.title}}"
+                                ng-click="render_page($event)"
                                 ng-href="/book?q={{book.id || book.book_id}}">{{::book.title}}</a></h2>
-                            <a ng-href="/author?q={{::book.author_id}}"
+                            <a ng-href="/author?q={{::book.author_id}}" data-header="{{::book.author_name}}"
                                 data-url="author" data-id="{{book.author_id}}" ng-click="render_page($event)">{{::book.author_name}}</a>
                         </div>
                         <div>
@@ -46,16 +50,10 @@
                         <img ng-src="{{feed.user.image_url || '/assets/user_profile.jpg'}}" class="circular" 
                             onerror="this.src='/assets/user_profile.jpg'">
                         <div layout="column" layout-padding>
-                            <div>
-                                <a ng-href="/profile?q={{feed.user.id}}"
-                                     data-url="profile" data-id="{{feed.user.id}}" ng-click="render_page($event)">
-                                    <span>{{::feed.user.first_name}}</span>
-                                    <span>{{::feed.user.last_name}}</span>
-                                </a>
-                            </div>
-                            <div class="less_important">
-                                {{::feed.user.init_book_read_count}}
-                            </div>
+                            <div><a ng-href="/profile?q={{feed.user.id}}" class="no_anchor" 
+                                    data-header="{{::feed.user.first_name}}&nbsp;{{::feed.user.last_name}}"
+                                     data-url="profile" data-id="{{feed.user.id}}" ng-click="render_page($event)">{{::feed.user.first_name}}&nbsp;{{::feed.user.last_name}}</a></div>
+                            <div class="less_important">{{::feed.user.init_book_read_count}}</div>
                         </div>
                     </md-card-content>
                     <md-card-content>
