@@ -1,5 +1,5 @@
 <div layout="row" layout-fill class="feed_margin">
-    <rd-content url="url" style="padding-left: 10px;" id="MainhomeContainer"></rd-content>
+    <rd-content url="url" style="padding-left: 10px; display: inline-table;" id="MainhomeContainer"></rd-content>
     <div ng-repeat="container in containers track by $index" id="container{{$index}}" 
         ng-if="container.url"
         style="padding-left: 10px; display: inline-table;">
@@ -23,4 +23,23 @@
         outline: none !important;
         margin-top: 72px !important;
     }
+
+   #browseRooms .room_image_wrapper{
+        position: relative;
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+   }
+
+   #browseRooms .room_image_wrapper img{
+        position: absolute;
+        min-height: 180px;
+        min-width: 180px;
+        width: 100%;
+   }
+
+   #browseRooms .room_container{
+      width: 180px;
+   }
+    
 </style>
