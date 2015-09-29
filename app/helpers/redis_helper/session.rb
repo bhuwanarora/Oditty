@@ -19,6 +19,10 @@ module RedisHelper::Session
 		info
 	end
 
+	def self.clear
+		RedisHelper.clear(RedisHelper::Session.get_key_session(""))
+	end
+
 	def self.get_key_session id
 		"session/" + id.to_s
 	end
