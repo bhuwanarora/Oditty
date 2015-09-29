@@ -148,7 +148,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :products, :layout => "material"
+		render :test, :layout => "material_home"
 	end
 
 	def privacy

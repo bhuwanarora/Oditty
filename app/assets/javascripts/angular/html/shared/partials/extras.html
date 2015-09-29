@@ -41,3 +41,6 @@
 <div ng-include src="'/assets/angular/html/shared/notifications.html'" 
     class="right_panel_container"></div>
 <div ng-include src="'/assets/angular/html/shared/shelves_sidenav.html'" ></div>
+<div ng-if="!info.hide_signin">
+    <div ng-include="'assets/angular/html/home/partials/login_options.html'"></div>
+</div>
