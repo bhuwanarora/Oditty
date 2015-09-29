@@ -94,6 +94,10 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                     $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/profile.html.erb';
                 }
+                else if(url == "rooms"){
+                    $scope.show_md_content = false;
+                    $scope.content_url = '/assets/angular/html/pages/browse.html.erb';
+                }
                 else if(url.contains("author")){
                     if(url == "author"){
 
@@ -112,6 +116,10 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                 else if(url == "read_news"){
                     $scope.content_url = '/assets/angular/html/pages/read_news.html.erb';
                     $scope.custom_style = {"width": '500px'};   
+                }
+                else if(url == "watch_video"){
+                    $scope.content_url = '/assets/angular/html/pages/watch_video.html.erb';
+                    $scope.custom_style = {"width": '500px'};
                 }
             }
 
