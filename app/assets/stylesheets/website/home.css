@@ -208,6 +208,10 @@ md-content{
     max-height: 100vh !important;
 }
 
+#browseScreen{
+	overflow-y: hidden;
+}
+
 .burger{
 	padding: 10px;
 }
