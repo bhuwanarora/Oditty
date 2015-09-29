@@ -149,7 +149,9 @@ homeApp.controller('communityController', ["$scope", 'newsService', '$rootScope'
             var id = url_parsed[2];
         }
         else{
-            var id = getCookie("id");
+            if($rootScope.pages){
+                var id = getCookie("id");
+            }
         }
         if(angular.isDefined(id)){
             $scope.active_tag = {"id": id};
