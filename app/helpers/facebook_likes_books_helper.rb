@@ -19,7 +19,16 @@ module FacebookLikesBooksHelper
 		self.clean_up node_id
 	end
 
+	def self.clean_up_self_loop node_id
+		clause = FacebookLike.new(node_id).match +
+		" MATCH (facebook_like)-[r:RelatedCommunity]->(facebook_like) "\
+		"DELETE r "\
+		" RETURN ID(facebook_like) AS id "
+		clause.execute
+	end
+
 	def self.clean_up node_id
+		FacebookLikesBooksHelper.clean_up_self_loop node_id
 		clause = self.match_rel(node_id, FacebookLike.get_relationship_type("category_list")) + " RETURN ID(destination) AS id, destination.name AS name "
 		ids = clause.execute
 		ids.each do |category|
