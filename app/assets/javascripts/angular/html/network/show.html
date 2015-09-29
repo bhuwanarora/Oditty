@@ -6,6 +6,7 @@
     </md-item-content>
     <md-item-content layout="row" layout-align="center center" class="clear">
         <a ng-href="/profile?p={{::user.id}}" class="no_anchor" 
+            data-header="{{::user.first_name}}"
             data-id="{{::user.id}}" data-url="profile" ng-click="render_page($event)">
             <div class="network_name">{{::user.first_name}}</div>
         </a>
@@ -22,11 +23,8 @@
         <div class="less_important" layout="row" layout-align="center center">Recently Visited Books</div>
         <div ng-repeat="book in user.books" class="network_book" ng-if="book.id" layout-padding>
             <a ng-href="/book?q={{::book.id}}" class="less_important bold no_anchor"
-                data-id="{{::book.id}}" data-url="book" ng-click="render_page($event)">
-                <span ng-bind-html="book.title"></span>
-                <span> by </span>
-                <span ng-bind-html="book.author_name"></span>
-            </a>
+                data-header="{{book.title}}"
+                data-id="{{::book.id}}" data-url="book" ng-click="render_page($event)">{{book.title}}&nbsp;by{{book.author_name}}</a>
         </div>
     </md-item-content>
 </md-item>

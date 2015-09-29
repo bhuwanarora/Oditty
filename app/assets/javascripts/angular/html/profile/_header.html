@@ -13,10 +13,13 @@
                 class="profile_pic" onerror="this.src='https://oditty.me/assets/rooms.png'"/>
             <div layout="row"  layout-align="center center">
                 <h2><a ng-href="/profile?id={{::profile_user.id}}" class="white_color no_anchor"
+                        data-header="{{::profile_user.first_name}}&nbsp;{{::profile_user.last_name}}"
                         data-id="{{::profile_user.id}}" data-url="profile" ng-click="render_page($event)">
-                        <div layout="column" layout-wrap layout-align="start start" class="no_anchor" 
+                        <div layout="column" layout-wrap layout-align="start start" class="no_anchor"
+                            data-header="{{::profile_user.first_name}}&nbsp;{{::profile_user.last_name}}" 
                             data-id="{{::profile_user.id}}" data-url="profile">
                             <div layout="row" layout-padding  class="no_anchor" 
+                                data-header="{{::profile_user.first_name}}&nbsp;{{::profile_user.last_name}}"
                                 data-id="{{::profile_user.id}}" data-url="profile">
                                 {{::profile_user.first_name}}&nbsp;{{::profile_user.last_name}}
                             </div>

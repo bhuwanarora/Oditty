@@ -7,7 +7,7 @@
         </div>
         <div layout="column" flex ng-if="!video.play" >
             <a ng-click="video.play = true" ng-if="!pages" class="less_important" ng-bind-html="video.title"></a>
-            <a ng-click="render_page($event)" data-url="watch_video" data-id="{{video.url}}"
+            <a ng-click="render_page($event)" data-url="watch_video" data-id="{{video.url}}" data-header="{{::video.title}}"
                 ng-if="pages" class="less_important no_anchor" ng-bind-html="video.title"></a>
         </div>
         <iframe ng-if="video.play" class="embed" 

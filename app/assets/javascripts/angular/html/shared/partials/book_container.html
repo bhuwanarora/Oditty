@@ -26,7 +26,9 @@
 					<div layout="row" layout-align="space-between">
 						<div layout="row" layout-align="space-between" flex>
 							<div>
-				    			<h2><a ng-href="/book?id={{book.book_id || book.id}}" ng-click="render_page($event)" data-url="book" data-id="{{book.book_id || book.id}}" >{{book.title}}</a></h2>
+				    			<h2><a ng-href="/book?id={{book.book_id || book.id}}" ng-click="render_page($event)" 
+				    				data-header="{{book.title}}"
+				    				data-url="book" data-id="{{book.book_id || book.id}}" >{{book.title}}</a></h2>
 								<div class="less_important">{{book.author_name}}</div>
 							</div>
 							<div layout="row" class="less_important" ng-include 
@@ -71,6 +73,7 @@
 		</div>
 		<div layout="row" layout-align="center center" layout-padding>
 			<md-button class="md-button-clear md-raised md-warn" ng-click="render_page($event)" data-url="book" 
+				data-header="{{book.title}}"
 				data-id="{{book.book_id || book.id}}" ng-href="/book?id={{book.id || book.book_id}}">Go to Book</md-button>
 		</div>
 	</div>
