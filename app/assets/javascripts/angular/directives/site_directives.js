@@ -428,7 +428,7 @@ homeApp.directive('suggestCommunities', ["$rootScope", "userService", "$timeout"
 }]);
 
 
-homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", function($rootScope, userService, $timeout){
+homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", "sharedService", function($rootScope, userService, $timeout, sharedService){
     return {
         restrict: 'E',
         controller: ["$scope", function($scope){
@@ -448,6 +448,10 @@ homeApp.directive('suggestFriends', ["$rootScope", "userService", "$timeout", fu
             $scope.remove_suggestion = function(friend){
                 var index = $scope.suggest_friends.indexOf(friend);
                 $scope.suggest_friends.splice(index, 1);
+            }
+
+            $scope.render_page = function($event){
+                sharedService.render_page(event);
             }
 
             $scope.follow_user = function(id){
