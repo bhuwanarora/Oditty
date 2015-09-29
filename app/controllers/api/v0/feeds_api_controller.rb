@@ -18,6 +18,7 @@ module Api
 			def get_news
 				user_id = session[:user_id]
 				info = []
+				news_day_skip_count = 0
 				if user_id
 					skip_count = RedisHelper::Session.get_session({:id => session[:session_id]})["news_skip_count"] rescue nil;
 					skip_count ||= params[:skip].to_i;
@@ -27,42 +28,39 @@ module Api
 				end
 				if !user_id || community_follow_count == 0
 					region = params[:id]
-					puts "0 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-					session[:news_skip_count] ||= 0
-					session[:news_day_skip_count] ||= 0
-					puts "1 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-
-					if(!(region.nil? || session[:region] == region))
-						session[:news_skip_count] = 0
-						session[:news_day_skip_count] = 0
-						session[:region] = region
-					end
+					#puts "0 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
 					redis_session = RedisHelper::Session.get_session({:id => session[:session_id]})
 					skip_count = redis_session["news_skip_count"] rescue nil
 					skip_count ||= params[:skip].to_i
-					redis_session["news_skip_count"] = skip_count if redis_session
 					news_day_skip_count = redis_session["news_day_skip_count"]
+					news_day_skip_count ||= 0
+					
+					# if(!(region.nil? || session[:region] == region))
+					# 	session[:news_skip_count] = 0
+					# 	session[:news_day_skip_count] = 0
+					# 	session[:region] = region
+					# end
 					info = Api::V0::FeedsApi.get_news(skip_count, news_day_skip_count, region).execute
 					
 					if info.blank?
-						session[:news_day_skip_count] += 1
-						session[:news_skip_count] = 0
-						info = Api::V0::FeedsApi.get_news(session[:news_skip_count], session[:news_day_skip_count], region).execute
+						news_day_skip_count += 1
+						news_skip_count = 0
+						info = Api::V0::FeedsApi.get_news(news_skip_count, news_day_skip_count, region).execute
 					end
-					puts "3 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
-					puts "4 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
+					#puts "3 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
+					#puts "4 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
 				end
-				session[:news_skip_count] += info.length
+				news_skip_count += info.length
 				redis_param =
 				{
 					:id 	=> session[:session_id],
 					:info 	=>
 					{
-						:news_skip_count => session[:news_skip_count],
-						:news_day_skip_count => session[:news_day_skip_count]
+						:news_skip_count => news_skip_count,
+						:news_day_skip_count => news_day_skip_count
 					}
 				}
-				RedisHelper::Session.set_session(redis_param);
+				RedisHelper::Session.set_session(redis_param)
 				render :json => info, :status => 200
 			end
 
