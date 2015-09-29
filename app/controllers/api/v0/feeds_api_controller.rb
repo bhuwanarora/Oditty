@@ -39,7 +39,7 @@ module Api
 						info = Api::V0::FeedsApi.get_news(news_skip_count, news_day_skip_count, region).execute
 					end
 				end
-				news_skip_count += info.length
+				news_skip_count += ((info.length)*3)/4
 				redis_param =
 				{
 					:id 	=> session[:session_id],
