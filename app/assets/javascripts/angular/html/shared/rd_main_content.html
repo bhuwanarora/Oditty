@@ -1,5 +1,6 @@
 <div class="md-whiteframe-z3 rd_main_container_wrapper">
-	<div class="main_container_bar" layout="row" layout-align="space-between center">
+	<div class="main_container_bar" layout="row" layout-align="space-between center" 
+        ng-class="{'green': container.url == 'news_group', 'red': container.url == 'books', 'violet': container.url == 'spaces', 'dark_blue': container.url == 'rooms'}">
 		<div class="white_color capitalize" ng-bind-html="container.header" layout-padding></div>
 		<div layout="row" layout-align="center center">
             <md-button ng-click="goto_page(container)">
@@ -10,9 +11,10 @@
 			</md-button>
 		</div>
 	</div>
-	<md-content class="rd_main_container white" layout-padding>
+	<md-content class="rd_main_container white" layout-padding ng-if="show_md_content" ng-style="custom_style">
 	    <div ng-include src="::content_url"></div>
 	</md-content>
+    <div ng-if="!show_md_content" ng-include src="::content_url"></div>
 </div>
 <style>
     .rd_main_container{

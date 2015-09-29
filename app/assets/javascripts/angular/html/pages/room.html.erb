@@ -1,3 +1,4 @@
-<div ng-controller="communityController">
-	<div ng-include src="'/assets/angular/html/shared/pages/room.html'" ></div>
-</div>
+<md-content ng-controller="communityController" check-scroll-bottom="get_community_news()"
+	class="rd_main_container white" layout-padding>
+	<div ng-include src="'/assets/angular/html/shared/pages/room.html'" layout-padding></div>
+</md-content>

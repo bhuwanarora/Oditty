@@ -169,7 +169,7 @@ input:focus{
 }
 
 .red{
-    background-color: #D73D32 !important;
+    background-color: #E9453B !important;
 }
 
 .light_grey{
@@ -230,7 +230,7 @@ input:focus{
 }
 
 .green{
-    background-color: #65b045 !important;
+    background-color: #88C151 !important;
 }
 
 .magenta{
@@ -626,4 +626,12 @@ md-tooltip div{
 
 .horizontal_scroll{
     overflow-x: scroll;
+}
+
+.violet{
+    background-color: #1876B8 !important;
+}
+
+.dark_blue{
+    background-color: #3E52B7 !important;
 }

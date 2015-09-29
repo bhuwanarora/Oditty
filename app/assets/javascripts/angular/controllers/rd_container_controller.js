@@ -19,7 +19,7 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-			var container = {"url": "spaces", "full_url": "spaces", "header": "Spaces"};
+			var container = {"url": "rooms", "full_url": "rooms", "header": "Rooms"};
             // var container = {"url": "author", "id": 2343423, "full_url": "author", "header": "Author"}
 			$rootScope.containers.push(container);
 		}
