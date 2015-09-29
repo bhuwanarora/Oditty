@@ -46,7 +46,7 @@ homeApp.directive('rdContent', ["websiteService", "$timeout", function(websiteSe
     };
 }]);
 
-homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(websiteService, $rootScope){
+homeApp.directive('rdMainContent', ["websiteService", "$rootScope", "$sce", function(websiteService, $rootScope, $sce){
     return {
         restrict: 'E',
         controller: ["$scope", function($scope){
@@ -94,7 +94,7 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                     $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/profile.html.erb';
                 }
-                else if(url == "rooms"){
+                else if(url == "browse"){
                     $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/browse.html.erb';
                 }
@@ -118,8 +118,31 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", function(web
                     $scope.custom_style = {"width": '500px'};   
                 }
                 else if(url == "watch_video"){
+                    container.id = $sce.trustAsResourceUrl(container.id+"&autoplay=1");
                     $scope.content_url = '/assets/angular/html/pages/watch_video.html.erb';
                     $scope.custom_style = {"width": '500px'};
+
+                    //  var tag = document.createElement('script');
+
+                    // tag.src = "http://www.youtube.com/iframe_api";
+                    // var firstScriptTag = document.getElementsByTagName('script')[0];
+                    // firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    // var player;
+                    // var _onYouTubeIframeAPIReady = function(){
+                    //     player = new YT.Player('ytplayer', {
+                    //         events: {
+                    //             'onReady': _onPlayerReady
+                    //         }
+                    //     });
+                    // }
+
+                    // var _onPlayerReady = function(event){
+                    //     player.mute();
+                    //     player.playVideo();
+                    // }
+
+                    // _onYouTubeIframeAPIReady();
                 }
             }
 

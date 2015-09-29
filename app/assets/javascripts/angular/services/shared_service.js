@@ -137,7 +137,8 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             var container = angular.element(document.getElementById('browseScreen'));
             var length = $rootScope.containers.length;
             container.scrollLeft(length*600, 1000);
-            return false;   
+            $location.path(null);
+            return false;
         }
     }
 
