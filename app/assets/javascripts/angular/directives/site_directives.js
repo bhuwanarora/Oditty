@@ -643,13 +643,17 @@ homeApp.directive('bookmark', ["$rootScope", 'feedService', '$timeout', '$mdSide
 }]);
 
 
-homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location', '$rootScope', function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location, $rootScope){
+homeApp.directive('communityFeed', ["$rootScope", 'websiteService', '$timeout', '$mdDialog', '$sce', '$location', '$rootScope', 'sharedService', function($rootScope, websiteService, $timeout, $mdDialog, $sce, $location, $rootScope, sharedService){
     return {
         restrict: 'E',
         scope : {communityFeed: '='},
         controller: ["$scope", function($scope){
             $scope.toggle_expand = function(){
                 $scope.communityFeed.expand = !$scope.communityFeed.expand;
+            }
+
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
             }
 
             $scope.remove_news = function(){

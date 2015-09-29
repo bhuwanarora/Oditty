@@ -295,7 +295,7 @@ homeApp.controller('profileController', ["$scope", "userService", '$rootScope', 
         	_handle_id_from_url(url_parser);
         }
         else{
-        	if(id_in_cookie){
+        	if(id_in_cookie && (id_in_cookie != null) && (id_in_cookie != 'null')){
         		_handle_id_from_cookie(id_in_cookie);
         	}
         	else{
