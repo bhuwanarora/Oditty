@@ -2,7 +2,7 @@
     <rd-content url="url" style="padding-left: 10px;" id="MainhomeContainer"></rd-content>
     <div ng-repeat="container in containers track by $index" id="container{{$index}}" 
         ng-if="container.url"
-        style="padding-left: 10px;">
+        style="padding-left: 10px; display: inline-table;">
         <rd-main-content></rd-main-content>
 	</div>
     <div layout-padding></div>
