@@ -20,9 +20,9 @@ module Api
 				info = []
 				news_day_skip_count = 0
 				if user_id
-					skip_count = RedisHelper::Session.get_session({:id => session[:session_id]})["news_skip_count"] rescue nil;
-					skip_count ||= params[:skip].to_i;
-					info = Api::V0::FeedsApi.get_personalized_news(user_id, skip_count)
+					news_skip_count = RedisHelper::Session.get_session({:id => session[:session_id]})["news_skip_count"] rescue nil;
+					news_skip_count ||= params[:skip].to_i;
+					info = Api::V0::FeedsApi.get_personalized_news(user_id, news_skip_count)
 					community_follow_count = info[0]["community_follow_count"] rescue 0
 					info = info[0]["news"] rescue []
 				end
@@ -30,8 +30,8 @@ module Api
 					region = params[:id]
 					#puts "0 #{session[:news_skip_count]} #{session[:news_day_skip_count]}".red
 					redis_session = RedisHelper::Session.get_session({:id => session[:session_id]})
-					skip_count = redis_session["news_skip_count"] rescue nil
-					skip_count ||= params[:skip].to_i
+					news_skip_count = redis_session["news_skip_count"] rescue nil
+					news_skip_count ||= params[:skip].to_i
 					news_day_skip_count = redis_session["news_day_skip_count"]
 					news_day_skip_count ||= 0
 					
@@ -40,7 +40,7 @@ module Api
 					# 	session[:news_day_skip_count] = 0
 					# 	session[:region] = region
 					# end
-					info = Api::V0::FeedsApi.get_news(skip_count, news_day_skip_count, region).execute
+					info = Api::V0::FeedsApi.get_news(news_skip_count, news_day_skip_count, region).execute
 					
 					if info.blank?
 						news_day_skip_count += 1
