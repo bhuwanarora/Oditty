@@ -126,7 +126,10 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             }
             var url = element.getAttribute('data-url');
             var id = element.getAttribute('data-id');
-            var header = url.toCamel();
+            var header = element.getAttribute('data-header');
+            if(!header || header == null || angular.isUndefined(header)){
+                header = url.toCamel();
+            }
             if(angular.isUndefined(id) || (id == null) || (id == 'null')){
                 var container = {"id": id, "url": url, "full_url": url, "header": header};
             }

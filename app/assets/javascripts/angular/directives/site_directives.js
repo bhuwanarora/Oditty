@@ -344,7 +344,6 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", "sharedService", 
                     }
                     var skip = $scope.rooms.length;
                     userService.room_suggestions(skip).then(function(data){
-                        data = [];
                         $scope.rooms_loading = false;
                         if(angular.isDefined(data.message)){
                             $scope.rooms = _rooms();
