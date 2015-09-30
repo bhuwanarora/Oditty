@@ -25,6 +25,11 @@ homeApp.run(['$httpBackend', 'ServerDataModel', function($httpBackend, ServerDat
         return [200, data, {}];
     });
 
+    $httpBackend.whenGET('http://119.81.63.26/api/v0/top_results').respond(function(method, url, data) {
+        var data = ServerDataModel.get_top_results();
+        return [200, data, {}];
+    });
+
     $httpBackend.whenGET(/api\/v0\/get_game_books\?.*/).respond(function(method, url, data) {
         var data = ServerDataModel.get_game_books();
         return [200, data, {}];
