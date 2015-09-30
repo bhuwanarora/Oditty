@@ -136,7 +136,16 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             else{
                 var container = {"id": id, "url": url, "full_url": url+"?id="+id, "header": header};
             }
-            $rootScope.containers.push(container);
+            if(container.url == "book"){
+                var first_container = {"id": id, "url": "book_interaction", "full_url": url+"?id="+id, "header": header};
+                $rootScope.containers.push(first_container);
+                $rootScope.containers.push(container);
+                var last_container = {"id": id, "url": "book_rating", "full_url": url+"?id="+id, "header": header};
+                $rootScope.containers.push(last_container);
+            }
+            else{
+                $rootScope.containers.push(container);
+            }
             var container = angular.element(document.getElementById('browseScreen'));
             var length = $rootScope.containers.length;
             container.scrollLeft(length*600, 1000);
@@ -215,8 +224,8 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             var month_index = Months.indexOf($scope.info.active_month);
             if(!$scope.info.loading){
                 $scope.info.loading = true;
-                var time = $scope.info.active_time;
-                if(time == "recent"){
+                var time = $scope.info.active_year;
+                if(time == "recent" || angular.isUndefined(time)){
                     time = 2015;
                 }
                 if(angular.isUndefined($scope.info.active_month)){

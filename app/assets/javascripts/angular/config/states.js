@@ -50,7 +50,7 @@ homeApp.config(["$stateProvider", "$urlRouterProvider", function($stateProvider,
             "author": { templateUrl: 'assets/angular/html/author/interview.html'}
         }
     })
-    .state('books', {
+    .state('room/books', {
         url: "/room/books",
         sticky: true,
         deepStateRedirect: true,
@@ -58,15 +58,25 @@ homeApp.config(["$stateProvider", "$urlRouterProvider", function($stateProvider,
             "room": { templateUrl: 'assets/angular/html/community/books.html'}
         }
     })
-    .state('home', {
+    .state('room/home', {
         url: "/room/home",
-        sticky: true,
-        deepStateRedirect: true,
         views: {
             "room": { templateUrl: 'assets/angular/html/community/feed.html'}
         }
     })
-    .state('videos', {
+    .state('room/home.year', {
+        url: "/:year",
+        views: {
+            "room": { templateUrl: 'assets/angular/html/community/feed.html'}
+        }
+    })
+    .state('room/home.month', {
+        url: "/:year/month/:month",
+        views: {
+            "room": { templateUrl: 'assets/angular/html/community/feed.html'}
+        }
+    })
+    .state('room/videos', {
         url: "/room/videos",
         sticky: true,
         deepStateRedirect: true,
@@ -74,7 +84,7 @@ homeApp.config(["$stateProvider", "$urlRouterProvider", function($stateProvider,
             "room": { templateUrl: 'assets/angular/html/community/videos.html'}
         }
     })
-    .state('wiki', {
+    .state('room/wiki', {
         url: "/room/wiki",
         sticky: true,
         deepStateRedirect: true,

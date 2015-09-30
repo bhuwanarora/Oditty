@@ -19,6 +19,17 @@ homeApp.controller('feedController', ["$scope", "$rootScope", 'userService', '$m
         $scope.get_community_feed();        
     }
 
+    var _shuffle_array = function(array) {
+        var m = array.length, t, i;
+        while (m) {
+            i = Math.floor(Math.random() * m--);
+            t = array[m];
+            array[m] = array[i];
+            array[i] = t;
+        }
+        return array;
+    }
+
     $scope.get_community_feed = function(){
         if(!$scope.info.loading){
             $scope.info.loading = true;
@@ -29,11 +40,7 @@ homeApp.controller('feedController', ["$scope", "$rootScope", 'userService', '$m
             var skip = $scope.feed.length;
             userService.get_feed(skip).then(function(data){
                 $scope.info.loading = false;
-                angular.forEach(data, function(value){
-                    var json = {'label': 'news'};
-                    value = angular.extend(value, json);
-                    this.push(value);
-                }, $scope.feed);
+                $scope.feed = $scope.feed.concat(_shuffle_array(data));
             });
         }
     }
