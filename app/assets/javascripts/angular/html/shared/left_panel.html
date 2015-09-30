@@ -5,15 +5,6 @@
             layout="column">
 	<section layout="column"
             ng-controller="leftController">
-		<!-- <a href="/home" layout-padding class="pointer">
-            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
-                <i class="material-icons light_grey_color">home</i>
-                <div layout-padding>
-  			       Home
-                </div>
-		    </div>
-        </a>
-         -->
         <a href="https://oditty.me/" layout-padding class="pointer">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
                 <md-button>
@@ -24,6 +15,7 @@
                 </div>
             </div>
         </a>
+        <md-divider></md-divider>
         <a href="https://rooms.oditty.me/" layout-padding class="pointer">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
                 <md-button>
@@ -44,14 +36,6 @@
                 </div>
             </div>
         </a>
-        <!-- <md-button layout-padding class="pointer" ng-disabled="!info.hide_signin" ng-hide="info.hide_signin">
-            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
-                <i class="material-icons light_grey_color">accessibility</i>
-                <div layout-padding class="light_grey_color">
-                    Suggestions
-                </div>
-            </div>
-        </md-button> -->
         <a href="https://spaces.oditty.me/" layout-padding class="pointer">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
                 <md-button>
@@ -73,14 +57,7 @@
                 </div>
             </div>
         </a>
-        <!-- <md-button layout-padding class="pointer" ng-disabled="!info.hide_signin" ng-hide="info.hide_signin">
-            <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
-                <i class="material-icons light_grey_color">account_circle</i>
-                <div layout-padding class="light_grey_color">
-                    Profile
-                </div>
-            </div>
-        </md-button> -->
+        <md-divider></md-divider>
         <a href="https://search.oditty.me/" layout-padding class="pointer">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
                 <md-button>
@@ -102,7 +79,7 @@
                 </div>
             </div>
         </a>
-        
+        <md-divider></md-divider>
         <a href="http://magazine.oditty.me/" target="_blank" layout-padding class="pointer">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
                 <md-button>
@@ -113,7 +90,7 @@
                 </div>
             </div>
         </a>
-        
+        <md-divider></md-divider>
         <a href="https://games.oditty.me/" layout-padding class="pointer">
             <div class="full_width side_padding" layout-padding layout="row" layout-align="start center">
                 <md-button>
@@ -135,15 +112,19 @@
                 </div>
             </div>
         </a>
-        
+        <md-divider></md-divider>
     </section>
-    <section layout-padding layout="row" layout-wrap>
-        <a layout-padding class="less_important" href="/testimonials">Share Feedback</a>
-        <a layout-padding class="less_important" href="/journey">Journey</a>
-        <a layout-padding class="less_important" href="/data_analytics">Data Analytics</a>
-        <a layout-padding class="less_important" href="/about">Know us</a>
-        <a layout-padding class="less_important" href="/work">Careers</a>
-        <a layout-padding href="/customise" class="less_important" ng-hide="!info.hide_signin">Customise</a>
-        <a layout-padding href="/signup" class="less_important" ng-hide="!info.hide_signin">Logout</a>
+    <section layout-padding  class="less_important">
+        <div layout="row" layout-wrap layout-padding>
+            <a layout-padding class="less_important" href="/testimonials">Share Feedback</a>
+            <a layout-padding class="less_important" href="/journey">Journey</a>
+            <a layout-padding class="less_important" href="/data_analytics">Data Analytics</a>
+            <a layout-padding class="less_important" href="/about">Know us</a>
+            <a layout-padding class="less_important" href="/work">Careers</a>
+        </div>
+        <div layout-padding>
+            <a layout-padding href="/customise" class="grey_color" ng-hide="!info.hide_signin">Customise</a>
+            <a layout-padding href="/signup" class="grey_color" ng-hide="!info.hide_signin">Logout</a>
+        </div>
     </section>
 </md-sidenav>
