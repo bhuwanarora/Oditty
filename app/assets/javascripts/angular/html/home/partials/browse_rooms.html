@@ -29,10 +29,12 @@
                     <div layout="column" class="facebook_likes">
                         <div layout="row" layout-padding>
                             <div ng-repeat="like in trend.facebook_likes | limitTo: 3" style="display: inline-table;">
-                                <a ng-href="/room?id={{like.id}}" 
+                                <a ng-href="/room?id={{like.id}}" class="no_anchor" 
                                     data-header="{{like.name}}" 
                                     data-url="room" data-id="{{like.id}}" ng-click="render_page($event)">
                                     <img ng-src="http://rd-images.readersdoor.netdna-cdn.com/{{like.id}}/S.png" 
+                                        data-header="{{like.name}}" 
+                                        data-url="room" data-id="{{like.id}}" 
                                         onerror="this.src='https://oditty.me/assets/rooms.png'"
                                         class="small_circle no_anchor"/>
                                     <md-tooltip>Because you like &nbsp;{{like.name}}</md-tooltip>
