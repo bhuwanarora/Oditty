@@ -36,4 +36,18 @@ module Constant::LabelRelationships
 		]
 
 	}
+
+	SemanticMapping =
+	{
+		Constant::NodeLabel::Category =>
+		{
+			Constant::NodeLabel::Genre =>
+			[
+				{
+					:type_1 => 'FromCategory',
+					:type_2 => 'Belongs_to'
+				}
+			]
+		}
+	}
 end
