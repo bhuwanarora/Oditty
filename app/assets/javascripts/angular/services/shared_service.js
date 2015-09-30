@@ -278,7 +278,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                             }
                             else{
                                 $scope.info.active_month = "Dec";
-                                $scope.info.active_year = $scope.info.active_year - 1;
+                                $scope.info.active_year = time - 1;
                             }
                         }
                         else{
