@@ -12,7 +12,7 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
         delete $rootScope.containers[index];
         $timeout(function(){
             $rootScope.containers.splice(index, 1);
-        }, 100);
+        }, 1000);
 	}
 
     var _go_fullscreen = function(){
