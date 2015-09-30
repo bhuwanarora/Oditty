@@ -136,6 +136,8 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             else{
                 var container = {"id": id, "url": url, "full_url": url+"?id="+id, "header": header};
             }
+
+            // debugger
             if(container.url == "book"){
                 var first_container = {"id": id, "url": "book_interaction", "full_url": url+"?id="+id, "header": header};
                 $rootScope.containers.push(first_container);
