@@ -12,7 +12,7 @@ homeApp.controller('videoController', ["$scope", "$rootScope", "$timeout", 'webs
 				$scope.active_tag.videos = [];
 				angular.forEach(data, function(value){
 					value.url = value.url.replace("watch?v=", "v/").replace("https", "http").replace("http", "https");
-					value.url = $sce.trustAsResourceUrl(value.url+"?output=embed");
+					value.url = $sce.trustAsResourceUrl(value.url+"?output=embed&autoplay=1");
 					this.push(value);
 				}, $scope.active_tag.videos);
 			});

@@ -1,6 +1,10 @@
-<div layout-padding layout="column" >
-	<a ng-class="get_active_class('{{month}}')" 
-		ng-repeat="month in ::months"
-		ng-href="#/{{info.active_time}}/{{month}}" 
-		class="time less_important">{{month}}</a>
+<a ui-sref-active="active_time" ui-sref="room/home.year({year: year})" 
+	ng-click="get_community_news(year, 'Dec')"
+	class="time anchor less_important capitalize">{{year}}</a>
+<div layout-padding layout="column" ng-if="$stateParams.year == year">
+	<a ng-repeat="month in ::months"
+		ng-click="get_community_news(year, month)"
+		ui-sref-active="active_time"
+		ui-sref="room/home.month({year: year, month: month})"
+		class="time less_important anchor">{{month}}</a>
 </div>

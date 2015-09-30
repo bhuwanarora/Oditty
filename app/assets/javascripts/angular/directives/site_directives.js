@@ -88,10 +88,18 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", "$sce", func
                     $scope.custom_style = {"width": '500px'};
                 }
                 else if(url == "book"){
+                    $scope.custom_style = {"width": '500px'};
                     $scope.content_url = '/assets/angular/html/pages/book.html.erb';
                 }
+                else if(url == "book_interaction"){
+                    $scope.custom_style = {"width": '400px', 'min-width': '400px'};
+                    $scope.content_url = '/assets/angular/html/pages/book_interaction.html.erb';   
+                }
+                else if(url == "book_rating"){
+                    $scope.custom_style = {"width": '400px', 'min-width': '400px'};
+                    $scope.content_url = '/assets/angular/html/pages/book_rating.html.erb';   
+                }
                 else if(url == "profile"){
-                    $scope.show_md_content = false;
                     $scope.content_url = '/assets/angular/html/pages/profile.html.erb';
                 }
                 else if(url == "browse"){

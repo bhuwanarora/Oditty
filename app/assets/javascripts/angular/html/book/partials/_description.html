@@ -1,0 +1,34 @@
+<div class="white round_corners">
+    <div layout="column" layout-md="row" layout-sm="column">
+        <div flex-md="30" flex-sm="100">
+            <div layout="column" layout-padding hide-md>
+                <h2><a ng-href="/book?q={{book.id || book.book_id}}" class="bold"
+                    data-url="book" data-id="{{book.id || book.book_id}}" data-header="{{::book.title}}"
+                    ng-click="render_page($event)">{{::book.title}}</a></h2>
+                <a ng-href="/author?q={{::book.author_id}}"
+                    data-url="author" data-id="{{book.author_id}}" data-header="{{::book.author_name}}"
+                    ng-click="render_page($event)">{{::book.author_name}}</a>
+            </div>
+            <div class="relative">
+                <img ng-src="{{book.isbn | medium_thumb}}" 
+                    onerror="this.src='/assets/defpicbook.png'" 
+                    class="full_width" />
+            </div>
+        </div>
+        <div flex-md="70" flex-sm="100" 
+            layout-md="column" class="description_card" 
+            layout-padding>
+            <div layout="column" layout-padding show-md hide>
+                <h2><a data-url="book" data-id="{{book.id || book.book_id}}" 
+                    data-header="{{::book.title}}"
+                    ng-click="render_page($event)"
+                    ng-href="/book?q={{book.id || book.book_id}}">{{::book.title}}</a></h2>
+                <a ng-href="/author?q={{::book.author_id}}" data-header="{{::book.author_name}}"
+                    data-url="author" data-id="{{book.author_id}}" ng-click="render_page($event)">{{::book.author_name}}</a>
+            </div>
+            <div>
+                {{book.description | reduced_summary}}&nbsp;<a href="#book/preview">Read more</a>
+            </div>
+        </div>
+    </div>
+</div>

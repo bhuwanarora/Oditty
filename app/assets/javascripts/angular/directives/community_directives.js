@@ -2,58 +2,58 @@ homeApp.directive('timeTravel', ["websiteService", "$timeout", "$location", "Com
     return {
         restrict: 'E',
         scope: {"info": "=", 'activeTag': "="},
-        controller: ["$scope", function($scope){
+        controller: ["$scope", "$stateParams", function($scope, $stateParams){
             $scope.show_all_times = function(){
                 $scope.show_all = !$scope.show_all;
             }
 
-            $scope.get_active_class = function(path){
-                var route = $location.path().substr(1, path.length+1).replace("/", "");
-                var is_init = (route == "") && (path == "recent");
-                if((route.indexOf(path) >= 0)|| is_init){
-                    return "active_time";
+            var _handle_year = function(){
+                var year = $stateParams.year;
+                $scope.info.active_year = year;                
+                if(angular.isUndefined(year)){
+                    $stateParams.year = "recent";
+                    $scope.info.active_year = "recent";
+                    year = "recent";
+                }
+                if(year == "recent" || year == 2014 || year == 2013 || year == 1998){
+                    $scope.show_all = false;
                 }
                 else{
-                    if(route.indexOf("room") >= 0 && (path == "recent")){
-                        return "active_time";       
-                    }
+                    $scope.show_all = true;
                 }
             }
 
-            var _init = function(){
-                $scope.active_tag = $scope.activeTag;
-                var time = $location.path().substr(1, 5).replace("/", "");
-                var recent = $location.path().substr(1, 7);
-                var month = $location.path().split("/")[2];
-                if(angular.isDefined($scope.active_tag)){
-                    delete $scope.active_tag.news;
-                }
-                if(recent.indexOf("recent") >= 0 || (time == "") || (time == "room")){
-                    $scope.show_all = false;
-                    $scope.info.active_time = "recent";
-                }
-                else{
-                    if((time.indexOf("2014") >= 0) || (time.indexOf("2013") >= 0) || (time.indexOf("1998") >= 0)){
-                        $scope.show_all = false;
-                    }
-                    else{
-                        $scope.show_all = true;   
-                    }
-                    $scope.info.active_time = time.replace("/", "");
-                }
+            var _handle_month = function(){
+                var year = $scope.info.active_year;
+                var month = $stateParams.month;
                 if(angular.isUndefined(month)){
-                    if($scope.info.active_time == "recent"){
+                    if(year == "recent"){
                         $scope.info.active_month = "Sept";
                     }
                     else{
                         $scope.info.active_month = "Dec";   
                     }
+                    month = $scope.info.active_month;
+                    $stateParams.month = $scope.info.active_month;
                 }
                 else{
                     $scope.info.active_month = month;
                 }
+            }
+
+            var _handle_news = function(){
+                $scope.active_tag = $scope.activeTag;
+                if(angular.isDefined($scope.active_tag)){
+                    delete $scope.active_tag.news;
+                }
                 sharedService.get_community_news($scope);
-                // $scope.get_community_news($scope.info.active_time);
+            }
+
+            var _init = function(){
+                $scope.$stateParams = $stateParams;
+                _handle_year();
+                _handle_month();
+                _handle_news();
                 $scope.years = CompressedYears;
             }
 
@@ -66,32 +66,58 @@ homeApp.directive('timeTravel', ["websiteService", "$timeout", "$location", "Com
 homeApp.directive('months', ["websiteService", "$timeout", "$location", "Months", "sharedService", function(websiteService, $timeout, $location, Months, sharedService){
     return {
         restrict: 'E',
-        scope: {"info": "="},
-        controller: ["$scope", function($scope){
-            $scope.get_active_class = function(path){
-                path = $scope.info.active_time + "/" + path;
-                var route = $location.path().substr(1, path.length+1);
-                var is_init = (route == "") && (path == "recent");
-                if((route.indexOf(path) >= 0)|| is_init){
-                    return "active_time";
+        scope: {"info": "=", "year": "=", 'activeTag': "="},
+        controller: ["$scope", "$stateParams", function($scope, $stateParams){
+
+            $scope.get_community_news = function(year, month){
+                $scope.info.active_year = year;
+                if(year == 'Recent'){
+                    month = 'Sept';
+                }
+                $scope.info.active_month = month;
+                if(angular.isDefined($scope.active_tag)){
+                    delete $scope.active_tag.news;
+                }
+                sharedService.get_community_news($scope);
+            }
+
+            var _handle_year = function(){
+                var year = $stateParams.year;
+                $scope.info.active_year = year;                
+                if(angular.isUndefined(year)){
+                    $stateParams.year = "recent";
+                    $scope.info.active_year = "recent";
+                    year = "recent";
+                }
+                if(year == "recent" || year == 2014 || year == 2013 || year == 1998){
+                    $scope.show_all = false;
                 }
                 else{
-                    if((path.indexOf(route) >= 0)){
-                        if(path.indexOf("recent") >= 0){
-                            if(path.indexOf("Sept") >= 0){
-                                return "active_time";
-                            }
-                        }
-                        else{
-                            if(path.indexOf("Dec") >= 0){
-                                return "active_time";
-                            }
-                        }
+                    $scope.show_all = true;
+                }
+            }
+
+            var _handle_month = function(){
+                var year = $scope.info.active_year;
+                var month = $stateParams.month;
+                if(angular.isUndefined(month)){
+                    if(year == "recent"){
+                        $scope.info.active_month = "Sept";
                     }
+                    else{
+                        $scope.info.active_month = "Dec";   
+                    }
+                    month = $scope.info.active_month;
+                    $stateParams.month = $scope.info.active_month;
+                }
+                else{
+                    $scope.info.active_month = month;
                 }
             }
 
             var _init = function(){
+                $scope.$stateParams = $stateParams;
+                $scope.active_tag = $scope.activeTag;
                 $scope.months = Months;
             }
 
