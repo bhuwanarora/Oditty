@@ -91,7 +91,9 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             }
         });
         if(!book_found){
-            _add_book();
+            $timeout(function(){
+                _add_book();
+            }, 100);   
         }
     }
 

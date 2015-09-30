@@ -6,9 +6,16 @@
                 News clippings related to {{active_tag.name}}
             </div>
         </h3>
+        <div class="center_text" layout-align="center center" layout-align="center" layout="row" layout-padding>
+            <div class="less_important bold">{{info.active_month}} {{info.active_year}}</div>
+        </div>
         <community-feed community-feed="::community_feed" flex
             ng-repeat="community_feed in active_tag.news">
         </community-feed>
+        <div class="center_text" layout-align="center center" layout-align="center" layout="row" layout-padding 
+            ng-if="!active_tag.news || (active_tag.news.length == 0)">
+            <div>No News Found.</div>
+        </div>
     </div>
     <time-travel info="info" active-tag="active_tag"></time-travel>
 </div>
