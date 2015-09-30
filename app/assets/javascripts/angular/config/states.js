@@ -1,8 +1,8 @@
 
 homeApp.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){
-    $urlRouterProvider.otherwise("");
+    $urlRouterProvider.otherwise("/");
     $stateProvider.state('index', {
-        url: "",
+        url: "/",
         views: {
             "profile": { templateUrl: "assets/angular/html/profile/feed.html" },
             "book": { templateUrl: "assets/angular/html/book/_buy.html" },
