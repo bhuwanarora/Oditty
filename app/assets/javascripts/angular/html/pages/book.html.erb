@@ -1,3 +1,8 @@
-<div ng-controller="specificBookController" class="no_feed_margin">
-	<div ng-include src="'/assets/angular/html/shared/pages/book.html'"></div>
+<div ng-controller="specificBookController" class="no_feed_margin" layout="row">
+	<div layout-padding 
+		ng-include src="'/assets/angular/html/pages/book_interaction.html.erb'" style="width: 300px;"></div>
+	<div layout-padding 
+		ng-include src="'/assets/angular/html/shared/pages/book.html'" style="width: 500px;"></div>
+	<div layout-padding 
+		ng-include src="'/assets/angular/html/pages/book_rating.html.erb'" style="width: 300px;"></div>
 </div>
