@@ -603,11 +603,15 @@ homeApp.directive('recommend', ["$rootScope", "userService", "sharedService", fu
     }
 }]);
 
-homeApp.directive('basicBook', ["$rootScope", "bookService", function($rootScope, bookService){
+homeApp.directive('basicBook', ["$rootScope", "bookService", "sharedService", function($rootScope, bookService, sharedService){
     return {
         restrict: 'E',
         scope : {book: '='},
         controller: ["$scope", function($scope){
+
+            $scope.render_page = function(event){
+                sharedService.render_page(event);
+            }
 
             var _init = function(){
                 bookService.get_primary_info($scope.book.id).then(function(data){
