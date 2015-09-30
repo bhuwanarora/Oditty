@@ -225,7 +225,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             if(!$scope.info.loading){
                 $scope.info.loading = true;
                 var time = $scope.info.active_year;
-                if(time == "recent"){
+                if(time == "recent" || angular.isUndefined(time)){
                     time = 2015;
                 }
                 if(angular.isUndefined($scope.info.active_month)){
