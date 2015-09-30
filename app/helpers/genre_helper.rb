@@ -52,6 +52,7 @@ module GenreHelper
 				" WHERE genre." + @@genre_search_index + "=~ \'" + search_prefix + ".*\' "\
 				" AND "\
 				" category." + @@category_search_index + "=~ \'" + search_prefix + ".*\' "\
+				" AND NOT category:Genre "\
 				" WITH genre, category "
 		clause
 	end
@@ -264,6 +265,19 @@ module GenreHelper
 		output
 	end
 
+	TransferCategoryEdges = Proc.new do |params, *args|
+		clause = " WITH category AS original, category AS duplicate "
+		rel_params = GenericHelper::MergeNodes::MergeRelationshipParams.clone
+		rel_params[:edge_types] = Constant::LabelRelationships::Incoming['Category']
+		GenreHelper.map_relationship_type rel_params
+		clause  += GenericHelper.optional_copy_incoming_edges rel_params
+		rel_params[:edge_types] = Constant::LabelRelationships::Outgoing['Category']
+		GenreHelper.map_relationship_type rel_params
+		clause += GenericHelper.optional_copy_outgoing_edges rel_params
+		clause += " RETURN ID(original) AS id "
+		clause
+	end
+
 	def self.convert_to_community
 		GenreHelper.init_variables
 		params = {
@@ -276,7 +290,30 @@ module GenreHelper
 		GraphHelper.iterative_entity_operations params
 	end
 
+
+	def self.transfer_category_edges
+		params = {
+			:class 			=> GenreHelper,
+			:label 			=> 'Category',
+			:function 		=> GenreHelper::TransferCategoryEdges,
+			:function_name 	=> 'transfer_category_edges',
+			:step_size 		=> 1
+		}
+		GraphHelper.iterative_entity_operations params
+	end
+
 	private
+
+	def self.map_relationship_type rel_params
+		Constant::LabelRelationships::SemanticMapping['Category']['Genre'].each do |type_hash|
+			rel_params[:edge_types].each do |edge_type|
+				if type_hash[:type_1] == edge_type[:type]
+					edge_type[:type_new] = type_hash[:type_2]
+				end
+			end
+		end
+		rel_params
+	end
 
 	def self.is_not_community
 		" WHERE NOT genre:Community "\
