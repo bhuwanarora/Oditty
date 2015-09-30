@@ -124,8 +124,17 @@ class CommunityInterface < Neo
 		output
 	end
 
+	def self.add_default_states_to_community neo_output
+		output = neo_output.sort_by { |e| -1*e["importance"]  }
+		index_max = neo_output.index(output[0])
+		index_2nd_max = neo_output.index(output[1])
+		neo_output[index_max]["score"] = 1
+		neo_output[index_2nd_max]["score"] = 2
+		neo_output
+	end
+
 	def self.add_states_to_community neo_output
-		std_dev_min_value = 5.to_f
+		std_dev_min_value = 1.to_f
 		scores = neo_output.map { |community| community["importance"]  }
 		mean_value = AlgorithmHelper.mean(scores)
 		std_dev = [AlgorithmHelper.std_dev(scores), std_dev_min_value].max
@@ -140,6 +149,6 @@ class CommunityInterface < Neo
 				community["score"] = 1
 			end
 		end
-		neo_output
+		CommunityInterface.add_default_states_to_community neo_output
 	end
 end
