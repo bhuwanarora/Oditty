@@ -444,12 +444,6 @@ namespace :graph do
       NewsHelper.handle_wrong_communities_linkage
   end
 
-  desc "merge genre with category"
-  task :merge_genre_with_category => :environment do
-    include GenreHelper
-    GenreHelper.merge_with_category
-  end
-
   desc "set indices for genre and category"
   task :set_category_genre_indices => :environment do
     include GenreHelper

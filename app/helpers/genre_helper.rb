@@ -223,7 +223,7 @@ module GenreHelper
 			if matched == 0
 				puts "No match with #{cur_index}. Incrementing the index"
 				cur_index = GraphHelper.next_regex_recursive(cur_index, cur_index.length - 1)
-				$redis[category_genre_prefix_regex] = cur_index
+				$redis[category_genre_redis_key] = cur_index
 			end
 		end
 	end
