@@ -88,7 +88,7 @@ homeApp.directive('rdMainContent', ["websiteService", "$rootScope", "$sce", func
                     $scope.custom_style = {"width": '500px'};
                 }
                 else if(url == "book"){
-                    $scope.custom_style = {"width": '500px'};
+                    $scope.custom_style = {"width": '1100px', "max-width": "1100px", "min-width": "1100px"};
                     $scope.content_url = '/assets/angular/html/pages/book.html.erb';
                 }
                 else if(url == "book_interaction"){
@@ -334,7 +334,7 @@ homeApp.directive('browseRooms', ["$rootScope", "userService", "sharedService", 
                     }
                     else if(value.score == 2){
                         value.row = 3;
-                        value.col = 3;
+                        value.col = 6;
                     }
                     else{
                         value.row = 3;
