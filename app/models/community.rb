@@ -1,7 +1,15 @@
-class Community < Neo
+class Community < CommunityInterface
 
 	def initialize id
 		@id = id
+	end
+
+	def get_combined_details
+		match + match_videos + Community.with_group("{#{Video.grouped_basic_info}} AS content", "labels(video) AS labels") + Community.return_group("content", "labels") + Community.limit(4) + " UNION ALL " + Community.match_books + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{Book.grouped_basic_info}} AS content", "labels(book) AS labels") + Community.return_group("content", "labels") + Community.limit(4) + " UNION ALL " + Community.match_news + Community.where_group("ID(community) = #{@id}") + Community.with_group("{#{News.grouped_basic_info}} AS content", "labels(news) AS labels") + Community.return_group("content", "labels") + Community.limit(4)
+	end
+
+	def remove_news news_id
+		match + " MATCH (community)<-[has_community:HasCommunity]-(news:News) WHERE ID(news)=" + news_id.to_s + " DELETE has_community"
 	end
 
 	def self.grouped_books_users
@@ -23,7 +31,19 @@ class Community < Neo
 		" MATCH (community:Community) WITH community "
 	end
 
-	def get_news skip_count=0
+	def set_image image_url
+		match + Community.set_image(image_url)
+	end
+
+	def self.set_image image_url
+		" SET community.image_url=\'" + image_url.escape_quotes + "\' "
+	end
+
+	def get_old_news skip_count, time_string
+		match + Community.match_news_in_period(time_string)  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+	end
+
+	def get_recent_news skip_count=0
 		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
 
@@ -36,6 +56,10 @@ class Community < Neo
 	end
 
 	def match_videos
+		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
+	end
+
+	def self.match_videos
 		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
 	end
 
@@ -65,6 +89,12 @@ class Community < Neo
 
 	def self.match_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
+	end
+
+	def self.match_recent_news skip_count, with_group = []
+		with_string = with_group.map{|elem| (" " + elem)}.join(", ")
+		with_string = ( "," + with_string ) if with_string.present?
+		Community.match_news + with_string + Community.order_by(" TOINT(news.created_at) DESC ") + Community.skip(skip_count)
 	end
 
 	def get_books
@@ -119,8 +149,12 @@ class Community < Neo
 		", HEAD(COLLECT({" + Community.grouped_basic_info + "})) AS community_info "
 	end
 
-	def self.merge community, url_list = {}
-		labels = NlpHelper.get_name_tags community
+	def self.merge community, url_list = {}, no_nlp = false
+		if !no_nlp
+			labels = NlpHelper.get_name_tags community
+		else
+			labels = []
+		end
 		clause = " MERGE (community:Community{indexed_community_name: \"" + community.search_ready + "\"}) "\
 		" ON CREATE SET "\
 		" community.name = \"" + community + "\", "\
@@ -145,6 +179,10 @@ class Community < Neo
 
 	def self.search_by_name name
 		" MATCH (community:Community{name:'" + name + "'}) WITH community " 
+	end
+
+	def self.search_by_index name
+		" MATCH (community:Community{indexed_community_name: \'" + name.search_ready + "\'}) WITH community "
 	end
 
 	def self.top_communities user_id, skip_count=0

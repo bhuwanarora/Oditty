@@ -3,7 +3,10 @@ module Constant::EntityLabel
 	Book			= "Book"
 	User			= "User"
 	Community		= "Community"
+	News			= "News"
 
 	HiddenUser 		= "HiddenUser"
 	HiddenBook		= "HiddenBook"
+
+	AllLabels = [Author, Book, User, Community, News, HiddenBook, HiddenUser]
 end

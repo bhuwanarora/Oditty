@@ -3,57 +3,55 @@ module Api
 		class CommunityApi
 
 			def self.get_popular_communities
-				Community.get_popular
+				CommunityInterface.get_popular_communities
 			end
 
-			def self.get_detailed_info(id, user_id)
-				UsersCommunity.new(user_id, id).get_info.execute[0]
+			def self.remove_news id, news_id
+				Community.new(id).remove_news(news_id).execute
 			end
 
 			def self.create_visited_news user_id, news_id
 				News.new(news_id).create_visited(user_id)
 			end
 
+			def self.get_combined_details id
+				CommunityInterface.get_combined_details(id)
+			end
+
 			def self.suggest_communities user_id
-				# clause = User::Suggest::CommunitySuggestion.new(user_id).get_communities
 				clause = User::Suggest::CommunitySuggestion.get_trending_communities
 			end
 
 			def self.add_book id, book_id, user_id
-				@community = Community.new(id)
-				clause = @community.match + @community.add_book(book_id, user_id)
-				clause.execute
+				CommunityInterface.add_book(id, book_id, user_id)
 			end
 
 			def self.top_communities user_id, skip_count
-				if user_id
-					clause  = UsersCommunity.top_communities  user_id, skip_count
-				else
-					clause = Community.top_communities skip_count
-				end
-				clause
+				CommunityInterface.top_communities(user_id, skip_count)
+			end
+
+			def self.get_detailed_info(id, user_id)
+				CommunityInterface.get_detailed_info(id, user_id)
 			end
 
 			def self.get_books id
-				Community.new(id).get_books
+				CommunityInterface.get_books(id)
 			end
 
-			def self.get_news(id, skip_count)
-				Community.new(id).get_news(skip_count).execute
+			def self.get_news(id, skip_count, time = "")
+				CommunityInterface.get_news(id, skip_count, time)
 			end
 
 			def self.get_videos(id)
-				Community.new(id).get_videos.execute
+				CommunityInterface.get_videos(id)
 			end
 
 			def self.get_rooms user_id, skip_count
-				clause = ""
-				if user_id.present?
-					clause = User.new(user_id).popular_rooms skip_count
-				else
-					clause = Community.get_most_viewed_rooms skip_count
-				end
-				clause.execute
+				CommunityInterface.get_rooms(user_id, skip_count)
+			end
+
+			def self.get_communities_from_fb_likes user_id, skip_count
+				CommunityInterface.get_communities_from_fb_likes user_id, skip_count
 			end
 		end
 	end

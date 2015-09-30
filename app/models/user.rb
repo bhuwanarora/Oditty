@@ -17,6 +17,14 @@ class User < Neo
 		"MATCH (user:User) WITH user "
 	end
 
+	def get_news skip_count
+		match + UsersNews.get_news(skip_count)
+	end
+
+	def get_fb_books skip
+		match + match_facebook_likes + FacebookLike.match_books + " WITH DISTINCT book, COLLECT(facebook_like.name) AS fb_like_page_title, " + Book.get_goodness_index + Book.order_by_goodness + User.skip(skip) + User.limit(Constant::Count::FacebookLikeBookCount) + User.return_group(Book.basic_info,"fb_like_page_title")
+	end
+
 	def self.link_basic_labels
 		" CREATE UNIQUE (user)-[:Labelled{user_id:ID(user)}]->(label) WITH user, label "
 	end
@@ -98,7 +106,7 @@ class User < Neo
 	end
 
 	def self.basic_info
-		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count, user.invite_count AS invite_count "
+		" user.intro_seen AS intro_seen, user.init_book_read_count AS init_book_read_count, user.selectedYear AS selectedYear, user.selectedMonth AS selectedMonth, user.selectedDay AS selectedDay, user.first_name AS first_name, user.last_name AS last_name, user.about AS about, ID(user) AS id, user.gender AS gender, user.thumb as image_url, user.region AS region, labels(user) AS label, user.latest_feed_id AS latest_feed_id, user.follows_count AS follows_count, user.followed_by_count AS followed_by_count, user.bookmark_count AS bookmark_count, user.notification_count AS notification_count, user.facebook_books_retrieval_time AS facebook_books_retrieval_time, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time, user.login_count AS login_count, user.invite_count AS invite_count, user.verified AS verified "
 	end
 
 	def self.grouped_basic_info
@@ -142,7 +150,7 @@ class User < Neo
 	end
 
 	def self.create(email, password=nil, verification_token=nil)
-		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, verification_time :" + Time.now.to_i.to_s + "}) "
+		"CREATE (user:User{email:\""+email+"\", verification_token:\""+verification_token+"\", password:\""+password+"\", like_count:0, rating_count:0, timer_count:0, dislike_count:0, comment_count:0, bookmark_count:0, book_read_count:0, follows_count:0, followed_by_count:0, last_book: "+Constant::Id::BestBook.to_s+", amateur: true, ask_info: true, created_at:" + Time.now.to_i.to_s + ", verification_time :" + Time.now.to_i.to_s + "}) "
 	end
 
 	def self.link_root_categories
@@ -155,13 +163,32 @@ class User < Neo
 		" WITH user "
 	end
 
+	def self.daily_decrement_wait_list
+		decrement_count 	= RedisHelper::UserWaitList::UserWaitListDecrementOnEachDay.to_s
+		decrement_string 	= " user.wait_list_count -" + decrement_count + " "
+		zero_to_threshold 	= "user.wait_list_count > 0 AND user.wait_list_count <= " + decrement_count + " "
+		more_than_threshold = "user.wait_list_count > " + decrement_count + " "
+		clause = ""\
+		" SET user.wait_list_count = ( CASE "\
+			" WHEN ( " + zero_to_threshold + ") THEN 0 "\
+			" WHEN ( " + more_than_threshold + ") THEN " + decrement_string + " "\
+			" ELSE NULL "\
+		" END ) "
+		clause
+	end
+
+	def self.set_wait_list wait_list_count
+		" SET user.wait_list_count = " + wait_list_count.to_s + " "
+	end
+
 	def self.handle_new(email, password=nil, verification_token=nil)
 		default_user_name = email.split("@")[0]
-		User.create(email, password, verification_token) + User.set_name(default_user_name) + User.create_links_for_new + User.return_init + User.basic_info
+		wait_list_count = RedisHelper::UserWaitList.push
+		User.create(email, password, verification_token) + User.set_name(default_user_name) + User.set_wait_list(wait_list_count) + User.create_links_for_new + User.return_init + User.basic_info
 	end
 
 	def self.create_links_for_new
-		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories
+		User::Feed.create_first + Label.match_basic + ", user " + User.link_basic_labels + User::UserNotification.create_for_new_user + Category::Root.match + ", user " + User.link_root_categories + User::Game.new_user
 	end
 
 	def get_notifications
@@ -271,7 +298,7 @@ class User < Neo
 	end
 
 	def self.authentication_info
-		" user.password AS password , user.verified AS verified, user.active AS active "
+		" user.password AS password, user.active AS active, user.wait_list_count AS wait_list_count, user.created_at AS user_created_at "
 	end
 
 	def self.set_last_login_for_verified_user
@@ -306,6 +333,10 @@ class User < Neo
 
 	def self.optional_get_visited_books
 		" OPTIONAL " + User.get_visited_books
+	end
+
+	def get_community_follow_count
+		match + UsersCommunity.match + User.return_group('COUNT(DISTINCT community) AS community_follow_count')
 	end
 
 	def self.get_visited_books_label
@@ -367,6 +398,14 @@ class User < Neo
 		" SET user.facebook_likes_retrieval_time = " + Time.now.to_i.to_s + " "
 	end
 
+	def self.fb_like_retrieval_time_info
+		" ID(user) AS user_id, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
+	end
+
+	def self.fb_book_retrieval_time_info
+		" ID(user) AS user_id, user.fb_id AS fb_id, user.facebook_books_retrieval_time AS facebook_books_retrieval_time "
+	end
+
 	def create_like timestamp
 		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s + User.with_group("user", "likes", "facebook_like")
 	end
@@ -375,8 +414,12 @@ class User < Neo
 		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
 	end
 
+	def self.match_facebook_likes
+		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
+	end
+
 	def get_facebook_likes
-		match + match_facebook_likes + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
+		match + match_facebook_likes + FacebookLike.not_completed + User.return_group(FacebookLike.basic_info, "likes.timestamp AS liked_on")
 	end
 
 	def popular_rooms skip_count=0
@@ -384,5 +427,6 @@ class User < Neo
 		" WITH user, community "\
 		" " + UsersCommunity.optional_match + ", COALESCE(community.view_count,0) AS view_count " +Community.order_by("view_count DESC, ID(community) DESC ") + Community.skip(skip_count) + Community.limit(Constant::Count::RoomPageRoomCount) + Community.return_group(Community.short_info,"(CASE WHEN follows_node IS NULL THEN 0 ELSE 1 END) AS status")
 	end
+
 
 end

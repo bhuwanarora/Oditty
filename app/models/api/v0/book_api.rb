@@ -30,6 +30,11 @@ module Api
 				book
 			end
 
+			def self.get_book_from_fb_likes user_id, skip_count
+				output = (User.new(user_id).get_fb_books(skip_count)).execute
+				output
+			end
+
 			def self.push_recommendations
 				self.recommendations
 			end

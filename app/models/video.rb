@@ -15,6 +15,10 @@ class Video < Neo
 		" video.title AS title, video.url AS url, video.publisher AS publisher, video.thumbnail AS thumbnail, video.duration AS duration, video.published_date AS published_date "
 	end
 
+	def self.grouped_basic_info
+		" title: video.title, url: video.url, publisher: video.publisher, thumbnail: video.thumbnail, duration: video.duration, published_date: video.published_date "
+	end
+
 	def self.merge_community google_rank = -1
 		clause = " MERGE (video)<-[has_video:HasVideo]-(community) "
 		if google_rank.present? && google_rank > 0

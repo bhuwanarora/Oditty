@@ -50,11 +50,14 @@ module RedisHelper
 	def self.update_book id
 		RedisHelper.clear id
 		rel_communities = BookHelper.get_related_communities id
+		author_id = BookHelper.get_author id
+		RedisHelper.clear(author_id) if !author_id.nil?
 		RedisHelper.clear(rel_communities.map{|community| community["id"]})
 	end
 
 	def self.update_author id
 		RedisHelper.clear id
+		RedisHelper::Author.clear_skip
 	end
 
 	def self.update_community id
@@ -64,4 +67,5 @@ module RedisHelper
 	def self.update_user id
 		RedisHelper.clear id
 	end
+
 end

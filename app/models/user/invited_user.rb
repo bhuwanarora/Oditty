@@ -16,6 +16,24 @@ class User::InvitedUser < User
 		clause
 	end
 
+	def self.match_first_login friend = 'friend'
+		if friend == 'user'
+			clause = " MATCH (user:User)-[invite_rel:" + InvitationRelation + "]->(friend:User) "
+		else
+			clause = " MATCH (friend:User)-[invite_rel:" + InvitationRelation + "]->(user:User) "
+		end
+		clause += ""\
+			" WITH user, friend, invite_rel "\
+			" WHERE NOT HAS(invite_rel.decrement_user_waiting_list) "\
+			" SET invite_rel.decrement_user_waiting_list = true "\
+			" WITH user, friend "
+		clause
+	end
+
+	def self.set_decrement_user_waiting_list
+		" SET invite_rel.decrement_user_waiting_list = true "
+	end
+
 	def self.invited_info
 		"user." + InvitationProperty + " AS " + InvitationProperty + " "
 	end

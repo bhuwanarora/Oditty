@@ -1,20 +1,25 @@
 module CommunitiesHelper
+	def self.set_up_redis label, key
+		GenericHelper.set_up_redis label, key
+	end
+
+	def self.update_redis key, value
+		GenericHelper.update_redis key, value
+	end
 
 	def self.handle_one_community community
 		c_name = community['value']
 		c_books = CommunitiesHelper.fetch_books_database_net(c_name)
 		book_name,authors = (c_books[c_name]).transpose
 		output = {}
-		if CommunitiesHelper.has_required_book_count(book_name)	
-			output[:book] = c_books
-			output[:relevance] = {'relevance' => community['relevance'],
-						'relevanceOriginal' => community['relevanceOriginal']}
-			community_google_content = GoogleSearchHelper.search_multiple_types(c_name, 
-				[GoogleSearchHelper::SearchTypes[:video]])
-			c_videos = community_google_content[GoogleSearchHelper::SearchTypes[:video]]
-			if c_videos.present?
-				output[:video] = c_videos
-			end
+		output[:book] = c_books
+		output[:relevance] = {'relevance' => community['relevance'],
+					'relevanceOriginal' => community['relevanceOriginal']}
+		community_google_content = GoogleSearchHelper.search_multiple_types(c_name, 
+			[GoogleSearchHelper::SearchTypes[:video]])
+		c_videos = community_google_content[GoogleSearchHelper::SearchTypes[:video]]
+		if c_videos.present?
+			output[:video] = c_videos
 		end
 		output		
 	end
@@ -67,6 +72,25 @@ module CommunitiesHelper
 		end
 	end
 
+	def self.handle_nlp_response response
+		communities_books = []
+		community_data = JSON.parse(response.body)
+		community_data = self.handle_communities community_data
+		community_data.each_with_index do |community, index|
+			community_books = CommunitiesHelper.fetch_books_id_database_net community['value']
+			book_ids = community_books[community['value']]
+			if CommunitiesHelper.has_required_book_count(book_ids)
+				communities_books << {
+									'name'		=> community['value'],
+									'relevance' => community['relevance'],
+									'relevanceOriginal' => community['relevanceOriginal'],
+									'books_id' => book_ids
+									}
+			end
+		end
+		communities_books
+	end
+
 	def self.handle_communities response
 		communities = []		
 		response["Tags"].each do |social_tag|
@@ -78,6 +102,25 @@ module CommunitiesHelper
 		WikiHelper.obtain_wiki_similar_communities communities
 	end
 
+	def self.fetch_books_id_database_net community
+		clause = Community.search_by_name(community) + Community.match_books + "RETURN book.title,book.author_name, ID(book)"
+		books_list = clause.execute
+		if(books_list.empty?)
+			books = CommunitiesHelper.fetch_book_ids community
+		else
+			books = {community => []}
+			books_list.each do |book|
+				if(book.has_key?("book.author_name"))
+					author = book["book.author_name"] # it will be array, now it is not
+					if(author.nil?)
+						next
+					end
+					books[community] << book["ID(book)"]
+				end
+			end
+		end
+		books
+	end
 	# This funnction first checks the database for books, if no books are present,
 	# it calls google api to fetch books	
 	def self.fetch_books_database_net community
@@ -123,17 +166,19 @@ module CommunitiesHelper
 		batch_size_cypher = 4
 		communities_books.each do |community_books,relevance|
 			community_books.each do |community, books_authors|
-				books,authors = books_authors.transpose
 				clause =  News.new(news_metadata["news_id"]).match + Community.merge(community, communities_web_urls[community]) + ", news " + Community.set_importance + " WITH community, news " + News.merge_community(relevance)
 	        	clause_temp = clause
-				books.each_with_index do |book,i|
-					authorlist_string = authors[i].sort.join('').search_ready						
-					unique_indices = authors[i].map{|author| (book.search_ready + author.search_ready)}
-					clause_temp += Book.search_by_unique_indices(unique_indices) + " , community " + Community.merge_book + " WITH community "
-					if((i+1)%batch_size_cypher == 0)
-						clause_temp += News.return_init + Community.basic_info
-						clause_temp.execute
-						clause_temp = clause
+				if books_authors.present?
+					books,authors = books_authors.transpose
+					books.each_with_index do |book,i|
+						authorlist_string = authors[i].sort.join('').search_ready						
+						unique_indices = authors[i].map{|author| (book.search_ready + author.search_ready)}
+						clause_temp += Book.search_by_unique_indices(unique_indices) + " , community " + Community.merge_book + " WITH community "
+						if((i+1)%batch_size_cypher == 0)
+							clause_temp += News.return_init + Community.basic_info
+							clause_temp.execute
+							clause_temp = clause
+						end
 					end
 				end
 				if(clause_temp.length > clause.length)
@@ -295,4 +340,46 @@ module CommunitiesHelper
 		id_list = clause.execute.map{|elem| elem['id']}
 		id_list.each{|community_id| CommunitiesHelper.handle_bookless_community(community_id)}
 	end
+
+	SetImageToS3 = Proc.new do |params, *args|
+		clause = params[:init_clause]
+		clause += " RETURN ID(community) AS id, community.name AS name, community.image_url AS image_url "
+		output = clause.execute
+		CommunitiesHelper.handle_images(output)
+		max_id = output.map{|elem| elem["id"]}.max
+		[{ "id" => max_id}]
+	end
+
+	def self.handle_images neo_output
+		neo_output.each do |community|
+			image_url = CommunitiesHelper.get_S3_image_url(community["id"])[0]
+			response = Net::HTTP.get(URI.parse(image_url))
+			if response.length < 1000
+				puts community["id"]
+				image = Community::CommunityImage.new(community["name"]).get_image
+				puts "new image:'#{image}' for id:#{community['id']}"
+				Community.new(community["id"]).set_image(image).execute
+				VersionerWorker.new.perform(community["id"], image, Constant::EntityLabel::Community)
+			end
+		end
+	end
+
+	def self.get_S3_image_url id
+		versions = ["O", "M", "S", "RS"]
+		prefix = "http://rd-images.readersdoor.netdna-cdn.com/" + id.to_s
+		image_urls = versions.map { |elem| (prefix + "/" + elem + ".png") }
+		image_urls
+	end
+
+	def self.add_images_to_S3
+		params = {
+			:class 			=> CommunitiesHelper,
+			:label 			=> 'Community',
+			:function 		=> CommunitiesHelper::SetImageToS3,
+			:function_name 	=> 'SetImageToS3',
+			:step_size 		=> 500
+		}
+		GraphHelper.iterative_entity_operations params
+	end
+
 end

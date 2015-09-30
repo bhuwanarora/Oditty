@@ -21,4 +21,19 @@ namespace :get_media do
         NewsHelper.insert_old_lit_news
     end
 
+    desc "Get facebook likes"
+    task :fb_likes => :environment do
+        FacebookLikesHelper.fetch_backlog_likes
+    end
+
+    desc "Get facebook books"
+    task :fb_books => :environment do
+        FacebookBooksHelper.fetch_backlog_books
+    end
+
+    desc "complete info of unfinished facebook books"
+    task :fb_books_info => :environment do
+        FacebookBooksHelper.fetch_backlog_books_info
+    end
+
 end

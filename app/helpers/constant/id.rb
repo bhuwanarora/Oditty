@@ -31,6 +31,10 @@ module Constant::Id
 	Modernism 					= 422372
 	PostModernLiterature 		= 422373
 	Contemporary				= 422374
-	FacebookAppId 				= "174275722710475"
-	GoodreadsAppId				= "2415071772"
+	BookIdForGame				= 384873
+	FacebookAppId 				= "667868653261167"
+	FbAppFacebookBookId			= "174275722710475"
+	FbAppGoodreadsBookId		= "2415071772"
+
+	GameStartingBookId			= '384867'
 end

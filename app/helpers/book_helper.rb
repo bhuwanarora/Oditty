@@ -11,6 +11,12 @@ module BookHelper
 		Book.new(id).match_communities.execute
 	end
 
+	def self.get_author id
+		clause = Book.new(id).match + Book.new(nil).match_author + Book.return_group("ID(author) AS author_id")
+		output = clause.execute[0]["author_id"] rescue nil
+		output
+	end
+
 	def self.set_author_list author_name_list,book_id
 		set_clause = "SET book.author_name_list = ["
 		author_name_list.each do |author_name|
@@ -18,6 +24,32 @@ module BookHelper
 		end
 		set_clause[set_clause.length - 1 ] =']'
 		Book.new(book_id).match + set_clause
+	end
+
+	def self.has_image_on_S3 book_id
+		clause = Book.new(book_id).match + " RETURN book.isbn AS isbn "
+		neo_output = clause.execute[0]
+		has_image = false
+		if neo_output["isbn"].present?
+			isbn_list = neo_output["isbn"].split(",").map{ |e| (e.strip)}
+			image_count = isbn_list.map{|isbn| BookHelper.check_S3_image(isbn)}.reduce(:+)
+			has_image = !(image_count.nil?) && image_count > 0
+		end
+		has_image
+	end
+
+	def self.check_S3_image isbn
+		urls = BookHelper.get_S3_image_urls isbn
+		data =  urls.map{|url| (Net::HTTP.get(URI.parse(url)) rescue nil)}
+		data.reject!{ |e| ((e.nil?) ||(e.length == 807 )) }
+		output = (data.present?) ? data.length : 0
+		output
+	end
+
+	def self.get_S3_image_urls isbn, versions = ["L"]
+		base_url = "http://rd-images.readersdoor.netdna-cdn.com/"
+		output = versions.map{|version| (base_url + isbn.to_s + "/" + version.to_s + ".jpg")}
+		output
 	end
 
 	def self.get_by_one_author book_name, author_name_list
@@ -185,6 +217,24 @@ module BookHelper
 			:label 			=> 'Book',
 			:function 		=> BookHelper::Analyse_gr_indices,
 			:function_name 	=> 'Analyse_gr_indices',
+			:step_size 		=> 500
+		}
+		GraphHelper.iterative_entity_operations params
+	end
+
+	AddAuthorIds = Proc.new do |params, *args|
+		clause = Author.match_books
+		clause += " SET book.author_id = ID(author) "
+		clause += " RETURN MAX(ID(book)) AS id "
+		clause
+	end
+
+	def self.add_author_id
+		params = {
+			:class 			=> BookHelper,
+			:label 			=> 'Book',
+			:function 		=> BookHelper::AddAuthorIds,
+			:function_name 	=> 'AddAuthorIds',
 			:step_size 		=> 500
 		}
 		GraphHelper.iterative_entity_operations params

@@ -13,6 +13,19 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def remove_news
+				id = params[:id]
+				news_id = params[:news_id]
+				info = Api::V0::CommunityApi.remove_news(id, news_id)
+				render :json => {:message => "Success"}, :status => 200
+			end
+
+			def get_combined_details
+				id = params[:id]
+				info = Api::V0::CommunityApi.get_combined_details(id)
+				render :json => info, :status => 200
+			end
+
 			def add_book
 				id = params[:id]
 				book_id = params[:book_id]
@@ -56,10 +69,12 @@ module Api
 				community_id = params[:id]
 				user_id = session[:user_id]
 				info = Api::V0::CommunityApi.get_detailed_info(community_id, user_id)
-				args = {:id => community_id,:view_count => info["view_count"]}
-				RedisHelper::Community.increment_view_count(args)
-				args[:work] = RedisHelper::WorkUpdateSuggestCommunities
-				RedisWorker.perform_async(args)
+				if info.present?
+					args = {:id => community_id, :view_count => info["view_count"]}
+					RedisHelper::Community.increment_view_count(args)
+					args[:work] = RedisHelper::WorkUpdateSuggestCommunities
+					RedisWorker.perform_async(args)
+				end
 				render :json => info, :status => 200 
 			end
 
@@ -71,8 +86,30 @@ module Api
 
 			def get_news
 				id = params[:id]
-				skip_count = params[:skip]
-				info = Api::V0::CommunityApi.get_news(id, skip_count)
+				skip_count = (params[:skip].present?) ? params[:skip] : 0
+				time = (params[:time].present?) ? params[:time] : ""
+				info = Api::V0::CommunityApi.get_news(id, skip_count, time)
+				render :json => info, :status => 200
+			end
+
+			def get_communities_from_fb_likes
+				user_id = session[:user_id]
+				skip_count = params[:skip].to_i
+				if user_id.nil?
+					info = {:message => 'You are not logged in. Please login again !'}
+				else
+					params_redis =
+					{
+						:id => user_id,
+						:skip => skip_count
+					}
+					info = RedisHelper::Community.get_communities_from_fb_likes params_redis
+					if info.nil?
+						info = Api::V0::CommunityApi.get_communities_from_fb_likes(user_id, skip_count)
+						params_redis[:info] = info
+						RedisHelper::Community.set_communities_from_fb_likes params_redis
+					end
+				end
 				render :json => info, :status => 200
 			end
 

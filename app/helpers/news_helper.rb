@@ -18,6 +18,28 @@ module NewsHelper
 		end
 	end
 
+	def self.add_news params
+		params = params.symbolize_keys
+		time = TimeHelper.unix_to_date(params[:created_at])
+		news_metadata =
+		{
+			"title" 			=> params[:title],
+			"news_link"			=> URI.decode(params[:news_link]),
+			"image_url" 		=> "",
+			"description" 		=> "",
+			"literature_news" 	=> false,
+			"region"			=> nil,
+			"created_at"		=> params[:created_at].to_i
+		}
+		google_rank = params[:rank]
+		community_id = params[:id]
+		news_metadata.merge!(time)
+		news_id = News.create(news_metadata).execute[0]["news_id"]
+		clause = News.new(news_id).match + Community.new(community_id).match + ", news " + News.merge_community_with_google_rank(google_rank) + " RETURN 1 "
+		output = clause.execute
+		puts output.to_s
+	end
+
 	def self.fetch_news_sources
 		news_sources = []
 		google_news_edition_url = Rails.application.config.google_news_sources
@@ -135,11 +157,21 @@ module NewsHelper
 		SubscriptionMailer.news_subscription(params).deliver
 	end
 
+	def self.clear_user_session
+		while true
+			sleep(15*Constant::Time::OneMin)
+			RedisHelper::Session.clear
+			puts "Redis Session flushed (for news)"
+		end
+	end
+
 	def self.insert_news
 		NewsSources.init_news_queue
+		redis_flush_thread = Thread.new{ NewsHelper.clear_user_session}
 		producer_thread  = Thread.new{ NewsSources.producer_thread }
 		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
 		consumer_thread.join
+		redis_flush_thread.join
 	end
 
 	def self.insert_old_lit_news
@@ -150,5 +182,50 @@ module NewsHelper
 		consumer_thread.join
 	end
 
+	def self.correct_news_date
+		start_time 	= 1442448000 #17 Sept
+		end_time 	= 1442659196 #19 Sept
+		clause = NewsHelper.get_news_between_time start_time, end_time
+		output = clause.execute
+		while output.present? && !start_time.nil?
+			start_time = NewsHelper.set_correct_news_date output
+			clause = NewsHelper.get_news_between_time start_time, end_time
+			output = clause.execute
+		end
+	end
 
+	def self.remove_html_communities
+		clause = 'MATCH (news:News)-[r:HasCommunity]-(c:Community) '\
+				'WHERE r.relevanceOriginal = 1 '\
+				'WITH news, r, c LIMIT 1000 '\
+				'DELETE r '\
+				'CREATE UNIQUE (news)-[:HasCommunityFromHtmlTags]->(c) '\
+				'RETURN COUNT (*) AS count'
+		output = clause.execute
+		while output[0]["count"] > 0
+			output = clause.execute
+		end
+	end
+
+	private
+
+	def self.get_news_between_time start_time, end_time
+		clause = " MATCH (news:News) "\
+			" WHERE TOINT(news.created_at) > " + start_time.to_s + " AND "\
+			" TOINT(news.created_at) < " + end_time.to_s + " "\
+			" RETURN ID(news) AS id, news.year AS year, news.month AS month, news.date AS date, TOINT(news.created_at) AS created_at "\
+			" ORDER BY created_at LIMIT 500 "
+	end
+
+	def self.set_correct_news_date neo_output
+		max_created_at = neo_output.map{|news| (news["created_at"])}.max rescue nil
+		neo_output.each do |news|
+			if news["year"] && news["month"] && news["date"]
+				created_at = DateTime.new(news["year"].to_i, news["month"].to_i, news["date"].to_i).strftime('%s')
+				clause = News.new(news["id"]).match + " SET news.created_at=" + created_at
+				clause.execute
+			end
+		end
+		max_created_at
+	end
 end

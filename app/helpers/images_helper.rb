@@ -71,10 +71,9 @@ module ImagesHelper
 	end
 
 	def self.set_community_image_version
-		redis = Redis.new
 		get_ids_range_clause = " MATCH (node:Community) RETURN MAX(ID(node)) AS maximum , MIN(ID(node)) AS minimum "
 		ids_range = get_ids_range_clause.execute[0]
-		minimum = redis.get("community_id_image_processed").present? ? redis.get("community_id_image_processed").to_i : ids_range["minimum"]
+		minimum = $redis.get("community_id_image_processed").present? ? $redis.get("community_id_image_processed").to_i : ids_range["minimum"]
 		maximum = ids_range["maximum"]
 		range = (maximum - minimum) / 500
 		while minimum < maximum
@@ -85,7 +84,7 @@ module ImagesHelper
 					url = "#{Rails.application.config.image_service}/api/v0/community_versions?id=#{community["id"]}&&bucket=#{Rails.application.config.community_bucket}&&url=#{CGI.escape(community["image_url"])}"
 					puts url.to_s.red
 					response = JSON.parse(Net::HTTP.get(URI.parse(url)))
-					redis.set("community_id_image_processed", community["id"])
+					$redis.set("community_id_image_processed", community["id"])
 				rescue Exception => e
 					puts e.to_s.red
 					message = "#{e} for id #{community["id"]} at #{ Time.now.strftime("%D")}"

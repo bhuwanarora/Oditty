@@ -15,4 +15,8 @@ module Constant::StatusMessage
 	PasswordChangedFailure		= "Error while saving the new password. Please try again."
 	SessionNotSet				= "Session not set properly error..."
 	VerificationTokenExpired	= "Verification token invalid or expired. Please request it again "
+
+	def self.waitlist_message count
+		"You're at number " + count.to_s + " on Waiting list for oditty.me. We will mail you when you are good to go."
+	end
 end

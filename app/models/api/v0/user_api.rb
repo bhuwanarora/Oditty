@@ -74,24 +74,24 @@ module Api
 						clause = Bookmark::Type::NotWorthReading.new(user_id, id).book.add
 					when "CURRENTLYREADING"
 						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).book.add
-					when "WISHIHADNTREAD"
-						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).book.add
-					when "READBUTCANTREMEMBERASINGLETHINGABOUTIT"
-						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).book.add
-					when "PRETENDIHAVEREAD"
-						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.add
+					# when "WISHIHADNTREAD"
+					# 	clause = Bookmark::Type::WishIHadntRead.new(user_id, id).book.add
+					# when "READBUTCANTREMEMBERASINGLETHINGABOUTIT"
+					# 	clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).book.add
+					# when "PRETENDIHAVEREAD"
+					# 	clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).book.add
 					when "INTENDINGTOREAD"
 						clause = Bookmark::Type::IntendingToRead.new(user_id, id).book.add
 					when "READ"
 						clause = Bookmark::Type::Read.new(user_id, id).book.add
-					when "DIDNTFEELLIKEREADINGITAFTERAPOINT"
-						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.add
-					when "SAVINGFORWHENIHAVEMORETIME"
-						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).book.add
-					when "WILLNEVERREAD"
-						clause = Bookmark::Type::WillNeverRead.new(user_id, id).book.add
-					when "PURELYFORSHOW"
-						clause = Bookmark::Type::PurelyForShow.new(user_id, id).book.add
+					# when "DIDNTFEELLIKEREADINGITAFTERAPOINT"
+					# 	clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).book.add
+					# when "SAVINGFORWHENIHAVEMORETIME"
+					# 	clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).book.add
+					# when "WILLNEVERREAD"
+					# 	clause = Bookmark::Type::WillNeverRead.new(user_id, id).book.add
+					# when "PURELYFORSHOW"
+					# 	clause = Bookmark::Type::PurelyForShow.new(user_id, id).book.add
 					when "PLANTOBUY"
 						clause = Bookmark::Type::PlanToBuy.new(user_id, id).book.add
 					end
@@ -107,24 +107,24 @@ module Api
 						clause = Bookmark::Type::NotWorthReading.new(user_id, id).news.add
 					when "CURRENTLYREADING"
 						clause = Bookmark::Type::CurrentlyReading.new(user_id, id).news.add
-					when "WISHIHADNTREAD"
-						clause = Bookmark::Type::WishIHadntRead.new(user_id, id).news.add
-					when "READBUTCANTREMEMBERASINGLETHINGABOUTIT"
-						clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).news.add
-					when "PRETENDIHAVEREAD"
-						clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.add
+					# when "WISHIHADNTREAD"
+					# 	clause = Bookmark::Type::WishIHadntRead.new(user_id, id).news.add
+					# when "READBUTCANTREMEMBERASINGLETHINGABOUTIT"
+					# 	clause = Bookmark::Type::ReadButCantRememberASingleThingAboutIt.new(user_id, id).news.add
+					# when "PRETENDIHAVEREAD"
+					# 	clause = Bookmark::Type::PretendIHaveRead.new(user_id, id).news.add
 					when "INTENDINGTOREAD"
 						clause = Bookmark::Type::IntendingToRead.new(user_id, id).news.add
 					when "READ"
 						clause = Bookmark::Type::Read.new(user_id, id).news.add
-					when "DIDNTFEELLIKEREADINGITAFTERAPOINT"
-						clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.add
-					when "SAVINGFORWHENIHAVEMORETIME"
-						clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).news.add
-					when "WILLNEVERREAD"
-						clause = Bookmark::Type::WillNeverRead.new(user_id, id).news.add
-					when "PURELYFORSHOW"
-						clause = Bookmark::Type::PurelyForShow.new(user_id, id).news.add
+					# when "DIDNTFEELLIKEREADINGITAFTERAPOINT"
+					# 	clause = Bookmark::Type::DidntFeelLikeReadingItAfterAPoint.new(user_id, id).news.add
+					# when "SAVINGFORWHENIHAVEMORETIME"
+					# 	clause = Bookmark::Type::SavingForWhenIHaveMoreTime.new(user_id, id).news.add
+					# when "WILLNEVERREAD"
+					# 	clause = Bookmark::Type::WillNeverRead.new(user_id, id).news.add
+					# when "PURELYFORSHOW"
+					# 	clause = Bookmark::Type::PurelyForShow.new(user_id, id).news.add
 					when "PLANTOBUY"
 						clause = Bookmark::Type::PlanToBuy.new(user_id, id).news.add
 					end
@@ -345,17 +345,6 @@ module Api
 
 			def self.get_profile_info id
 				User.new(id).get_detailed_info.execute
-			end
-
-			def self.add_books_from_fb(params, user_id)
-				if params[:data].present?
-					clause = User.new(user_id).match + User.return_group("user.facebook_books_retrieval_time AS time")
-					facebook_books_retrieval_time = clause.execute[0]['time'] rescue ""
-					time_to_add_books = !facebook_books_retrieval_time.present? || facebook_books_retrieval_time.to_i < (Time.now.to_i - 3600*24*30)
-					if time_to_add_books
-						FacebookBooksWorker.perform_async(params, user_id)
-					end
-				end
 			end
 
 			def self.recommend_book(user_id, friends_id, book_id)
