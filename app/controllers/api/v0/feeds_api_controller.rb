@@ -19,7 +19,7 @@ module Api
 				user_id = session[:user_id]
 				info = []
 				news_day_skip_count = 0
-				news_skip_count = params[:skip_count]
+				news_skip_count = params[:skip_count].to_i
 				if user_id
 					#news_skip_count = RedisHelper::Session.get_session({:id => session[:session_id]})["news_skip_count"] rescue nil
 					#news_skip_count ||= params[:skip].to_i
