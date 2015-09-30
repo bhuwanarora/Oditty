@@ -70,6 +70,31 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         return published_era;
     }
 
+    var _remove_book = function(container){
+        var id = container.id;
+        var book_found = false;
+
+        var _add_book = function(){
+            $rootScope.containers.push(container);
+            _focus_container();
+        }
+        
+        angular.forEach($rootScope.containers, function(value, index){
+            if(value.url == 'book' && (value.id != id)){
+                book_found = true;
+                delete $rootScope.containers[index];
+                $timeout(function(){
+                    $rootScope.containers.splice(index, 1);
+                    delete $rootScope.active_book;
+                    _add_book();
+                }, 100);
+            }
+        });
+        if(!book_found){
+            _add_book();
+        }
+    }
+
     this.show_book_dialog = function($rootScope, $scope, book, event){
         var id = book.book_id || book.id;
         window.location.href = "/book?id="+id;
@@ -139,21 +164,21 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
 
             // debugger
             if(container.url == "book"){
-                var first_container = {"id": id, "url": "book_interaction", "full_url": url+"?id="+id, "header": header};
-                $rootScope.containers.push(first_container);
-                $rootScope.containers.push(container);
-                var last_container = {"id": id, "url": "book_rating", "full_url": url+"?id="+id, "header": header};
-                $rootScope.containers.push(last_container);
+                _remove_book(container);
             }
             else{
                 $rootScope.containers.push(container);
             }
-            var container = angular.element(document.getElementById('browseScreen'));
-            var length = $rootScope.containers.length;
-            container.scrollLeft(length*600, 1000);
-            $location.path(null);
-            return false;
+            _focus_container();
         }
+    }
+
+    var _focus_container = function(){
+        var container = angular.element(document.getElementById('browseScreen'));
+        var length = $rootScope.containers.length;
+        container.scrollLeft(length*600, 1000);
+        $location.path(null);
+        return false;
     }
 
     this.toggle_bookmark = function(label, data, bookmark_object, scope){
