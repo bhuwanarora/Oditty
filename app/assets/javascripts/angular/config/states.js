@@ -108,8 +108,8 @@ homeApp.config(["$stateProvider", "$urlRouterProvider", function($stateProvider,
             "book": { templateUrl: 'assets/angular/html/book/_buy.html'}
         }
     })
-    .state('book/realvirtuality', {
-        url: "/book/realvirtuality",
+    .state('book/rooms', {
+        url: "/book/rooms",
         sticky: true,
         deepStateRedirect: true,
         views: {

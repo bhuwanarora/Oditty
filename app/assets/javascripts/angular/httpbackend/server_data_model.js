@@ -27,6 +27,11 @@ homeApp.service('ServerDataModel', function ServerDataModel(){
         return data;
     }
 
+    this.get_top_results = function(){
+        var data = [{"title":"Mockingjay","description":null,"isbn":"0439023513,9780439023511","author_name":"Suzanne Collins","author_id":5117092,"labels":"Book","id":385359},{"name":"Anonymous","overview":"Anonymous (used as a mass noun) is a loosely associated international network of activist and hacktivist entities. A website nominally associated with the group describes it as 'an internet gathering' with 'a very loose and decentralized command structure that operates on ideas rather than directives'. The group became known for a series of well-publicized publicity stunts and distributed denial-of-service (DDoS) attacks on government, religious, and corporate websites.","location":null,"labels":"Author","id":384957},{"name":"Death","image_url":"http://static.giantbomb.com/uploads/original/15/155745/2263909-death_skull_bones_image_31001.jpg","labels":"Community","id":4975736},{"title":"The PLO's ","description":"Ali Abunimah of The Electronic Intifada discusses the recent resignations from the Palestinian Liberation Organization's executive committee","image_url":"http://therealnews.com/media/trn_2015-08-01/aabunimah0825plo.jpg","created_at":1440668180,"labels":"News","id":5709866}];
+        return data;
+    }
+
     this.render_page = function(){
         var data = "";
         return data;
