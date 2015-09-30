@@ -78,7 +78,6 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
             $rootScope.containers.push(container);
             _focus_container();
         }
-        
         angular.forEach($rootScope.containers, function(value, index){
             if(value.url == 'book' && (value.id != id)){
                 book_found = true;
@@ -145,7 +144,7 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
     }
 
     this.render_page = function(event){
-        if(angular.isDefined($rootScope.containers)){
+        if(angular.isDefined($rootScope.containers) && $rootScope.pages){
             var element = event.target;
             var content = String(element.textContent).replace(/^\s+|\s+$/g, '');
             if(content == "Go to Book"){
@@ -244,11 +243,11 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         // if(angular.isUndefined($scope.active_tag)){
         //     $scope.active_tag.news = {};
         // }
-        var id = $scope.active_tag.id;
         if(angular.isUndefined($scope.active_tag.news)){
             $scope.active_tag.news = [];
         }
         if(is_news_tab){
+            var id = $scope.active_tag.id;
             var skip_count = $scope.active_tag.news.length;
             var month_index = Months.indexOf($scope.info.active_month);
             if(!$scope.info.loading){
@@ -276,9 +275,13 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
                                 time = Years[year_index + 1];
                                 $scope.info.active_month = Months[0];
                             }
+                            else{
+                                $scope.info.active_month = "Dec";
+                                $scope.info.active_year = $scope.info.active_year - 1;
+                            }
                         }
                         else{
-                            $scope.info.active_month = Months[month_index + 1];   
+                            $scope.info.active_month = Months[month_index + 1];
                         }
                     }
                     $scope.info.loading = false;
