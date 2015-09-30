@@ -1,21 +1,16 @@
 <div layout-padding layout="column">
-	<a ng-class="get_active_class('recent')" ng-href="#recent" class="time less_important">Recent</a>
-	<months info="info" active-tag="active_tag" ng-if="get_active_class('recent') == 'active_time'"></months>
-	<a ng-class="get_active_class('2014')" ng-href="#2014" class="time less_important">2014</a>
-	<months info="info" active-tag="active_tag" ng-if="get_active_class('2014') == 'active_time'"></months>
-	<a ng-class="get_active_class('2013')" ng-href="#2013" class="time less_important">2013</a>
-	<months info="info" active-tag="active_tag" ng-if="get_active_class('2013') == 'active_time'"></months>
-	<div ng-if="!show_all" >
+	<months info="info" active-tag="activeTag" year="'recent'"></months>
+	<months info="info" active-tag="activeTag" year="2014"></months>
+	<months info="info" active-tag="activeTag" year="2013"></months>
+	<div ng-if="!show_all">
 		<div ng-click="show_all_times()">
 			<md-icon md-font-set="material-icons">more_vert</md-icon>
 		</div>
 	</div>
 	<div ng-if="show_all" layout="column">
 		<div ng-repeat="year in ::years">
-			<a ng-class="get_active_class('{{year}}')" ng-href="#{{year}}" class="time less_important">{{year}}</a>
-			<months info="info" active-tag="active_tag" ng-if="get_active_class(year) == 'active_time'"></months>
+			<months info="info" active-tag="activeTag" year="year"></months>
 		</div>
 	</div>
-	<a ng-class="get_active_class('1998')" ng-href="#1998" class="time less_important">1998</a>
-	<months info="info" active-tag="active_tag" ng-if="get_active_class('1998') == 'active_time'"></months>
+	<months info="info" active-tag="activeTag" year="1998"></months>
 </div>
