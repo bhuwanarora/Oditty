@@ -35,10 +35,8 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-            var container = {"url": "rooms", "full_url": "rooms", "header": "Rooms"};
-            $rootScope.containers.push(container);
-            var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
-            $rootScope.containers.push(container);
+            var containers = [{"url": "rooms", "full_url": "rooms", "header": "Rooms"}, {"url": "news_group", "full_url": "news_group", "header": "News Group"}, {"url": "books", "full_url": "books", "header": "Books"}, {"url": "spaces", "full_url": "spaces", "header": "Spaces"}];
+            $rootScope.containers = containers.sample_range(2);
         }
         
         // _go_fullscreen();
@@ -74,4 +72,12 @@ document.onclick = function(e){
 
 String.prototype.toCamel = function(){
     return this.replace(/(\_[a-z])/g, function($1){return $1.toUpperCase().replace('_','');});
+};
+
+Array.prototype.sample_range = function(n) {
+    var sample = [];
+    for(var i=0;i<n;i++) {
+        sample = sample.concat(this.splice(Math.random()*this.length,1));
+    }
+    return sample;
 };
