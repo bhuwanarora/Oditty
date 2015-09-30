@@ -684,7 +684,7 @@ angular.module('homeApp').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('/assets/angular/html/rooms/room.html',
-    "<div class=\"white round_corners room_container\"><div class=\"room_image_wrapper\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png\"></div><br><div layout-padding class=\"room_content\"><a ng-bind-html=\"room.name\" ng-href=\"/room?id={{room.id}}\" data-header=\"{{room.name}}\" data-url=\"room\" data-id=\"{{room.id}}\" ng-click=\"render_page($event)\"></a><div class=\"less_important\">{{room.view_count}} Views</div><br><md-button ng-click=\"join_room(room)\" ng-if=\"!room.status\" class=\"md-button-clear md-raised action_button\">Join</md-button></div></div>"
+    "<div class=\"white round_corners room_container relative\"><div class=\"room_image_wrapper\"><img ng-src=\"http://rd-images.readersdoor.netdna-cdn.com/{{room.id}}/M.png\"></div><br><div layout-padding class=\"room_content\"><a ng-bind-html=\"room.name\" ng-href=\"/room?id={{room.id}}\" data-header=\"{{room.name}}\" data-url=\"room\" data-id=\"{{room.id}}\" ng-click=\"render_page($event)\"></a><div class=\"less_important\">{{room.view_count}} Views</div><br><md-button ng-click=\"join_room(room)\" ng-if=\"!room.status\" class=\"md-button-clear md-raised action_button\">Join</md-button></div></div>"
   );
 
 
