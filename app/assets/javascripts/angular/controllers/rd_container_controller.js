@@ -35,7 +35,7 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-            var containers = [{"url": "rooms", "full_url": "rooms", "header": "Rooms"}, {"url": "news_group", "full_url": "news_group", "header": "News Group"}, {"url": "books", "full_url": "books", "header": "Books"}, {"url": "spaces", "full_url": "spaces", "header": "Spaces"}];
+            var containers = [{"url": "rooms", "full_url": "rooms", "header": "Rooms"}, {"url": "news_group", "full_url": "news_group", "header": "News Group"}];
             $rootScope.containers = containers.sample_range(2);
         }
         
