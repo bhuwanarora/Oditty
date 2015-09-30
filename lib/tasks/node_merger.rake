@@ -15,5 +15,11 @@ namespace :merge do
     	include GenreHelper
     	GenreHelper.convert_to_community
     end
+
+  desc "merge genre with category"
+  task :merge_genre_with_category => :environment do
+    include GenreHelper
+    GenreHelper.merge_with_category
+  end
 	
 end

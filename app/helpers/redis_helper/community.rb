@@ -166,34 +166,34 @@ module RedisHelper::Community
 	private
 
 	def self.get_key_communities_from_fb_likes id, skip_count
-		"com/CFFL" + id.to_s + skip_count.to_s
+		"com/CFFL/" + id.to_s + "/" + skip_count.to_s
 	end
 
 	def self.get_key_basic_info id
-		"BCI" + id.to_s
+		"BCI/" + id.to_s
 	end
 
 	def self.get_key_feed_info id
-		"FCI" + id.to_s
+		"FCI/" + id.to_s
 	end
 
 	def self.get_key_important_info news_id, community_id
 		#NI
-		'ICI' + news_id.to_s + community_id.to_s
+		'ICI/' + news_id.to_s + "/" + community_id.to_s
 	end
 
 	def self.get_key_suggested id
 		#trends
-		'SC' + id.to_s
+		'SC/' + id.to_s
 	end
 
 	def self.get_key_videos id
 		#GV
-		'CV' + id.to_s
+		'CV/' + id.to_s
 	end
 
 	def self.get_key_books id
 		#GV
-		'CB' + id.to_s
+		'CB/' + id.to_s
 	end
 end
