@@ -40,7 +40,7 @@ homeApp.controller('feedController', ["$scope", "$rootScope", 'userService', '$m
             var skip = $scope.feed.length;
             userService.get_feed(skip).then(function(data){
                 $scope.info.loading = false;
-                $scope.feed = _shuffle_array(data);
+                $scope.feed = $scope.feed.concat(_shuffle_array(data));
             });
         }
     }
