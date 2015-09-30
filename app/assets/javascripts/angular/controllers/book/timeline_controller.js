@@ -85,6 +85,9 @@ homeApp.controller('timelineController', ["$scope", "$rootScope", "bookService",
         else{
             var book_id = id;
         }
+        if(angular.isUndefined(book_id) && $rootScope.pages){
+            book_id = getCookie("id");
+        }
         $scope.book_id = book_id;
         var feed_timeout = $timeout(function(){
             $scope.get_feed();
