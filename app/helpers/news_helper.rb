@@ -194,6 +194,19 @@ module NewsHelper
 		end
 	end
 
+	def self.remove_html_communities
+		clause = 'MATCH (news:News)-[r:HasCommunity]-(c:Community) '\
+				'WHERE r.relevanceOriginal = 1 '\
+				'WITH news, r, c LIMIT 1000 '\
+				'DELETE r '\
+				'CREATE UNIQUE (news)-[:HasCommunityFromHtmlTags]->(c) '\
+				'RETURN COUNT (*) AS count'
+		output = clause.execute
+		while output[0]["count"] > 0
+			output = clause.execute
+		end
+	end
+
 	private
 
 	def self.get_news_between_time start_time, end_time
