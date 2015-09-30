@@ -1350,3 +1350,7 @@ md-autocomplete button{
 	border-radius: 3px;
 	z-index: 99999;
 }
+
+.no_feed_margin{
+	margin-top: -50px;
+}

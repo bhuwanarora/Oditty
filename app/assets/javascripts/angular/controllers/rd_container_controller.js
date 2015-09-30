@@ -15,15 +15,33 @@ homeApp.controller('rdContainerController', ["websiteService", "$scope", '$rootS
         }, 100);
 	}
 
+    var _go_fullscreen = function(){
+        var elem = document.documentElement;
+        if(elem.requestFullscreen){
+            elem.requestFullscreen();
+        }
+        else if(elem.msRequestFullscreen){
+            elem.msRequestFullscreen();
+        }
+        else if(elem.mozRequestFullScreen){
+            elem.mozRequestFullScreen();
+        }
+        else if(elem.webkitRequestFullscreen){
+            elem.webkitRequestFullscreen();
+        }
+    }
+
 	var _init = (function(){
 		$rootScope.pages = true;
         $rootScope.containers = [];
 		var _add_groups = function(){
-      var container = {"url": "rooms", "full_url": "rooms", "header": "Rooms"};
-      $rootScope.containers.push(container);
-      var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
-      $rootScope.containers.push(container);
-		}
+            var container = {"url": "rooms", "full_url": "rooms", "header": "Rooms"};
+            $rootScope.containers.push(container);
+            var container = {"url": "news_group", "full_url": "news_group", "header": "News Group"};
+            $rootScope.containers.push(container);
+        }
+        
+        // _go_fullscreen();
 		_add_groups();
 	}());
 }]);
@@ -32,22 +50,25 @@ document.onclick = function(e){
   	e = e ||  window.event;
   	var element = e.target || e.srcElement;
     var content = String(element.textContent).replace(/^\s+|\s+$/g, '');
+
   	if(element.tagName == 'A') {
-  		e.preventDefault();
-    	return false; // prevent default action and stop event propagation
+      if(!element.classList.contains("anchor")){
+    		e.preventDefault();
+      	return false;
+      }
   	}
   	else if(element.tagName == 'FIGCAPTION'){
   		e.preventDefault();
   		element = element.getElementsByClassName('no_anchor');
-  		return false; // prevent default action and stop event propagation
+  		return false;
   	}
   	else if(element.classList.contains("no_anchor")){
   		e.preventDefault();
-  		return false; // prevent default action and stop event propagation	
+  		return false;
   	}
     else if(content == "Go to Book"){
         e.preventDefault();
-        return false; // prevent default action and stop event propagation  
+        return false;
     }
 };
 
