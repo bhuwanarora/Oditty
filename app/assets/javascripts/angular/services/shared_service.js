@@ -75,13 +75,13 @@ homeApp.service('sharedService', ["$timeout", "$rootScope", "ColorConstants", "$
         var book_found = false;
 
         var _add_book = function(){
+            delete $rootScope.containers[index];
             $rootScope.containers.push(container);
             _focus_container();
         }
         angular.forEach($rootScope.containers, function(value, index){
             if(value.url == 'book' && (value.id != id)){
                 book_found = true;
-                delete $rootScope.containers[index];
                 $timeout(function(){
                     $rootScope.containers.splice(index, 1);
                     delete $rootScope.active_book;
