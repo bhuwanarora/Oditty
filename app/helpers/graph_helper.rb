@@ -17,13 +17,15 @@ module GraphHelper
 	def self.genre_to_community
 		min_id = 384294
 		max_id = 6280644
-		step = 100
+		step = 1
 		count = min_id
 		while count <= max_id
-			count = min_id + step
-			clause = " MATCH (genre:Genre)-[:Belongs_to]->(book:Book) "\
-				" WHERE ID(book) < " + count.to_s + " AND ID(book) >= " + min_id.to_s +
+			clause = " MATCH (book:Book) "\
+				" WHERE ID(book) = " + count.to_s + 
+				" WITH book "\
+				" MATCH (book)<-[:Belongs_to]-(genre:Genre) "\
 				" CREATE UNIQUE (genre)-[:RelatedBooks]->(book) "
+			count = min_id + step
 			clause.execute
 		end
 	end
