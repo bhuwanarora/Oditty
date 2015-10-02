@@ -10,10 +10,15 @@ class UsersNews < Neo
 	end
 
 	def self.get_news skip_count
-		UsersCommunity.match + Community.match_recent_news(skip_count) +
-		" WITH DISTINCT news LIMIT 30 " +
-		" WITH news " + News.order_view_desc +
-		UsersNews.return_group(News.basic_info) + UsersNews.limit(10)
+		UsersCommunity.match +
+		"WITH COUNT(community) AS community_follow_count, COLLECT(community) AS communities " +
+		" UNWIND communities AS community " +
+		" WITH community, community_follow_count " +
+		" OPTIONAL " + Community.match_recent_news(skip_count,['community_follow_count']) +
+		" WITH DISTINCT news, community_follow_count LIMIT 30 " +
+		" WITH news, community_follow_count " + News.order_view_desc + UsersNews.limit(10) +
+		" WITH community_follow_count, " + UsersNews.collect_map({ "news" =>News.grouped_basic_info}) +
+		UsersNews.return_group('news', 'community_follow_count')
 	end
 
 	# def self.optional_match_rating

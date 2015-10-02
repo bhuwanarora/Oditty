@@ -16,7 +16,8 @@ module Constant::Time
 	Day 				= ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 	DayAbbreviated 		= ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
 
-	OneHour				= 3600
+	OneMin				= 60
+	OneHour				= 60*OneMin
 	OneDay				= 24*OneHour
 	OneWeek				= 7 *OneDay
 	OneMonth			= 30*OneDay

@@ -77,6 +77,7 @@ module GenericHelper
 
 	def self.copy_edges_clause edge_info, source_node, destination_node
 		edge_type 		= edge_info[:type]
+		edge_type_new	= (edge_info[:type_new].nil?)? edge_type : edge_info[:type_new]
 		node_labels		= edge_info[:label]
 		properties		= edge_info[:property]
 		direction 		= edge_info[:direction]
@@ -87,12 +88,12 @@ module GenericHelper
 			clause = " "\
 				" OPTIONAL MATCH (" + source_node + ")-[old_rel:" + edge_type + "]->(" + node + label_string + ") "\
 				" FOREACH (ignore IN (CASE WHEN old_rel IS NULL THEN [] ELSE [1] END) |"\
-					" MERGE (" + destination_node + ")-[new_rel:" + edge_type + "]->( " + node + " ) "
+					" MERGE (" + destination_node + ")-[new_rel:" + edge_type_new + "]->( " + node + " ) "
 		elsif direction == Constant::LabelRelationships::IncomingRel
 			clause = " "\
 				" OPTIONAL MATCH (" + source_node + ")<-[old_rel:" + edge_type + "]-(" + node + label_string + ") "\
 				" FOREACH (ignore IN (CASE WHEN old_rel IS NULL THEN [] ELSE [1] END) | "\
-					" MERGE (" + destination_node + ")<-[new_rel:" + edge_type + "]-( " + node + " ) "
+					" MERGE (" + destination_node + ")<-[new_rel:" + edge_type_new + "]-( " + node + " ) "
 		else
 			puts " Direction of relationship : #{edge_type} not mentioned !!".red
 			clause = ""

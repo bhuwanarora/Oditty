@@ -19,7 +19,12 @@ module Api
 			end
 
 			def self.get_personalized_news user_id, skip_count
-				User.new(user_id).get_news(skip_count)
+				info = User.new(user_id).get_news(skip_count).execute
+				if info.empty?
+					info = User.new(user_id).get_community_follow_count.execute
+					info[0]["news"] = []
+				end
+				info
 			end
 
 			def self.get_blog skip_count, multiple_blog

@@ -157,11 +157,21 @@ module NewsHelper
 		SubscriptionMailer.news_subscription(params).deliver
 	end
 
+	def self.clear_user_session
+		while true
+			sleep(15*Constant::Time::OneMin)
+			RedisHelper::Session.clear
+			puts "Redis Session flushed (for news)"
+		end
+	end
+
 	def self.insert_news
 		NewsSources.init_news_queue
+		redis_flush_thread = Thread.new{ NewsHelper.clear_user_session}
 		producer_thread  = Thread.new{ NewsSources.producer_thread }
 		consumer_thread  = Thread.new{ NewsSources.consumer_thread }
 		consumer_thread.join
+		redis_flush_thread.join
 	end
 
 	def self.insert_old_lit_news
@@ -180,6 +190,19 @@ module NewsHelper
 		while output.present? && !start_time.nil?
 			start_time = NewsHelper.set_correct_news_date output
 			clause = NewsHelper.get_news_between_time start_time, end_time
+			output = clause.execute
+		end
+	end
+
+	def self.remove_html_communities
+		clause = 'MATCH (news:News)-[r:HasCommunity]-(c:Community) '\
+				'WHERE r.relevanceOriginal = 1 '\
+				'WITH news, r, c LIMIT 1000 '\
+				'DELETE r '\
+				'CREATE UNIQUE (news)-[:HasCommunityFromHtmlTags]->(c) '\
+				'RETURN COUNT (*) AS count'
+		output = clause.execute
+		while output[0]["count"] > 0
 			output = clause.execute
 		end
 	end

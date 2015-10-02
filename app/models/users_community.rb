@@ -62,6 +62,10 @@ class UsersCommunity < Neo
 		clause
 	end
 
+	def get_detailed_info
+		clause = @community.match + @user.match + ", community " + UsersCommunity.optional_match + UsersCommunity.set_view_count + Community.return_group(UsersCommunity.basic_info, Community.basic_info)
+	end
+
 	def match
 		" MATCH (user:User), (community:Community) WHERE ID(user)= #{@user_id}  AND ID(community)=#{ @community_id} WITH user, community "
 	end
