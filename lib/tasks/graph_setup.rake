@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  desc "genre_to_community"
+  task :genre_to_community => :environment do
+    include GraphHelper
+    GraphHelper.genre_to_community
+  end
+
   desc "reset user feedNext circlular linked list"
   task :reset_user_feed => :environment do
     include CircularLinkedListHelper

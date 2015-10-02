@@ -14,6 +14,20 @@ module GraphHelper
 		end
 	end
 
+	def self.genre_to_community
+		min_id = 384296
+		max_id = 4830210
+		step = 1000
+		count = min_id
+		while count <= max_id
+			count = min_id + step
+			clause = " MATCH (genre:Genre)-[:Belongs_to]->(book:Book) "\
+				" WHERE ID(genre) < " + count.to_s + " AND ID(genre) >= " + min_id.to_s +
+				" CREATE UNIQUE (genre)-[:RelatedBooks]->(book) "
+			clause.execute
+		end
+	end
+
 	def self.fix_feed user_id
 		clause = " MATCH (feed:Feed{user_id:" + user_id.to_s + "}), user WHERE ID(user) = " + user_id.to_s + " OPTIONAL MATCH (feed)-[r:FeedNext]-() DELETE r WITH feed, user ORDER BY feed.updated_at DESC WITH user, COLLECT(feed) AS feeds  FOREACH(i in RANGE(0, length(feeds)-2) |  FOREACH(p1 in [feeds[i]] |  FOREACH(p2 in [feeds[i+1]] |  MERGE (p1)-[:FeedNext{user_id:" + user_id.to_s + " }]->(p2)))) WITH user, LAST(feeds) AS last, HEAD(feeds) AS head  MERGE (last)-[:FeedNext{user_id:" + user_id.to_s + " }]->(user)-[:FeedNext{user_id:" + user_id.to_s + " }]->(head) " + User.return_group(User.basic_info)
 		clause.execute
