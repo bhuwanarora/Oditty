@@ -27,13 +27,13 @@ class GoodreadsBook < Neo
 	def self.merge_by_url book
 		type = book["type"]
 		goodreads_url = book["url"]
-
-		type_string = type.to_s.split(":")[1] rescue ""
+		facebook_id = book["id"]
+		type_string = type.split(".")[1] rescue ""
 		type_string = (", book.type =\'" + type_string + "\'") if type_string.present?
 
 		goodreads_url = goodreads_url.gsub("http://", "https://")
 		" MERGE (book :GoodreadsBook{gr_url:\'"+goodreads_url.to_s+"\'}) "\
-		" SET "\
+		" SET book.facebook_id=" + facebook_id.to_s + ", "\
 		" book :FacebookBook "\
 		"" + type_string + " "\
 		" WITH book "

@@ -45,7 +45,8 @@ module WikiHelper
 		output = []
 		sorted_tags = tags_data.sort_by{ |tag| tag['url_list']['wiki_url']}
 		sorted_tags.each do |tag|
-			if output.empty? || output[-1]['url_list']['wiki_url'] != tag['url_list']['wiki_url']
+			different_wiki = (output[-1]['url_list']['wiki_url'] != tag['url_list']['wiki_url']) || (tag['url_list']['wiki_url'].empty?) rescue true
+			if output.empty? || different_wiki
 				output << tag
 			else
 				output[-1]['relevance'] = [output[-1]['relevance'], tag['relevance']].max

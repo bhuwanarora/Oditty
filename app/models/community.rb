@@ -1,4 +1,4 @@
-class Community < Neo
+class Community < CommunityInterface
 
 	def initialize id
 		@id = id
@@ -31,7 +31,19 @@ class Community < Neo
 		" MATCH (community:Community) WITH community "
 	end
 
-	def get_news skip_count=0
+	def set_image image_url
+		match + Community.set_image(image_url)
+	end
+
+	def self.set_image image_url
+		" SET community.image_url=\'" + image_url.escape_quotes + "\' "
+	end
+
+	def get_old_news skip_count, time_string
+		match + Community.match_news_in_period(time_string)  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
+	end
+
+	def get_recent_news skip_count=0
 		match + Community.match_news  + " WITH news, community ORDER BY TOINT(news.created_at) DESC SKIP "+skip_count.to_s+" LIMIT 10 WITH community, " +  UsersCommunity.collect_map("news" => News.grouped_basic_info) + UsersCommunity.set_view_count + Community.return_group("news")
 	end
 
@@ -44,6 +56,10 @@ class Community < Neo
 	end
 
 	def match_videos
+		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
+	end
+
+	def self.match_videos
 		" MATCH (community)-[has_video:HasVideo]->(video:Video) WITH community, video, has_video.rank AS video_relevance "
 	end
 
@@ -73,6 +89,12 @@ class Community < Neo
 
 	def self.match_news
 		" MATCH (community)<-[:HasCommunity]-(news:News) WITH community, news "
+	end
+
+	def self.match_recent_news skip_count, with_group = []
+		with_string = with_group.map{|elem| (" " + elem)}.join(", ")
+		with_string = ( "," + with_string ) if with_string.present?
+		Community.match_news + with_string + Community.order_by(" TOINT(news.created_at) DESC ") + Community.skip(skip_count)
 	end
 
 	def get_books

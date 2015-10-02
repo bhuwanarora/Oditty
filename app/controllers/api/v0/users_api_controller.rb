@@ -238,7 +238,7 @@ module Api
 				session[:user_id] = info["id"]
 				Api::V0::FacebookApi.handle_access_tokens params
 				Api::V0::FacebookApi.handle_facebook_likes params[:id]
-				#Api::V0::FacebookApi.handle_facebook_books session[:user_id]
+				Api::V0::FacebookApi.handle_facebook_books params[:id], session[:user_id]
 				if info["id"].present?
 					render :json => info, :status => 200
 				else
@@ -552,7 +552,11 @@ module Api
 			def search_friends
 				user_id = session[:user_id]
 				search_text = params[:q]
-				info = Api::V0::UserApi.search_friends(user_id, search_text)
+				if user_id.nil?
+					info = {:message => "User not logged in"}
+				else
+					info = Api::V0::UserApi.search_friends(user_id, search_text)
+				end
 				render :json => info, :status => 200
 			end
 

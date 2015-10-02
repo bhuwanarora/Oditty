@@ -1,7 +1,7 @@
 module FacebookLikesBooksHelper
 
 	def self.set_community_videos node_id
-		clause = FacebookLike.new(nil,node_id).match_by_neo_id + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
+		clause = FacebookLike.new(node_id).match + FacebookLike.match_community + FacebookLike.return_group("ID(community) AS id")
 		output = clause.execute
 		output.each do |id|
 			VideosWorker.add_to_community(id["id"])
@@ -19,7 +19,16 @@ module FacebookLikesBooksHelper
 		self.clean_up node_id
 	end
 
+	def self.clean_up_self_loop node_id
+		clause = FacebookLike.new(node_id).match +
+		" MATCH (facebook_like)-[r:RelatedCommunity]->(facebook_like) "\
+		"DELETE r "\
+		" RETURN ID(facebook_like) AS id "
+		clause.execute
+	end
+
 	def self.clean_up node_id
+		FacebookLikesBooksHelper.clean_up_self_loop node_id
 		clause = self.match_rel(node_id, FacebookLike.get_relationship_type("category_list")) + " RETURN ID(destination) AS id, destination.name AS name "
 		ids = clause.execute
 		ids.each do |category|

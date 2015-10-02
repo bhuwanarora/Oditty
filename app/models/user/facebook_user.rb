@@ -36,6 +36,12 @@ class User::FacebookUser < User
 		match_user + " SET facebook_user.recent_like_created_at=" + unix_time.to_s
 	end
 
+	def get_recommended_communities skip
+		match_user + User.match_facebook_likes + FacebookLike.match_community +
+		" WHERE LENGTH(SPLIT(community.name, \' \')) > 1 " +
+		" WITH community, SUM(community_relevance) AS score," + User::FacebookUser.collect_map({"facebook_likes" => (FacebookLike.grouped_basic_info + ", score:community_relevance")}) + " ORDER BY score DESC " + User::FacebookUser.skip(skip) + User::FacebookUser.limit(12) + User::FacebookUser.return_group(Community.basic_info,'score','facebook_likes')
+	end
+
 	def self.parse_token_response response
 		output = {}
 		if !response.nil?
@@ -55,7 +61,11 @@ class User::FacebookUser < User
 	end
 
 	def get_latest_like
-		match_user + User.new(nil).match_facebook_likes + FacebookLike.order_desc + FacebookLike.limit(1) + User::FacebookUser.return_group("likes.timestamp AS created_at",FacebookLike.basic_info, User.fb_like_retrieval_time_info)
+		match_user + " OPTIONAL " + User.new(nil).match_facebook_likes + FacebookLike.order_desc + FacebookLike.limit(1) + User::FacebookUser.return_group("likes.timestamp AS created_at",FacebookLike.basic_info, User.fb_like_retrieval_time_info)
+	end
+
+	def get_latest_book
+		match_user + " OPTIONAL " + ReadingJourney.match_facebook_book  + " WITH user, reading_journey, book " + ReadingJourney.order_desc + ReadingJourney.limit(1) + User::FacebookUser.return_group("reading_journey.publish_time AS created_at", User.fb_book_retrieval_time_info)
 	end
 
 	def set_access_token_when_expired

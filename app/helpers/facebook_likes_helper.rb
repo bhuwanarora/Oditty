@@ -7,7 +7,7 @@ module FacebookLikesHelper
 
 
 	def self.model_as_community node_id
-		clause = FacebookLike.new(nil, node_id).match_by_neo_id +
+		clause = FacebookLike.new(node_id).match +
 				" OPTIONAL " + FacebookLike.get_image_url +
 				" RETURN facebook_like.name AS name, image_url "
 		neo_output = clause.execute[0]
@@ -17,7 +17,7 @@ module FacebookLikesHelper
 			web_urls.merge!({:image => image_url})
 			VersionerWorker.new.perform(node_id, image_url, "community")
 		end
-		clause  = FacebookLike.new(nil, node_id).match_by_neo_id
+		clause  = FacebookLike.new(node_id).match
 		clause += FacebookLikesHelper.set_community_properties(web_urls, neo_output["name"])
 		clause.execute
 	end
@@ -40,8 +40,8 @@ module FacebookLikesHelper
 		clause
 	end
 
-	def self.need_to_fetch created_at, facebook_likes_retrieval_time = 0
-		last_like_reason = (Time.now().to_i - created_at) > Constant::Time::OneDay
+	def self.need_to_fetch latest_like_time, facebook_likes_retrieval_time = 0
+		last_like_reason = ((Time.now().to_i - latest_like_time) > Constant::Time::OneDay) rescue true
 		last_check_reason = ((Time.now().to_i - facebook_likes_retrieval_time) > Constant::Time::OneDay) rescue true
 		last_check_reason && last_like_reason
 	end
@@ -50,9 +50,10 @@ module FacebookLikesHelper
 		clause = User::FacebookUser.new({'id' => user_fb_id}).get_latest_like
 		output = clause.execute[0]
 		user_id = output["user_id"]
-		need_to_fetch_likes = FacebookLikesHelper.need_to_fetch output["created_at"], output["facebook_likes_retrieval_time"]
+		stop_time = (output["created_at"].nil?) ? 0 : output["created_at"]
+		need_to_fetch_likes = FacebookLikesHelper.need_to_fetch stop_time, output["facebook_likes_retrieval_time"]
 		if need_to_fetch_likes
-			new_fb_like_ids = FacebookLikesHelper.fetch_likes_iterative(user_fb_id, user_id, output["created_at"])
+			new_fb_like_ids = FacebookLikesHelper.fetch_likes_iterative(user_fb_id, user_id, stop_time)
 			FacebookLikesHelper.set_facebook_likes_retrieval_time user_id
 		else
 			new_fb_like_ids = []
@@ -82,17 +83,19 @@ module FacebookLikesHelper
 		id_list
 	end
 
-	def self.next_iteration_needed(response, stop_time)
-		likes = response["data"]
-		earliest_like = likes[likes.length - 1]
+	def self.next_iteration_needed(response, stop_time, created_time_key = 'created_time')
 		recent_like_count = 0
-		likes.each do |like|
-			like_time = TimeHelper::Facebook.unix(like["created_time"])
-			recent_like = like_time > stop_time
-			if !recent_like
-				next
-			else
-				recent_like_count += 1
+		likes = response["data"]
+		if likes.present?
+			earliest_like = likes[likes.length - 1]
+			likes.each do |like|
+				like_time = TimeHelper::Facebook.unix(like[created_time_key])
+				recent_like = like_time > stop_time
+				if !recent_like
+					next
+				else
+					recent_like_count += 1
+				end
 			end
 		end
 		recent_like_count
@@ -145,10 +148,10 @@ private
 			category = like["category"]
 			created_time = like["created_time"].to_time.to_i
 			name = like["name"]
-			@facebook_like = FacebookLike.new(app_id)
+			@facebook_like = FacebookLike.new(nil, app_id)
 			@facebook_like.merge_info(category, created_time, name).execute
 			@user = User.new(user_id)
-			clause = @user.match + @facebook_like.match + ", user " + @user.create_like(created_time) + " RETURN ID(user)"
+			clause = @user.match + @facebook_like.match_by_app_id + ", user " + @user.create_like(created_time) + " RETURN ID(user)"
 			clause.execute
 		end
 	end

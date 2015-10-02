@@ -17,6 +17,10 @@ class User < Neo
 		"MATCH (user:User) WITH user "
 	end
 
+	def get_news skip_count
+		match + UsersNews.get_news(skip_count)
+	end
+
 	def get_fb_books skip
 		match + match_facebook_likes + FacebookLike.match_books + " WITH DISTINCT book, COLLECT(facebook_like.name) AS fb_like_page_title, " + Book.get_goodness_index + Book.order_by_goodness + User.skip(skip) + User.limit(Constant::Count::FacebookLikeBookCount) + User.return_group(Book.basic_info,"fb_like_page_title")
 	end
@@ -331,6 +335,10 @@ class User < Neo
 		" OPTIONAL " + User.get_visited_books
 	end
 
+	def get_community_follow_count
+		match + UsersCommunity.match + User.return_group('COUNT(DISTINCT community) AS community_follow_count')
+	end
+
 	def self.get_visited_books_label
 		Bookmark::Type::Visited.match_label("book", "Book") + " WITH DISTINCT user, book " + Book.order_desc + " WITH user, " + Book.collect_map("books" => Book.grouped_basic_info ) + " WITH user, books[0..3] AS books "
 	end
@@ -394,11 +402,19 @@ class User < Neo
 		" ID(user) AS user_id, user.facebook_likes_retrieval_time AS facebook_likes_retrieval_time "
 	end
 
+	def self.fb_book_retrieval_time_info
+		" ID(user) AS user_id, user.fb_id AS fb_id, user.facebook_books_retrieval_time AS facebook_books_retrieval_time "
+	end
+
 	def create_like timestamp
 		" MERGE (user)-[likes:Likes]->(facebook_like) SET likes.timestamp = "+timestamp.to_s + User.with_group("user", "likes", "facebook_like")
 	end
 
 	def match_facebook_likes
+		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
+	end
+
+	def self.match_facebook_likes
 		" MATCH (user)-[likes:Likes]->(facebook_like:FacebookLike) WITH user, facebook_like, likes "
 	end
 
