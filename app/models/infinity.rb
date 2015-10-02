@@ -2,7 +2,7 @@ class Infinity < Neo
 	Limit = Constant::Count::BookShownInInfinty
 	def initialize filters
 		filters = JSON.parse(filters)
-		@community_id = filters["community_id"]
+		@community_id = filters["genre_id"]
 		@author_id = filters["author_id"]
 		@reading_time_id = filters["reading_time_id"] 
 		@era_id = filters["era_id"]
