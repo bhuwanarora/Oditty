@@ -17,7 +17,7 @@ module GraphHelper
 	def self.genre_to_community
 		min_id = 384296
 		max_id = 4830210
-		step = 1000
+		step = 10
 		count = min_id
 		while count <= max_id
 			count = min_id + step
