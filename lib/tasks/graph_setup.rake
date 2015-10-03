@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  desc "convert_to_rooms"
+  task :convert_to_rooms => :environment do
+    include RestructureGraphHelper
+    RestructureGraphHelper.convert_to_rooms
+  end
+
   desc "genre_to_community"
   task :genre_to_community => :environment do
     include GraphHelper
