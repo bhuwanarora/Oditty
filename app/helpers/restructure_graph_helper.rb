@@ -75,15 +75,17 @@ module RestructureGraphHelper
 		maximum = range["maximum"]
 		minimum = range["minimum"]
 		puts minimum, maximum
-		range = (maximum - minimum) / 500
-		while minimum < maximum
-			get_nodes = " MATCH (book: Book) WHERE ID(book) <= #{minimum + range} AND ID(book) >= #{minimum}  RETURN ID(book) as book_id" 
-			minimum += range
-			nodes = get_nodes.execute
-			for node in nodes
-				book_id = node["book_id"]
-				delete_related_books_relation(book_id, genre_id)
-				# delete_category_relation(book_id, genre_id)
+		if maximum.present? && minimum.present?
+			range = (maximum - minimum) / 500
+			while minimum < maximum
+				get_nodes = " MATCH (book: Book) WHERE ID(book) <= #{minimum + range} AND ID(book) >= #{minimum}  RETURN ID(book) as book_id" 
+				minimum += range
+				nodes = get_nodes.execute
+				for node in nodes
+					book_id = node["book_id"]
+					delete_related_books_relation(book_id, genre_id)
+					# delete_category_relation(book_id, genre_id)
+				end
 			end
 		end
 	end
