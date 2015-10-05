@@ -13,9 +13,9 @@ namespace :graph do
   end
 
   task :delete_genre_related_books => :environment do
-    include GenreHelper
+    include RestructureGraphHelper
     puts "DELETE GENRE RELATED TO BOOKS" 
-    GenreHelper.delete_genre_related_books
+    RestructureGraphHelper.delete_genre_related_books
   end
 
   desc "convert_to_rooms"
