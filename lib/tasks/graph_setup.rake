@@ -12,6 +12,12 @@ namespace :graph do
     GraphHelper.set_author_feed
   end
 
+  task :delete_genre_related_books => :environment do
+    include GenreHelper
+    puts "DELETE GENRE RELATED TO BOOKS" 
+    GenreHelper.delete_genre_related_books
+  end
+
   desc "convert_to_rooms"
   task :convert_to_rooms => :environment do
     include RestructureGraphHelper
