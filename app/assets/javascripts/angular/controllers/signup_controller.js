@@ -176,7 +176,6 @@ homeApp.controller('signupController', ["$scope", "$rootScope", "Facebook", "$ti
                var token = fbresponse.authResponse.accessToken;
                 response = angular.extend(response, {"auth_response": token});
                 websiteService.handle_facebook_user(response).then(function(data){
-                    alert("login successful");
                     $rootScope.user = angular.extend($rootScope.user, data);
                     $scope._init_user();
                     _redirect_user();
