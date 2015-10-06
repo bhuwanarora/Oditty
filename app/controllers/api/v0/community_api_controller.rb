@@ -15,7 +15,7 @@ module Api
 
 			def get_rooms_by_timestamp
 				skip_count = params[:skip_count]
-				info = Community.get_rooms_by_timestamp(skip_count)
+				info = Api::V0::CommunityApi.get_rooms_by_timestamp(skip_count)
 				render :json => info, :status => 200
 			end
 
