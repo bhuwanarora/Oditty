@@ -14,6 +14,10 @@ module Api
 				News.new(news_id).create_visited(user_id)
 			end
 
+			def self.get_rooms_by_timestamp skip_count
+				Community.get_rooms_by_timestamp(skip_count).execute
+			end
+
 			def self.get_combined_details id
 				CommunityInterface.get_combined_details(id)
 			end
