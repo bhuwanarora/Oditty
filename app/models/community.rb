@@ -20,6 +20,10 @@ class Community < CommunityInterface
 		" MATCH (community:Community) WHERE ID(community) = " + @id.to_s + " WITH community "
 	end
 
+	def self.get_rooms_by_timestamp skip
+		Community.match + Community.return_group("ID(community) AS id", "community.name AS name", "community.created_at AS created_at") + Community.order_by("TOINT(created_at)") + Community.skip(skip) + Community.limit(10)
+	end
+
 	def add_book book_id, user_id
 		" MATCH (book:Book) WHERE ID(book)=" + book_id.to_s + " WITH book, community "\
 		" MATCH (user:User) WHERE ID(user)=" + user_id.to_s + " WITH user, book, community "\

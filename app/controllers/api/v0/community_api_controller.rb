@@ -13,6 +13,12 @@ module Api
 				render :json => info, :status => 200
 			end
 
+			def get_rooms_by_timestamp
+				skip_count = params[:skip_count]
+				info = Community.get_rooms_by_timestamp(skip_count)
+				render :json => info, :status => 200
+			end
+
 			def remove_news
 				id = params[:id]
 				news_id = params[:news_id]
