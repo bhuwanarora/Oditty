@@ -38,4 +38,5 @@ class Video < Neo
 			" video.created_at = " + Time.now.to_i.to_s + " "\
 		" WITH video "
 	end
+
 end
