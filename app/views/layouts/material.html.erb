@@ -73,7 +73,7 @@
     </head>
 
     <body ng-controller="appController" 
-        class="<% if @journey || @search || @books || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group || @products %>white<% end %>" 
+        class="<% if @journey || @search || @books || @profile || @book || @news || @games || @room || @customise || @authors || @testimonials || @news_group || @products || @home %>white<% end %>" 
         id="<% unless @book %>parent<% end %>"
         ng-keydown="scroll_on_keypress($event)"
         ng-click="close_popups()"
