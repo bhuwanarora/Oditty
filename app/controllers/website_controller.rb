@@ -148,7 +148,7 @@ class WebsiteController < ApplicationController
 		cookies.delete :logged
 		session.clear
 		@signup = true
-		render :test, :layout => "material_home"
+		render :products, :layout => "material"
 	end
 
 	def privacy
@@ -356,8 +356,12 @@ class WebsiteController < ApplicationController
 	end
 
 	def home
-		@products = true
-		render :test, :layout => "material_home"
+		unless session[:user_id]
+			@products = true
+			render :products, :layout => "material"
+		else
+			render :test, :layout => "material_home"
+		end
 	end
 
 	def rooms
@@ -384,5 +388,7 @@ class WebsiteController < ApplicationController
 	def help
 		render :layout => "material_clean"
 	end
+
+
 
 end
