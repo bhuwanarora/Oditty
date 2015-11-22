@@ -56,7 +56,7 @@ class Community < CommunityInterface
 	end
 
 	def self.short_info
-		" community.name AS name, community.view_count AS view_count, ID(community) AS id "
+		" community.name AS name, community.view_count AS view_count, ID(community) AS id, community.image_url AS image_url "
 	end
 
 	def match_videos
