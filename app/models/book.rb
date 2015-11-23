@@ -80,7 +80,7 @@ class Book < Neo
 	end
 
 	def self.basic_info
-		" ID(book) AS book_id, book.isbn AS isbn, book.author_id AS author_id, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, " + Book.metrics_info
+		" ID(book) AS book_id, book.isbn AS isbn, book.author_id AS author_id, book.title AS title, book.author_name AS author_name, book.page_count AS page_count, book.published_year AS published_year, TOINT(book.total_weight) as popularity, labels(book) AS label, book.image_url AS image_url " + Book.metrics_info
 	end
 
 	def self.get_book_by_isbn isbn
@@ -110,7 +110,7 @@ class Book < Neo
 	end
 
 	def self.grouped_basic_info
-		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, " + Book.grouped_metrics_info
+		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, image_url: book.image_url" + Book.grouped_metrics_info
 	end
 
 	def self.match_genre
