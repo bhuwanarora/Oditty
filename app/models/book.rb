@@ -110,7 +110,7 @@ class Book < Neo
 	end
 
 	def self.grouped_basic_info
-		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, image_url: book.image_url" + Book.grouped_metrics_info
+		" id: ID(book), isbn: book.isbn, title: book.title, author_name: book.author_name, page_count: book.page_count, published_year: book.published_year, image_url: book.image_url, " + Book.grouped_metrics_info
 	end
 
 	def self.match_genre
